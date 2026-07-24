@@ -105,7 +105,7 @@
     </div>
 
     <!-- TOP HEADER BAR -->
-    <header class="relative z-10 w-full bg-navy-dark/90 backdrop-blur-xl border-b border-white/10 px-8 py-4 flex items-center justify-between shadow-2xl">
+    <header class="relative z-30 w-full bg-navy-dark/90 backdrop-blur-xl border-b border-white/10 px-8 py-4 flex items-center justify-between shadow-2xl">
         <!-- Logo & Airport Info -->
         <div class="flex items-center space-x-6">
             <div class="flex items-center space-x-4 bg-white/10 p-2.5 px-4 rounded-2xl border border-white/15">
@@ -148,7 +148,7 @@
             </div>
 
             <!-- Multi-language Switcher + Dropdown Menu -->
-            <div class="relative flex items-center bg-black/40 p-1.5 rounded-2xl border border-white/15 space-x-1" id="lang-selector">
+            <div class="relative z-50 flex items-center bg-black/40 p-1.5 rounded-2xl border border-white/15 space-x-1" id="lang-selector">
                 <button onclick="changeLang('vi')" id="btn-vi" class="lang-btn active-lang px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-teal text-white shadow-md">
                     <span>🇻🇳</span> <span>VIE</span>
                 </button>
@@ -170,7 +170,7 @@
                     </button>
 
                     <!-- Language Dropdown Menu -->
-                    <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-navy-dark/95 border border-white/20 rounded-2xl shadow-2xl backdrop-blur-xl z-50 overflow-hidden py-1">
+                    <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-navy-dark/95 border border-white/20 rounded-2xl shadow-2xl backdrop-blur-xl z-[100] overflow-hidden py-1">
                         <div class="px-3 py-1.5 text-[10px] uppercase font-bold text-slate-400 border-b border-white/10">Ngôn ngữ khác / More</div>
                         <button onclick="changeLang('jp'); closeLangDropdown();" id="btn-jp" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
                             <span>🇯🇵</span> <span class="font-semibold">日本語 (JPN)</span>
@@ -471,22 +471,22 @@
                 <!-- Left Section: Interactive Pulse Orb Audio Visualizer -->
                 <div class="w-1/2 flex flex-col items-center justify-center border-r border-white/10 pr-8 relative">
                     
-                    <!-- Dynamic Pulse Orb Sphere Container -->
+                    <!-- Dynamic Pulse Orb Sphere Container (Dark Orange Vector Style) -->
                     <div class="relative w-64 h-64 flex items-center justify-center mb-6">
                         <!-- Outer Pulse Wave Rings -->
-                        <div id="orb-wave-outer" class="absolute w-56 h-56 rounded-full border border-teal/40 bg-teal/10 orb-wave-1 pointer-events-none"></div>
-                        <div id="orb-wave-mid" class="absolute w-44 h-44 rounded-full border border-gold/40 bg-gold/10 orb-wave-2 pointer-events-none"></div>
+                        <div id="orb-wave-outer" class="absolute w-56 h-56 rounded-full border-2 border-orange-500/50 bg-orange-500/10 orb-wave-1 pointer-events-none"></div>
+                        <div id="orb-wave-mid" class="absolute w-44 h-44 rounded-full border-2 border-amber-600/50 bg-amber-600/10 orb-wave-2 pointer-events-none"></div>
                         
-                        <!-- Core Glowing Orb -->
-                        <div id="pulse-orb" class="relative z-10 w-32 h-32 rounded-full bg-gradient-to-tr from-teal via-cyan-400 to-gold shadow-[0_0_50px_rgba(0,168,150,0.8)] border-2 border-white/80 flex items-center justify-center transition-all duration-100 ease-out">
-                            <i data-lucide="mic" class="w-12 h-12 text-navy font-bold animate-pulse"></i>
+                        <!-- Core Dark Orange Vector Glowing Orb -->
+                        <div id="pulse-orb" class="relative z-10 w-32 h-32 rounded-full bg-gradient-to-tr from-orange-700 via-amber-600 to-orange-500 shadow-[0_0_50px_rgba(234,88,12,0.85)] border-2 border-orange-300 flex items-center justify-center transition-all duration-100 ease-out">
+                            <i data-lucide="mic" class="w-12 h-12 text-slate-950 font-bold animate-pulse"></i>
                         </div>
                     </div>
 
                     <!-- Voice Status Description -->
                     <div class="text-center z-10">
                         <div class="text-white font-bold text-lg" id="clory-sub-text">Trò chuyện cùng Trợ lý CloryAI</div>
-                        <p class="text-teal text-xs mt-1 font-mono flex items-center justify-center gap-1.5" id="mic-status">
+                        <p class="text-orange-400 text-xs mt-1 font-mono flex items-center justify-center gap-1.5" id="mic-status">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                             <span>Đang kết nối micro / Lắng nghe âm thanh...</span>
                         </p>
@@ -611,7 +611,7 @@
 
                     if (orb) {
                         orb.style.transform = `scale(${scale})`;
-                        orb.style.boxShadow = `0 0 ${30 + average * 0.8}px rgba(0, 168, 150, ${glowOpacity})`;
+                        orb.style.boxShadow = `0 0 ${30 + average * 0.9}px rgba(234, 88, 12, ${glowOpacity})`;
                     }
 
                     animFrameId = requestAnimationFrame(renderOrbPulse);
@@ -631,7 +631,7 @@
                     let scale = 1 + Math.sin(count) * 0.12;
                     if (orb) {
                         orb.style.transform = `scale(${scale})`;
-                        orb.style.boxShadow = `0 0 ${40 + Math.sin(count) * 20}px rgba(0,168,150,0.8)`;
+                        orb.style.boxShadow = `0 0 ${40 + Math.sin(count) * 20}px rgba(234, 88, 12, 0.85)`;
                     }
                     animFrameId = requestAnimationFrame(simulatePulse);
                 }
