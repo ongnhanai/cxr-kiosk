@@ -6,8 +6,8 @@
     <title>Sân bay Quốc tế Cam Ranh - Kiosk Cảm ứng 40"</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Lucide Icons UMD Build for Reliability -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
@@ -37,15 +37,12 @@
                     animation: {
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'float': 'float 4s ease-in-out infinite',
-                        'shimmer': 'shimmer 2.5s infinite',
+                        'spin-slow': 'spin 12s linear infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0px)' },
                             '50%': { transform: 'translateY(-8px)' },
-                        },
-                        shimmer: {
-                            '100%': { transform: 'translateX(100%)' },
                         }
                     }
                 }
@@ -71,11 +68,6 @@
             background: #00A896;
             border-radius: 999px;
         }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
         .glass-dark {
             background: rgba(11, 37, 69, 0.85);
             backdrop-filter: blur(16px);
@@ -86,6 +78,19 @@
         }
         .touch-effect:active {
             transform: scale(0.97);
+        }
+        /* Pulse Orb Wave Effect */
+        .orb-wave-1 {
+            animation: orbPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+        .orb-wave-2 {
+            animation: orbPing 2.8s cubic-bezier(0, 0, 0.2, 1) infinite 0.5s;
+        }
+        @keyframes orbPing {
+            75%, 100% {
+                transform: scale(1.8);
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -125,7 +130,7 @@
             </div>
         </div>
 
-        <!-- Right Header Widgets: Weather, Time & Language -->
+        <!-- Right Header Widgets: Weather, Time & Multi-Language Switcher -->
         <div class="flex items-center space-x-6">
             <!-- Weather Widget -->
             <div class="flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl">
@@ -142,8 +147,8 @@
                 <div id="live-date" class="text-slate-300 text-xs mt-1 font-medium">Thứ Sáu, 24/07/2026</div>
             </div>
 
-            <!-- Multi-language Switcher -->
-            <div class="flex items-center bg-black/40 p-1.5 rounded-2xl border border-white/15 space-x-1" id="lang-selector">
+            <!-- Multi-language Switcher + Dropdown Menu -->
+            <div class="relative flex items-center bg-black/40 p-1.5 rounded-2xl border border-white/15 space-x-1" id="lang-selector">
                 <button onclick="changeLang('vi')" id="btn-vi" class="lang-btn active-lang px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-teal text-white shadow-md">
                     <span>🇻🇳</span> <span>VIE</span>
                 </button>
@@ -156,6 +161,31 @@
                 <button onclick="changeLang('cn')" id="btn-cn" class="lang-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1.5">
                     <span>🇨🇳</span> <span>CHN</span>
                 </button>
+
+                <!-- Dropdown Trigger Button for Additional Languages -->
+                <div class="relative inline-block text-left">
+                    <button onclick="toggleLangDropdown(event)" id="btn-more-lang" class="px-2.5 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 border border-white/10">
+                        <i data-lucide="globe" class="w-3.5 h-3.5 text-gold"></i>
+                        <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400"></i>
+                    </button>
+
+                    <!-- Language Dropdown Menu -->
+                    <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-navy-dark/95 border border-white/20 rounded-2xl shadow-2xl backdrop-blur-xl z-50 overflow-hidden py-1">
+                        <div class="px-3 py-1.5 text-[10px] uppercase font-bold text-slate-400 border-b border-white/10">Ngôn ngữ khác / More</div>
+                        <button onclick="changeLang('jp'); closeLangDropdown();" id="btn-jp" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
+                            <span>🇯🇵</span> <span class="font-semibold">日本語 (JPN)</span>
+                        </button>
+                        <button onclick="changeLang('fr'); closeLangDropdown();" id="btn-fr" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
+                            <span>🇫🇷</span> <span class="font-semibold">Français (FRA)</span>
+                        </button>
+                        <button onclick="changeLang('de'); closeLangDropdown();" id="btn-de" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
+                            <span>🇩🇪</span> <span class="font-semibold">Deutsch (GER)</span>
+                        </button>
+                        <button onclick="changeLang('th'); closeLangDropdown();" id="btn-th" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition border-t border-white/5">
+                            <span>🇹🇭</span> <span class="font-semibold">ไทย (THA)</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -163,7 +193,7 @@
     <!-- MAIN CONTENT GRID (40-inch 16:9 Landscape Optimized Layout) -->
     <main class="relative z-10 flex-1 p-8 grid grid-cols-12 gap-8 items-stretch overflow-hidden">
         
-        <!-- LEFT COLUMN (60% Width - 7 Cols): Welcome Hero Banner & Amenities Quick Info -->
+        <!-- LEFT COLUMN (60% Width - 7 Cols): Welcome Hero Banner & Amenities Board -->
         <section class="col-span-7 flex flex-col justify-between space-y-6">
             
             <!-- Hero Banner Card -->
@@ -188,7 +218,7 @@
                     </p>
                 </div>
 
-                <!-- Carousel Highlights Footer inside Hero -->
+                <!-- Carousel Highlights Footer inside Hero (Cleaned: Wifi Only) -->
                 <div class="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between">
                     <div class="flex items-center space-x-6">
                         <div class="flex items-center space-x-3">
@@ -196,7 +226,7 @@
                                 <i data-lucide="wifi" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <div class="text-white text-xs font-bold">Free Wi-Fi</div>
+                                <div class="text-white text-xs font-bold">Free Wi-Fi Highspeed</div>
                                 <div class="text-slate-400 text-[11px]">@CamRanh_Airport_Free</div>
                             </div>
                         </div>
@@ -309,7 +339,7 @@
                 <!-- Background Glow -->
                 <div class="absolute top-0 right-0 -mr-10 -mt-10 w-56 h-56 bg-gold/20 rounded-full blur-2xl group-hover:bg-gold/30 transition-all"></div>
                 
-                <!-- AI Staff Mini Avatar Graphic Overlay -->
+                <!-- AI Staff Mini Graphic Overlay -->
                 <div class="absolute bottom-0 right-2 w-44 h-52 pointer-events-none opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 flex items-end">
                     <div class="relative w-full h-full flex items-end justify-center">
                         <div class="w-36 h-44 bg-gradient-to-t from-navy to-teal/30 rounded-t-full border border-gold/30 flex items-center justify-center overflow-hidden shadow-2xl">
@@ -384,7 +414,7 @@
                 <div class="flex items-center space-x-3">
                     <div class="p-3 bg-teal/20 rounded-xl text-teal"><i data-lucide="map" class="w-6 h-6"></i></div>
                     <div>
-                        <h3 class="text-xl font-bold text-white">BẢN ĐỒ SÂN BAY TƯƠNG TÁC</h3>
+                        <h3 class="text-xl font-bold text-white" id="modal-map-header-title">BẢN ĐỒ SÂN BAY TƯƠNG TÁC</h3>
                         <p class="text-xs text-slate-400">Đang khởi chạy giao diện Bản đồ & Tìm đường...</p>
                     </div>
                 </div>
@@ -412,14 +442,14 @@
 
             <!-- Modal Footer -->
             <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
-                <button onclick="closeMapModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition">
+                <button onclick="closeMapModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition" id="modal-map-close-btn">
                     Đóng
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL PREVIEW 2: CLORY AI QUICK PREVIEW -->
+    <!-- MODAL PREVIEW 2: CLORY AI WITH DYNAMIC PULSE ORB -->
     <div id="clory-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-8 transition-opacity">
         <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-5xl h-[80vh] flex flex-col overflow-hidden shadow-2xl relative">
             <!-- Modal Header -->
@@ -436,43 +466,57 @@
                 </button>
             </div>
 
-            <!-- Simulated CloryAI Avatar Screen -->
+            <!-- Simulated CloryAI Dynamic Pulse Orb Screen -->
             <div class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 p-8 flex items-center justify-between">
-                <!-- Left Avatar Teaser -->
-                <div class="w-1/2 flex flex-col items-center justify-center border-r border-white/10 pr-8">
-                    <div class="w-48 h-56 rounded-3xl bg-gradient-to-t from-navy to-teal/20 border-2 border-gold/40 flex items-center justify-center overflow-hidden relative shadow-2xl mb-4">
-                        <i data-lucide="bot" class="w-28 h-28 text-gold animate-float"></i>
-                        <span class="absolute bottom-2 bg-navy/90 text-gold text-[10px] font-bold px-3 py-1 rounded-full border border-gold/40">
-                            Clory AI • CXR Staff
-                        </span>
+                <!-- Left Section: Interactive Pulse Orb Audio Visualizer -->
+                <div class="w-1/2 flex flex-col items-center justify-center border-r border-white/10 pr-8 relative">
+                    
+                    <!-- Dynamic Pulse Orb Sphere Container -->
+                    <div class="relative w-64 h-64 flex items-center justify-center mb-6">
+                        <!-- Outer Pulse Wave Rings -->
+                        <div id="orb-wave-outer" class="absolute w-56 h-56 rounded-full border border-teal/40 bg-teal/10 orb-wave-1 pointer-events-none"></div>
+                        <div id="orb-wave-mid" class="absolute w-44 h-44 rounded-full border border-gold/40 bg-gold/10 orb-wave-2 pointer-events-none"></div>
+                        
+                        <!-- Core Glowing Orb -->
+                        <div id="pulse-orb" class="relative z-10 w-32 h-32 rounded-full bg-gradient-to-tr from-teal via-cyan-400 to-gold shadow-[0_0_50px_rgba(0,168,150,0.8)] border-2 border-white/80 flex items-center justify-center transition-all duration-100 ease-out">
+                            <i data-lucide="mic" class="w-12 h-12 text-navy font-bold animate-pulse"></i>
+                        </div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-white font-bold text-lg">Trò chuyện cùng Trợ lý CloryAI</div>
-                        <p class="text-slate-400 text-xs mt-1">Đang lắng nghe giọng nói tiếng Việt / English...</p>
+
+                    <!-- Voice Status Description -->
+                    <div class="text-center z-10">
+                        <div class="text-white font-bold text-lg" id="clory-sub-text">Trò chuyện cùng Trợ lý CloryAI</div>
+                        <p class="text-teal text-xs mt-1 font-mono flex items-center justify-center gap-1.5" id="mic-status">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span>Đang kết nối micro / Lắng nghe âm thanh...</span>
+                        </p>
                     </div>
                 </div>
 
-                <!-- Right Question Chips Teaser -->
+                <!-- Right Question Chips Teaser (Strict Airport FAQ Content) -->
                 <div class="w-1/2 pl-8 flex flex-col justify-center space-y-3">
                     <h5 class="text-gold font-bold text-sm uppercase tracking-wider">Gợi ý câu hỏi phổ biến:</h5>
                     <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Cổng ra máy bay (Gates) ở đâu?"
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Cổng ra máy bay (Gates) nằm ở đâu?"
                     </div>
                     <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
                         <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Mật khẩu Wifi miễn phí sân bay là gì?"
                     </div>
                     <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Xe bus / Taxi về trung tâm Nha Trang ở đâu?"
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Xe bus & Taxi về trung tâm Nha Trang ở đâu?"
                     </div>
                     <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Khu vực ăn uống & Mua sắm ở tầng mấy?"
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Khu vực ăn uống, Cafe & WC ở tầng mấy?"
+                    </div>
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Cửa hàng Mua sắm Duty Free ở đâu?"
                     </div>
                 </div>
             </div>
 
             <!-- Modal Footer -->
             <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
-                <button onclick="closeCloryModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition">
+                <button onclick="closeCloryModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition" id="modal-ai-close-btn">
                     Đóng
                 </button>
             </div>
@@ -480,8 +524,12 @@
     </div>
 
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
+        // Safe Lucide Icon Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
+            }
+        });
 
         // Real-time Digital Clock & Date Update
         function updateClock() {
@@ -490,11 +538,13 @@
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
             
-            document.getElementById('live-clock').innerText = `${hours}:${minutes}:${seconds}`;
+            const clockEl = document.getElementById('live-clock');
+            if (clockEl) clockEl.innerText = `${hours}:${minutes}:${seconds}`;
 
             const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
             const dateStr = now.toLocaleDateString('vi-VN', options);
-            document.getElementById('live-date').innerText = dateStr;
+            const dateEl = document.getElementById('live-date');
+            if (dateEl) dateEl.innerText = dateStr;
         }
         setInterval(updateClock, 1000);
         updateClock();
@@ -506,14 +556,116 @@
         function closeMapModal() {
             document.getElementById('map-modal').classList.add('hidden');
         }
+
+        // Web Audio API Pulse Orb Variables
+        let audioCtx = null;
+        let analyser = null;
+        let micStream = null;
+        let animFrameId = null;
+
         function openCloryModal() {
             document.getElementById('clory-modal').classList.remove('hidden');
-        }
-        function closeCloryModal() {
-            document.getElementById('clory-modal').classList.add('hidden');
+            startPulseOrbAudio();
         }
 
-        // Multi-language Text Dictionary
+        function closeCloryModal() {
+            document.getElementById('clory-modal').classList.add('hidden');
+            stopPulseOrbAudio();
+        }
+
+        // Web Audio API Microphone Sensitivity Visualizer for Pulse Orb
+        async function startPulseOrbAudio() {
+            const statusEl = document.getElementById('mic-status');
+            const orb = document.getElementById('pulse-orb');
+
+            try {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    throw new Error("Microphone API not supported");
+                }
+
+                micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioCtx.createAnalyser();
+                analyser.fftSize = 64;
+                
+                const source = audioCtx.createMediaStreamSource(micStream);
+                source.connect(analyser);
+
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+                if (statusEl) {
+                    statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span><span>Đang nhận tín hiệu giọng nói...</span>`;
+                }
+
+                function renderOrbPulse() {
+                    analyser.getByteFrequencyData(dataArray);
+                    let sum = 0;
+                    for (let i = 0; i < dataArray.length; i++) {
+                        sum += dataArray[i];
+                    }
+                    let average = sum / dataArray.length;
+                    
+                    // Scale Orb dynamically from 1.0 up to 1.45 based on voice audio intensity
+                    let scale = 1 + (average / 180);
+                    let glowOpacity = Math.min(1, 0.4 + (average / 100));
+
+                    if (orb) {
+                        orb.style.transform = `scale(${scale})`;
+                        orb.style.boxShadow = `0 0 ${30 + average * 0.8}px rgba(0, 168, 150, ${glowOpacity})`;
+                    }
+
+                    animFrameId = requestAnimationFrame(renderOrbPulse);
+                }
+                renderOrbPulse();
+
+            } catch (err) {
+                console.warn("Microphone access denied or simulated mode:", err);
+                if (statusEl) {
+                    statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span><span>Chế độ mô phỏng phản hồi giọng nói</span>`;
+                }
+                
+                // Fallback smooth animation if mic is disabled or blocked in iframe
+                let count = 0;
+                function simulatePulse() {
+                    count += 0.05;
+                    let scale = 1 + Math.sin(count) * 0.12;
+                    if (orb) {
+                        orb.style.transform = `scale(${scale})`;
+                        orb.style.boxShadow = `0 0 ${40 + Math.sin(count) * 20}px rgba(0,168,150,0.8)`;
+                    }
+                    animFrameId = requestAnimationFrame(simulatePulse);
+                }
+                simulatePulse();
+            }
+        }
+
+        function stopPulseOrbAudio() {
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+            if (micStream) {
+                micStream.getTracks().forEach(track => track.stop());
+                micStream = null;
+            }
+            if (audioCtx) {
+                audioCtx.close();
+                audioCtx = null;
+            }
+        }
+
+        // Language Dropdown Controllers
+        function toggleLangDropdown(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('lang-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        function closeLangDropdown() {
+            const dropdown = document.getElementById('lang-dropdown');
+            if (dropdown) dropdown.classList.add('hidden');
+        }
+
+        document.addEventListener('click', () => closeLangDropdown());
+
+        // Multi-language Text Dictionary (Expanded to 8 Languages)
         const i18n = {
             vi: {
                 welcomeTag: "Kính chào Quý khách",
@@ -527,7 +679,9 @@
                 aiDesc: "Hỏi đáp giọng nói, sơ đồ nhà ga, vị trí cổng, thủ tục hành lý & thông tin du lịch Nha Trang.",
                 aiBtn: "TRÒ CHUYỆN VỚI CLORY AI",
                 amenitiesTitle: "Khu vực & Tiện ích",
-                touchHint: "Chạm vào màn hình để bắt đầu thao tác"
+                touchHint: "Chạm vào màn hình để bắt đầu thao tác",
+                closeBtn: "Đóng",
+                clorySub: "Trò chuyện cùng Trợ lý CloryAI"
             },
             en: {
                 welcomeTag: "Welcome Valued Passengers",
@@ -541,7 +695,9 @@
                 aiDesc: "Voice assistant for terminal maps, gate locations, baggage inquiries & Nha Trang travel guides.",
                 aiBtn: "TALK TO CLORY AI",
                 amenitiesTitle: "Areas & Amenities",
-                touchHint: "Touch screen to start interaction"
+                touchHint: "Touch screen to start interaction",
+                closeBtn: "Close",
+                clorySub: "Talk with CloryAI Assistant"
             },
             kr: {
                 welcomeTag: "환영합니다",
@@ -555,7 +711,9 @@
                 aiDesc: "음성 대화로 터미널 안내, 게이트 위치, 수하물 안내 및 나트랑 관광 정보를 확인하세요.",
                 aiBtn: "CLORY AI와 대화하기",
                 amenitiesTitle: "구역 및 편의시설",
-                touchHint: "화면을 터치하여 시작하세요"
+                touchHint: "화면을 터치하여 시작하세요",
+                closeBtn: "닫기",
+                clorySub: "CloryAI 어시스턴트와 대화하기"
             },
             cn: {
                 welcomeTag: "尊贵的旅客，欢迎您",
@@ -569,12 +727,78 @@
                 aiDesc: "支持语音问答，查询航站楼地图、登机口位置、行李须知及芽庄旅游资讯。",
                 aiBtn: "与 CLORY AI 对话",
                 amenitiesTitle: "区域与服务设施",
-                touchHint: "点击屏幕开始操作"
+                touchHint: "点击屏幕开始操作",
+                closeBtn: "关闭",
+                clorySub: "与 CloryAI 助手对话"
+            },
+            jp: {
+                welcomeTag: "ようこそ",
+                welcomeTitle: "カムラン国際空港へ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ようこそ</span>",
+                welcomeSub: "世界クラスの航空サービスと24時間対応のスマート案内をご利用ください。",
+                status: "ターミナル正常運行中",
+                mapTitle: "空港マップ＆案内",
+                mapDesc: "搭乗口、レストラン、免税店、お手洗い、ATMなどを検索できます。",
+                mapBtn: "マップを開く",
+                aiTitle: "CLORY AI アシスタント",
+                aiDesc: "音声案内で搭乗口、手荷物案内、ニャチャン観光情報をご案内します。",
+                aiBtn: "CLORY AIと話す",
+                amenitiesTitle: "エリア＆施設案内",
+                touchHint: "画面をタッチしてスタート",
+                closeBtn: "閉じる",
+                clorySub: "CloryAIアシスタントと対話"
+            },
+            fr: {
+                welcomeTag: "Bienvenue",
+                welcomeTitle: "BIENVENUE À <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>L'AÉROPORT DE CAM RANH</span>",
+                welcomeSub: "Profitez de nos services aéroportuaires et de notre assistance intelligente 24/7.",
+                status: "AÉROGARE EN SERVICE NORMAL",
+                mapTitle: "CARTE INTERACTIVE DE L'AÉROPORT",
+                mapDesc: "Localisez les portes d'embarquement, restaurants, magasins Duty Free et commodités.",
+                mapBtn: "OUVRIR LA CARTE",
+                aiTitle: "ASSISTANT CLORY AI",
+                aiDesc: "Assistant vocal pour les plans du terminal, bagages et guides de Nha Trang.",
+                aiBtn: "PARLER À CLORY AI",
+                amenitiesTitle: "Zones & Services",
+                touchHint: "Touchez l'écran pour commencer",
+                closeBtn: "Fermer",
+                clorySub: "Discutez avec CloryAI"
+            },
+            de: {
+                welcomeTag: "Herzlich Willkommen",
+                welcomeTitle: "WILLKOMMEN AM <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>FLUGHAFEN CAM RANH</span>",
+                welcomeSub: "Erleben Sie erstklassigen Service und 24/7 intelligente Flughafen-Unterstützung.",
+                status: "TERMINAL-BETRIEB NORMAL",
+                mapTitle: "FLUGHAFENPLAN & NAVI",
+                mapDesc: "Finden Sie Gates, Restaurants, Duty Free Shops, Toiletten und Geldautomaten.",
+                mapBtn: "INTERAKTIVE KARTE ÖFFNEN",
+                aiTitle: "CLORY AI ASSISTENT",
+                aiDesc: "Sprachassistent für Terminalpläne, Gates, Gepäck und Nha Trang Reisetipps.",
+                aiBtn: "MIT CLORY AI SPRECHEN",
+                amenitiesTitle: "Bereiche & Einrichtungen",
+                touchHint: "Zum Starten Bildschirm berühren",
+                closeBtn: "Schließen",
+                clorySub: "Sprechen Sie mit CloryAI"
+            },
+            th: {
+                welcomeTag: "ยินดีต้อนรับ",
+                welcomeTitle: "ยินดีต้อนรับสู่ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ท่าอากาศยานนานาชาติกามรัญ</span>",
+                welcomeSub: "สัมผัสบริการระดับโลกพร้อมระบบช่วยเหลือกิจการการบินตลอด 24 ชั่วโมง",
+                status: "อาคารผู้โดยสารเปิดให้บริการปกติ",
+                mapTitle: "แผนที่สนามบิน",
+                mapDesc: "ค้นหาประตูขึ้นเครื่อง ร้านอาหาร ร้านค้าปลอดภาษี ห้องน้ำ และตู้ ATM",
+                mapBtn: "เปิดแผนที่แบบโต้ตอบ",
+                aiTitle: "ผู้ช่วยเสมือน CLORY AI",
+                aiDesc: "สอบถามด้วยเสียงเกี่ยวกับแผนที่อาคาร ตำแหน่งประตู และข้อมูลท่องเที่ยวญาจาง",
+                aiBtn: "คุยกับ CLORY AI",
+                amenitiesTitle: "พื้นที่และสิ่งอำนวยความสะดวก",
+                touchHint: "แตะหน้าจอเพื่อเริ่มใช้งาน",
+                closeBtn: "ปิด",
+                clorySub: "พูดคุยกับผู้ช่วย CloryAI"
             }
         };
 
         function changeLang(langKey) {
-            // Update Active Class on Lang Buttons
+            // Update Active UI Button States
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('bg-teal', 'text-white', 'shadow-md');
                 btn.classList.add('text-slate-300');
@@ -585,21 +809,25 @@
                 activeBtn.classList.remove('text-slate-300');
             }
 
-            // Update UI Elements
+            // Update UI Elements text
             const t = i18n[langKey];
             if(t) {
-                document.getElementById('welcome-tag').innerText = t.welcomeTag;
-                document.getElementById('welcome-title').innerHTML = t.welcomeTitle;
-                document.getElementById('welcome-sub').innerText = t.welcomeSub;
-                document.getElementById('status-text').innerText = t.status;
-                document.getElementById('card-map-title').innerText = t.mapTitle;
-                document.getElementById('card-map-desc').innerText = t.mapDesc;
-                document.getElementById('card-map-btn').innerText = t.mapBtn;
-                document.getElementById('card-ai-title').innerText = t.aiTitle;
-                document.getElementById('card-ai-desc').innerText = t.aiDesc;
-                document.getElementById('card-ai-btn').innerText = t.aiBtn;
-                document.getElementById('amenities-board-title').innerText = t.amenitiesTitle;
-                document.getElementById('touch-hint').innerText = t.touchHint;
+                if(document.getElementById('welcome-tag')) document.getElementById('welcome-tag').innerText = t.welcomeTag;
+                if(document.getElementById('welcome-title')) document.getElementById('welcome-title').innerHTML = t.welcomeTitle;
+                if(document.getElementById('welcome-sub')) document.getElementById('welcome-sub').innerText = t.welcomeSub;
+                if(document.getElementById('status-text')) document.getElementById('status-text').innerText = t.status;
+                if(document.getElementById('card-map-title')) document.getElementById('card-map-title').innerText = t.mapTitle;
+                if(document.getElementById('card-map-desc')) document.getElementById('card-map-desc').innerText = t.mapDesc;
+                if(document.getElementById('card-map-btn')) document.getElementById('card-map-btn').innerText = t.mapBtn;
+                if(document.getElementById('card-ai-title')) document.getElementById('card-ai-title').innerText = t.aiTitle;
+                if(document.getElementById('card-ai-desc')) document.getElementById('card-ai-desc').innerText = t.aiDesc;
+                if(document.getElementById('card-ai-btn')) document.getElementById('card-ai-btn').innerText = t.aiBtn;
+                if(document.getElementById('amenities-board-title')) document.getElementById('amenities-board-title').innerText = t.amenitiesTitle;
+                if(document.getElementById('touch-hint')) document.getElementById('touch-hint').innerText = t.touchHint;
+                if(document.getElementById('modal-map-header-title')) document.getElementById('modal-map-header-title').innerText = t.mapTitle;
+                if(document.getElementById('modal-map-close-btn')) document.getElementById('modal-map-close-btn').innerText = t.closeBtn;
+                if(document.getElementById('modal-ai-close-btn')) document.getElementById('modal-ai-close-btn').innerText = t.closeBtn;
+                if(document.getElementById('clory-sub-text')) document.getElementById('clory-sub-text').innerText = t.clorySub;
             }
         }
     </script>
