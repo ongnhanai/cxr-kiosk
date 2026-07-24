@@ -163,7 +163,7 @@
     <!-- MAIN CONTENT GRID (40-inch 16:9 Landscape Optimized Layout) -->
     <main class="relative z-10 flex-1 p-8 grid grid-cols-12 gap-8 items-stretch overflow-hidden">
         
-        <!-- LEFT COLUMN (60% Width - 7 Cols): Welcome Hero Banner & Live Flights Board -->
+        <!-- LEFT COLUMN (60% Width - 7 Cols): Welcome Hero Banner & Amenities Quick Info -->
         <section class="col-span-7 flex flex-col justify-between space-y-6">
             
             <!-- Hero Banner Card -->
@@ -184,7 +184,7 @@
                     </h2>
 
                     <p class="text-slate-300 text-base max-w-xl font-normal leading-relaxed" id="welcome-sub">
-                        Trải nghiệm dịch vụ tiện ích hàng không đẳng cấp và sẵn sàng hỗ trợ thông tin 24/7 cho chuyến bay của bạn.
+                        Trải nghiệm dịch vụ tiện ích hàng không đẳng cấp và sẵn sàng hỗ trợ thông tin 24/7 cho chuyến đi của bạn.
                     </p>
                 </div>
 
@@ -221,62 +221,50 @@
                 </div>
             </div>
 
-            <!-- Live Flight Info Ticker / Mini Board -->
+            <!-- Khu vực & Tiện ích Sân Bay -->
             <div class="glass-dark rounded-3xl p-5 border border-white/15 shadow-xl">
                 <div class="flex items-center justify-between mb-3 px-1">
                     <div class="flex items-center space-x-2">
-                        <i data-lucide="plane" class="w-5 h-5 text-teal animate-bounce"></i>
-                        <h3 class="text-white font-bold text-sm tracking-wide uppercase" id="flight-board-title">Thông tin chuyến bay sắp khởi hành</h3>
+                        <i data-lucide="compass" class="w-5 h-5 text-teal animate-pulse"></i>
+                        <h3 class="text-white font-bold text-sm tracking-wide uppercase" id="amenities-board-title">Khu vực & Tiện ích</h3>
                     </div>
                     <span class="text-xs text-slate-400 flex items-center gap-1">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span> Cập nhật thời gian thực
+                        <span class="w-2 h-2 rounded-full bg-teal inline-block"></span> Dịch vụ tiện ích Tầng 1 & Tầng 2
                     </span>
                 </div>
 
-                <!-- Flight Rows -->
+                <!-- Amenities Cards -->
                 <div class="grid grid-cols-3 gap-3">
-                    <!-- Flight 1 -->
-                    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex items-center justify-between hover:bg-white/10 transition">
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-gold font-extrabold text-sm">VN 134</span>
-                                <span class="bg-teal/20 text-teal text-[10px] font-bold px-2 py-0.5 rounded">Gate 04</span>
-                            </div>
-                            <div class="text-white text-xs font-medium mt-1">Đà Nẵng (DAD)</div>
+                    <!-- Amenity 1: Ăn uống & Cafe -->
+                    <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3.5 rounded-2xl flex items-center space-x-3 hover:bg-white/10 transition cursor-pointer group">
+                        <div class="w-11 h-11 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-gold shrink-0 group-hover:scale-105 transition-transform">
+                            <i data-lucide="utensils" class="w-5 h-5"></i>
                         </div>
-                        <div class="text-right">
-                            <div class="text-white font-mono font-bold text-sm">15:10</div>
-                            <div class="text-emerald-400 text-[10px] font-semibold">Đang nhận khách</div>
+                        <div>
+                            <div class="text-white font-bold text-xs group-hover:text-gold transition-colors">Ăn uống & Nhà hàng</div>
+                            <div class="text-slate-400 text-[11px] mt-0.5">Tầng 1 & Tầng 2</div>
                         </div>
                     </div>
 
-                    <!-- Flight 2 -->
-                    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex items-center justify-between hover:bg-white/10 transition">
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-gold font-extrabold text-sm">VJ 602</span>
-                                <span class="bg-teal/20 text-teal text-[10px] font-bold px-2 py-0.5 rounded">Gate 02</span>
-                            </div>
-                            <div class="text-white text-xs font-medium mt-1">Hà Nội (HAN)</div>
+                    <!-- Amenity 2: Mua sắm & Duty Free -->
+                    <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3.5 rounded-2xl flex items-center space-x-3 hover:bg-white/10 transition cursor-pointer group">
+                        <div class="w-11 h-11 rounded-xl bg-teal/20 border border-teal/30 flex items-center justify-center text-teal shrink-0 group-hover:scale-105 transition-transform">
+                            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
                         </div>
-                        <div class="text-right">
-                            <div class="text-white font-mono font-bold text-sm">15:25</div>
-                            <div class="text-emerald-400 text-[10px] font-semibold">Đúng giờ</div>
+                        <div>
+                            <div class="text-white font-bold text-xs group-hover:text-teal transition-colors">Mua sắm Duty Free</div>
+                            <div class="text-slate-400 text-[11px] mt-0.5">Sảnh cách ly Tầng 2</div>
                         </div>
                     </div>
 
-                    <!-- Flight 3 -->
-                    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex items-center justify-between hover:bg-white/10 transition">
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-gold font-extrabold text-sm">KE 468</span>
-                                <span class="bg-gold/20 text-gold text-[10px] font-bold px-2 py-0.5 rounded">Gate 08</span>
-                            </div>
-                            <div class="text-white text-xs font-medium mt-1">Seoul (ICN)</div>
+                    <!-- Amenity 3: Restrooms / Toilet & Y tế -->
+                    <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3.5 rounded-2xl flex items-center space-x-3 hover:bg-white/10 transition cursor-pointer group">
+                        <div class="w-11 h-11 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 shrink-0 group-hover:scale-105 transition-transform">
+                            <i data-lucide="bath" class="w-5 h-5"></i>
                         </div>
-                        <div class="text-right">
-                            <div class="text-white font-mono font-bold text-sm">15:40</div>
-                            <div class="text-amber-300 text-[10px] font-semibold">Chuẩn bị Boarding</div>
+                        <div>
+                            <div class="text-white font-bold text-xs group-hover:text-indigo-300 transition-colors">WC & Phòng chờ</div>
+                            <div class="text-slate-400 text-[11px] mt-0.5">Tất cả khu vực nhà ga</div>
                         </div>
                     </div>
                 </div>
@@ -303,7 +291,7 @@
                         <i data-lucide="map" class="w-9 h-9"></i>
                     </div>
                     <span class="bg-teal/20 border border-teal/40 text-teal text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5">
-                        <i data-lucide="navigation" class="w-3.5 h-3.5"></i> Dẫn đường 3D
+                        <i data-lucide="navigation" class="w-3.5 h-3.5"></i> Dẫn đường trực quan
                     </span>
                 </div>
 
@@ -356,7 +344,7 @@
                         TRỢ LÝ ẢO CLORY AI
                     </h3>
                     <p class="text-slate-300 text-sm mt-2 leading-relaxed" id="card-ai-desc">
-                        Hỏi đáp giọng nói, tra cứu lịch trình chuyến bay, thủ tục hành lý & thông tin du lịch Nha Trang.
+                        Hỏi đáp giọng nói, sơ đồ nhà ga, vị trí cổng, thủ tục hành lý & thông tin du lịch Nha Trang.
                     </p>
                 </div>
 
@@ -406,7 +394,7 @@
                 <div class="flex items-center space-x-3">
                     <div class="p-3 bg-teal/20 rounded-xl text-teal"><i data-lucide="map" class="w-6 h-6"></i></div>
                     <div>
-                        <h3 class="text-xl font-bold text-white">BẢN ĐỒ SÂN BAY TƯƠNG TÁC (3D MAP)</h3>
+                        <h3 class="text-xl font-bold text-white">BẢN ĐỒ SÂN BAY TƯƠNG TÁC</h3>
                         <p class="text-xs text-slate-400">Đang khởi chạy giao diện Bản đồ & Tìm đường...</p>
                     </div>
                 </div>
@@ -435,7 +423,7 @@
             <!-- Modal Footer -->
             <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
                 <button onclick="closeMapModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition">
-                    Đóng Xem Trước
+                    Đóng
                 </button>
             </div>
         </div>
@@ -469,7 +457,7 @@
                         </span>
                     </div>
                     <div class="text-center">
-                        <div class="text-white font-bold text-lg">Trang phục Vest lịch sự & Bảng tên CXR</div>
+                        <div class="text-white font-bold text-lg">Trò chuyện cùng Trợ lý CloryAI</div>
                         <p class="text-slate-400 text-xs mt-1">Đang lắng nghe giọng nói tiếng Việt / English...</p>
                     </div>
                 </div>
@@ -477,17 +465,17 @@
                 <!-- Right Question Chips Teaser -->
                 <div class="w-1/2 pl-8 flex flex-col justify-center space-y-3">
                     <h5 class="text-gold font-bold text-sm uppercase tracking-wider">Gợi ý câu hỏi phổ biến:</h5>
-                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Chuyến bay VN134 đi cửa số mấy?"
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Cổng ra máy bay (Gates) ở đâu?"
                     </div>
-                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Mật khẩu Wifi miễn phí là gì?"
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Mật khẩu Wifi miễn phí sân bay là gì?"
                     </div>
-                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Xe bus về trung tâm Nha Trang ở đâu?"
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Xe bus / Taxi về trung tâm Nha Trang ở đâu?"
                     </div>
-                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Khu vực ăn uống ở tầng mấy?"
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Khu vực ăn uống & Mua sắm ở tầng mấy?"
                     </div>
                 </div>
             </div>
@@ -495,7 +483,7 @@
             <!-- Modal Footer -->
             <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
                 <button onclick="closeCloryModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition">
-                    Đóng Xem Trước
+                    Đóng
                 </button>
             </div>
         </div>
@@ -540,57 +528,57 @@
             vi: {
                 welcomeTag: "Kính chào Quý khách",
                 welcomeTitle: "CHÀO MỪNG ĐẾN VỚI <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>SÂN BAY QUỐC TẾ CAM RANH</span>",
-                welcomeSub: "Trải nghiệm dịch vụ tiện ích hàng không đẳng cấp và sẵn sàng hỗ trợ thông tin 24/7 cho chuyến bay của bạn.",
+                welcomeSub: "Trải nghiệm dịch vụ tiện ích hàng không đẳng cấp và sẵn sàng hỗ trợ thông tin 24/7 cho chuyến đi của bạn.",
                 status: "NHÀ GA HOẠT ĐỘNG BÌNH THƯỜNG",
                 mapTitle: "BẢN ĐỒ SÂN BAY",
                 mapDesc: "Tìm cửa ra máy bay (Gates), nhà hàng, cửa hàng Duty Free, WC, ATM & sơ đồ nhà ga trực quan.",
                 mapBtn: "MỞ BẢN ĐỒ TƯƠNG TÁC",
                 aiTitle: "TRỢ LÝ ẢO CLORY AI",
-                aiDesc: "Hỏi đáp giọng nói, tra cứu lịch trình chuyến bay, thủ tục hành lý & thông tin du lịch Nha Trang.",
+                aiDesc: "Hỏi đáp giọng nói, sơ đồ nhà ga, vị trí cổng, thủ tục hành lý & thông tin du lịch Nha Trang.",
                 aiBtn: "TRÒ CHUYỆN VỚI CLORY AI",
-                flightBoard: "Thông tin chuyến bay sắp khởi hành",
+                amenitiesTitle: "Khu vực & Tiện ích",
                 touchHint: "Chạm vào màn hình để bắt đầu thao tác"
             },
             en: {
                 welcomeTag: "Welcome Valued Passengers",
                 welcomeTitle: "WELCOME TO <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>CAM RANH INTL AIRPORT</span>",
-                welcomeSub: "Experience world-class aviation services and 24/7 intelligent assistance for your flight journey.",
+                welcomeSub: "Experience world-class aviation services and 24/7 intelligent assistance for your journey.",
                 status: "TERMINAL OPERATING NORMALLY",
                 mapTitle: "AIRPORT MAP & WAYFINDING",
                 mapDesc: "Locate boarding gates, dining, Duty Free shops, restrooms, ATMs & interactive terminal maps.",
                 mapBtn: "OPEN INTERACTIVE MAP",
                 aiTitle: "CLORY AI ASSISTANT",
-                aiDesc: "Voice assistant for flight status, baggage inquiries, and Nha Trang travel guides.",
+                aiDesc: "Voice assistant for terminal maps, gate locations, baggage inquiries & Nha Trang travel guides.",
                 aiBtn: "TALK TO CLORY AI",
-                flightBoard: "Upcoming Departing Flights",
+                amenitiesTitle: "Areas & Amenities",
                 touchHint: "Touch screen to start interaction"
             },
             kr: {
                 welcomeTag: "환영합니다",
                 welcomeTitle: "깜라인 국제공항에 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>오신 것을 환영합니다</span>",
-                welcomeSub: "세계적 수준의 항공 서비스와 24시간 스마트 비행 안내 서비스를 경험해 보세요.",
+                welcomeSub: "세계적 수준의 항공 서비스와 24시간 스마트 공항 안내 서비스를 경험해 보세요.",
                 status: "터미널 정상 운영 중",
                 mapTitle: "공항 지도 및 길안내",
                 mapDesc: "탑승구, 식당, 면세점, 화장실, ATM 및 터미널 지도를 검색하세요.",
                 mapBtn: "인터랙티브 지도 열기",
                 aiTitle: "CLORY AI 어시스턴트",
-                aiDesc: "음성 대화로 항공편 현황, 수하물 안내 및 나트랑 관광 정보를 확인하세요.",
+                aiDesc: "음성 대화로 터미널 안내, 게이트 위치, 수하물 안내 및 나트랑 관광 정보를 확인하세요.",
                 aiBtn: "CLORY AI와 대화하기",
-                flightBoard: "출발 예정 항공편 정보",
+                amenitiesTitle: "구역 및 편의시설",
                 touchHint: "화면을 터치하여 시작하세요"
             },
             cn: {
                 welcomeTag: "尊贵的旅客，欢迎您",
                 welcomeTitle: "欢迎光临 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>金兰国际机场</span>",
-                welcomeSub: "体验世界级的航空服务，全天候24/7为您 provide 智能航班与导航 support。",
+                welcomeSub: "体验世界级的航空服务，全天候24/7为您 provide 智能航站楼导航与 support。",
                 status: "航站楼运行正常",
                 mapTitle: "机场地图与导航",
                 mapDesc: "查找登机口、餐厅、免税店、洗手间、ATM及航站楼平面图。",
                 mapBtn: "打开互动地图",
                 aiTitle: "CLORY AI 智能助手",
-                aiDesc: "支持语音问答，查询航班动态、行李须知及芽庄旅游资讯。",
+                aiDesc: "支持语音问答，查询航站楼地图、登机口位置、行李须知及芽庄旅游资讯。",
                 aiBtn: "与 CLORY AI 对话",
-                flightBoard: "即将在金兰起飞的航班",
+                amenitiesTitle: "区域与服务设施",
                 touchHint: "点击屏幕开始操作"
             }
         };
@@ -620,7 +608,7 @@
                 document.getElementById('card-ai-title').innerText = t.aiTitle;
                 document.getElementById('card-ai-desc').innerText = t.aiDesc;
                 document.getElementById('card-ai-btn').innerText = t.aiBtn;
-                document.getElementById('flight-board-title').innerText = t.flightBoard;
+                document.getElementById('amenities-board-title').innerText = t.amenitiesTitle;
                 document.getElementById('touch-hint').innerText = t.touchHint;
             }
         }
