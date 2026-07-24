@@ -203,19 +203,22 @@
                 <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-gold/15 rounded-full blur-3xl pointer-events-none"></div>
                 
                 <div class="relative z-10">
-                    <div class="inline-flex items-center space-x-2 bg-gradient-to-r from-gold/30 to-gold/10 border border-gold/40 px-4 py-1.5 rounded-full mb-4">
-                        <i data-lucide="sparkles" class="w-4 h-4 text-gold"></i>
-                        <span class="text-gold text-xs font-bold tracking-widest uppercase" id="welcome-tag">Kính chào Quý khách</span>
+                    <!-- Hero Content Container with Smooth Fade Transition -->
+                    <div id="hero-text-container" class="transition-opacity duration-500 ease-in-out opacity-100">
+                        <div class="inline-flex items-center space-x-2 bg-gradient-to-r from-gold/30 to-gold/10 border border-gold/40 px-4 py-1.5 rounded-full mb-4">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-gold"></i>
+                            <span class="text-gold text-xs font-bold tracking-widest uppercase" id="welcome-tag">Kính chào Quý khách</span>
+                        </div>
+
+                        <h2 class="text-4xl xl:text-5xl font-black text-white leading-tight tracking-tight mb-3" id="welcome-title">
+                            CHÀO MỪNG ĐẾN VỚI <br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold">SÂN BAY QUỐC TẾ CAM RANH</span>
+                        </h2>
+
+                        <p class="text-slate-300 text-base max-w-xl font-normal leading-relaxed" id="welcome-sub">
+                            Trải nghiệm dịch vụ tiện ích hàng không đẳng cấp và sẵn sàng hỗ trợ thông tin 24/7 cho chuyến đi của bạn.
+                        </p>
                     </div>
-
-                    <h2 class="text-4xl xl:text-5xl font-black text-white leading-tight tracking-tight mb-3" id="welcome-title">
-                        CHÀO MỪNG ĐẾN VỚI <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold">SÂN BAY QUỐC TẾ CAM RANH</span>
-                    </h2>
-
-                    <p class="text-slate-300 text-base max-w-xl font-normal leading-relaxed" id="welcome-sub">
-                        Trải nghiệm dịch vụ tiện ích hàng không đẳng cấp và sẵn sàng hỗ trợ thông tin 24/7 cho chuyến đi của bạn.
-                    </p>
                 </div>
 
                 <!-- Carousel Highlights Footer inside Hero (Cleaned: Wifi Only) -->
@@ -232,11 +235,9 @@
                         </div>
                     </div>
 
-                    <!-- Slide Controls Indicators -->
-                    <div class="flex space-x-2" id="carousel-dots">
-                        <span class="w-8 h-2 rounded-full bg-teal transition-all"></span>
-                        <span class="w-2 h-2 rounded-full bg-white/30"></span>
-                        <span class="w-2 h-2 rounded-full bg-white/30"></span>
+                    <!-- Slide Controls Indicators (Active Language Indicator Dots) -->
+                    <div class="flex items-center space-x-1.5" id="carousel-dots">
+                        <!-- Dynamic Dots Generated via JS -->
                     </div>
                 </div>
             </div>
@@ -546,7 +547,64 @@
                 lucide.createIcons();
             }
             fetchRealtimeWeather();
+            initHeroLanguageAutoCycle();
         });
+
+        // Auto Language Cycling for Hero Banner Card
+        const heroLangs = ['vi', 'en', 'kr', 'cn', 'jp', 'fr', 'de', 'th'];
+        let currentHeroLangIdx = 0;
+        let heroAutoCycleTimer = null;
+
+        function updateHeroDots() {
+            const dotsContainer = document.getElementById('carousel-dots');
+            if (!dotsContainer) return;
+            
+            let html = '';
+            heroLangs.forEach((lang, idx) => {
+                if (idx === currentHeroLangIdx) {
+                    html += `<span class="w-6 h-2 rounded-full bg-teal transition-all duration-300"></span>`;
+                } else {
+                    html += `<span class="w-2 h-2 rounded-full bg-white/20 transition-all duration-300"></span>`;
+                }
+            });
+            dotsContainer.innerHTML = html;
+        }
+
+        function initHeroLanguageAutoCycle() {
+            updateHeroDots();
+            
+            heroAutoCycleTimer = setInterval(() => {
+                const textContainer = document.getElementById('hero-text-container');
+                if (!textContainer) return;
+
+                // Fade Out
+                textContainer.classList.remove('opacity-100');
+                textContainer.classList.add('opacity-0');
+
+                setTimeout(() => {
+                    // Advance Language Index
+                    currentHeroLangIdx = (currentHeroLangIdx + 1) % heroLangs.length;
+                    const langKey = heroLangs[currentHeroLangIdx];
+                    const t = i18n[langKey];
+
+                    if (t) {
+                        const tagEl = document.getElementById('welcome-tag');
+                        const titleEl = document.getElementById('welcome-title');
+                        const subEl = document.getElementById('welcome-sub');
+
+                        if (tagEl) tagEl.innerText = t.welcomeTag;
+                        if (titleEl) titleEl.innerHTML = t.welcomeTitle;
+                        if (subEl) subEl.innerText = t.welcomeSub;
+                    }
+
+                    updateHeroDots();
+
+                    // Fade In
+                    textContainer.classList.remove('opacity-0');
+                    textContainer.classList.add('opacity-100');
+                }, 500); // 500ms transition time
+            }, 5000); // Cycles every 5 seconds
+        }
 
         // Real-time Weather Fetching from Open-Meteo for Cam Ranh Airport (Coordinates: 11.998, 109.219)
         async function fetchRealtimeWeather() {
