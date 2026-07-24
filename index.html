@@ -38,7 +38,6 @@
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'float': 'float 4s ease-in-out infinite',
                         'shimmer': 'shimmer 2.5s infinite',
-                        'wave': 'wave 1.2s ease-in-out infinite alternate',
                     },
                     keyframes: {
                         float: {
@@ -47,10 +46,6 @@
                         },
                         shimmer: {
                             '100%': { transform: 'translateX(100%)' },
-                        },
-                        wave: {
-                            '0%': { height: '8px' },
-                            '100%': { height: '36px' }
                         }
                     }
                 }
@@ -92,61 +87,52 @@
         .touch-effect:active {
             transform: scale(0.97);
         }
-        .nav-tab-active {
-            background: linear-gradient(135deg, #00A896 0%, #028090 100%);
-            color: #ffffff;
-            box-shadow: 0 4px 20px rgba(0, 168, 150, 0.4);
-        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-800 h-screen w-screen flex flex-col justify-between overflow-hidden relative">
 
-    <!-- Dynamic Wallpaper Background -->
-    <div class="absolute inset-0 z-0 pointer-events-none">
+    <!-- Background Dynamic Wallpaper with Subtle Overlay -->
+    <div class="absolute inset-0 z-0">
         <img id="bg-image" src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1920&auto=format&fit=crop" 
              alt="Cam Ranh Airport" 
-             class="w-full h-full object-cover filter brightness-[0.35] contrast-105 transition-all duration-1000 scale-105">
-        <div class="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/70 to-transparent"></div>
+             class="w-full h-full object-cover filter brightness-[0.45] contrast-105 transition-all duration-1000 scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/60 to-transparent"></div>
     </div>
 
-    <!-- TOP GLOBAL HEADER BAR -->
-    <header class="relative z-20 w-full bg-navy-dark/90 backdrop-blur-xl border-b border-white/10 px-8 py-3.5 flex items-center justify-between shadow-2xl">
+    <!-- TOP HEADER BAR -->
+    <header class="relative z-10 w-full bg-navy-dark/90 backdrop-blur-xl border-b border-white/10 px-8 py-4 flex items-center justify-between shadow-2xl">
         <!-- Logo & Airport Info -->
         <div class="flex items-center space-x-6">
-            <div onclick="switchScreen('home')" class="flex items-center space-x-4 bg-white/10 p-2 px-4 rounded-2xl border border-white/15 cursor-pointer hover:bg-white/15 transition">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-teal via-teal-hover to-navy flex items-center justify-center shadow-lg shadow-teal/30">
-                    <i data-lucide="plane-takeoff" class="w-6 h-6 text-white"></i>
+            <div class="flex items-center space-x-4 bg-white/10 p-2.5 px-4 rounded-2xl border border-white/15">
+                <!-- CXR Logo Emblem -->
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal via-teal-hover to-navy flex items-center justify-center shadow-lg shadow-teal/30">
+                    <i data-lucide="plane-takeoff" class="w-7 h-7 text-white"></i>
                 </div>
                 <div>
-                    <h1 class="text-white font-extrabold text-lg tracking-wide uppercase flex items-center gap-2">
-                        CAM RANH <span class="text-gold font-bold text-xs bg-gold/20 px-2 py-0.5 rounded-md border border-gold/40">CXR</span>
+                    <h1 class="text-white font-extrabold text-xl tracking-wide uppercase flex items-center gap-2">
+                        CAM RANH <span class="text-gold font-bold text-sm bg-gold/20 px-2 py-0.5 rounded-md border border-gold/40">CXR</span>
                     </h1>
-                    <p class="text-slate-300 text-[11px] font-medium tracking-wider">INTERNATIONAL AIRPORT • GA QUỐC TẾ T2</p>
+                    <p class="text-slate-300 text-xs font-medium tracking-wider">INTERNATIONAL AIRPORT • GA QUỐC TẾ T2</p>
                 </div>
             </div>
+            
+            <div class="h-10 w-px bg-white/15 hidden xl:block"></div>
 
-            <!-- Screen Quick Switch Navigation Bar -->
-            <div class="hidden xl:flex items-center bg-black/40 p-1.5 rounded-2xl border border-white/15 space-x-2">
-                <button onclick="switchScreen('home')" id="nav-btn-home" class="nav-tab-active px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-2">
-                    <i data-lucide="home" class="w-4 h-4"></i> <span id="lbl-nav-home">TRANG CHỦ</span>
-                </button>
-                <button onclick="switchScreen('map')" id="nav-btn-map" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-2">
-                    <i data-lucide="map" class="w-4 h-4 text-teal"></i> <span id="lbl-nav-map">BẢN ĐỒ SÂN BAY</span>
-                </button>
-                <button onclick="switchScreen('clory')" id="nav-btn-clory" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-2">
-                    <i data-lucide="bot" class="w-4 h-4 text-gold"></i> <span id="lbl-nav-clory">TRỢ LÝ CLORY AI</span>
-                </button>
+            <!-- Live Status Indicator -->
+            <div class="hidden xl:flex items-center space-x-3 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-2 rounded-xl">
+                <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+                <span class="text-emerald-300 text-xs font-semibold tracking-wide" id="status-text">NHÀ GA HOẠT ĐỘNG BÌNH THƯỜNG</span>
             </div>
         </div>
 
-        <!-- Right Header Widgets: Weather, Clock & Multi-Language -->
+        <!-- Right Header Widgets: Weather, Time & Language -->
         <div class="flex items-center space-x-6">
             <!-- Weather Widget -->
             <div class="flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl">
-                <i data-lucide="sun" class="w-6 h-6 text-gold animate-spin-slow"></i>
+                <i data-lucide="sun" class="w-7 h-7 text-gold animate-spin-slow"></i>
                 <div>
-                    <div class="text-white font-bold text-base leading-none">31°C</div>
-                    <div class="text-slate-400 text-[10px] font-medium">Cam Ranh • Nắng nhẹ</div>
+                    <div class="text-white font-bold text-lg leading-none">31°C</div>
+                    <div class="text-slate-400 text-[11px] font-medium" id="weather-loc">Cam Ranh • Nắng nhẹ</div>
                 </div>
             </div>
 
@@ -158,28 +144,31 @@
 
             <!-- Multi-language Switcher -->
             <div class="flex items-center bg-black/40 p-1.5 rounded-2xl border border-white/15 space-x-1" id="lang-selector">
-                <button onclick="changeLang('vi')" id="btn-vi" class="lang-btn px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-1 bg-teal text-white shadow-md">
+                <button onclick="changeLang('vi')" id="btn-vi" class="lang-btn active-lang px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-teal text-white shadow-md">
                     <span>🇻🇳</span> <span>VIE</span>
                 </button>
-                <button onclick="changeLang('en')" id="btn-en" class="lang-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1">
+                <button onclick="changeLang('en')" id="btn-en" class="lang-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1.5">
                     <span>🇬🇧</span> <span>ENG</span>
                 </button>
-                <button onclick="changeLang('kr')" id="btn-kr" class="lang-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1">
+                <button onclick="changeLang('kr')" id="btn-kr" class="lang-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1.5">
                     <span>🇰🇷</span> <span>KOR</span>
                 </button>
-                <button onclick="changeLang('cn')" id="btn-cn" class="lang-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1">
+                <button onclick="changeLang('cn')" id="btn-cn" class="lang-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1.5">
                     <span>🇨🇳</span> <span>CHN</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- SCREEN 1: HOME SCREEN -->
-    <main id="screen-home" class="screen-view relative z-10 flex-1 p-8 grid grid-cols-12 gap-8 items-stretch overflow-hidden">
-        <!-- LEFT COLUMN (60% Width): Hero Banner & Live Flight Board -->
+    <!-- MAIN CONTENT GRID (40-inch 16:9 Landscape Optimized Layout) -->
+    <main class="relative z-10 flex-1 p-8 grid grid-cols-12 gap-8 items-stretch overflow-hidden">
+        
+        <!-- LEFT COLUMN (60% Width - 7 Cols): Welcome Hero Banner & Live Flights Board -->
         <section class="col-span-7 flex flex-col justify-between space-y-6">
-            <!-- Hero Card -->
+            
+            <!-- Hero Banner Card -->
             <div class="glass-dark rounded-3xl p-8 border border-white/15 shadow-2xl relative overflow-hidden flex-1 flex flex-col justify-between group">
+                <!-- Decorative background radial gradient -->
                 <div class="absolute -top-24 -left-24 w-72 h-72 bg-teal/20 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-gold/15 rounded-full blur-3xl pointer-events-none"></div>
                 
@@ -199,7 +188,7 @@
                     </p>
                 </div>
 
-                <!-- Carousel Banner Footer -->
+                <!-- Carousel Highlights Footer inside Hero -->
                 <div class="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between">
                     <div class="flex items-center space-x-6">
                         <div class="flex items-center space-x-3">
@@ -223,7 +212,8 @@
                         </div>
                     </div>
 
-                    <div class="flex space-x-2">
+                    <!-- Slide Controls Indicators -->
+                    <div class="flex space-x-2" id="carousel-dots">
                         <span class="w-8 h-2 rounded-full bg-teal transition-all"></span>
                         <span class="w-2 h-2 rounded-full bg-white/30"></span>
                         <span class="w-2 h-2 rounded-full bg-white/30"></span>
@@ -231,7 +221,7 @@
                 </div>
             </div>
 
-            <!-- Live Flight Board -->
+            <!-- Live Flight Info Ticker / Mini Board -->
             <div class="glass-dark rounded-3xl p-5 border border-white/15 shadow-xl">
                 <div class="flex items-center justify-between mb-3 px-1">
                     <div class="flex items-center space-x-2">
@@ -243,8 +233,10 @@
                     </span>
                 </div>
 
+                <!-- Flight Rows -->
                 <div class="grid grid-cols-3 gap-3">
-                    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex items-center justify-between hover:bg-white/10 transition cursor-pointer" onclick="switchScreen('map')">
+                    <!-- Flight 1 -->
+                    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex items-center justify-between hover:bg-white/10 transition">
                         <div>
                             <div class="flex items-center space-x-2">
                                 <span class="text-gold font-extrabold text-sm">VN 134</span>
@@ -258,7 +250,8 @@
                         </div>
                     </div>
 
-                    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex items-center justify-between hover:bg-white/10 transition cursor-pointer" onclick="switchScreen('map')">
+                    <!-- Flight 2 -->
+                    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex items-center justify-between hover:bg-white/10 transition">
                         <div>
                             <div class="flex items-center space-x-2">
                                 <span class="text-gold font-extrabold text-sm">VJ 602</span>
@@ -272,7 +265,8 @@
                         </div>
                     </div>
 
-                    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex items-center justify-between hover:bg-white/10 transition cursor-pointer" onclick="switchScreen('map')">
+                    <!-- Flight 3 -->
+                    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex items-center justify-between hover:bg-white/10 transition">
                         <div>
                             <div class="flex items-center space-x-2">
                                 <span class="text-gold font-extrabold text-sm">KE 468</span>
@@ -287,18 +281,23 @@
                     </div>
                 </div>
             </div>
+
         </section>
 
-        <!-- RIGHT COLUMN (40% Width): 2 Giant Interactive Touch Cards -->
+        <!-- RIGHT COLUMN (40% Width - 5 Cols): 2 Giant Interactive Touch Cards -->
         <section class="col-span-5 flex flex-col space-y-6">
-            <!-- Card 1: Map Screen Trigger -->
-            <div onclick="switchScreen('map')" 
+            
+            <!-- BUTTON 1: BẢN ĐỒ SÂN BAY (Interactive Map Feature) -->
+            <div onclick="openMapModal()" 
                  class="touch-effect flex-1 rounded-3xl p-7 bg-gradient-to-br from-navy-light via-navy to-slate-900 border-2 border-teal/40 hover:border-teal shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
+                
+                <!-- Background Accent Graphic -->
                 <div class="absolute top-0 right-0 -mr-10 -mt-10 w-56 h-56 bg-teal/20 rounded-full blur-2xl group-hover:bg-teal/30 transition-all"></div>
                 <div class="absolute bottom-4 right-4 opacity-15 group-hover:opacity-30 transition-all duration-500 transform group-hover:scale-110">
                     <i data-lucide="map-pin" class="w-48 h-48 text-teal"></i>
                 </div>
 
+                <!-- Top Badge & Icon -->
                 <div class="relative z-10 flex items-center justify-between">
                     <div class="w-16 h-16 rounded-2xl bg-teal/20 border border-teal/50 flex items-center justify-center text-teal shadow-lg shadow-teal/20 group-hover:scale-110 transition-transform">
                         <i data-lucide="map" class="w-9 h-9"></i>
@@ -308,6 +307,7 @@
                     </span>
                 </div>
 
+                <!-- Text Content -->
                 <div class="relative z-10 my-4">
                     <h3 class="text-3xl font-black text-white group-hover:text-teal transition-colors tracking-tight" id="card-map-title">
                         BẢN ĐỒ SÂN BAY
@@ -317,17 +317,21 @@
                     </p>
                 </div>
 
+                <!-- Action Button Link Bar -->
                 <div class="relative z-10 flex items-center justify-between bg-white/10 group-hover:bg-teal group-hover:text-white p-4 rounded-2xl border border-white/15 transition-all">
                     <span class="font-extrabold text-sm uppercase tracking-wider text-white" id="card-map-btn">MỞ BẢN ĐỒ TƯƠNG TÁC</span>
                     <i data-lucide="arrow-right" class="w-6 h-6 text-teal group-hover:text-white group-hover:translate-x-1 transition-all"></i>
                 </div>
             </div>
 
-            <!-- Card 2: Clory AI Screen Trigger -->
-            <div onclick="switchScreen('clory')" 
+            <!-- BUTTON 2: CLORY AI ASSISTANT (AI Assistant Feature) -->
+            <div onclick="openCloryModal()" 
                  class="touch-effect flex-1 rounded-3xl p-7 bg-gradient-to-br from-navy-dark via-navy to-indigo-950 border-2 border-gold/40 hover:border-gold shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
+                
+                <!-- Background Glow -->
                 <div class="absolute top-0 right-0 -mr-10 -mt-10 w-56 h-56 bg-gold/20 rounded-full blur-2xl group-hover:bg-gold/30 transition-all"></div>
                 
+                <!-- AI Staff Mini Avatar Graphic Overlay -->
                 <div class="absolute bottom-0 right-2 w-44 h-52 pointer-events-none opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 flex items-end">
                     <div class="relative w-full h-full flex items-end justify-center">
                         <div class="w-36 h-44 bg-gradient-to-t from-navy to-teal/30 rounded-t-full border border-gold/30 flex items-center justify-center overflow-hidden shadow-2xl">
@@ -336,6 +340,7 @@
                     </div>
                 </div>
 
+                <!-- Top Badge & Icon -->
                 <div class="relative z-10 flex items-center justify-between">
                     <div class="w-16 h-16 rounded-2xl bg-gold/20 border border-gold/50 flex items-center justify-center text-gold shadow-lg shadow-gold/20 group-hover:scale-110 transition-transform">
                         <i data-lucide="bot" class="w-9 h-9"></i>
@@ -345,6 +350,7 @@
                     </span>
                 </div>
 
+                <!-- Text Content -->
                 <div class="relative z-10 my-4 max-w-[65%]">
                     <h3 class="text-3xl font-black text-white group-hover:text-gold transition-colors tracking-tight" id="card-ai-title">
                         TRỢ LÝ ẢO CLORY AI
@@ -354,296 +360,19 @@
                     </p>
                 </div>
 
+                <!-- Action Button Link Bar -->
                 <div class="relative z-10 flex items-center justify-between bg-white/10 group-hover:bg-gold group-hover:text-navy p-4 rounded-2xl border border-white/15 transition-all">
                     <span class="font-extrabold text-sm uppercase tracking-wider text-white group-hover:text-navy" id="card-ai-btn">TRÒ CHUYỆN VỚI CLORY AI</span>
                     <i data-lucide="mic" class="w-6 h-6 text-gold group-hover:text-navy group-hover:scale-110 transition-all"></i>
                 </div>
             </div>
-        </section>
-    </main>
 
-    <!-- SCREEN 2: MAP INTERACTIVE SCREEN -->
-    <main id="screen-map" class="screen-view hidden relative z-10 flex-1 p-6 grid grid-cols-12 gap-6 items-stretch overflow-hidden">
-        <!-- LEFT PANEL (Sidebar Search & Destination Filter) -->
-        <section class="col-span-4 glass-dark rounded-3xl p-6 border border-white/15 flex flex-col justify-between shadow-2xl">
-            <div>
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="p-2.5 bg-teal/20 rounded-xl text-teal border border-teal/40">
-                            <i data-lucide="map" class="w-6 h-6"></i>
-                        </div>
-                        <h2 class="text-white font-extrabold text-lg">TÌM ĐƯỜNG BAY & TIỆN ÍCH</h2>
-                    </div>
-                    <button onclick="switchScreen('home')" class="p-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
-                        <i data-lucide="home" class="w-5 h-5"></i>
-                    </button>
-                </div>
-
-                <!-- Category Filters -->
-                <div class="grid grid-cols-2 gap-2.5 mb-4">
-                    <button onclick="filterMapCategory('gate')" class="map-cat-btn bg-teal/20 border border-teal/50 text-teal p-3 rounded-2xl font-bold text-xs flex items-center space-x-2 transition hover:bg-teal hover:text-white">
-                        <i data-lucide="plane-takeoff" class="w-4 h-4"></i>
-                        <span>Cửa Gates (01-10)</span>
-                    </button>
-                    <button onclick="filterMapCategory('food')" class="map-cat-btn bg-white/5 border border-white/10 text-slate-300 p-3 rounded-2xl font-bold text-xs flex items-center space-x-2 transition hover:bg-teal hover:text-white">
-                        <i data-lucide="utensils" class="w-4 h-4 text-gold"></i>
-                        <span>Ăn uống & Cafe</span>
-                    </button>
-                    <button onclick="filterMapCategory('duty')" class="map-cat-btn bg-white/5 border border-white/10 text-slate-300 p-3 rounded-2xl font-bold text-xs flex items-center space-x-2 transition hover:bg-teal hover:text-white">
-                        <i data-lucide="shopping-bag" class="w-4 h-4 text-purple-400"></i>
-                        <span>Duty Free Shops</span>
-                    </button>
-                    <button onclick="filterMapCategory('service')" class="map-cat-btn bg-white/5 border border-white/10 text-slate-300 p-3 rounded-2xl font-bold text-xs flex items-center space-x-2 transition hover:bg-teal hover:text-white">
-                        <i data-lucide="info" class="w-4 h-4 text-blue-400"></i>
-                        <span>WC / ATM / Y tế</span>
-                    </button>
-                </div>
-
-                <!-- POI Selection List -->
-                <div class="space-y-2 max-h-[300px] overflow-y-auto pr-1" id="poi-list">
-                    <div onclick="selectPOI('Gate 04', 'Tầng 2 - Sảnh Chờ', '120m', '2 phút')" class="p-3 bg-white/10 border border-teal/50 rounded-2xl text-white flex items-center justify-between cursor-pointer hover:bg-teal/20 transition">
-                        <div class="flex items-center space-x-3">
-                            <span class="w-8 h-8 rounded-xl bg-teal/30 text-teal font-extrabold flex items-center justify-center text-xs">G4</span>
-                            <div>
-                                <div class="font-bold text-xs text-white">Gate 04 (Cửa khởi hành)</div>
-                                <div class="text-[10px] text-slate-300">Chuyến VN134 đi Đà Nẵng</div>
-                            </div>
-                        </div>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-teal"></i>
-                    </div>
-
-                    <div onclick="selectPOI('Highlands Coffee', 'Tầng 2 - Ga Đi Quốc Tế', '85m', '1 phút')" class="p-3 bg-white/5 border border-white/10 rounded-2xl text-white flex items-center justify-between cursor-pointer hover:bg-teal/20 transition">
-                        <div class="flex items-center space-x-3">
-                            <span class="w-8 h-8 rounded-xl bg-gold/20 text-gold font-extrabold flex items-center justify-center text-xs">☕</span>
-                            <div>
-                                <div class="font-bold text-xs text-white">Highlands Coffee</div>
-                                <div class="text-[10px] text-slate-300">Khu ăn uống Tầng 2</div>
-                            </div>
-                        </div>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                    </div>
-
-                    <div onclick="selectPOI('Lotte Duty Free', 'Tầng 2 - Khu Miễn Thuế', '150m', '3 phút')" class="p-3 bg-white/5 border border-white/10 rounded-2xl text-white flex items-center justify-between cursor-pointer hover:bg-teal/20 transition">
-                        <div class="flex items-center space-x-3">
-                            <span class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-extrabold flex items-center justify-center text-xs">🛍️</span>
-                            <div>
-                                <div class="font-bold text-xs text-white">Lotte Duty Free</div>
-                                <div class="text-[10px] text-slate-300">Mỹ phẩm & Hàng miễn thuế</div>
-                            </div>
-                        </div>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Route Details Info Card -->
-            <div class="bg-teal/10 border border-teal/40 p-4 rounded-2xl text-white">
-                <div class="text-xs font-bold text-teal flex items-center gap-1 mb-1">
-                    <i data-lucide="navigation-2" class="w-4 h-4"></i> TUYẾN ĐƯỜNG ĐANG CHỌN
-                </div>
-                <div class="text-sm font-extrabold" id="selected-poi-name">ĐÍCH ĐẾN: GATE 04</div>
-                <div class="text-xs text-slate-300 mt-1 flex justify-between">
-                    <span>Khoảng cách: <strong class="text-gold" id="selected-poi-dist">120 mét</strong></span>
-                    <span>Đi bộ: <strong class="text-gold" id="selected-poi-time">~2 phút</strong></span>
-                </div>
-                <div class="mt-2 text-[10px] text-emerald-300 bg-emerald-500/10 p-2 rounded-xl flex items-center gap-1.5 border border-emerald-500/20">
-                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Hỗ trợ lối đi ưu tiên xe lăn & thang cuốn
-                </div>
-            </div>
-        </section>
-
-        <!-- RIGHT PANEL (Interactive 3D Floor Map Canvas simulation) -->
-        <section class="col-span-8 glass-dark rounded-3xl border border-white/15 p-6 flex flex-col justify-between relative overflow-hidden">
-            <!-- Floor Selector Switcher -->
-            <div class="absolute top-8 left-8 z-20 flex space-x-2 bg-navy-dark/90 p-1.5 rounded-2xl border border-white/20">
-                <button onclick="switchFloor(2)" id="floor-btn-2" class="px-4 py-2 bg-teal text-white font-extrabold text-xs rounded-xl shadow-lg">TẦNG 2 (SẢNH ĐI)</button>
-                <button onclick="switchFloor(1)" id="floor-btn-1" class="px-4 py-2 text-slate-300 hover:text-white font-extrabold text-xs rounded-xl">TẦNG 1 (SẢNH ĐẾN)</button>
-            </div>
-
-            <!-- Interactive Map Graphic Canvas -->
-            <div class="flex-1 w-full relative flex items-center justify-center my-4 bg-slate-900/60 rounded-2xl border border-white/10 overflow-hidden">
-                <!-- Grid background pattern -->
-                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#00A896_1px,transparent_1px)] [background-size:24px_24px]"></div>
-
-                <!-- Map Terminal Structure Graphic Simulation -->
-                <div class="relative w-[90%] h-[80%] border-2 border-teal/40 rounded-3xl bg-navy/60 p-6 flex flex-col justify-between shadow-2xl">
-                    <!-- Top Gate Row -->
-                    <div class="flex justify-between items-center">
-                        <div class="p-3 bg-teal/20 border border-teal text-teal rounded-xl text-xs font-bold">Gate 01</div>
-                        <div class="p-3 bg-teal/20 border border-teal text-teal rounded-xl text-xs font-bold">Gate 02</div>
-                        <div class="p-3 bg-teal/20 border border-teal text-teal rounded-xl text-xs font-bold animate-pulse">Gate 03</div>
-                        <div id="target-gate-pin" class="p-3 bg-gold border-2 border-white text-navy font-extrabold text-xs rounded-xl shadow-xl shadow-gold/40 animate-bounce">
-                            📍 GATE 04 (ĐIỂM ĐẾN)
-                        </div>
-                        <div class="p-3 bg-teal/20 border border-teal text-teal rounded-xl text-xs font-bold">Gate 05</div>
-                    </div>
-
-                    <!-- Middle Runway Path Line -->
-                    <div class="relative my-6 h-12 border-t-2 border-b-2 border-dashed border-teal/50 flex items-center justify-between px-8">
-                        <span class="text-[10px] text-slate-400 font-mono uppercase tracking-widest">HÀNH LANG TRUNG TÂM TERMINAL T2</span>
-                        
-                        <!-- Glowing Route Trail -->
-                        <div class="absolute left-16 right-36 top-1/2 h-1.5 bg-gradient-to-r from-teal via-gold to-teal rounded-full shadow-lg shadow-teal animate-pulse"></div>
-
-                        <!-- Current Kiosk Location Pin -->
-                        <div class="relative z-10 flex items-center space-x-2 bg-red-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg shadow-red-500/40 animate-pulse">
-                            <span class="w-2 h-2 rounded-full bg-white"></span>
-                            <span>BẠN ĐANG Ở ĐÂY (KIOSK #1)</span>
-                        </div>
-                    </div>
-
-                    <!-- Bottom Amenities Row -->
-                    <div class="flex justify-between items-center">
-                        <div class="p-3 bg-white/10 border border-white/20 text-slate-200 rounded-xl text-xs font-medium">☕ Highlands Coffee</div>
-                        <div class="p-3 bg-white/10 border border-white/20 text-slate-200 rounded-xl text-xs font-medium">🛍️ Lotte Duty Free</div>
-                        <div class="p-3 bg-white/10 border border-white/20 text-slate-200 rounded-xl text-xs font-medium">🏧 ATM Sacombank</div>
-                        <div class="p-3 bg-white/10 border border-white/20 text-slate-200 rounded-xl text-xs font-medium">🚻 Khu Vực WC</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom Map Quick Action Controls -->
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3 text-xs text-slate-300">
-                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span> Vị trí Kiosk</span>
-                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-gold inline-block"></span> Điểm đến</span>
-                    <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-teal inline-block"></span> Lối đi chính</span>
-                </div>
-                <div class="flex space-x-2">
-                    <button class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold transition flex items-center gap-1">
-                        <i data-lucide="zoom-in" class="w-4 h-4"></i> Phóng to
-                    </button>
-                    <button class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold transition flex items-center gap-1">
-                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Đặt lại
-                    </button>
-                    <button onclick="switchScreen('clory')" class="px-4 py-2 bg-gold hover:bg-gold-accent text-navy rounded-xl text-xs font-extrabold transition flex items-center gap-1 shadow-lg">
-                        <i data-lucide="bot" class="w-4 h-4"></i> Hỏi Clory AI chỉ đường
-                    </button>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- SCREEN 3: CLORY AI ASSISTANT INTERACTIVE SCREEN -->
-    <main id="screen-clory" class="screen-view hidden relative z-10 flex-1 p-6 grid grid-cols-12 gap-6 items-stretch overflow-hidden">
-        <!-- LEFT PANEL (AI Avatar Staff Representation & Voice Indicator) -->
-        <section class="col-span-5 glass-dark rounded-3xl p-6 border border-gold/40 flex flex-col justify-between items-center text-center shadow-2xl relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-gold/10 to-transparent"></div>
-
-            <!-- Top Header Badge -->
-            <div class="relative z-10 w-full flex items-center justify-between">
-                <span class="bg-gold/20 border border-gold/50 text-gold text-xs font-extrabold px-3 py-1.5 rounded-full flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span> AI CXR Staff Active
-                </span>
-                <button onclick="switchScreen('home')" class="p-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
-                    <i data-lucide="home" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <!-- Avatar Representation (Half Body Staff Uniform with CXR Badge) -->
-            <div class="relative z-10 my-auto flex flex-col items-center">
-                <div class="w-56 h-64 rounded-3xl bg-gradient-to-t from-navy via-navy-light to-teal/30 border-2 border-gold/60 flex flex-col items-center justify-end overflow-hidden shadow-2xl relative group">
-                    
-                    <!-- Simulated Staff Avatar Icon/Graphic -->
-                    <div class="relative w-full h-full flex items-end justify-center">
-                        <!-- Head & Staff Suit Styling -->
-                        <div class="w-40 h-48 flex flex-col items-center justify-end">
-                            <div class="w-20 h-20 rounded-full bg-gold/20 border-2 border-gold flex items-center justify-center text-gold shadow-lg mb-2">
-                                <i data-lucide="bot" class="w-12 h-12 text-gold animate-float"></i>
-                            </div>
-                            <!-- Navy Vest Uniform Graphic -->
-                            <div class="w-36 h-24 bg-navy-dark border-t-2 border-gold/60 rounded-t-2xl flex flex-col items-center pt-2 relative">
-                                <span class="bg-gold text-navy font-extrabold text-[9px] px-2 py-0.5 rounded border border-white uppercase shadow">
-                                    CLORY AI • CXR STAFF
-                                </span>
-                                <div class="w-8 h-10 border-l border-r border-gold/30 mt-1"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Online Status Badge -->
-                    <div class="absolute top-3 right-3 bg-emerald-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1 shadow">
-                        <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> ONLINE
-                    </div>
-                </div>
-
-                <h3 class="text-white font-extrabold text-xl mt-4">TRỢ LÝ ẢO CLORY AI</h3>
-                <p class="text-slate-300 text-xs mt-1 max-w-xs">Nhân viên hỗ trợ thông tin thông minh Sân bay Cam Ranh</p>
-            </div>
-
-            <!-- Voice Listening Waveform Animation -->
-            <div class="relative z-10 w-full bg-white/5 border border-white/10 p-4 rounded-2xl flex flex-col items-center">
-                <div class="text-xs text-gold font-bold mb-2 flex items-center gap-1.5">
-                    <i data-lucide="mic" class="w-4 h-4 text-gold animate-pulse"></i> Đang lắng nghe giọng nói của bạn...
-                </div>
-                <!-- Animated Audio Wave Bars -->
-                <div class="flex items-center space-x-1.5 h-8">
-                    <span class="w-1.5 bg-teal rounded-full animate-wave"></span>
-                    <span class="w-1.5 bg-gold rounded-full animate-wave [animation-delay:0.2s]"></span>
-                    <span class="w-1.5 bg-teal rounded-full animate-wave [animation-delay:0.4s]"></span>
-                    <span class="w-1.5 bg-gold rounded-full animate-wave [animation-delay:0.1s]"></span>
-                    <span class="w-1.5 bg-teal rounded-full animate-wave [animation-delay:0.3s]"></span>
-                    <span class="w-1.5 bg-gold rounded-full animate-wave [animation-delay:0.5s]"></span>
-                </div>
-            </div>
-        </section>
-
-        <!-- RIGHT PANEL (Interactive AI Conversation & Quick FAQ Chips) -->
-        <section class="col-span-7 glass-dark rounded-3xl p-6 border border-white/15 flex flex-col justify-between shadow-2xl relative">
-            <!-- Chat History Window -->
-            <div class="flex-1 overflow-y-auto space-y-4 pr-2 mb-4" id="chat-box">
-                <!-- AI Welcome Message -->
-                <div class="flex items-start space-x-3">
-                    <div class="w-10 h-10 rounded-2xl bg-gold/20 border border-gold/40 flex items-center justify-center text-gold flex-shrink-0">
-                        <i data-lucide="bot" class="w-6 h-6"></i>
-                    </div>
-                    <div class="bg-navy-light/90 border border-white/15 p-4 rounded-3xl rounded-tl-none text-white text-sm max-w-xl shadow-lg">
-                        <p class="font-bold text-gold text-xs mb-1">Clory AI • CXR Assistant</p>
-                        Xin chào! Tôi là <strong>Clory AI</strong>, đại diện hỗ trợ tại Sân bay Quốc tế Cam Ranh. Tôi có thể giúp gì cho bạn về thông tin chuyến bay, bản đồ nhà ga hoặc du lịch Nha Trang?
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Suggestion Question Chips -->
-            <div class="mb-4">
-                <div class="text-slate-400 text-xs font-bold mb-2 flex items-center gap-1">
-                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold"></i> Gợi ý câu hỏi phổ biến:
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="askAI('Chuyến bay VN134 đi cửa số mấy?')" class="bg-white/5 hover:bg-teal/20 border border-white/10 hover:border-teal text-slate-200 hover:text-white px-3.5 py-2 rounded-xl text-xs font-medium transition">
-                        ✈️ Chuyến bay VN134 đi cửa nào?
-                    </button>
-                    <button onclick="askAI('Mật khẩu Wifi miễn phí là gì?')" class="bg-white/5 hover:bg-teal/20 border border-white/10 hover:border-teal text-slate-200 hover:text-white px-3.5 py-2 rounded-xl text-xs font-medium transition">
-                        📶 Mật khẩu Wifi miễn phí?
-                    </button>
-                    <button onclick="askAI('Xe bus về trung tâm Nha Trang ở đâu?')" class="bg-white/5 hover:bg-teal/20 border border-white/10 hover:border-teal text-slate-200 hover:text-white px-3.5 py-2 rounded-xl text-xs font-medium transition">
-                        🚌 Xe bus về trung tâm Nha Trang?
-                    </button>
-                    <button onclick="askAI('Khu vực ăn uống ở tầng mấy?')" class="bg-white/5 hover:bg-teal/20 border border-white/10 hover:border-teal text-slate-200 hover:text-white px-3.5 py-2 rounded-xl text-xs font-medium transition">
-                        ☕ Khu vực ăn uống ở đâu?
-                    </button>
-                </div>
-            </div>
-
-            <!-- Input Controls Bar -->
-            <div class="flex items-center space-x-3 bg-black/40 p-2 rounded-2xl border border-white/15">
-                <input id="ai-input" type="text" placeholder="Chạm vào đây để nhập câu hỏi hoặc chọn câu hỏi bên trên..." 
-                       class="flex-1 bg-transparent text-white placeholder-slate-400 px-4 py-2.5 text-sm outline-none">
-                
-                <button onclick="sendUserMessage()" class="p-3 bg-teal hover:bg-teal-hover text-white rounded-xl transition shadow-lg flex items-center justify-center">
-                    <i data-lucide="send" class="w-5 h-5"></i>
-                </button>
-                
-                <button onclick="triggerVoiceSim()" class="p-3 bg-gold hover:bg-gold-accent text-navy rounded-xl transition shadow-lg flex items-center justify-center font-bold">
-                    <i data-lucide="mic" class="w-5 h-5"></i>
-                </button>
-            </div>
         </section>
     </main>
 
     <!-- BOTTOM FOOTER BAR -->
-    <footer class="relative z-20 w-full bg-navy-dark/95 border-t border-white/10 px-8 py-3 flex items-center justify-between">
-        <!-- Hotlines & Quick Info -->
+    <footer class="relative z-10 w-full bg-navy-dark/95 border-t border-white/10 px-8 py-3.5 flex items-center justify-between">
+        <!-- Hotlines & Quick Contact -->
         <div class="flex items-center space-x-8 text-xs text-slate-300">
             <div class="flex items-center space-x-2">
                 <i data-lucide="phone-call" class="w-4 h-4 text-gold"></i>
@@ -652,7 +381,7 @@
             </div>
             <div class="flex items-center space-x-2">
                 <i data-lucide="shield-alert" class="w-4 h-4 text-red-400"></i>
-                <span class="font-medium">Cấp cứu Y tế:</span>
+                <span class="font-medium">Cấp cứu Y tế / SOS:</span>
                 <span class="text-red-400 font-bold font-mono">115</span>
             </div>
             <div class="flex items-center space-x-2">
@@ -662,41 +391,121 @@
             </div>
         </div>
 
-        <!-- Touch Prompt Hint -->
+        <!-- Touch Hint Prompt -->
         <div class="flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-1.5 rounded-full">
             <i data-lucide="hand" class="w-4 h-4 text-teal animate-bounce"></i>
-            <span class="text-xs text-slate-300 font-medium" id="touch-hint">Chạm vào màn hình để chuyển giao diện tương tác</span>
+            <span class="text-xs text-slate-300 font-medium" id="touch-hint">Chạm vào màn hình để bắt đầu thao tác</span>
         </div>
     </footer>
+
+    <!-- MODAL PREVIEW 1: MAP SCREEN QUICK PREVIEW -->
+    <div id="map-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-8 transition-opacity">
+        <div class="bg-navy border-2 border-teal rounded-3xl w-full max-w-5xl h-[80vh] flex flex-col overflow-hidden shadow-2xl relative">
+            <!-- Modal Header -->
+            <div class="p-6 bg-navy-dark border-b border-white/10 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="p-3 bg-teal/20 rounded-xl text-teal"><i data-lucide="map" class="w-6 h-6"></i></div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">BẢN ĐỒ SÂN BAY TƯƠNG TÁC (3D MAP)</h3>
+                        <p class="text-xs text-slate-400">Đang khởi chạy giao diện Bản đồ & Tìm đường...</p>
+                    </div>
+                </div>
+                <button onclick="closeMapModal()" class="p-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Simulated Map Preview Body -->
+            <div class="flex-1 bg-slate-900 relative p-6 flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#00A896_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                
+                <!-- Map Graphic Simulation -->
+                <div class="relative z-10 text-center max-w-lg">
+                    <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-teal/10 border-2 border-teal flex items-center justify-center text-teal animate-pulse">
+                        <i data-lucide="navigation-2" class="w-12 h-12"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-white mb-2">Đang chuyển sang Màn hình Bản đồ</h4>
+                    <p class="text-slate-300 text-sm mb-6">Bạn có thể phóng to, chọn Cửa ra máy bay (Gate) hoặc tìm kiếm các tiện ích như Nhà hàng, ATM, WC.</p>
+                    <div class="inline-flex items-center gap-2 bg-teal text-white font-bold px-6 py-3 rounded-2xl shadow-lg">
+                        <i data-lucide="check-circle" class="w-5 h-5"></i> Sẵn sàng kết nối sơ đồ Tầng 1 & Tầng 2
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
+                <button onclick="closeMapModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition">
+                    Đóng Xem Trước
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PREVIEW 2: CLORY AI QUICK PREVIEW -->
+    <div id="clory-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-8 transition-opacity">
+        <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-5xl h-[80vh] flex flex-col overflow-hidden shadow-2xl relative">
+            <!-- Modal Header -->
+            <div class="p-6 bg-navy-dark border-b border-white/10 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="p-3 bg-gold/20 rounded-xl text-gold"><i data-lucide="bot" class="w-6 h-6"></i></div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">TRỢ LÝ ẢO CLORY AI</h3>
+                        <p class="text-xs text-slate-400">Nhân viên hỗ trợ thông tin thông minh - Sân bay Cam Ranh</p>
+                    </div>
+                </div>
+                <button onclick="closeCloryModal()" class="p-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Simulated CloryAI Avatar Screen -->
+            <div class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 p-8 flex items-center justify-between">
+                <!-- Left Avatar Teaser -->
+                <div class="w-1/2 flex flex-col items-center justify-center border-r border-white/10 pr-8">
+                    <div class="w-48 h-56 rounded-3xl bg-gradient-to-t from-navy to-teal/20 border-2 border-gold/40 flex items-center justify-center overflow-hidden relative shadow-2xl mb-4">
+                        <i data-lucide="bot" class="w-28 h-28 text-gold animate-float"></i>
+                        <span class="absolute bottom-2 bg-navy/90 text-gold text-[10px] font-bold px-3 py-1 rounded-full border border-gold/40">
+                            Clory AI • CXR Staff
+                        </span>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-white font-bold text-lg">Trang phục Vest lịch sự & Bảng tên CXR</div>
+                        <p class="text-slate-400 text-xs mt-1">Đang lắng nghe giọng nói tiếng Việt / English...</p>
+                    </div>
+                </div>
+
+                <!-- Right Question Chips Teaser -->
+                <div class="w-1/2 pl-8 flex flex-col justify-center space-y-3">
+                    <h5 class="text-gold font-bold text-sm uppercase tracking-wider">Gợi ý câu hỏi phổ biến:</h5>
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2">
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Chuyến bay VN134 đi cửa số mấy?"
+                    </div>
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2">
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Mật khẩu Wifi miễn phí là gì?"
+                    </div>
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2">
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Xe bus về trung tâm Nha Trang ở đâu?"
+                    </div>
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2">
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Khu vực ăn uống ở tầng mấy?"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
+                <button onclick="closeCloryModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition">
+                    Đóng Xem Trước
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Screen Switcher Logic (Home <-> Map <-> CloryAI)
-        function switchScreen(screenName) {
-            document.querySelectorAll('.screen-view').forEach(el => el.classList.add('hidden'));
-            
-            // Reset Nav Tabs Style
-            ['home', 'map', 'clory'].forEach(name => {
-                const btn = document.getElementById(`nav-btn-${name}`);
-                if (btn) {
-                    btn.className = "px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-2";
-                }
-            });
-
-            // Activate Target Screen
-            const targetScreen = document.getElementById(`screen-${screenName}`);
-            const activeNavBtn = document.getElementById(`nav-btn-${screenName}`);
-
-            if (targetScreen) targetScreen.classList.remove('hidden');
-            if (activeNavBtn) activeNavBtn.className = "nav-tab-active px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-2";
-            
-            // Re-render Lucide icons for dynamically unhidden elements
-            lucide.createIcons();
-        }
-
-        // Live Clock Update
+        // Real-time Digital Clock & Date Update
         function updateClock() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -712,174 +521,106 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Map Category Filter Switcher
-        function filterMapCategory(cat) {
-            document.querySelectorAll('.map-cat-btn').forEach(btn => {
-                btn.className = "map-cat-btn bg-white/5 border border-white/10 text-slate-300 p-3 rounded-2xl font-bold text-xs flex items-center space-x-2 transition hover:bg-teal hover:text-white";
-            });
-            event.currentTarget.className = "map-cat-btn bg-teal/20 border border-teal/50 text-teal p-3 rounded-2xl font-bold text-xs flex items-center space-x-2 transition hover:bg-teal hover:text-white";
+        // Modal Controllers
+        function openMapModal() {
+            document.getElementById('map-modal').classList.remove('hidden');
+        }
+        function closeMapModal() {
+            document.getElementById('map-modal').classList.add('hidden');
+        }
+        function openCloryModal() {
+            document.getElementById('clory-modal').classList.remove('hidden');
+        }
+        function closeCloryModal() {
+            document.getElementById('clory-modal').classList.add('hidden');
         }
 
-        // POI Map Selection Handler
-        function selectPOI(name, loc, dist, time) {
-            document.getElementById('selected-poi-name').innerText = `ĐÍCH ĐẾN: ${name.toUpperCase()}`;
-            document.getElementById('selected-poi-dist').innerText = dist;
-            document.getElementById('selected-poi-time').innerText = `~${time}`;
-        }
-
-        // Floor Toggle
-        function switchFloor(floorNum) {
-            document.getElementById('floor-btn-1').className = floorNum === 1 ? "px-4 py-2 bg-teal text-white font-extrabold text-xs rounded-xl shadow-lg" : "px-4 py-2 text-slate-300 hover:text-white font-extrabold text-xs rounded-xl";
-            document.getElementById('floor-btn-2').className = floorNum === 2 ? "px-4 py-2 bg-teal text-white font-extrabold text-xs rounded-xl shadow-lg" : "px-4 py-2 text-slate-300 hover:text-white font-extrabold text-xs rounded-xl";
-        }
-
-        // Clory AI Interactive Chat Logic
-        function askAI(questionText) {
-            const chatBox = document.getElementById('chat-box');
-
-            // Append User Question
-            const userMsgHtml = `
-                <div class="flex items-start justify-end space-x-3">
-                    <div class="bg-teal text-white p-4 rounded-3xl rounded-tr-none text-sm max-w-xl shadow-lg font-medium">
-                        ${questionText}
-                    </div>
-                </div>
-            `;
-            chatBox.insertAdjacentHTML('beforeend', userMsgHtml);
-
-            // Generate AI Response
-            let aiReply = "Tôi có thể giúp bạn kiểm tra thông tin này ngay!";
-            if (questionText.includes("VN134")) {
-                aiReply = "Chuyến bay <strong>VN 134</strong> đi Đà Nẵng khởi hành lúc 15:10 tại <strong>Gate 04 (Tầng 2)</strong>. Bạn có thể mở màn hình Bản đồ để xem chỉ dẫn lối đi ngắn nhất.";
-            } else if (questionText.includes("Wifi")) {
-                aiReply = "Mạng Wi-Fi miễn phí tại Sân bay Cam Ranh là <strong>@CamRanh_Airport_Free</strong> (Không yêu cầu mật khẩu, chỉ cần chấp nhận điều khoản truy cập).";
-            } else if (questionText.includes("Nha Trang")) {
-                aiReply = "Trạm xe bus Đất Mới (Tuyến 18 đi Trung tâm Nha Trang) nằm ngay ngoài <strong>Sảnh Đến Tầng 1 - Cửa số 2</strong>. Giá vé khoảng 60.000 VNĐ/lượt.";
-            } else if (questionText.includes("ăn uống")) {
-                aiReply = "Khu vực ăn uống & cafe (Highlands Coffee, Burger King, Pho24) tập trung chủ yếu tại <strong>Tầng 2 - Sảnh Chờ Quốc Tế</strong>.";
-            }
-
-            setTimeout(() => {
-                const aiMsgHtml = `
-                    <div class="flex items-start space-x-3">
-                        <div class="w-10 h-10 rounded-2xl bg-gold/20 border border-gold/40 flex items-center justify-center text-gold flex-shrink-0">
-                            <i data-lucide="bot" class="w-6 h-6"></i>
-                        </div>
-                        <div class="bg-navy-light/90 border border-white/15 p-4 rounded-3xl rounded-tl-none text-white text-sm max-w-xl shadow-lg">
-                            <p class="font-bold text-gold text-xs mb-1">Clory AI • CXR Assistant</p>
-                            ${aiReply}
-                        </div>
-                    </div>
-                `;
-                chatBox.insertAdjacentHTML('beforeend', aiMsgHtml);
-                chatBox.scrollTop = chatBox.scrollHeight;
-                lucide.createIcons();
-            }, 600);
-
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        function sendUserMessage() {
-            const input = document.getElementById('ai-input');
-            if (input.value.trim() !== '') {
-                askAI(input.value.trim());
-                input.value = '';
-            }
-        }
-
-        function triggerVoiceSim() {
-            askAI("Chuyến bay VN134 đi cửa số mấy?");
-        }
-
-        // Multi-Language Dictionary
+        // Multi-language Text Dictionary
         const i18n = {
             vi: {
                 welcomeTag: "Kính chào Quý khách",
                 welcomeTitle: "CHÀO MỪNG ĐẾN VỚI <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>SÂN BAY QUỐC TẾ CAM RANH</span>",
                 welcomeSub: "Trải nghiệm dịch vụ tiện ích hàng không đẳng cấp và sẵn sàng hỗ trợ thông tin 24/7 cho chuyến bay của bạn.",
+                status: "NHÀ GA HOẠT ĐỘNG BÌNH THƯỜNG",
                 mapTitle: "BẢN ĐỒ SÂN BAY",
                 mapDesc: "Tìm cửa ra máy bay (Gates), nhà hàng, cửa hàng Duty Free, WC, ATM & sơ đồ nhà ga trực quan.",
                 mapBtn: "MỞ BẢN ĐỒ TƯƠNG TÁC",
                 aiTitle: "TRỢ LÝ ẢO CLORY AI",
                 aiDesc: "Hỏi đáp giọng nói, tra cứu lịch trình chuyến bay, thủ tục hành lý & thông tin du lịch Nha Trang.",
                 aiBtn: "TRÒ CHUYỆN VỚI CLORY AI",
-                navHome: "TRANG CHỦ",
-                navMap: "BẢN ĐỒ SÂN BAY",
-                navClory: "TRỢ LÝ CLORY AI",
-                touchHint: "Chạm vào màn hình để chuyển giao diện tương tác"
+                flightBoard: "Thông tin chuyến bay sắp khởi hành",
+                touchHint: "Chạm vào màn hình để bắt đầu thao tác"
             },
             en: {
                 welcomeTag: "Welcome Valued Passengers",
                 welcomeTitle: "WELCOME TO <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>CAM RANH INTL AIRPORT</span>",
                 welcomeSub: "Experience world-class aviation services and 24/7 intelligent assistance for your flight journey.",
+                status: "TERMINAL OPERATING NORMALLY",
                 mapTitle: "AIRPORT MAP & WAYFINDING",
                 mapDesc: "Locate boarding gates, dining, Duty Free shops, restrooms, ATMs & interactive terminal maps.",
                 mapBtn: "OPEN INTERACTIVE MAP",
                 aiTitle: "CLORY AI ASSISTANT",
                 aiDesc: "Voice assistant for flight status, baggage inquiries, and Nha Trang travel guides.",
                 aiBtn: "TALK TO CLORY AI",
-                navHome: "HOME",
-                navMap: "AIRPORT MAP",
-                navClory: "CLORY AI ASSISTANT",
-                touchHint: "Touch screen to switch interactive interface"
+                flightBoard: "Upcoming Departing Flights",
+                touchHint: "Touch screen to start interaction"
             },
             kr: {
                 welcomeTag: "환영합니다",
                 welcomeTitle: "깜라인 국제공항에 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>오신 것을 환영합니다</span>",
                 welcomeSub: "세계적 수준의 항공 서비스와 24시간 스마트 비행 안내 서비스를 경험해 보세요.",
+                status: "터미널 정상 운영 중",
                 mapTitle: "공항 지도 및 길안내",
                 mapDesc: "탑승구, 식당, 면세점, 화장실, ATM 및 터미널 지도를 검색하세요.",
                 mapBtn: "인터랙티브 지도 열기",
                 aiTitle: "CLORY AI 어시스턴트",
                 aiDesc: "음성 대화로 항공편 현황, 수하물 안내 및 나트랑 관광 정보를 확인하세요.",
                 aiBtn: "CLORY AI와 대화하기",
-                navHome: "홈",
-                navMap: "공항 지도",
-                navClory: "CLORY AI 도우미",
-                touchHint: "화면을 터치하여 터치하세요"
+                flightBoard: "출발 예정 항공편 정보",
+                touchHint: "화면을 터치하여 시작하세요"
             },
             cn: {
                 welcomeTag: "尊贵的旅客，欢迎您",
                 welcomeTitle: "欢迎光临 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>金兰国际机场</span>",
                 welcomeSub: "体验世界级的航空服务，全天候24/7为您 provide 智能航班与导航 support。",
+                status: "航站楼运行正常",
                 mapTitle: "机场地图与导航",
                 mapDesc: "查找登机口、餐厅、免税店、洗手间、ATM及航站楼平面图。",
                 mapBtn: "打开互动地图",
                 aiTitle: "CLORY AI 智能助手",
                 aiDesc: "支持语音问答，查询航班动态、行李须知及芽庄旅游资讯。",
                 aiBtn: "与 CLORY AI 对话",
-                navHome: "首页",
-                navMap: "机场地图",
-                navClory: "CLORY AI 助手",
-                touchHint: "点击屏幕切换界面"
+                flightBoard: "即将在金兰起飞的航班",
+                touchHint: "点击屏幕开始操作"
             }
         };
 
         function changeLang(langKey) {
+            // Update Active Class on Lang Buttons
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('bg-teal', 'text-white', 'shadow-md');
                 btn.classList.add('text-slate-300');
             });
             const activeBtn = document.getElementById(`btn-${langKey}`);
-            if (activeBtn) {
+            if(activeBtn) {
                 activeBtn.classList.add('bg-teal', 'text-white', 'shadow-md');
                 activeBtn.classList.remove('text-slate-300');
             }
 
+            // Update UI Elements
             const t = i18n[langKey];
-            if (t) {
+            if(t) {
                 document.getElementById('welcome-tag').innerText = t.welcomeTag;
                 document.getElementById('welcome-title').innerHTML = t.welcomeTitle;
                 document.getElementById('welcome-sub').innerText = t.welcomeSub;
+                document.getElementById('status-text').innerText = t.status;
                 document.getElementById('card-map-title').innerText = t.mapTitle;
                 document.getElementById('card-map-desc').innerText = t.mapDesc;
                 document.getElementById('card-map-btn').innerText = t.mapBtn;
                 document.getElementById('card-ai-title').innerText = t.aiTitle;
                 document.getElementById('card-ai-desc').innerText = t.aiDesc;
                 document.getElementById('card-ai-btn').innerText = t.aiBtn;
-                document.getElementById('lbl-nav-home').innerText = t.navHome;
-                document.getElementById('lbl-nav-map').innerText = t.navMap;
-                document.getElementById('lbl-nav-clory').innerText = t.navClory;
+                document.getElementById('flight-board-title').innerText = t.flightBoard;
                 document.getElementById('touch-hint').innerText = t.touchHint;
             }
         }
