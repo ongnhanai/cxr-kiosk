@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Hidden Remote Audio Element for WebRTC Call Stream (Positioned off-screen without display:none) -->
+    <title>Kiosk Sân Bay Quốc Tế Cam Ranh - CXR Smart Hub</title>
+
+    <!-- Hidden Remote Audio Element for WebRTC Call Stream (Positioned off-screen without display:none to ensure audio decoding) -->
     <audio id="sip-remote-audio" autoplay playsinline style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></audio>
 
     <script>
@@ -36,17 +38,20 @@
             }
         })();
     </script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons UMD Build for Reliability -->
+    <!-- Lucide Icons UMD Build -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <!-- JsSIP Multi-CDN Script Tags with Failover -->
+    <!-- JsSIP Multi-CDN Script Tags for WebRTC Voice Calling -->
     <script src="https://cdn.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js"></script>
     <script src="https://unpkg.com/jssip@3.10.1/dist/jssip.min.js"></script>
     <script src="https://fastly.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.0/jssip.min.js"></script>
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
@@ -86,6 +91,7 @@
             }
         }
     </script>
+
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -141,12 +147,11 @@
         <div class="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/60 to-transparent"></div>
     </div>
 
-    <!-- TOP HEADER BAR (Z-30 for Dropdown layering) -->
+    <!-- TOP HEADER BAR -->
     <header class="relative z-30 w-full bg-navy-dark/90 backdrop-blur-xl border-b border-white/10 px-8 py-4 flex items-center justify-between shadow-2xl">
         <!-- Logo & Airport Info -->
         <div class="flex items-center space-x-6">
             <div class="flex items-center space-x-4 bg-white/10 p-2.5 px-4 rounded-2xl border border-white/15">
-                <!-- CXR Logo Emblem -->
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal via-teal-hover to-navy flex items-center justify-center shadow-lg shadow-teal/30">
                     <i data-lucide="plane-takeoff" class="w-7 h-7 text-white"></i>
                 </div>
@@ -163,7 +168,7 @@
             <!-- Live Status Indicator -->
             <div class="hidden xl:flex items-center space-x-3 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-2 rounded-xl">
                 <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
-                <span class="text-emerald-300 text-xs font-semibold tracking-wide" id="status-text">NHÀ GA HOẠT ĐỘNG BÌNH THƯỜNG</span>
+                <span class="text-emerald-300 text-xs font-semibold tracking-wide" id="status-text">TERMINAL OPERATING NORMALLY</span>
             </div>
         </div>
 
@@ -174,17 +179,17 @@
                 <i data-lucide="sun" id="weather-icon" class="w-7 h-7 text-gold animate-spin-slow"></i>
                 <div>
                     <div class="text-white font-bold text-lg leading-none" id="weather-temp">30°C</div>
-                    <div class="text-slate-400 text-[11px] font-medium" id="weather-loc">Cam Ranh • Nắng nhẹ</div>
+                    <div class="text-slate-400 text-[11px] font-medium" id="weather-loc">Cam Ranh • Sunny</div>
                 </div>
             </div>
 
             <!-- Live Clock -->
             <div class="text-right border-l border-white/10 pl-6">
                 <div id="live-clock" class="text-white font-mono font-extrabold text-2xl tracking-wider leading-none">14:30:25</div>
-                <div id="live-date" class="text-slate-300 text-xs mt-1 font-medium">Thứ Sáu, 24/07/2026</div>
+                <div id="live-date" class="text-slate-300 text-xs mt-1 font-medium">Friday, 24/07/2026</div>
             </div>
 
-            <!-- Multi-language Switcher (English First + On-Top Dropdown z-50) -->
+            <!-- Multi-language Switcher (English First) -->
             <div class="relative flex items-center bg-black/40 p-1.5 rounded-2xl border border-white/15 space-x-1 z-50" id="lang-selector">
                 <button onclick="changeLang('en')" id="btn-en" class="lang-btn active-lang px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-teal text-white shadow-md">
                     <span>🇬🇧</span> <span>ENG</span>
@@ -206,9 +211,9 @@
                         <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400"></i>
                     </button>
 
-                    <!-- Language Dropdown Menu (Z-[100] On-Top) -->
+                    <!-- Language Dropdown Menu -->
                     <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-52 bg-navy-dark/95 border border-white/20 rounded-2xl shadow-2xl backdrop-blur-xl z-[100] overflow-hidden py-1">
-                        <div class="px-3 py-1.5 text-[10px] uppercase font-bold text-slate-400 border-b border-white/10" id="dropdown-header-title">Ngôn ngữ khác / More</div>
+                        <div class="px-3 py-1.5 text-[10px] uppercase font-bold text-slate-400 border-b border-white/10" id="dropdown-header-title">Other Languages / Ngôn ngữ khác</div>
                         <button onclick="changeLang('ru'); closeLangDropdown();" id="btn-ru" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
                             <span>🇷🇺</span> <span class="font-semibold">Русский (RUS)</span>
                         </button>
@@ -233,7 +238,7 @@
     <!-- MAIN CONTENT GRID (40-inch 16:9 Landscape Layout) -->
     <main class="relative z-10 flex-1 p-8 grid grid-cols-12 gap-8 items-stretch overflow-hidden">
         
-        <!-- LEFT COLUMN (60% Width): Auto-cycling Multilingual Hero Banner & 4 Amenities Cards -->
+        <!-- LEFT COLUMN (60% Width): Auto-cycling Hero Banner & Amenities -->
         <section class="col-span-7 flex flex-col justify-between space-y-6">
             
             <!-- Hero Banner Card -->
@@ -257,7 +262,7 @@
                     </p>
                 </div>
 
-                <!-- Carousel Footer: Wi-Fi Highlight & 9-Language Indicator Dots -->
+                <!-- Carousel Footer: Wi-Fi Highlight & Dots -->
                 <div class="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between">
                     <div class="flex items-center space-x-6">
                         <div class="flex items-center space-x-3">
@@ -272,13 +277,11 @@
                     </div>
 
                     <!-- Slide Controls Indicators (Dynamic 9 Dots) -->
-                    <div class="flex space-x-1.5" id="carousel-dots">
-                        <!-- Rendered by JS -->
-                    </div>
+                    <div class="flex space-x-1.5" id="carousel-dots"></div>
                 </div>
             </div>
 
-            <!-- Khu vực & Tiện ích Sân Bay (Separated into 4 Cards) -->
+            <!-- Khu vực & Tiện ích Sân Bay (4 Cards) -->
             <div class="glass-dark rounded-3xl p-5 border border-white/15 shadow-xl">
                 <div class="flex items-center justify-between mb-3 px-1">
                     <div class="flex items-center space-x-2">
@@ -290,9 +293,8 @@
                     </span>
                 </div>
 
-                <!-- 4 Distinct Amenity Cards Grid -->
+                <!-- 4 Amenity Cards Grid -->
                 <div class="grid grid-cols-4 gap-3">
-                    <!-- Amenity 1: Dining & Restaurants -->
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
                         <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-gold mb-2 group-hover:scale-105 transition-transform">
                             <i data-lucide="utensils" class="w-5 h-5"></i>
@@ -303,7 +305,6 @@
                         </div>
                     </div>
 
-                    <!-- Amenity 2: Duty Free Shopping -->
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
                         <div class="w-10 h-10 rounded-xl bg-teal/20 border border-teal/30 flex items-center justify-center text-teal mb-2 group-hover:scale-105 transition-transform">
                             <i data-lucide="shopping-bag" class="w-5 h-5"></i>
@@ -314,7 +315,6 @@
                         </div>
                     </div>
 
-                    <!-- Amenity 3: CIP/VIP Lounge -->
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
                         <div class="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 mb-2 group-hover:scale-105 transition-transform">
                             <i data-lucide="armchair" class="w-5 h-5"></i>
@@ -325,7 +325,6 @@
                         </div>
                     </div>
 
-                    <!-- Amenity 4: Restrooms / WC -->
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
                         <div class="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 mb-2 group-hover:scale-105 transition-transform">
                             <i data-lucide="bath" class="w-5 h-5"></i>
@@ -343,7 +342,7 @@
         <!-- RIGHT COLUMN (40% Width): 2 Giant Touch Launch Cards -->
         <section class="col-span-5 flex flex-col space-y-6">
             
-            <!-- BUTTON 1: BẢN ĐỒ SÂN BAY (Interactive Map Feature Launcher) -->
+            <!-- BUTTON 1: BẢN ĐỒ SÂN BAY (Interactive Map Launcher) -->
             <div onclick="openMapModal()" 
                  class="touch-effect flex-1 rounded-3xl p-7 bg-gradient-to-br from-navy-light via-navy to-slate-900 border-2 border-teal/40 hover:border-teal shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
                 
@@ -352,7 +351,6 @@
                     <i data-lucide="map-pin" class="w-48 h-48 text-teal"></i>
                 </div>
 
-                <!-- Top Badge & Icon -->
                 <div class="relative z-10 flex items-center justify-between">
                     <div class="w-16 h-16 rounded-2xl bg-teal/20 border border-teal/50 flex items-center justify-center text-teal shadow-lg shadow-teal/20 group-hover:scale-110 transition-transform">
                         <i data-lucide="map" class="w-9 h-9"></i>
@@ -362,7 +360,6 @@
                     </span>
                 </div>
 
-                <!-- Text Content -->
                 <div class="relative z-10 my-4">
                     <h3 class="text-3xl font-black text-white group-hover:text-teal transition-colors tracking-tight" id="card-map-title">
                         AIRPORT MAP & WAYFINDING
@@ -372,20 +369,18 @@
                     </p>
                 </div>
 
-                <!-- Action Button Link Bar -->
                 <div class="relative z-10 flex items-center justify-between bg-white/10 group-hover:bg-teal group-hover:text-white p-4 rounded-2xl border border-white/15 transition-all">
                     <span class="font-extrabold text-sm uppercase tracking-wider text-white" id="card-map-btn">OPEN INTERACTIVE MAP</span>
                     <i data-lucide="arrow-right" class="w-6 h-6 text-teal group-hover:text-white group-hover:translate-x-1 transition-all"></i>
                 </div>
             </div>
 
-            <!-- BUTTON 2: CLORY AI ASSISTANT (AI Voice Feature Launcher) -->
+            <!-- BUTTON 2: CLORY AI ASSISTANT (Voice Launcher) -->
             <div onclick="openCloryModal()" 
                  class="touch-effect flex-1 rounded-3xl p-7 bg-gradient-to-br from-navy-dark via-navy to-indigo-950 border-2 border-gold/40 hover:border-gold shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
                 
                 <div class="absolute top-0 right-0 -mr-10 -mt-10 w-56 h-56 bg-gold/20 rounded-full blur-2xl group-hover:bg-gold/30 transition-all"></div>
                 
-                <!-- AI Mini Avatar Overlay Graphic -->
                 <div class="absolute bottom-0 right-2 w-44 h-52 pointer-events-none opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 flex items-end">
                     <div class="relative w-full h-full flex items-end justify-center">
                         <div class="w-36 h-44 bg-gradient-to-t from-navy to-teal/30 rounded-t-full border border-gold/30 flex items-center justify-center overflow-hidden shadow-2xl">
@@ -394,7 +389,6 @@
                     </div>
                 </div>
 
-                <!-- Top Badge & Icon -->
                 <div class="relative z-10 flex items-center justify-between">
                     <div class="w-16 h-16 rounded-2xl bg-gold/20 border border-gold/50 flex items-center justify-center text-gold shadow-lg shadow-gold/20 group-hover:scale-110 transition-transform">
                         <i data-lucide="bot" class="w-9 h-9"></i>
@@ -404,7 +398,6 @@
                     </span>
                 </div>
 
-                <!-- Text Content -->
                 <div class="relative z-10 my-4 max-w-[65%]">
                     <h3 class="text-3xl font-black text-white group-hover:text-gold transition-colors tracking-tight" id="card-ai-title">
                         CLORY AI ASSISTANT
@@ -414,7 +407,6 @@
                     </p>
                 </div>
 
-                <!-- Action Button Link Bar -->
                 <div class="relative z-10 flex items-center justify-between bg-white/10 group-hover:bg-gold group-hover:text-navy p-4 rounded-2xl border border-white/15 transition-all">
                     <span class="font-extrabold text-sm uppercase tracking-wider text-white group-hover:text-navy" id="card-ai-btn">TALK TO CLORY AI</span>
                     <i data-lucide="mic" class="w-6 h-6 text-gold group-hover:text-navy group-hover:scale-110 transition-all"></i>
@@ -430,22 +422,21 @@
         <div class="flex items-center space-x-8 text-xs text-slate-300">
             <div class="flex items-center space-x-2">
                 <i data-lucide="phone-call" class="w-4 h-4 text-gold"></i>
-                <span class="font-medium" id="footer-hotline-label">Hotline Sân Bay:</span>
+                <span class="font-medium" id="footer-hotline-label">Airport Hotline:</span>
                 <span class="text-white font-bold font-mono">(+84) 258 397 7988</span>
             </div>
             <div class="flex items-center space-x-2">
                 <i data-lucide="shield-alert" class="w-4 h-4 text-red-400"></i>
-                <span class="font-medium" id="footer-sos-label">Cấp cứu Y tế / SOS:</span>
+                <span class="font-medium" id="footer-sos-label">Medical / SOS:</span>
                 <span class="text-red-400 font-bold font-mono">(+84) 258 397 7987</span>
             </div>
             <div class="flex items-center space-x-2">
                 <i data-lucide="info" class="w-4 h-4 text-teal"></i>
-                <span class="font-medium" id="footer-info-label">Quầy thông tin:</span>
-                <span class="text-white font-semibold" id="footer-info-val">Tầng 1 - Sảnh Đến</span>
+                <span class="font-medium" id="footer-info-label">Info Desk:</span>
+                <span class="text-white font-semibold" id="footer-info-val">Level 1 - Arrivals</span>
             </div>
         </div>
 
-        <!-- Copyright & Touch Prompt -->
         <div class="flex items-center space-x-6">
             <div class="text-slate-400 text-[11px]">
                 © 2026 CloryAI AeroHub Agent. Powered by <a href="https://www.dntg.com.vn" target="_blank" rel="noopener noreferrer" class="text-teal hover:underline font-bold">DNTG</a>. All rights reserved.
@@ -457,16 +448,15 @@
         </div>
     </footer>
 
-    <!-- MODAL 1: INTERACTIVE WEB MAP POP-UP (Expanded 90vw x 90vh with Embedded Frame) -->
+    <!-- MODAL 1: INTERACTIVE WEB MAP POP-UP (90vw x 90vh Frame) -->
     <div id="map-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
         <div class="bg-navy border-2 border-teal rounded-3xl w-[90vw] h-[90vh] flex flex-col overflow-hidden shadow-2xl relative">
-            <!-- Modal Header -->
             <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="p-3 bg-teal/20 rounded-xl text-teal"><i data-lucide="map" class="w-6 h-6"></i></div>
                     <div>
                         <h3 class="text-xl font-bold text-white" id="modal-map-header-title">AIRPORT MAP & WAYFINDING</h3>
-                        <p class="text-xs text-slate-400" id="modal-map-header-sub">Đang kết nối Bản đồ Sân bay Quốc tế Cam Ranh...</p>
+                        <p class="text-xs text-slate-400" id="modal-map-header-sub">Cam Ranh International Airport Map System</p>
                     </div>
                 </div>
 
@@ -475,16 +465,14 @@
                 </button>
             </div>
 
-            <!-- Embedded Live Map Application Frame -->
             <div class="flex-1 bg-slate-900 relative overflow-hidden">
                 <iframe id="iframe-interactive-map"
                         src="https://camranh.aero/mapv2/" 
-                        title="Bản đồ tương tác Sân bay Cam Ranh" 
+                        title="Cam Ranh Airport Interactive Map" 
                         class="w-full h-full border-0"
                         allow="geolocation; autoplay"></iframe>
             </div>
 
-            <!-- Modal Footer -->
             <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
                 <button onclick="closeMapModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition" id="modal-map-close-btn">
                     Close
@@ -502,16 +490,15 @@
                     <div class="p-3 bg-gold/20 rounded-xl text-gold"><i data-lucide="bot" class="w-6 h-6"></i></div>
                     <div>
                         <h3 class="text-xl font-bold text-white" id="modal-ai-header-title">CLORY AI ASSISTANT</h3>
-                        <p class="text-xs text-slate-400" id="modal-ai-header-sub">Sân bay Quốc tế Cam Ranh • CXR Smart Agent</p>
+                        <p class="text-xs text-slate-400" id="modal-ai-header-sub">Cam Ranh International Airport • CXR Smart Agent</p>
                     </div>
                 </div>
                 
-                <!-- SIP Controls Header Actions -->
                 <div class="flex items-center space-x-3">
                     <!-- SIP Registration Status Badge -->
-                    <div id="sip-status-badge" onclick="openSipConfigModal()" class="cursor-pointer bg-white/5 border border-white/15 hover:bg-white/10 px-3 py-1.5 rounded-xl flex items-center space-x-2 transition">
+                    <div id="sip-status-badge" onclick="openSipConfigModal()" class="cursor-pointer bg-white/5 border border-white/15 hover:bg-white/10 px-3.5 py-1.5 rounded-xl flex items-center space-x-2 transition">
                         <span id="sip-status-dot" class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
-                        <span id="sip-status-text" class="text-xs font-mono font-bold text-slate-300">SIP: Chưa kết nối</span>
+                        <span id="sip-status-text" class="text-xs font-mono font-bold text-slate-300">CloryAI Offline</span>
                         <i data-lucide="settings" class="w-3.5 h-3.5 text-gold ml-1"></i>
                     </div>
 
@@ -521,15 +508,15 @@
                 </div>
             </div>
 
-            <!-- CloryAI Voice Pulse Visualizer Body -->
+            <!-- CloryAI Voice Pulse Body -->
             <div class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 p-8 flex items-center justify-between relative">
                 <!-- Left Section: Interactive Pulse Orb Audio Visualizer -->
                 <div class="w-1/2 flex flex-col items-center justify-center border-r border-white/10 pr-8 relative">
                     
                     <!-- Dynamic Pulse Orb Sphere Container -->
-                    <div class="relative w-64 h-64 flex items-center justify-center mb-6">
-                        <div id="orb-wave-outer" class="absolute w-56 h-56 rounded-full border border-teal/40 bg-teal/10 orb-wave-1 pointer-events-none"></div>
-                        <div id="orb-wave-mid" class="absolute w-44 h-44 rounded-full border border-gold/40 bg-gold/10 orb-wave-2 pointer-events-none"></div>
+                    <div class="relative w-60 h-60 flex items-center justify-center mb-3">
+                        <div id="orb-wave-outer" class="absolute w-52 h-52 rounded-full border border-teal/40 bg-teal/10 orb-wave-1 pointer-events-none"></div>
+                        <div id="orb-wave-mid" class="absolute w-40 h-40 rounded-full border border-gold/40 bg-gold/10 orb-wave-2 pointer-events-none"></div>
                         
                         <!-- Core Glowing Teal Orb -->
                         <div id="pulse-orb" class="relative z-10 w-32 h-32 rounded-full bg-gradient-to-tr from-teal via-cyan-400 to-gold shadow-[0_0_50px_rgba(0,168,150,0.8)] border-2 border-white/80 flex items-center justify-center transition-all duration-100 ease-out">
@@ -537,36 +524,40 @@
                         </div>
                     </div>
 
+                    <!-- In-Call Timer Positioned Immediately Below Pulse Orb -->
+                    <div id="sip-incall-timer-box" class="hidden mb-4">
+                        <span id="sip-call-timer" class="font-mono text-sm font-extrabold text-gold px-4 py-1.5 bg-black/60 border border-gold/40 rounded-full shadow-lg">00:00</span>
+                    </div>
+
                     <!-- Voice Status Indicator & WebRTC Call Action -->
                     <div class="text-center z-10 w-full max-w-xs">
-                        <div class="text-white font-bold text-lg" id="clory-sub-text">Talk with CloryAI Assistant</div>
+                        <div class="text-white font-bold text-lg" id="clory-sub-text">Clory is ready to assist...</div>
                         <p class="text-teal text-xs mt-1 font-mono flex items-center justify-center gap-1.5 mb-4" id="mic-status">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                            <span>CloryAI is listening to you...</span>
+                            <span>Listening to audio...</span>
                         </p>
 
                         <!-- WebRTC Live Call Control Panel -->
                         <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col items-center space-y-2">
                             <button id="btn-sip-call" onclick="toggleSipCall()" class="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-500 to-teal text-white font-extrabold text-xs rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition flex items-center justify-center space-x-2">
                                 <i data-lucide="phone-call" class="w-4 h-4"></i>
-                                <span id="sip-call-btn-label">GỌI TỔNG ĐÀI HỖ TRỢ (LIVE)</span>
+                                <span id="sip-call-btn-label">CALL NOW</span>
                             </button>
                             
-                            <!-- Active Call Controls (Hidden by Default) -->
+                            <!-- Active Call Controls -->
                             <div id="sip-incall-controls" class="hidden w-full flex items-center justify-center space-x-2 pt-1">
                                 <button onclick="toggleSipMute()" id="btn-sip-mute" class="p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs flex items-center gap-1">
-                                    <i data-lucide="mic-off" class="w-4 h-4 text-amber-400"></i> Tắt tiếng
+                                    <i data-lucide="mic-off" class="w-4 h-4 text-amber-400"></i> Mute
                                 </button>
-                                <span id="sip-call-timer" class="font-mono text-xs font-bold text-gold px-2 py-1 bg-black/40 rounded-lg">00:00</span>
                                 <button onclick="hangupSipCall()" class="p-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs flex items-center gap-1 font-bold">
-                                    <i data-lucide="phone-off" class="w-4 h-4"></i> Ngắt cuộc gọi
+                                    <i data-lucide="phone-off" class="w-4 h-4"></i> Hang Up
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Section: Airport FAQ Quick Prompt Chips -->
+                <!-- Right Section: FAQ Quick Prompt Chips -->
                 <div class="w-1/2 pl-8 flex flex-col justify-center space-y-3">
                     <h5 class="text-gold font-bold text-sm uppercase tracking-wider" id="faq-header">Popular Questions:</h5>
                     <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
@@ -587,7 +578,6 @@
                 </div>
             </div>
 
-            <!-- Modal Footer -->
             <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
                 <button onclick="closeCloryModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition" id="modal-ai-close-btn">
                     Close
@@ -638,14 +628,13 @@
                                class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-teal outline-none">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-300 mb-1">Số gọi mặc định (Hotline):</label>
-                        <input type="text" id="sip-cfg-target" placeholder="8000" 
+                        <label class="block font-bold text-slate-300 mb-1">Số gọi mặc định (Voice Agent):</label>
+                        <input type="text" id="sip-cfg-target" placeholder="6666" 
                                class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-teal outline-none">
                     </div>
                 </div>
             </div>
 
-            <!-- Modal Actions -->
             <div class="p-4 bg-navy-dark border-t border-white/10 flex items-center justify-between">
                 <button onclick="unregisterSip()" class="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 rounded-xl text-xs font-bold transition">
                     Ngắt kết nối
@@ -662,11 +651,8 @@
         </div>
     </div>
 
-    <!-- Hidden Remote Audio Element for WebRTC Call Stream -->
-    <audio id="sip-remote-audio" autoplay playsinline class="hidden"></audio>
-
     <script>
-        // Global State Variables
+        // Global Application State Variables
         let currentLang = 'en';
         let autoCycleTimer = null;
         let cycleLangIndex = 0;
@@ -684,7 +670,7 @@
             extension: localStorage.getItem('cxr_sip_ext') || '1001',
             password: localStorage.getItem('cxr_sip_pass') || '',
             domain: localStorage.getItem('cxr_sip_domain') || '',
-            targetExt: localStorage.getItem('cxr_sip_target') || '8000'
+            targetExt: localStorage.getItem('cxr_sip_target') || '6666'
         };
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -696,17 +682,16 @@
             fetchRealtimeWeather();
             initSipFormFields();
             
-            // Asynchronously wait for JsSIP with robust multi-stage loader
+            // Asynchronously wait for JsSIP with multi-stage CDN loader
             waitForJsSIP((SIPClass) => {
                 if (SIPClass && sipConfig.wssUrl && sipConfig.extension) {
                     initSIPUA();
-                } else if (!sipConfig.wssUrl || !sipConfig.extension) {
-                    updateSipStatus('unregistered', 'SIP: Chưa cấu hình');
+                } else {
+                    updateSipStatus('unregistered');
                 }
             });
         });
 
-        // Helper to resolve global JsSIP instance safely
         function getSIPClass() {
             if (typeof window.JsSIP !== 'undefined') return window.JsSIP;
             if (typeof window.jssip !== 'undefined') return window.jssip;
@@ -715,7 +700,6 @@
             return null;
         }
 
-        // Extended Polling Loader for Async CDNs
         function waitForJsSIP(callback, maxAttempts = 100) {
             let attempts = 0;
             const check = () => {
@@ -738,8 +722,7 @@
             "https://cdn.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js",
             "https://unpkg.com/jssip@3.10.1/dist/jssip.min.js",
             "https://fastly.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js",
-            "https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.0/jssip.min.js",
-            "https://cdn.jsdelivr.net/npm/jssip@3.9.0/dist/jssip.min.js"
+            "https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.0/jssip.min.js"
         ];
 
         function loadJsSIPFallback(cdnIndex = 0, onComplete) {
@@ -749,14 +732,12 @@
                 return;
             }
 
-            // If external CDN loading is restricted by firewall or offline sandbox, create a standalone fallback SIP instance
             if (cdnIndex >= cdnList.length) {
                 createFallbackSIPClient();
                 if (onComplete) onComplete(window.JsSIP);
                 return;
             }
 
-            updateSipStatus('connecting', `Đang tải JsSIP (${cdnIndex + 1}/${cdnList.length})...`);
             const script = document.createElement('script');
             script.src = cdnList[cdnIndex];
             script.async = true;
@@ -774,59 +755,35 @@
             document.head.appendChild(script);
         }
 
-        // Standalone Fallback WebRTC Client Shim when external CDNs are blocked
         function createFallbackSIPClient() {
             if (window.JsSIP) return;
 
             window.JsSIP = {
-                WebSocketInterface: function(url) {
-                    this.url = url;
-                },
+                WebSocketInterface: function(url) { this.url = url; },
                 UA: function(config) {
                     this.config = config;
                     this.listeners = {};
                     this._isRegistered = false;
 
-                    this.on = function(event, callback) {
-                        this.listeners[event] = callback;
-                    };
-
+                    this.on = function(event, callback) { this.listeners[event] = callback; };
                     this.start = function() {
-                        setTimeout(() => {
-                            if (this.listeners['connecting']) this.listeners['connecting']();
-                        }, 200);
-                        setTimeout(() => {
-                            if (this.listeners['connected']) this.listeners['connected']();
-                        }, 500);
+                        setTimeout(() => { if (this.listeners['connecting']) this.listeners['connecting'](); }, 200);
+                        setTimeout(() => { if (this.listeners['connected']) this.listeners['connected'](); }, 500);
                         setTimeout(() => {
                             this._isRegistered = true;
                             if (this.listeners['registered']) this.listeners['registered']();
                         }, 1000);
                     };
-
                     this.stop = function() {
                         this._isRegistered = false;
                         if (this.listeners['unregistered']) this.listeners['unregistered']();
                     };
-
-                    this.isRegistered = function() {
-                        return this._isRegistered;
-                    };
-
+                    this.isRegistered = function() { return this._isRegistered; };
                     this.call = function(target, options) {
                         const handlers = options.eventHandlers || {};
-                        let callState = {
-                            terminate: function() {
-                                if (handlers.ended) handlers.ended();
-                            },
-                            mute: function() {},
-                            unmute: function() {}
-                        };
-
                         setTimeout(() => { if (handlers.progress) handlers.progress(); }, 300);
                         setTimeout(() => { if (handlers.confirmed) handlers.confirmed(); }, 1200);
-
-                        return callState;
+                        return { terminate: function() { if (handlers.ended) handlers.ended(); }, mute: function(){}, unmute: function(){} };
                     };
                 }
             };
@@ -835,9 +792,7 @@
         function initSIPUA() {
             const SIPClass = getSIPClass();
             if (!SIPClass) {
-                waitForJsSIP((instance) => {
-                    if (instance) initSIPUA();
-                });
+                waitForJsSIP((instance) => { if (instance) initSIPUA(); });
                 return;
             }
 
@@ -847,12 +802,12 @@
             }
 
             if (!sipConfig.wssUrl || !sipConfig.extension) {
-                updateSipStatus('unregistered', 'SIP: Chưa cấu hình');
+                updateSipStatus('unregistered');
                 return;
             }
 
             try {
-                updateSipStatus('connecting', 'Đang nối WSS...');
+                updateSipStatus('connecting');
 
                 const socket = new SIPClass.WebSocketInterface(sipConfig.wssUrl.trim());
                 const ext = sipConfig.extension.trim();
@@ -871,7 +826,7 @@
                     sockets: [socket],
                     uri: `sip:${ext}@${domain}`,
                     password: sipConfig.password,
-                    display_name: `CXR Kiosk T2 (${ext})`,
+                    display_name: `CXR Kiosk (${ext})`,
                     register: true,
                     session_timers: true,
                     register_expires: 300,
@@ -887,63 +842,60 @@
 
                 ua = new SIPClass.UA(configuration);
 
-                // Event Listeners
-                ua.on('connecting', () => updateSipStatus('connecting', 'Đang kết nối WSS...'));
-                ua.on('connected', () => updateSipStatus('connecting', 'WSS OK - Đang đăng ký SIP...'));
-                ua.on('disconnected', (e) => {
-                    const reason = e && e.error ? 'Lỗi SSL/WSS Certificate' : `Đã ngắt (Mã ${(e && e.code) || 1006})`;
-                    updateSipStatus('failed', reason);
-                });
-                ua.on('registered', () => updateSipStatus('registered', `Ext ${ext} Online`));
-                ua.on('unregistered', () => updateSipStatus('unregistered', 'SIP Unregistered'));
-                ua.on('registrationFailed', (e) => {
-                    const cause = (e && e.cause) || 'Lỗi Mật khẩu / Server';
-                    updateSipStatus('failed', `Đăng ký thất bại: ${cause}`);
-                });
+                ua.on('connecting', () => updateSipStatus('connecting'));
+                ua.on('connected', () => updateSipStatus('connecting'));
+                ua.on('disconnected', () => updateSipStatus('failed'));
+                ua.on('registered', () => updateSipStatus('registered'));
+                ua.on('unregistered', () => updateSipStatus('unregistered'));
+                ua.on('registrationFailed', () => updateSipStatus('failed'));
 
-                // Handle Incoming WebRTC Calls
                 ua.on('newRTCSession', (data) => {
                     const session = data.session;
                     if (session && session.direction === 'incoming') {
                         activeSession = session;
                         setupSessionHandlers(session);
                         openCloryModal();
-                        updateSipStatus('incall', 'Có cuộc gọi đến...');
+                        updateSipStatus('incall');
                     }
                 });
 
                 ua.start();
             } catch (err) {
-                console.error("SIP UA Initialization Error:", err);
-                updateSipStatus('failed', `Lỗi khởi tạo: ${err.message || err}`);
+                console.error("SIP Initialization Error:", err);
+                updateSipStatus('failed');
             }
         }
 
-        function updateSipStatus(state, text) {
+        function updateSipStatus(state) {
             const dot = document.getElementById('sip-status-dot');
             const txt = document.getElementById('sip-status-text');
             if (!dot || !txt) return;
 
-            txt.innerText = text;
+            const t = i18n[currentLang] || i18n['en'];
+
             dot.className = "w-2.5 h-2.5 rounded-full ";
 
             switch (state) {
                 case 'registered':
                     dot.classList.add('bg-emerald-400', 'animate-pulse');
+                    txt.innerText = t.sipRegistered;
                     break;
                 case 'connecting':
                 case 'connected':
                     dot.classList.add('bg-amber-400', 'animate-ping');
+                    txt.innerText = "Connecting...";
                     break;
                 case 'incall':
                     dot.classList.add('bg-cyan-400', 'animate-ping');
+                    txt.innerText = "In Call";
                     break;
                 default:
                     dot.classList.add('bg-red-400');
+                    txt.innerText = t.sipOffline;
             }
         }
 
-        // Web Audio API Ringback Tone Generator for Dialing State
+        // Ringback Tone Generator
         let ringbackAudioCtx = null;
         let ringbackInterval = null;
 
@@ -966,9 +918,9 @@
                     const gain = ringbackAudioCtx.createGain();
                     
                     osc1.type = 'sine';
-                    osc1.frequency.setValueAtTime(440, now); // Standard 440 Hz
+                    osc1.frequency.setValueAtTime(440, now);
                     osc2.type = 'sine';
-                    osc2.frequency.setValueAtTime(480, now); // Standard 480 Hz
+                    osc2.frequency.setValueAtTime(480, now);
                     
                     gain.gain.setValueAtTime(0.08, now);
                     gain.gain.setValueAtTime(0.08, now + 1.0);
@@ -986,9 +938,7 @@
                 
                 playToneBurst();
                 ringbackInterval = setInterval(playToneBurst, 3000);
-            } catch(e) {
-                console.warn("Ringback tone error:", e);
-            }
+            } catch(e) {}
         }
 
         function stopRingbackTone() {
@@ -1002,7 +952,6 @@
             }
         }
 
-        // WebRTC Call Handlers
         function toggleSipCall() {
             if (activeSession) {
                 hangupSipCall();
@@ -1014,7 +963,6 @@
                 return;
             }
 
-            // Unlock browser audio playback policy & initialize AudioContext on direct user gesture
             const remoteAudio = document.getElementById('sip-remote-audio');
             if (remoteAudio) {
                 remoteAudio.muted = false;
@@ -1030,24 +978,24 @@
                 audioCtx.resume();
             }
 
-            const target = sipConfig.targetExt || '8000';
+            const target = sipConfig.targetExt || '6666';
             startRingbackTone();
 
             const eventHandlers = {
-                'progress': () => updateSipStatus('connecting', `Đang đổ chuông ${target}...`),
-                'failed': (e) => {
+                'progress': () => updateSipStatus('connecting'),
+                'failed': () => {
                     stopRingbackTone();
-                    updateSipStatus('registered', `Ext ${sipConfig.extension} Online`);
+                    updateSipStatus('registered');
                     resetCallUI();
                 },
                 'ended': () => {
                     stopRingbackTone();
-                    updateSipStatus('registered', `Ext ${sipConfig.extension} Online`);
+                    updateSipStatus('registered');
                     resetCallUI();
                 },
                 'confirmed': () => {
                     stopRingbackTone();
-                    updateSipStatus('incall', `Đang thoại (${target})`);
+                    updateSipStatus('incall');
                     startCallTimer();
                 }
             };
@@ -1073,7 +1021,6 @@
                 stopRingbackTone();
                 const remoteAudio = document.getElementById('sip-remote-audio');
                 if (remoteAudio && stream) {
-                    console.log("Connecting WebRTC remote stream to playback:", stream);
                     remoteAudio.srcObject = stream;
                     remoteAudio.muted = false;
                     remoteAudio.volume = 1.0;
@@ -1082,19 +1029,10 @@
                         audioCtx.resume();
                     }
 
-                    const playPromise = remoteAudio.play();
-                    if (playPromise !== undefined) {
-                        playPromise.catch(err => {
-                            console.warn("Remote audio play blocked, retrying on user click:", err);
-                            const resumeAudioOnClick = () => {
-                                remoteAudio.play().catch(() => {});
-                                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-                            };
-                            document.addEventListener('click', resumeAudioOnClick, { once: true });
-                        });
-                    }
+                    remoteAudio.play().catch(err => {
+                        console.warn("Playback prevented:", err);
+                    });
 
-                    // Route remote stream to AudioContext for visualizer AND audio output
                     if (audioCtx) {
                         try {
                             if (!analyser) {
@@ -1103,10 +1041,9 @@
                             }
                             const streamSource = audioCtx.createMediaStreamSource(stream);
                             streamSource.connect(analyser);
-                            // CRITICAL: Connect analyser to audioCtx.destination to prevent WebAudio from swallowing the output sound!
                             analyser.connect(audioCtx.destination);
                         } catch(err) {
-                            console.warn("Analyser stream routing warning:", err);
+                            console.warn("Analyser routing error:", err);
                         }
                     }
                 }
@@ -1124,9 +1061,7 @@
                         });
 
                         peerconnection.addEventListener('addstream', (event) => {
-                            if (event.stream) {
-                                handleRemoteStream(event.stream);
-                            }
+                            if (event.stream) handleRemoteStream(event.stream);
                         });
                     }
                 });
@@ -1183,6 +1118,9 @@
         function startCallTimer() {
             callSeconds = 0;
             if (callTimerInterval) clearInterval(callTimerInterval);
+            const timerBox = document.getElementById('sip-incall-timer-box');
+            if (timerBox) timerBox.classList.remove('hidden');
+
             callTimerInterval = setInterval(() => {
                 callSeconds++;
                 const mins = String(Math.floor(callSeconds / 60)).padStart(2, '0');
@@ -1194,19 +1132,23 @@
 
         function showIncallUI() {
             document.getElementById('sip-incall-controls').classList.remove('hidden');
-            document.getElementById('sip-call-btn-label').innerText = "ĐANG KẾT NỐI CUỘC GỌI...";
+            const t = i18n[currentLang] || i18n['en'];
+            document.getElementById('sip-call-btn-label').innerText = "Connecting...";
         }
 
         function resetCallUI() {
             stopRingbackTone();
             if (callTimerInterval) clearInterval(callTimerInterval);
             document.getElementById('sip-incall-controls').classList.add('hidden');
-            document.getElementById('sip-call-btn-label').innerText = "GỌI TỔNG ĐÀI HỖ TRỢ (LIVE)";
+            const timerBox = document.getElementById('sip-incall-timer-box');
+            if (timerBox) timerBox.classList.add('hidden');
+
+            const t = i18n[currentLang] || i18n['en'];
+            document.getElementById('sip-call-btn-label').innerText = t.callBtn;
             activeSession = null;
             isMuted = false;
         }
 
-        // SIP Config Modal Handlers
         function openSipConfigModal() {
             initSipFormFields();
             document.getElementById('sip-config-modal').classList.remove('hidden');
@@ -1246,11 +1188,11 @@
                 ua.stop();
                 ua = null;
             }
-            updateSipStatus('unregistered', 'SIP: Chưa kết nối');
+            updateSipStatus('unregistered');
             closeSipConfigModal();
         }
 
-        // Open-Meteo Weather API for Cam Ranh (Lat 11.998, Lon 109.219)
+        // Open-Meteo Weather API for Cam Ranh
         async function fetchRealtimeWeather() {
             try {
                 const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=11.998&longitude=109.219&current_weather=true');
@@ -1300,6 +1242,11 @@
 
         function openCloryModal() {
             document.getElementById('clory-modal').classList.remove('hidden');
+            
+            // Auto register SIP connection immediately on opening modal
+            if (!ua && sipConfig.wssUrl && sipConfig.extension) {
+                initSIPUA();
+            }
             startPulseOrbAudio();
         }
 
@@ -1317,9 +1264,11 @@
                 }
 
                 micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                analyser = audioCtx.createAnalyser();
-                analyser.fftSize = 64;
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (!analyser) {
+                    analyser = audioCtx.createAnalyser();
+                    analyser.fftSize = 64;
+                }
                 
                 const source = audioCtx.createMediaStreamSource(micStream);
                 source.connect(analyser);
@@ -1363,10 +1312,6 @@
             if (micStream) {
                 micStream.getTracks().forEach(track => track.stop());
                 micStream = null;
-            }
-            if (audioCtx) {
-                audioCtx.close();
-                audioCtx = null;
             }
         }
 
@@ -1455,16 +1400,16 @@
                 wifiLabel: "Free Wi-Fi Highspeed",
                 touchHint: "Touch screen to start interaction",
                 closeBtn: "Close",
-                clorySub: "Talk with CloryAI Assistant",
-                micStatus: "CloryAI is listening to you...",
+                clorySub: "Clory is ready to assist...",
+                callBtn: "CALL NOW",
+                sipOffline: "CloryAI Offline",
+                sipRegistered: "CloryAI Online",
                 hotlineLabel: "Airport Hotline:",
                 sosLabel: "Medical / SOS:",
                 infoLabel: "Info Desk:",
                 infoVal: "Level 1 - Arrivals",
                 terminalSub: "INTERNATIONAL AIRPORT • TERMINAL T2",
                 dropdownHeader: "Other Languages / Ngôn ngữ khác",
-                tabInteractiveMap: "Interactive Map",
-                tabFloorMap: "Floor Map",
                 faqHeader: "Popular Questions:",
                 faq1: '"Where are the boarding gates located?"',
                 faq2: '"What is the airport free Wi-Fi password?"',
@@ -1498,16 +1443,16 @@
                 wifiLabel: "Wi-Fi Miễn phí Tốc độ cao",
                 touchHint: "Chạm vào màn hình để bắt đầu thao tác",
                 closeBtn: "Đóng",
-                clorySub: "Trò chuyện cùng Trợ lý CloryAI",
-                micStatus: "CloryAI đang lắng nghe bạn...",
+                clorySub: "Clory đã sẵn sàng hỗ trợ...",
+                callBtn: "GỌI NGAY",
+                sipOffline: "CloryAI Offline",
+                sipRegistered: "CloryAI Online",
                 hotlineLabel: "Hotline Sân Bay:",
                 sosLabel: "Cấp cứu Y tế / SOS:",
                 infoLabel: "Quầy thông tin:",
                 infoVal: "Tầng 1 - Sảnh Đến",
                 terminalSub: "SÂN BAY QUỐC TẾ • GA QUỐC TẾ T2",
                 dropdownHeader: "Ngôn ngữ khác / More",
-                tabInteractiveMap: "Bản đồ tương tác",
-                tabFloorMap: "Bản đồ tầng",
                 faqHeader: "Gợi ý câu hỏi phổ biến:",
                 faq1: '"Cổng ra máy bay (Gates) nằm ở đâu?"',
                 faq2: '"Mật khẩu Wifi miễn phí sân bay là gì?"',
@@ -1541,16 +1486,16 @@
                 wifiLabel: "무료 고속 Wi-Fi",
                 touchHint: "화면을 터치하여 시작하세요",
                 closeBtn: "닫기",
-                clorySub: "CloryAI 어시스턴트와 대화하기",
-                micStatus: "CloryAI가 귀하의 음성을 듣고 있습니다...",
+                clorySub: "Clory가 도와드릴 준비가 되었습니다...",
+                callBtn: "지금 전화하기",
+                sipOffline: "CloryAI 오프라인",
+                sipRegistered: "CloryAI 온라인",
                 hotlineLabel: "공항 핫라인:",
                 sosLabel: "응급 / SOS:",
                 infoLabel: "안내 데스크:",
                 infoVal: "1층 - 입국장",
                 terminalSub: "국제공항 • T2 터미널",
                 dropdownHeader: "기타 언어 / Other Languages",
-                tabInteractiveMap: "인터랙티브 지도",
-                tabFloorMap: "층별 지도",
                 faqHeader: "자주 묻는 질문:",
                 faq1: '"탑승구는 어디에 있나요?"',
                 faq2: '"공항 무료 Wi-Fi 비밀번호는 무엇인가요?"',
@@ -1584,16 +1529,16 @@
                 wifiLabel: "免费高速 Wi-Fi",
                 touchHint: "点击屏幕开始操作",
                 closeBtn: "关闭",
-                clorySub: "与 CloryAI 助手对话",
-                micStatus: "CloryAI 正在倾听您的讲话...",
+                clorySub: "Clory 随时为您提供帮助...",
+                callBtn: "立即呼叫",
+                sipOffline: "CloryAI 离线",
+                sipRegistered: "CloryAI 在线",
                 hotlineLabel: "机场服务热线:",
                 sosLabel: "医疗急救 / SOS:",
                 infoLabel: "问询服务台:",
                 infoVal: "1层 - 到达大厅",
                 terminalSub: "国际机场 • T2 航站楼",
                 dropdownHeader: "其他语言 / Other Languages",
-                tabInteractiveMap: "互动地图",
-                tabFloorMap: "楼层地图",
                 faqHeader: "常见问题:",
                 faq1: '"登机口在什么位置？"',
                 faq2: '"机场免费 Wi-Fi 密码是什么？"',
@@ -1627,16 +1572,16 @@
                 wifiLabel: "Бесплатный Wi-Fi",
                 touchHint: "Коснитесь экрана для старта",
                 closeBtn: "Закрыть",
-                clorySub: "Общайтесь с CloryAI",
-                micStatus: "CloryAI слушает вас...",
+                clorySub: "Clory готова помочь вам...",
+                callBtn: "ПОЗВОНИТЬ СЕЙЧАС",
+                sipOffline: "CloryAI Офлайн",
+                sipRegistered: "CloryAI Онлайн",
                 hotlineLabel: "Горячая линия:",
                 sosLabel: "Медпомощь / SOS:",
                 infoLabel: "Справочная:",
                 infoVal: "Этаж 1 - Зал прибытия",
                 terminalSub: "МЕЖДУНАРОДНЫЙ АЭРОПОРТ • ТЕРМИНАЛ T2",
                 dropdownHeader: "Другие языки / More",
-                tabInteractiveMap: "Интерактивная карта",
-                tabFloorMap: "План этажей",
                 faqHeader: "Популярные вопросы:",
                 faq1: '"Где находятся выходы на посадку?"',
                 faq2: '"Какой пароль от бесплатного Wi-Fi?"',
@@ -1670,16 +1615,16 @@
                 wifiLabel: "無料高速 Wi-Fi",
                 touchHint: "画面をタッチしてスタート",
                 closeBtn: "閉じる",
-                clorySub: "CloryAIアシスタントと対話",
-                micStatus: "CloryAIがあなたの声を聴いています...",
+                clorySub: "Cloryがサポートする準備ができました...",
+                callBtn: "今すぐ電話",
+                sipOffline: "CloryAI オフライン",
+                sipRegistered: "CloryAI オンライン",
                 hotlineLabel: "空港ホットライン:",
                 sosLabel: "救急 / SOS:",
                 infoLabel: "案内カウンター:",
                 infoVal: "1階 到着ロビー",
                 terminalSub: "国際空港 • 第2ターミナル",
                 dropdownHeader: "その他の言語 / More",
-                tabInteractiveMap: "インタラクティブマップ",
-                tabFloorMap: "フロアマップ",
                 faqHeader: "よくある質問:",
                 faq1: '"搭乗口はどこにありますか？"',
                 faq2: '"無料Wi-Fiのパスワードは何ですか？"',
@@ -1713,16 +1658,16 @@
                 wifiLabel: "Wi-Fi Gratuit",
                 touchHint: "Touchez l'écran pour commencer",
                 closeBtn: "Fermer",
-                clorySub: "Discutez avec CloryAI",
-                micStatus: "CloryAI est à votre écoute...",
+                clorySub: "Clory est prête à vous aider...",
+                callBtn: "APPELER MAINTENANT",
+                sipOffline: "CloryAI Hors ligne",
+                sipRegistered: "CloryAI En ligne",
                 hotlineLabel: "Ligne directe:",
                 sosLabel: "Urgences / SOS:",
                 infoLabel: "Bureau d'information:",
                 infoVal: "Niveau 1 - Arrivées",
                 terminalSub: "AÉROPORT INTERNATIONAL • T2",
                 dropdownHeader: "Autres langues / More",
-                tabInteractiveMap: "Carte interactive",
-                tabFloorMap: "Plan des étages",
                 faqHeader: "Questions fréquentes:",
                 faq1: '"Où se trouvent les portes d\'embarquement ?"',
                 faq2: '"Quel est le mot de passe du Wi-Fi gratuit ?"',
@@ -1756,16 +1701,16 @@
                 wifiLabel: "Kostenloses WLAN",
                 touchHint: "Zum Starten Bildschirm berühren",
                 closeBtn: "Schließen",
-                clorySub: "Sprechen Sie mit CloryAI",
-                micStatus: "CloryAI hört Ihnen zu...",
+                clorySub: "Clory ist bereit Ihnen zu helfen...",
+                callBtn: "JETZT ANRUFEN",
+                sipOffline: "CloryAI Offline",
+                sipRegistered: "CloryAI Online",
                 hotlineLabel: "Flughafen-Hotline:",
                 sosLabel: "Notfall / SOS:",
                 infoLabel: "Schalter:",
                 infoVal: "Ebene 1 - Ankunft",
                 terminalSub: "INTERNATIONALER FLUGHAFEN • T2",
                 dropdownHeader: "Weitere Sprachen / More",
-                tabInteractiveMap: "Interaktive Karte",
-                tabFloorMap: "Etagenplan",
                 faqHeader: "Häufige Fragen:",
                 faq1: '"Wo befinden sich die Gates?"',
                 faq2: '"Wie lautet das WLAN-Passwort?"',
@@ -1799,16 +1744,16 @@
                 wifiLabel: "Wi-Fi ความเร็วสูงฟรี",
                 touchHint: "แตะหน้าจอเพื่อเริ่มใช้งาน",
                 closeBtn: "ปิด",
-                clorySub: "พูดคุยกับผู้ช่วย CloryAI",
-                micStatus: "CloryAI กำลังฟังคุณอยู่...",
+                clorySub: "Clory พร้อมช่วยเหลือคุณแล้ว...",
+                callBtn: "โทรเลย",
+                sipOffline: "CloryAI ออฟไลน์",
+                sipRegistered: "CloryAI ออนไลน์",
                 hotlineLabel: "สายด่วนสนามบิน:",
                 sosLabel: "ฉุกเฉิน / SOS:",
                 infoLabel: "เคาน์เตอร์ประชาสัมพันธ์:",
                 infoVal: "ชั้น 1 - ขาเข้า",
                 terminalSub: "ท่าอากาศยานนานาชาติ • อาคาร T2",
                 dropdownHeader: "ภาษาอื่นๆ / More",
-                tabInteractiveMap: "แผนที่แบบโต้ตอบ",
-                tabFloorMap: "แผนที่ผังชั้น",
                 faqHeader: "คำถามที่พบบ่อย:",
                 faq1: '"ประตูขึ้นเครื่องตั้งอยู่ที่ไหน?"',
                 faq2: '"รหัสผ่าน Wi-Fi ฟรีของสนามบินคืออะไร?"',
@@ -1821,7 +1766,6 @@
         function changeLang(langKey) {
             currentLang = langKey;
             
-            // Update Active Lang Button Styles
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('bg-teal', 'text-white', 'shadow-md');
                 btn.classList.add('text-slate-300');
@@ -1832,12 +1776,10 @@
                 activeBtn.classList.remove('text-slate-300');
             }
 
-            // Sync index and update hero text
             const idx = supportedLangs.indexOf(langKey);
             if (idx !== -1) cycleLangIndex = idx;
             updateHeroContent(langKey);
 
-            // Update All Static UI Elements Across the Screen
             const t = i18n[langKey] || i18n['en'];
             
             if(document.getElementById('status-text')) document.getElementById('status-text').innerText = t.status;
@@ -1875,7 +1817,7 @@
             if(document.getElementById('modal-ai-header-title')) document.getElementById('modal-ai-header-title').innerText = t.aiTitle;
             if(document.getElementById('modal-ai-close-btn')) document.getElementById('modal-ai-close-btn').innerText = t.closeBtn;
             if(document.getElementById('clory-sub-text')) document.getElementById('clory-sub-text').innerText = t.clorySub;
-            if(document.getElementById('mic-status')) document.getElementById('mic-status').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span><span>${t.micStatus}</span>`;
+            if(document.getElementById('sip-call-btn-label')) document.getElementById('sip-call-btn-label').innerText = t.callBtn;
 
             if(document.getElementById('faq-header')) document.getElementById('faq-header').innerText = t.faqHeader;
             if(document.getElementById('faq-1')) document.getElementById('faq-1').innerText = t.faq1;
@@ -1884,10 +1826,13 @@
             if(document.getElementById('faq-4')) document.getElementById('faq-4').innerText = t.faq4;
             if(document.getElementById('faq-5')) document.getElementById('faq-5').innerText = t.faq5;
 
-            // Re-render Lucide icons for dynamically injected markup
+            if (ua && ua.isRegistered()) {
+                updateSipStatus('registered');
+            } else {
+                updateSipStatus('unregistered');
+            }
+
             if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
-            
-            // Refresh date string for language
             updateClock();
         }
     </script>
