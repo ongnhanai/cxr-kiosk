@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kiosk Sân Bay Quốc Tế Cam Ranh - CXR Smart Hub</title>
 
-    <!-- Hidden Remote Audio Element for WebRTC Call Stream (Off-screen, non-zero frame to ensure decoder works) -->
-    <audio id="sip-remote-audio" autoplay playsinline style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></audio>
+    <!-- Hidden / Off-screen Media Element for Remote WebRTC Video & Audio Stream -->
+    <video id="sip-remote-video" autoplay playsinline style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></video>
 
     <script>
         (function() {
@@ -389,7 +389,7 @@
                         <i data-lucide="bot" class="w-9 h-9"></i>
                     </div>
                     <span class="bg-gold/20 border border-gold/40 text-gold text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 animate-pulse" id="badge-ai">
-                        <span class="w-2 h-2 rounded-full bg-gold"></span> AI Voice Assistant 24/7
+                        <span class="w-2 h-2 rounded-full bg-gold"></span> Voice & Video Call 24/7
                     </span>
                 </div>
 
@@ -398,13 +398,13 @@
                         CLORY AI ASSISTANT
                     </h3>
                     <p class="text-slate-300 text-sm mt-2 leading-relaxed" id="card-ai-desc">
-                        Voice assistant for terminal maps, gate locations, baggage inquiries & Nha Trang travel guides.
+                        Voice & Video assistant for terminal maps, gate locations, baggage inquiries & Nha Trang travel guides.
                     </p>
                 </div>
 
                 <div class="relative z-10 flex items-center justify-between bg-white/10 group-hover:bg-gold group-hover:text-navy p-4 rounded-2xl border border-white/15 transition-all">
                     <span class="font-extrabold text-sm uppercase tracking-wider text-white group-hover:text-navy" id="card-ai-btn">TALK TO CLORY AI</span>
-                    <i data-lucide="mic" class="w-6 h-6 text-gold group-hover:text-navy group-hover:scale-110 transition-all"></i>
+                    <i data-lucide="video" class="w-6 h-6 text-gold group-hover:text-navy group-hover:scale-110 transition-all"></i>
                 </div>
             </div>
 
@@ -475,7 +475,7 @@
     </div>
 
     <div id="clory-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-8 transition-opacity">
-        <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-5xl h-[80vh] flex flex-col overflow-hidden shadow-2xl relative">
+        <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-5xl h-[82vh] flex flex-col overflow-hidden shadow-2xl relative">
             <!-- Modal Header -->
             <div class="p-6 bg-navy-dark border-b border-white/10 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
@@ -500,48 +500,74 @@
                 </div>
             </div>
 
-            <!-- CloryAI Voice Pulse Body -->
+            <!-- CloryAI Voice & Video Call Body -->
             <div class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 p-8 flex items-center justify-between relative">
-                <!-- Left Section: Interactive Pulse Orb Audio Visualizer -->
+                <!-- Left Section: Pulse Orb Visualizer or Video Display Box -->
                 <div class="w-1/2 flex flex-col items-center justify-center border-r border-white/10 pr-8 relative">
                     
-                    <!-- Dynamic Pulse Orb Sphere Container -->
-                    <div class="relative w-60 h-60 flex items-center justify-center mb-3">
-                        <div id="orb-wave-outer" class="absolute w-52 h-52 rounded-full border border-teal/40 bg-teal/10 orb-wave-1 pointer-events-none"></div>
-                        <div id="orb-wave-mid" class="absolute w-40 h-40 rounded-full border border-gold/40 bg-gold/10 orb-wave-2 pointer-events-none"></div>
+                    <!-- Local Webcam Video Preview Box (PIP) & Local Audio Visualizer -->
+                    <div id="video-display-container" class="relative w-full max-w-sm h-56 bg-slate-900/90 rounded-2xl border border-teal/40 overflow-hidden shadow-2xl hidden mb-3 flex items-center justify-center">
+                        <!-- Remote Video Feed -->
+                        <video id="video-remote-view" autoplay playsinline class="w-full h-full object-cover"></video>
                         
-                        <!-- Core Glowing Teal Orb -->
-                        <div id="pulse-orb" class="relative z-10 w-32 h-32 rounded-full bg-gradient-to-tr from-teal via-cyan-400 to-gold shadow-[0_0_50px_rgba(0,168,150,0.8)] border-2 border-white/80 flex items-center justify-center transition-all duration-100 ease-out">
-                            <i data-lucide="mic" id="orb-mic-icon" class="w-12 h-12 text-navy font-bold animate-pulse"></i>
+                        <!-- Local Video PIP Feed -->
+                        <video id="sip-local-video" autoplay playsinline muted class="absolute bottom-2 right-2 w-28 h-20 bg-black/80 rounded-xl border-2 border-teal object-cover shadow-lg hidden z-20"></video>
+                        
+                        <!-- Video Status Overlay Tag -->
+                        <div class="absolute top-3 left-3 bg-black/60 border border-white/20 px-3 py-1 rounded-full text-[10px] font-mono text-teal flex items-center gap-1.5 z-10">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>Live Video HD</span>
                         </div>
                     </div>
 
-                    <!-- In-Call Timer Positioned Immediately Below Pulse Orb -->
-                    <div id="sip-incall-timer-box" class="hidden mb-4">
+                    <!-- Dynamic Pulse Orb Sphere Container (Audio Mode) -->
+                    <div id="pulse-orb-container" class="relative w-52 h-52 flex items-center justify-center mb-2">
+                        <div id="orb-wave-outer" class="absolute w-48 h-48 rounded-full border border-teal/40 bg-teal/10 orb-wave-1 pointer-events-none"></div>
+                        <div id="orb-wave-mid" class="absolute w-36 h-36 rounded-full border border-gold/40 bg-gold/10 orb-wave-2 pointer-events-none"></div>
+                        
+                        <!-- Core Glowing Teal Orb -->
+                        <div id="pulse-orb" class="relative z-10 w-28 h-28 rounded-full bg-gradient-to-tr from-teal via-cyan-400 to-gold shadow-[0_0_50px_rgba(0,168,150,0.8)] border-2 border-white/80 flex items-center justify-center transition-all duration-100 ease-out">
+                            <i data-lucide="mic" id="orb-mic-icon" class="w-10 h-10 text-navy font-bold animate-pulse"></i>
+                        </div>
+                    </div>
+
+                    <!-- In-Call Timer Positioned Immediately Below Orb/Video -->
+                    <div id="sip-incall-timer-box" class="hidden mb-3">
                         <span id="sip-call-timer" class="font-mono text-sm font-extrabold text-gold px-4 py-1.5 bg-black/60 border border-gold/40 rounded-full shadow-lg">00:00</span>
                     </div>
 
                     <!-- Voice Status Indicator & WebRTC Call Action -->
-                    <div class="text-center z-10 w-full max-w-xs">
-                        <div class="text-white font-bold text-lg" id="clory-sub-text">Clory is ready to assist...</div>
-                        <p class="text-teal text-xs mt-1 font-mono flex items-center justify-center gap-1.5 mb-4" id="mic-status">
+                    <div class="text-center z-10 w-full max-w-sm">
+                        <div class="text-white font-bold text-base" id="clory-sub-text">Clory is ready to assist...</div>
+                        <p class="text-teal text-[11px] mt-0.5 font-mono flex items-center justify-center gap-1.5 mb-3" id="mic-status">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                             <span>Listening to audio...</span>
                         </p>
 
-                        <!-- WebRTC Live Call Control Panel -->
-                        <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col items-center space-y-2">
+                        <!-- WebRTC Voice & Video Call Control Panel -->
+                        <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col items-center space-y-2.5">
+                            
+                            <!-- Toggle Media Controls (Voice & Video Selectors) -->
+                            <div class="w-full grid grid-cols-2 gap-2">
+                                <button id="btn-toggle-mic" onclick="toggleAudioTrack()" class="w-full py-2 px-3 bg-emerald-500/20 border border-emerald-500/40 hover:bg-emerald-500/30 text-emerald-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5">
+                                    <i data-lucide="mic" class="w-3.5 h-3.5"></i>
+                                    <span id="lbl-mic">Mic: On</span>
+                                </button>
+                                <button id="btn-toggle-cam" onclick="toggleVideoTrack()" class="w-full py-2 px-3 bg-white/10 border border-white/15 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5">
+                                    <i data-lucide="video-off" class="w-3.5 h-3.5 text-slate-400"></i>
+                                    <span id="lbl-cam">Camera: Off</span>
+                                </button>
+                            </div>
+
+                            <!-- Primary Call Button -->
                             <button id="btn-sip-call" onclick="toggleSipCall()" class="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-500 to-teal text-white font-extrabold text-xs rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition flex items-center justify-center space-x-2">
                                 <i data-lucide="phone-call" class="w-4 h-4"></i>
                                 <span id="sip-call-btn-label">CALL NOW</span>
                             </button>
                             
-                            <!-- Active Call Controls -->
-                            <div id="sip-incall-controls" class="hidden w-full flex items-center justify-center space-x-2 pt-1">
-                                <button onclick="toggleSipMute()" id="btn-sip-mute" class="p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs flex items-center gap-1">
-                                    <i data-lucide="mic-off" class="w-4 h-4 text-amber-400"></i> Mute
-                                </button>
-                                <button onclick="hangupSipCall()" class="p-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs flex items-center gap-1 font-bold">
+                            <!-- Active Call End Button -->
+                            <div id="sip-incall-controls" class="hidden w-full pt-1">
+                                <button onclick="hangupSipCall()" class="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs flex items-center justify-center gap-1.5 font-bold shadow-lg">
                                     <i data-lucide="phone-off" class="w-4 h-4"></i> Hang Up
                                 </button>
                             </div>
@@ -649,13 +675,16 @@
         let cycleLangIndex = 0;
         const supportedLangs = ['en', 'vi', 'kr', 'cn', 'ru', 'jp', 'fr', 'de', 'th'];
 
-        // WebRTC SIP Client State
+        // WebRTC SIP Client & Media Track States
         let ua = null;
         let activeSession = null;
         let callTimerInterval = null;
         let callSeconds = 0;
-        let isMuted = false;
         
+        let isAudioEnabled = true;
+        let isVideoEnabled = false;
+        let localMediaStream = null;
+
         let sipConfig = {
             wssUrl: localStorage.getItem('cxr_sip_wss') || '',
             extension: localStorage.getItem('cxr_sip_ext') || '1001',
@@ -942,6 +971,76 @@
             }
         }
 
+        // Toggle Microphone Audio State
+        function toggleAudioTrack() {
+            isAudioEnabled = !isAudioEnabled;
+            const btn = document.getElementById('btn-toggle-mic');
+            const lbl = document.getElementById('lbl-mic');
+            const t = i18n[currentLang] || i18n['en'];
+
+            if (isAudioEnabled) {
+                btn.className = "w-full py-2 px-3 bg-emerald-500/20 border border-emerald-500/40 hover:bg-emerald-500/30 text-emerald-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
+                btn.innerHTML = `<i data-lucide="mic" class="w-3.5 h-3.5"></i> <span id="lbl-mic">${t.micOn}</span>`;
+                if (activeSession && activeSession.unmute) activeSession.unmute({ audio: true });
+            } else {
+                btn.className = "w-full py-2 px-3 bg-red-500/20 border border-red-500/40 hover:bg-red-500/30 text-red-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
+                btn.innerHTML = `<i data-lucide="mic-off" class="w-3.5 h-3.5"></i> <span id="lbl-mic">${t.micOff}</span>`;
+                if (activeSession && activeSession.mute) activeSession.mute({ audio: true });
+            }
+            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+        }
+
+        // Toggle Camera Video State
+        async function toggleVideoTrack() {
+            isVideoEnabled = !isVideoEnabled;
+            const btn = document.getElementById('btn-toggle-cam');
+            const videoDisplay = document.getElementById('video-display-container');
+            const pulseContainer = document.getElementById('pulse-orb-container');
+            const localVideoEl = document.getElementById('sip-local-video');
+            const t = i18n[currentLang] || i18n['en'];
+
+            if (isVideoEnabled) {
+                btn.className = "w-full py-2 px-3 bg-teal/20 border border-teal/40 hover:bg-teal/30 text-teal rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
+                btn.innerHTML = `<i data-lucide="video" class="w-3.5 h-3.5"></i> <span id="lbl-cam">${t.camOn}</span>`;
+                
+                videoDisplay.classList.remove('hidden');
+                pulseContainer.classList.add('hidden');
+
+                // Request Camera Access for Local PIP
+                try {
+                    const videoStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                    if (localVideoEl) {
+                        localVideoEl.srcObject = videoStream;
+                        localVideoEl.classList.remove('hidden');
+                    }
+                } catch (e) {
+                    console.warn("Webcam access note:", e);
+                }
+
+                if (activeSession && activeSession.unmute) {
+                    activeSession.unmute({ video: true });
+                }
+            } else {
+                btn.className = "w-full py-2 px-3 bg-white/10 border border-white/15 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
+                btn.innerHTML = `<i data-lucide="video-off" class="w-3.5 h-3.5 text-slate-400"></i> <span id="lbl-cam">${t.camOff}</span>`;
+                
+                videoDisplay.classList.add('hidden');
+                pulseContainer.classList.remove('hidden');
+
+                if (localVideoEl && localVideoEl.srcObject) {
+                    const tracks = localVideoEl.srcObject.getTracks();
+                    tracks.forEach(tr => tr.stop());
+                    localVideoEl.srcObject = null;
+                    localVideoEl.classList.add('hidden');
+                }
+
+                if (activeSession && activeSession.mute) {
+                    activeSession.mute({ video: true });
+                }
+            }
+            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+        }
+
         function toggleSipCall() {
             if (activeSession) {
                 hangupSipCall();
@@ -953,11 +1052,11 @@
                 return;
             }
 
-            const remoteAudio = document.getElementById('sip-remote-audio');
-            if (remoteAudio) {
-                remoteAudio.muted = false;
-                remoteAudio.volume = 1.0;
-                remoteAudio.play().catch(() => {});
+            const remoteMediaEl = document.getElementById('sip-remote-video');
+            if (remoteMediaEl) {
+                remoteMediaEl.muted = false;
+                remoteMediaEl.volume = 1.0;
+                remoteMediaEl.play().catch(() => {});
             }
 
             if (!audioCtx) {
@@ -992,10 +1091,10 @@
 
             const options = {
                 eventHandlers: eventHandlers,
-                mediaConstraints: { audio: true, video: false },
+                mediaConstraints: { audio: isAudioEnabled, video: isVideoEnabled },
                 rtcOfferConstraints: {
                     offerToReceiveAudio: true,
-                    offerToReceiveVideo: false
+                    offerToReceiveVideo: true
                 }
             };
 
@@ -1009,19 +1108,25 @@
 
             const handleRemoteStream = (stream) => {
                 stopRingbackTone();
-                const remoteAudio = document.getElementById('sip-remote-audio');
-                if (remoteAudio && stream) {
-                    remoteAudio.srcObject = stream;
-                    remoteAudio.muted = false;
-                    remoteAudio.volume = 1.0;
+                const remoteMediaEl = document.getElementById('sip-remote-video');
+                const remoteViewEl = document.getElementById('video-remote-view');
+
+                if (stream) {
+                    if (remoteMediaEl) {
+                        remoteMediaEl.srcObject = stream;
+                        remoteMediaEl.muted = false;
+                        remoteMediaEl.volume = 1.0;
+                        remoteMediaEl.play().catch(() => {});
+                    }
+
+                    if (remoteViewEl) {
+                        remoteViewEl.srcObject = stream;
+                        remoteViewEl.play().catch(() => {});
+                    }
 
                     if (audioCtx && audioCtx.state === 'suspended') {
                         audioCtx.resume();
                     }
-
-                    remoteAudio.play().catch(err => {
-                        console.warn("Playback prevented:", err);
-                    });
 
                     if (audioCtx) {
                         try {
@@ -1060,14 +1165,12 @@
                     stopRingbackTone();
                     if (session.connection) {
                         const receivers = session.connection.getReceivers ? session.connection.getReceivers() : [];
-                        const audioTracks = [];
+                        const tracks = [];
                         receivers.forEach(receiver => {
-                            if (receiver.track && receiver.track.kind === 'audio') {
-                                audioTracks.push(receiver.track);
-                            }
+                            if (receiver.track) tracks.push(receiver.track);
                         });
-                        if (audioTracks.length > 0) {
-                            handleRemoteStream(new MediaStream(audioTracks));
+                        if (tracks.length > 0) {
+                            handleRemoteStream(new MediaStream(tracks));
                         }
                     }
                 });
@@ -1093,18 +1196,6 @@
             }
             activeSession = null;
             resetCallUI();
-        }
-
-        function toggleSipMute() {
-            if (!activeSession) return;
-            isMuted = !isMuted;
-            if (isMuted) {
-                if (activeSession.mute) activeSession.mute({ audio: true });
-                document.getElementById('btn-sip-mute').classList.add('bg-amber-500/30', 'text-amber-300');
-            } else {
-                if (activeSession.unmute) activeSession.unmute({ audio: true });
-                document.getElementById('btn-sip-mute').classList.remove('bg-amber-500/30', 'text-amber-300');
-            }
         }
 
         function startCallTimer() {
@@ -1137,7 +1228,15 @@
             const t = i18n[currentLang] || i18n['en'];
             document.getElementById('sip-call-btn-label').innerText = t.callBtn;
             activeSession = null;
-            isMuted = false;
+
+            // Clean up local camera PIP stream
+            const localVideoEl = document.getElementById('sip-local-video');
+            if (localVideoEl && localVideoEl.srcObject) {
+                const tracks = localVideoEl.srcObject.getTracks();
+                tracks.forEach(tr => tr.stop());
+                localVideoEl.srcObject = null;
+                localVideoEl.classList.add('hidden');
+            }
         }
 
         function openSipConfigModal() {
@@ -1254,7 +1353,7 @@
                     throw new Error("Microphone API restricted");
                 }
 
-                micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: isVideoEnabled });
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (!analyser) {
                     analyser = audioCtx.createAnalyser();
@@ -1372,9 +1471,9 @@
                 mapBtn: "OPEN INTERACTIVE MAP",
                 badgeMap: "Interactive Navigation",
                 aiTitle: "CLORY AI ASSISTANT",
-                aiDesc: "Voice assistant for terminal maps, gate locations, baggage inquiries & Nha Trang travel guides.",
+                aiDesc: "Voice & Video assistant for terminal maps, gate locations, baggage inquiries & Nha Trang travel guides.",
                 aiBtn: "TALK TO CLORY AI",
-                badgeAi: "AI Voice Assistant 24/7",
+                badgeAi: "Voice & Video Call 24/7",
                 amenitiesTitle: "Areas & Amenities",
                 amenitiesSub: "Services at Terminal 1 & 2",
                 amenity1Title: "Dining & Cafés",
@@ -1390,6 +1489,10 @@
                 closeBtn: "Close",
                 clorySub: "Clory is ready to assist...",
                 callBtn: "CALL NOW",
+                micOn: "Mic: On",
+                micOff: "Mic: Off",
+                camOn: "Camera: On",
+                camOff: "Camera: Off",
                 sipOffline: "CloryAI Offline",
                 sipRegistered: "CloryAI Online",
                 hotlineLabel: "Airport Hotline:",
@@ -1415,9 +1518,9 @@
                 mapBtn: "MỞ BẢN ĐỒ TƯƠNG TÁC",
                 badgeMap: "Dẫn đường trực quan",
                 aiTitle: "TRỢ LÝ ẢO CLORY AI",
-                aiDesc: "Hỏi đáp giọng nói, sơ đồ nhà ga, vị trí cổng, thủ tục hành lý & thông tin du lịch Nha Trang.",
+                aiDesc: "Hỏi đáp giọng nói & Video call, sơ đồ nhà ga, vị trí cổng, thủ tục hành lý & thông tin du lịch Nha Trang.",
                 aiBtn: "TRÒ CHUYỆN VỚI CLORY AI",
-                badgeAi: "Trợ lý Giọng nói 24/7",
+                badgeAi: "Gọi Voice & Video 24/7",
                 amenitiesTitle: "Khu vực & Tiện ích",
                 amenitiesSub: "Dịch vụ tiện ích Tầng 1 & Tầng 2",
                 amenity1Title: "Ăn uống & Nhà hàng",
@@ -1433,6 +1536,10 @@
                 closeBtn: "Đóng",
                 clorySub: "Clory đã sẵn sàng hỗ trợ...",
                 callBtn: "GỌI NGAY",
+                micOn: "Mic: Bật",
+                micOff: "Mic: Tắt",
+                camOn: "Camera: Bật",
+                camOff: "Camera: Tắt",
                 sipOffline: "CloryAI Offline",
                 sipRegistered: "CloryAI Online",
                 hotlineLabel: "Hotline Sân Bay:",
@@ -1458,9 +1565,9 @@
                 mapBtn: "인터랙티브 지도 열기",
                 badgeMap: "실시간 길안내",
                 aiTitle: "CLORY AI 어시스턴트",
-                aiDesc: "음성 대화로 터미널 안내, 게이트 위치, 수하물 안내 및 나트랑 관광 정보를 확인하세요.",
+                aiDesc: "음성 및 비디오 통화로 터미널 안내, 게이트 위치, 수하물 안내 및 나트랑 관광 정보를 확인하세요.",
                 aiBtn: "CLORY AI와 대화하기",
-                badgeAi: "24/7 AI 음성 어시스턴트",
+                badgeAi: "24/7 음성 & 영상 통화",
                 amenitiesTitle: "구역 및 편의시설",
                 amenitiesSub: "터미널 1 및 2 편의 서비스",
                 amenity1Title: "식당 및 카페",
@@ -1476,6 +1583,10 @@
                 closeBtn: "닫기",
                 clorySub: "Clory가 도와드릴 준비가 되었습니다...",
                 callBtn: "지금 전화하기",
+                micOn: "마이크: 켜짐",
+                micOff: "마이크: 꺼짐",
+                camOn: "카메라: 켜짐",
+                camOff: "카메라: 꺼짐",
                 sipOffline: "CloryAI 오프라인",
                 sipRegistered: "CloryAI 온라인",
                 hotlineLabel: "공항 핫라인:",
@@ -1501,9 +1612,9 @@
                 mapBtn: "打开互动地图",
                 badgeMap: "互动地图导航",
                 aiTitle: "CLORY AI 智能助手",
-                aiDesc: "支持语音问答，查询航站楼地图、登机口位置、行李须知及芽庄旅游资讯。",
+                aiDesc: "支持语音与视频通话，查询航站楼地图、登机口位置、行李须知及芽庄旅游资讯。",
                 aiBtn: "与 CLORY AI 对话",
-                badgeAi: "24/7 AI 语音助手",
+                badgeAi: "24/7 语音与视频通话",
                 amenitiesTitle: "区域与服务设施",
                 amenitiesSub: "1号及2号航站楼服务",
                 amenity1Title: "餐饮与咖啡",
@@ -1519,6 +1630,10 @@
                 closeBtn: "关闭",
                 clorySub: "Clory 随时为您提供帮助...",
                 callBtn: "立即呼叫",
+                micOn: "麦克风: 开启",
+                micOff: "麦克风: 关闭",
+                camOn: "摄像头: 开启",
+                camOff: "摄像头: 关闭",
                 sipOffline: "CloryAI 离线",
                 sipRegistered: "CloryAI 在线",
                 hotlineLabel: "机场服务热线:",
@@ -1544,9 +1659,9 @@
                 mapBtn: "ОТКРЫТЬ ИНТЕРАКТИВНУЮ КАРТУ",
                 badgeMap: "Интерактивная навигация",
                 aiTitle: "ИИ-ПОМОЩНИК CLORY AI",
-                aiDesc: "Голосовой помощник: карты, выходы, багаж и гид по Нячангу.",
+                aiDesc: "Голосовые и видеозвонки: карты терминала, выходы, багаж и гид по Нячангу.",
                 aiBtn: "ГОВОРИТЬ С CLORY AI",
-                badgeAi: "Голосовой ИИ 24/7",
+                badgeAi: "Голос и Видео 24/7",
                 amenitiesTitle: "Зоны и Услуги",
                 amenitiesSub: "Сервисы Терминалов 1 и 2",
                 amenity1Title: "Рестораны и Кафе",
@@ -1562,6 +1677,10 @@
                 closeBtn: "Закрыть",
                 clorySub: "Clory готова помочь вам...",
                 callBtn: "ПОЗВОНИТЬ СЕЙЧАС",
+                micOn: "Микр: Вкл",
+                micOff: "Микр: Выкл",
+                camOn: "Камера: Вкл",
+                camOff: "Камера: Выкл",
                 sipOffline: "CloryAI Офлайн",
                 sipRegistered: "CloryAI Онлайн",
                 hotlineLabel: "Горячая линия:",
@@ -1587,9 +1706,9 @@
                 mapBtn: "マップを開く",
                 badgeMap: "マップナビゲーション",
                 aiTitle: "CLORY AI アシスタント",
-                aiDesc: "音声案内で搭乗口、手荷物案内、ニャチャン観光情報をご案内します。",
+                aiDesc: "音声・ビデオ通話で搭乗口、手荷物案内、ニャチャン観光情報をご案内します。",
                 aiBtn: "CLORY AIと話す",
-                badgeAi: "24/7 AI音声アシスタント",
+                badgeAi: "24/7 音声＆ビデオ通話",
                 amenitiesTitle: "エリア＆施設案内",
                 amenitiesSub: "第1・第2ターミナルサービス",
                 amenity1Title: "お食事・カフェ",
@@ -1605,6 +1724,10 @@
                 closeBtn: "閉じる",
                 clorySub: "Cloryがサポートする準備ができました...",
                 callBtn: "今すぐ電話",
+                micOn: "マイク: オン",
+                micOff: "マイク: オフ",
+                camOn: "カメラ: オン",
+                camOff: "カメラ: オフ",
                 sipOffline: "CloryAI オフライン",
                 sipRegistered: "CloryAI オンライン",
                 hotlineLabel: "空港ホットライン:",
@@ -1630,9 +1753,9 @@
                 mapBtn: "OUVRIR LA CARTE",
                 badgeMap: "Navigation interactive",
                 aiTitle: "ASSISTANT CLORY AI",
-                aiDesc: "Assistant vocal pour les plans du terminal, bagages et guides de Nha Trang.",
+                aiDesc: "Appels vocaux et vidéo pour les plans du terminal, bagages et guides de Nha Trang.",
                 aiBtn: "PARLER À CLORY AI",
-                badgeAi: "Assistant Vocal 24/7",
+                badgeAi: "Appel Vocal & Vidéo 24/7",
                 amenitiesTitle: "Zones & Services",
                 amenitiesSub: "Services aux T1 & T2",
                 amenity1Title: "Restaurants & Cafés",
@@ -1648,6 +1771,10 @@
                 closeBtn: "Fermer",
                 clorySub: "Clory est prête à vous aider...",
                 callBtn: "APPELER MAINTENANT",
+                micOn: "Mic: Activé",
+                micOff: "Mic: Désactivé",
+                camOn: "Cam: Activée",
+                camOff: "Cam: Désactivée",
                 sipOffline: "CloryAI Hors ligne",
                 sipRegistered: "CloryAI En ligne",
                 hotlineLabel: "Ligne directe:",
@@ -1673,9 +1800,9 @@
                 mapBtn: "INTERAKTIVE KARTE ÖFFNEN",
                 badgeMap: "Interaktive Navigation",
                 aiTitle: "CLORY AI ASSISTENT",
-                aiDesc: "Sprachassistent für Terminalpläne, Gates, Gepäck und Nha Trang Reisetipps.",
+                aiDesc: "Sprach- und Videoanrufe für Terminalpläne, Gates, Gepäck und Nha Trang Reisetipps.",
                 aiBtn: "MIT CLORY AI SPRECHEN",
-                badgeAi: "24/7 KI-Sprachassistent",
+                badgeAi: "Sprach- & Videoanruf 24/7",
                 amenitiesTitle: "Bereiche & Einrichtungen",
                 amenitiesSub: "Services in Terminal 1 & 2",
                 amenity1Title: "Gastronomie & Cafés",
@@ -1691,6 +1818,10 @@
                 closeBtn: "Schließen",
                 clorySub: "Clory ist bereit Ihnen zu helfen...",
                 callBtn: "JETZT ANRUFEN",
+                micOn: "Mik: An",
+                micOff: "Mik: Aus",
+                camOn: "Kamera: An",
+                camOff: "Kamera: Aus",
                 sipOffline: "CloryAI Offline",
                 sipRegistered: "CloryAI Online",
                 hotlineLabel: "Flughafen-Hotline:",
@@ -1716,9 +1847,9 @@
                 mapBtn: "เปิดแผนที่แบบโต้ตอบ",
                 badgeMap: "ระบบนำทางโต้ตอบ",
                 aiTitle: "ผู้ช่วยเสมือน CLORY AI",
-                aiDesc: "สอบถามด้วยเสียงเกี่ยวกับแผนที่อาคาร ตำแหน่งประตู และข้อมูลท่องเที่ยวญาจาง",
+                aiDesc: "สอบถามด้วยเสียงและวิดีโอคอลเกี่ยวกับแผนที่อาคาร ตำแหน่งประตู และข้อมูลท่องเที่ยวญาจาง",
                 aiBtn: "คุยกับ CLORY AI",
-                badgeAi: "ผู้ช่วยเสียง AI 24/7",
+                badgeAi: "โทรเสียง & วิดีโอ 24/7",
                 amenitiesTitle: "พื้นที่และสิ่งอำนวยความสะดวก",
                 amenitiesSub: "บริการในอาคาร T1 และ T2",
                 amenity1Title: "ร้านอาหารและกาแฟ",
@@ -1734,6 +1865,10 @@
                 closeBtn: "ปิด",
                 clorySub: "Clory พร้อมช่วยเหลือคุณแล้ว...",
                 callBtn: "โทรเลย",
+                micOn: "ไมค์: เปิด",
+                micOff: "ไมค์: ปิด",
+                camOn: "กล้อง: เปิด",
+                camOff: "กล้อง: ปิด",
                 sipOffline: "CloryAI ออฟไลน์",
                 sipRegistered: "CloryAI ออนไลน์",
                 hotlineLabel: "สายด่วนสนามบิน:",
@@ -1806,6 +1941,9 @@
             if(document.getElementById('modal-ai-close-btn')) document.getElementById('modal-ai-close-btn').innerText = t.closeBtn;
             if(document.getElementById('clory-sub-text')) document.getElementById('clory-sub-text').innerText = t.clorySub;
             if(document.getElementById('sip-call-btn-label')) document.getElementById('sip-call-btn-label').innerText = t.callBtn;
+
+            if(document.getElementById('lbl-mic')) document.getElementById('lbl-mic').innerText = isAudioEnabled ? t.micOn : t.micOff;
+            if(document.getElementById('lbl-cam')) document.getElementById('lbl-cam').innerText = isVideoEnabled ? t.camOn : t.camOff;
 
             if(document.getElementById('faq-header')) document.getElementById('faq-header').innerText = t.faqHeader;
             if(document.getElementById('faq-1')) document.getElementById('faq-1').innerText = t.faq1;
