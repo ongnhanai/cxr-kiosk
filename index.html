@@ -8,8 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons UMD Build for Reliability -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <!-- JsSIP Library for WebRTC PJSIP Connection -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.1/jssip.min.js"></script>
+    <!-- JsSIP Library for WebRTC PJSIP Connection (jsDelivr + unpkg Fallback) -->
+    <script src="https://cdn.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js"></script>
+    <script src="https://unpkg.com/jssip@3.10.1/dist/jssip.min.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
@@ -669,7 +670,20 @@
         // WebRTC JsSIP User Agent Initialization
         function initSIPUA() {
             if (typeof JsSIP === 'undefined') {
-                updateSipStatus('failed', 'Chưa tải thư viện JsSIP');
+                updateSipStatus('connecting', 'Đang nạp thư viện JsSIP...');
+                const sipScript = document.createElement('script');
+                sipScript.src = "https://cdn.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js";
+                sipScript.onload = () => {
+                    if (typeof JsSIP !== 'undefined') {
+                        initSIPUA();
+                    } else {
+                        updateSipStatus('failed', 'Lỗi khởi tạo JsSIP');
+                    }
+                };
+                sipScript.onerror = () => {
+                    updateSipStatus('failed', 'Chưa tải được JsSIP từ CDN');
+                };
+                document.head.appendChild(sipScript);
                 return;
             }
 
