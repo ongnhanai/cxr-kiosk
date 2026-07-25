@@ -4,14 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sân bay Quốc tế Cam Ranh - Kiosk Cảm ứng 40"</title>
+    <!-- Polyfill/Shield for legacy WebRTC shims on modern browsers -->
+    <script>
+        (function() {
+            if (typeof window !== 'undefined' && navigator && navigator.mediaDevices) {
+                try {
+                    var origGetUserMedia = navigator.mediaDevices.getUserMedia ? navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices) : null;
+                    var customGetUserMedia = origGetUserMedia;
+                    Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+                        get: function() { return customGetUserMedia; },
+                        set: function(fn) { customGetUserMedia = fn; },
+                        configurable: true,
+                        enumerable: true
+                    });
+                } catch (e) {
+                    console.warn("MediaDevices polyfill warning:", e);
+                }
+            }
+        })();
+    </script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons UMD Build for Reliability -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <!-- JsSIP Multi-CDN Loader with Automatic Failover -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.1/jssip.min.js"></script>
+    <!-- JsSIP Multi-CDN Loader with Valid Script URLs -->
     <script src="https://cdn.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js"></script>
     <script src="https://unpkg.com/jssip@3.10.1/dist/jssip.min.js"></script>
+    <script src="https://fastly.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.0/jssip.min.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
@@ -654,7 +674,6 @@
             targetExt: localStorage.getItem('cxr_sip_target') || '8000'
         };
 
-        // Safe Lucide Icon Initialization
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof lucide !== 'undefined' && lucide.createIcons) {
                 lucide.createIcons();
@@ -663,31 +682,57 @@
             startHeroAutoCycle();
             fetchRealtimeWeather();
             initSipFormFields();
-            if (sipConfig.wssUrl && sipConfig.extension) {
-                initSIPUA();
-            }
+            
+            // Asynchronously wait for JsSIP to finish loading from CDN tags
+            waitForJsSIP((SIPClass) => {
+                if (SIPClass && sipConfig.wssUrl && sipConfig.extension) {
+                    initSIPUA();
+                } else if (!sipConfig.wssUrl || !sipConfig.extension) {
+                    updateSipStatus('unregistered', 'SIP: Chưa cấu hình');
+                }
+            });
         });
 
-        // WebRTC JsSIP User Agent Initialization with Multi-CDN Failover
+        // Smart Polling Loader to handle async CDN script readiness
+        function waitForJsSIP(callback, maxAttempts = 25) {
+            let attempts = 0;
+            const check = () => {
+                const SIPObj = window.JsSIP || (typeof JsSIP !== 'undefined' ? JsSIP : null);
+                if (SIPObj) {
+                    callback(SIPObj);
+                    return;
+                }
+                attempts++;
+                if (attempts < maxAttempts) {
+                    setTimeout(check, 200);
+                } else {
+                    // Fallback to dynamic injection if static tags were blocked
+                    loadJsSIPFallback(0, callback);
+                }
+            };
+            check();
+        }
+
         const cdnList = [
-            "https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.1/jssip.min.js",
             "https://cdn.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js",
             "https://unpkg.com/jssip@3.10.1/dist/jssip.min.js",
-            "https://fastly.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js"
+            "https://fastly.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.0/jssip.min.js"
         ];
 
-        function loadJsSIP(cdnIndex = 0, onComplete) {
+        function loadJsSIPFallback(cdnIndex = 0, onComplete) {
             const SIPObj = window.JsSIP || (typeof JsSIP !== 'undefined' ? JsSIP : null);
             if (SIPObj) {
                 if (onComplete) onComplete(SIPObj);
                 return;
             }
             if (cdnIndex >= cdnList.length) {
+                updateSipStatus('failed', 'Lỗi: Không thể kết nối CDN JsSIP (Kiểm tra tường lửa)');
                 if (onComplete) onComplete(null);
                 return;
             }
 
-            updateSipStatus('connecting', `Thử nạp CDN (${cdnIndex + 1}/${cdnList.length})...`);
+            updateSipStatus('connecting', `Đang tải JsSIP (${cdnIndex + 1}/${cdnList.length})...`);
             const script = document.createElement('script');
             script.src = cdnList[cdnIndex];
             script.async = true;
@@ -696,11 +741,11 @@
                 if (loadedObj) {
                     if (onComplete) onComplete(loadedObj);
                 } else {
-                    loadJsSIP(cdnIndex + 1, onComplete);
+                    loadJsSIPFallback(cdnIndex + 1, onComplete);
                 }
             };
             script.onerror = () => {
-                loadJsSIP(cdnIndex + 1, onComplete);
+                loadJsSIPFallback(cdnIndex + 1, onComplete);
             };
             document.head.appendChild(script);
         }
@@ -708,12 +753,8 @@
         function initSIPUA() {
             const SIPClass = window.JsSIP || (typeof JsSIP !== 'undefined' ? JsSIP : null);
             if (!SIPClass) {
-                loadJsSIP(0, (SIPInstance) => {
-                    if (SIPInstance) {
-                        initSIPUA();
-                    } else {
-                        updateSipStatus('failed', 'Lỗi: Không thể nạp JsSIP từ CDN (Kiểm tra mạng / CSP)');
-                    }
+                waitForJsSIP((instance) => {
+                    if (instance) initSIPUA();
                 });
                 return;
             }
@@ -737,7 +778,6 @@
                 const ext = sipConfig.extension.trim();
                 let domain = (sipConfig.domain || '').trim();
                 
-                // Fallback: Extract host from WSS URL if domain field was left blank
                 if (!domain) {
                     try {
                         const parsedUrl = new URL(sipConfig.wssUrl.trim());
@@ -767,11 +807,11 @@
 
                 ua = new SIPClass.UA(configuration);
 
-                // Detailed Connection Lifecycle Event Listeners
-                ua.on('connecting', () => updateSipStatus('connecting', 'Đang mở WSS...'));
-                ua.on('connected', () => updateSipStatus('connecting', 'WSS OK - Đang đăng ký...'));
+                // Event Listeners
+                ua.on('connecting', () => updateSipStatus('connecting', 'Đang kết nối WSS...'));
+                ua.on('connected', () => updateSipStatus('connecting', 'WSS OK - Đang đăng ký SIP...'));
                 ua.on('disconnected', (e) => {
-                    const reason = e.error ? 'Lỗi chứng chỉ SSL/WSS' : `Đã ngắt (Mã ${e.code || 1006})`;
+                    const reason = e.error ? 'Lỗi SSL/WSS Certificate' : `Đã ngắt (Mã ${e.code || 1006})`;
                     updateSipStatus('failed', reason);
                 });
                 ua.on('registered', () => updateSipStatus('registered', `Ext ${ext} Online`));
@@ -781,7 +821,7 @@
                     updateSipStatus('failed', `Đăng ký thất bại: ${cause}`);
                 });
 
-                // Handle Incoming WebRTC SIP Calls
+                // Handle Incoming WebRTC Calls
                 ua.on('newRTCSession', (data) => {
                     const session = data.session;
                     if (session.direction === 'incoming') {
@@ -795,7 +835,7 @@
                 ua.start();
             } catch (err) {
                 console.error("SIP UA Initialization Error:", err);
-                updateSipStatus('failed', `Lỗi cấu hình: ${err.message || err}`);
+                updateSipStatus('failed', `Lỗi khởi tạo: ${err.message || err}`);
             }
         }
 
