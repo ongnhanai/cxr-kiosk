@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kiosk Sân Bay Quốc Tế Cam Ranh - CXR Smart Hub</title>
 
-    <!-- Hidden Remote Audio Element for WebRTC Call Stream (Positioned off-screen without display:none to ensure audio decoding) -->
+    <!-- Hidden Remote Audio Element for WebRTC Call Stream (Off-screen, non-zero frame to ensure decoder works) -->
     <audio id="sip-remote-audio" autoplay playsinline style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></audio>
 
     <script>
@@ -32,18 +32,18 @@
                             enumerable: true
                         });
                     } catch (err) {
-                        console.warn("MediaDevices polyfill warning:", err);
+                        console.warn("MediaDevices polyfill note:", err);
                     }
                 }
             }
         })();
     </script>
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons UMD Build -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <!-- JsSIP Multi-CDN Script Tags for WebRTC Voice Calling -->
+    <!-- JsSIP Multi-CDN Script Fallbacks for WebRTC Call Engine -->
     <script src="https://cdn.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js"></script>
     <script src="https://unpkg.com/jssip@3.10.1/dist/jssip.min.js"></script>
     <script src="https://fastly.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js"></script>
@@ -139,7 +139,6 @@
 </head>
 <body class="bg-slate-950 text-slate-800 h-screen w-screen flex flex-col justify-between overflow-hidden relative">
 
-    <!-- Background Dynamic Wallpaper with Overlay -->
     <div class="absolute inset-0 z-0">
         <img id="bg-image" src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1920&auto=format&fit=crop" 
              alt="Cam Ranh Airport" 
@@ -147,7 +146,6 @@
         <div class="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/60 to-transparent"></div>
     </div>
 
-    <!-- TOP HEADER BAR -->
     <header class="relative z-30 w-full bg-navy-dark/90 backdrop-blur-xl border-b border-white/10 px-8 py-4 flex items-center justify-between shadow-2xl">
         <!-- Logo & Airport Info -->
         <div class="flex items-center space-x-6">
@@ -159,7 +157,7 @@
                     <h1 class="text-white font-extrabold text-xl tracking-wide uppercase flex items-center gap-2">
                         CAM RANH <span class="text-gold font-bold text-sm bg-gold/20 px-2 py-0.5 rounded-md border border-gold/40">CXR</span>
                     </h1>
-                    <p class="text-slate-300 text-xs font-medium tracking-wider" id="header-terminal-sub">INTERNATIONAL AIRPORT • GA QUỐC TẾ T2</p>
+                    <p class="text-slate-300 text-xs font-medium tracking-wider" id="header-terminal-sub">INTERNATIONAL AIRPORT • TERMINAL T2</p>
                 </div>
             </div>
             
@@ -172,7 +170,7 @@
             </div>
         </div>
 
-        <!-- Right Header Widgets: Weather, Live Clock & 9-Language Selector -->
+        <!-- Right Header Widgets: Weather, Live Clock & Multi-Language Selector -->
         <div class="flex items-center space-x-6">
             <!-- Weather Widget (Realtime Open-Meteo API) -->
             <div class="flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl">
@@ -189,7 +187,7 @@
                 <div id="live-date" class="text-slate-300 text-xs mt-1 font-medium">Friday, 24/07/2026</div>
             </div>
 
-            <!-- Multi-language Switcher (English First) -->
+            <!-- Multi-language Switcher (English First Order) -->
             <div class="relative flex items-center bg-black/40 p-1.5 rounded-2xl border border-white/15 space-x-1 z-50" id="lang-selector">
                 <button onclick="changeLang('en')" id="btn-en" class="lang-btn active-lang px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-teal text-white shadow-md">
                     <span>🇬🇧</span> <span>ENG</span>
@@ -235,10 +233,9 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT GRID (40-inch 16:9 Landscape Layout) -->
     <main class="relative z-10 flex-1 p-8 grid grid-cols-12 gap-8 items-stretch overflow-hidden">
         
-        <!-- LEFT COLUMN (60% Width): Auto-cycling Hero Banner & Amenities -->
+        <!-- LEFT COLUMN (60% Width): Auto-cycling Hero Banner & Terminal Amenities -->
         <section class="col-span-7 flex flex-col justify-between space-y-6">
             
             <!-- Hero Banner Card -->
@@ -281,7 +278,6 @@
                 </div>
             </div>
 
-            <!-- Khu vực & Tiện ích Sân Bay (4 Cards) -->
             <div class="glass-dark rounded-3xl p-5 border border-white/15 shadow-xl">
                 <div class="flex items-center justify-between mb-3 px-1">
                     <div class="flex items-center space-x-2">
@@ -339,10 +335,9 @@
 
         </section>
 
-        <!-- RIGHT COLUMN (40% Width): 2 Giant Touch Launch Cards -->
         <section class="col-span-5 flex flex-col space-y-6">
             
-            <!-- BUTTON 1: BẢN ĐỒ SÂN BAY (Interactive Map Launcher) -->
+            <!-- BUTTON 1: INTERACTIVE MAP LAUNCH CARD -->
             <div onclick="openMapModal()" 
                  class="touch-effect flex-1 rounded-3xl p-7 bg-gradient-to-br from-navy-light via-navy to-slate-900 border-2 border-teal/40 hover:border-teal shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
                 
@@ -375,7 +370,7 @@
                 </div>
             </div>
 
-            <!-- BUTTON 2: CLORY AI ASSISTANT (Voice Launcher) -->
+            <!-- BUTTON 2: CLORY AI ASSISTANT LAUNCH CARD -->
             <div onclick="openCloryModal()" 
                  class="touch-effect flex-1 rounded-3xl p-7 bg-gradient-to-br from-navy-dark via-navy to-indigo-950 border-2 border-gold/40 hover:border-gold shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
                 
@@ -416,7 +411,6 @@
         </section>
     </main>
 
-    <!-- BOTTOM FOOTER BAR -->
     <footer class="relative z-10 w-full bg-navy-dark/95 border-t border-white/10 px-8 py-3 flex items-center justify-between">
         <!-- Hotlines & Contacts -->
         <div class="flex items-center space-x-8 text-xs text-slate-300">
@@ -448,7 +442,6 @@
         </div>
     </footer>
 
-    <!-- MODAL 1: INTERACTIVE WEB MAP POP-UP (90vw x 90vh Frame) -->
     <div id="map-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
         <div class="bg-navy border-2 border-teal rounded-3xl w-[90vw] h-[90vh] flex flex-col overflow-hidden shadow-2xl relative">
             <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
@@ -481,7 +474,6 @@
         </div>
     </div>
 
-    <!-- MODAL 2: CLORY AI VOICE POP-UP WITH REAL-TIME AUDIO PULSE ORB -->
     <div id="clory-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-8 transition-opacity">
         <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-5xl h-[80vh] flex flex-col overflow-hidden shadow-2xl relative">
             <!-- Modal Header -->
@@ -586,7 +578,6 @@
         </div>
     </div>
 
-    <!-- MODAL 3: WEBRTC SIP / PJSIP CONFIGURATION PANEL -->
     <div id="sip-config-modal" class="fixed inset-0 z-[120] bg-black/85 backdrop-blur-lg hidden flex items-center justify-center p-6 transition-opacity">
         <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl relative">
             <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
@@ -895,7 +886,6 @@
             }
         }
 
-        // Ringback Tone Generator
         let ringbackAudioCtx = null;
         let ringbackInterval = null;
 
@@ -1097,7 +1087,9 @@
         function hangupSipCall() {
             stopRingbackTone();
             if (activeSession && activeSession.terminate) {
-                activeSession.terminate();
+                try {
+                    activeSession.terminate();
+                } catch(e) {}
             }
             activeSession = null;
             resetCallUI();
@@ -1132,7 +1124,6 @@
 
         function showIncallUI() {
             document.getElementById('sip-incall-controls').classList.remove('hidden');
-            const t = i18n[currentLang] || i18n['en'];
             document.getElementById('sip-call-btn-label').innerText = "Connecting...";
         }
 
@@ -1192,7 +1183,6 @@
             closeSipConfigModal();
         }
 
-        // Open-Meteo Weather API for Cam Ranh
         async function fetchRealtimeWeather() {
             try {
                 const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=11.998&longitude=109.219&current_weather=true');
@@ -1207,7 +1197,6 @@
             } catch (err) {}
         }
 
-        // Real-time Digital Clock
         function updateClock() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -1226,7 +1215,6 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Modal Controllers
         function openMapModal() {
             document.getElementById('map-modal').classList.remove('hidden');
         }
@@ -1234,7 +1222,6 @@
             document.getElementById('map-modal').classList.add('hidden');
         }
 
-        // Web Audio API Pulse Visualizer
         let audioCtx = null;
         let analyser = null;
         let micStream = null;
@@ -1251,6 +1238,10 @@
         }
 
         function closeCloryModal() {
+            // Auto terminate active call when closing CloryAI pop-up
+            if (activeSession) {
+                hangupSipCall();
+            }
             document.getElementById('clory-modal').classList.add('hidden');
             stopPulseOrbAudio();
         }
@@ -1315,7 +1306,6 @@
             }
         }
 
-        // Language Dropdown Handler
         function toggleLangDropdown(e) {
             e.stopPropagation();
             const dropdown = document.getElementById('lang-dropdown');
@@ -1329,7 +1319,6 @@
 
         document.addEventListener('click', () => closeLangDropdown());
 
-        // Hero Auto-Cycle Engine
         function initDots() {
             const container = document.getElementById('carousel-dots');
             if (!container) return;
@@ -1372,7 +1361,6 @@
             });
         }
 
-        // Expanded 9-Language Dictionary
         const i18n = {
             en: {
                 welcomeTag: "Welcome Valued Passengers",
