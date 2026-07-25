@@ -117,7 +117,7 @@
                     <h1 class="text-white font-extrabold text-xl tracking-wide uppercase flex items-center gap-2">
                         CAM RANH <span class="text-gold font-bold text-sm bg-gold/20 px-2 py-0.5 rounded-md border border-gold/40">CXR</span>
                     </h1>
-                    <p class="text-slate-300 text-xs font-medium tracking-wider">INTERNATIONAL AIRPORT • GA QUỐC TẾ T2</p>
+                    <p class="text-slate-300 text-xs font-medium tracking-wider" id="header-terminal-sub">INTERNATIONAL AIRPORT • GA QUỐC TẾ T2</p>
                 </div>
             </div>
             
@@ -130,9 +130,9 @@
             </div>
         </div>
 
-        <!-- Right Header Widgets: Weather, Time & Multi-Language Switcher -->
+        <!-- Right Header Widgets: Weather, Time & Multi-Language Switcher (English First) -->
         <div class="flex items-center space-x-6">
-            <!-- Weather Widget (Realtime API Integrated) -->
+            <!-- Weather Widget -->
             <div class="flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl">
                 <i data-lucide="sun" id="weather-icon" class="w-7 h-7 text-gold animate-spin-slow"></i>
                 <div>
@@ -147,13 +147,13 @@
                 <div id="live-date" class="text-slate-300 text-xs mt-1 font-medium">Thứ Sáu, 24/07/2026</div>
             </div>
 
-            <!-- Multi-language Switcher + Dropdown Menu -->
+            <!-- Multi-language Switcher (English arranged first in row) -->
             <div class="relative flex items-center bg-black/40 p-1.5 rounded-2xl border border-white/15 space-x-1" id="lang-selector">
-                <button onclick="changeLang('vi')" id="btn-vi" class="lang-btn active-lang px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-teal text-white shadow-md">
-                    <span>🇻🇳</span> <span>VIE</span>
-                </button>
                 <button onclick="changeLang('en')" id="btn-en" class="lang-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1.5">
                     <span>🇬🇧</span> <span>ENG</span>
+                </button>
+                <button onclick="changeLang('vi')" id="btn-vi" class="lang-btn active-lang px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-teal text-white shadow-md">
+                    <span>🇻🇳</span> <span>VIE</span>
                 </button>
                 <button onclick="changeLang('kr')" id="btn-kr" class="lang-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1.5">
                     <span>🇰🇷</span> <span>KOR</span>
@@ -169,9 +169,12 @@
                         <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400"></i>
                     </button>
 
-                    <!-- Language Dropdown Menu (Guaranteed On-Top Menu) -->
-                    <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-navy-dark/95 border border-white/20 rounded-2xl shadow-2xl backdrop-blur-xl z-[100] overflow-hidden py-1">
-                        <div class="px-3 py-1.5 text-[10px] uppercase font-bold text-slate-400 border-b border-white/10">Ngôn ngữ khác / More</div>
+                    <!-- Language Dropdown Menu (Guaranteed On-Top Menu z-[100]) -->
+                    <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-52 bg-navy-dark/95 border border-white/20 rounded-2xl shadow-2xl backdrop-blur-xl z-[100] overflow-hidden py-1">
+                        <div class="px-3 py-1.5 text-[10px] uppercase font-bold text-slate-400 border-b border-white/10" id="lang-dropdown-label">Ngôn ngữ khác / More</div>
+                        <button onclick="changeLang('ru'); closeLangDropdown();" id="btn-ru" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
+                            <span>🇷🇺</span> <span class="font-semibold">Русский (RUS)</span>
+                        </button>
                         <button onclick="changeLang('jp'); closeLangDropdown();" id="btn-jp" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
                             <span>🇯🇵</span> <span class="font-semibold">日本語 (JPN)</span>
                         </button>
@@ -221,7 +224,7 @@
                     </div>
                 </div>
 
-                <!-- Carousel Highlights Footer inside Hero (Cleaned: Wifi Only) -->
+                <!-- Carousel Highlights Footer inside Hero -->
                 <div class="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between">
                     <div class="flex items-center space-x-6">
                         <div class="flex items-center space-x-3">
@@ -229,13 +232,13 @@
                                 <i data-lucide="wifi" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <div class="text-white text-xs font-bold">Free Wi-Fi Highspeed</div>
+                                <div class="text-white text-xs font-bold" id="wifi-label">Free Wi-Fi Highspeed</div>
                                 <div class="text-slate-400 text-[11px]">@CamRanh_Airport_Free</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Slide Controls Indicators (Active Language Indicator Dots) -->
+                    <!-- Slide Controls Indicators -->
                     <div class="flex items-center space-x-1.5" id="carousel-dots">
                         <!-- Dynamic Dots Generated via JS -->
                     </div>
@@ -249,7 +252,7 @@
                         <i data-lucide="compass" class="w-5 h-5 text-teal animate-pulse"></i>
                         <h3 class="text-white font-bold text-sm tracking-wide uppercase" id="amenities-board-title">Khu vực & Tiện ích</h3>
                     </div>
-                    <span class="text-xs text-slate-400 flex items-center gap-1">
+                    <span class="text-xs text-slate-400 flex items-center gap-1" id="amenities-board-sub">
                         <span class="w-2 h-2 rounded-full bg-teal inline-block"></span> Dịch vụ tiện ích Tầng 1 & Tầng 2
                     </span>
                 </div>
@@ -263,7 +266,7 @@
                         </div>
                         <div class="overflow-hidden">
                             <div class="text-white font-bold text-xs truncate group-hover:text-gold transition-colors" id="amenity-food">Ăn uống & Nhà hàng</div>
-                            <div class="text-slate-400 text-[10px] mt-0.5 truncate">Tầng 1 & Tầng 2</div>
+                            <div class="text-slate-400 text-[10px] mt-0.5 truncate" id="amenity-food-sub">Tầng 1 & Tầng 2</div>
                         </div>
                     </div>
 
@@ -274,7 +277,7 @@
                         </div>
                         <div class="overflow-hidden">
                             <div class="text-white font-bold text-xs truncate group-hover:text-teal transition-colors" id="amenity-dutyfree">Mua sắm Duty Free</div>
-                            <div class="text-slate-400 text-[10px] mt-0.5 truncate">Sảnh Tầng 2</div>
+                            <div class="text-slate-400 text-[10px] mt-0.5 truncate" id="amenity-dutyfree-sub">Sảnh Tầng 2</div>
                         </div>
                     </div>
 
@@ -285,18 +288,18 @@
                         </div>
                         <div class="overflow-hidden">
                             <div class="text-white font-bold text-xs truncate group-hover:text-indigo-300 transition-colors" id="amenity-lounge">Phòng chờ CIP/VIP</div>
-                            <div class="text-slate-400 text-[10px] mt-0.5 truncate">Tầng 2 Ga Quốc tế</div>
+                            <div class="text-slate-400 text-[10px] mt-0.5 truncate" id="amenity-lounge-sub">Tầng 2 Ga Quốc tế</div>
                         </div>
                     </div>
 
-                    <!-- Amenity 4: Khu vực WC / Restrooms -->
+                    <!-- Amenity 4: Khu vực Vệ sinh (WC) -->
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex items-center space-x-2.5 hover:bg-white/10 transition cursor-pointer group">
                         <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-300 shrink-0 group-hover:scale-105 transition-transform">
                             <i data-lucide="bath" class="w-5 h-5"></i>
                         </div>
                         <div class="overflow-hidden">
                             <div class="text-white font-bold text-xs truncate group-hover:text-emerald-300 transition-colors" id="amenity-wc">Khu vực Vệ sinh (WC)</div>
-                            <div class="text-slate-400 text-[10px] mt-0.5 truncate">Tất cả các tầng</div>
+                            <div class="text-slate-400 text-[10px] mt-0.5 truncate" id="amenity-wc-sub">Tất cả các tầng</div>
                         </div>
                     </div>
                 </div>
@@ -322,7 +325,7 @@
                     <div class="w-16 h-16 rounded-2xl bg-teal/20 border border-teal/50 flex items-center justify-center text-teal shadow-lg shadow-teal/20 group-hover:scale-110 transition-transform">
                         <i data-lucide="map" class="w-9 h-9"></i>
                     </div>
-                    <span class="bg-teal/20 border border-teal/40 text-teal text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                    <span class="bg-teal/20 border border-teal/40 text-teal text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5" id="card-map-badge">
                         <i data-lucide="navigation" class="w-3.5 h-3.5"></i> Dẫn đường trực quan
                     </span>
                 </div>
@@ -365,7 +368,7 @@
                     <div class="w-16 h-16 rounded-2xl bg-gold/20 border border-gold/50 flex items-center justify-center text-gold shadow-lg shadow-gold/20 group-hover:scale-110 transition-transform">
                         <i data-lucide="bot" class="w-9 h-9"></i>
                     </div>
-                    <span class="bg-gold/20 border border-gold/40 text-gold text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 animate-pulse">
+                    <span class="bg-gold/20 border border-gold/40 text-gold text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 animate-pulse" id="card-ai-badge">
                         <span class="w-2 h-2 rounded-full bg-gold"></span> Trợ lý AI 24/7
                     </span>
                 </div>
@@ -396,18 +399,18 @@
         <div class="flex items-center space-x-8 text-xs text-slate-300">
             <div class="flex items-center space-x-2">
                 <i data-lucide="phone-call" class="w-4 h-4 text-gold"></i>
-                <span class="font-medium">Hotline Sân Bay:</span>
-                <span class="text-white font-bold font-mono">(+84) 258 3989 918</span>
+                <span class="font-medium" id="footer-hotline-label">Hotline Sân Bay:</span>
+                <span class="text-white font-bold font-mono">(+84) 258 397 7988</span>
             </div>
             <div class="flex items-center space-x-2">
                 <i data-lucide="shield-alert" class="w-4 h-4 text-red-400"></i>
-                <span class="font-medium">Cấp cứu Y tế / SOS:</span>
-                <span class="text-red-400 font-bold font-mono">115</span>
+                <span class="font-medium" id="footer-sos-label">Cấp cứu Y tế / SOS:</span>
+                <span class="text-red-400 font-bold font-mono">(+84) 258 397 7987</span>
             </div>
             <div class="flex items-center space-x-2">
                 <i data-lucide="info" class="w-4 h-4 text-teal"></i>
-                <span class="font-medium">Quầy thông tin:</span>
-                <span class="text-white font-semibold">Tầng 1 - Sảnh Đến</span>
+                <span class="font-medium" id="footer-info-label">Quầy thông tin:</span>
+                <span class="text-white font-semibold" id="footer-info-val">Tầng 1 - Sảnh Đến</span>
             </div>
         </div>
 
@@ -432,7 +435,7 @@
                     <div class="p-3 bg-teal/20 rounded-xl text-teal"><i data-lucide="map" class="w-6 h-6"></i></div>
                     <div>
                         <h3 class="text-xl font-bold text-white" id="modal-map-header-title">BẢN ĐỒ SÂN BAY TƯƠNG TÁC</h3>
-                        <p class="text-xs text-slate-400">Đang khởi chạy giao diện Bản đồ & Tìm đường...</p>
+                        <p class="text-xs text-slate-400" id="modal-map-header-sub">Đang khởi chạy giao diện Bản đồ & Tìm đường...</p>
                     </div>
                 </div>
                 <button onclick="closeMapModal()" class="p-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
@@ -449,9 +452,9 @@
                     <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-teal/10 border-2 border-teal flex items-center justify-center text-teal animate-pulse">
                         <i data-lucide="navigation-2" class="w-12 h-12"></i>
                     </div>
-                    <h4 class="text-2xl font-bold text-white mb-2">Đang chuyển sang Màn hình Bản đồ</h4>
-                    <p class="text-slate-300 text-sm mb-6">Bạn có thể phóng to, chọn Cửa ra máy bay (Gate) hoặc tìm kiếm các tiện ích như Nhà hàng, ATM, WC.</p>
-                    <div class="inline-flex items-center gap-2 bg-teal text-white font-bold px-6 py-3 rounded-2xl shadow-lg">
+                    <h4 class="text-2xl font-bold text-white mb-2" id="modal-map-body-title">Đang chuyển sang Màn hình Bản đồ</h4>
+                    <p class="text-slate-300 text-sm mb-6" id="modal-map-body-desc">Bạn có thể phóng to, chọn Cửa ra máy bay (Gate) hoặc tìm kiếm các tiện ích như Nhà hàng, ATM, WC.</p>
+                    <div class="inline-flex items-center gap-2 bg-teal text-white font-bold px-6 py-3 rounded-2xl shadow-lg" id="modal-map-body-status">
                         <i data-lucide="check-circle" class="w-5 h-5"></i> Sẵn sàng kết nối sơ đồ Tầng 1 & Tầng 2
                     </div>
                 </div>
@@ -474,8 +477,8 @@
                 <div class="flex items-center space-x-3">
                     <div class="p-3 bg-gold/20 rounded-xl text-gold"><i data-lucide="bot" class="w-6 h-6"></i></div>
                     <div>
-                        <h3 class="text-xl font-bold text-white">TRỢ LÝ ẢO CLORY AI</h3>
-                        <p class="text-xs text-slate-400">Nhân viên hỗ trợ thông tin thông minh - Sân bay Cam Ranh</p>
+                        <h3 class="text-xl font-bold text-white" id="modal-ai-header-title">TRỢ LÝ ẢO CLORY AI</h3>
+                        <p class="text-xs text-slate-400" id="modal-ai-header-sub">Nhân viên hỗ trợ thông tin thông minh - Sân bay Cam Ranh</p>
                     </div>
                 </div>
                 <button onclick="closeCloryModal()" class="p-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
@@ -505,28 +508,28 @@
                         <div class="text-white font-bold text-lg" id="clory-sub-text">Trò chuyện cùng Trợ lý CloryAI</div>
                         <p class="text-teal text-xs mt-1 font-mono flex items-center justify-center gap-1.5" id="mic-status">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                            <span>Đang kết nối micro / Lắng nghe âm thanh...</span>
+                            <span id="mic-status-text">CloryAI đang lắng nghe bạn...</span>
                         </p>
                     </div>
                 </div>
 
                 <!-- Right Question Chips Teaser (Strict Airport FAQ Content) -->
                 <div class="w-1/2 pl-8 flex flex-col justify-center space-y-3">
-                    <h5 class="text-gold font-bold text-sm uppercase tracking-wider">Gợi ý câu hỏi phổ biến:</h5>
+                    <h5 class="text-gold font-bold text-sm uppercase tracking-wider" id="faq-title">Gợi ý câu hỏi phổ biến:</h5>
                     <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Cổng ra máy bay (Gates) nằm ở đâu?"
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> <span id="faq-1">"Cổng ra máy bay (Gates) nằm ở đâu?"</span>
                     </div>
                     <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Mật khẩu Wifi miễn phí sân bay là gì?"
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> <span id="faq-2">"Mật khẩu Wifi miễn phí sân bay là gì?"</span>
                     </div>
                     <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Xe bus & Taxi về trung tâm Nha Trang ở đâu?"
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> <span id="faq-3">"Xe bus & Taxi về trung tâm Nha Trang ở đâu?"</span>
                     </div>
                     <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Khu vực ăn uống, Cafe & WC ở tầng mấy?"
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> <span id="faq-4">"Khu vực ăn uống, Cafe & WC ở tầng mấy?"</span>
                     </div>
                     <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
-                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> "Cửa hàng Mua sắm Duty Free ở đâu?"
+                        <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> <span id="faq-5">"Cửa hàng Mua sắm Duty Free ở đâu?"</span>
                     </div>
                 </div>
             </div>
@@ -541,6 +544,9 @@
     </div>
 
     <script>
+        // Global Selected Language State (Default: Vietnamese)
+        let currentLangKey = 'vi';
+
         // Safe Lucide Icon Initialization
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof lucide !== 'undefined' && lucide.createIcons) {
@@ -550,8 +556,8 @@
             initHeroLanguageAutoCycle();
         });
 
-        // Auto Language Cycling for Hero Banner Card
-        const heroLangs = ['vi', 'en', 'kr', 'cn', 'jp', 'fr', 'de', 'th'];
+        // Auto Language Cycling for Hero Banner Card (9 Languages Supported)
+        const heroLangs = ['vi', 'en', 'kr', 'cn', 'ru', 'jp', 'fr', 'de', 'th'];
         let currentHeroLangIdx = 0;
         let heroAutoCycleTimer = null;
 
@@ -602,11 +608,11 @@
                     // Fade In
                     textContainer.classList.remove('opacity-0');
                     textContainer.classList.add('opacity-100');
-                }, 500); // 500ms transition time
-            }, 5000); // Cycles every 5 seconds
+                }, 500);
+            }, 5000);
         }
 
-        // Real-time Weather Fetching from Open-Meteo for Cam Ranh Airport (Coordinates: 11.998, 109.219)
+        // Real-time Weather Fetching from Open-Meteo for Cam Ranh Airport
         async function fetchRealtimeWeather() {
             try {
                 const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=11.998&longitude=109.219&current_weather=true');
@@ -621,7 +627,6 @@
                     
                     if (tempEl) tempEl.innerText = `${temp}°C`;
                     
-                    // Interpret WMO weather interpretation codes
                     let weatherDesc = 'Cam Ranh • Nắng đẹp';
                     if (code === 0) weatherDesc = 'Cam Ranh • Trời quang nắng';
                     else if (code >= 1 && code <= 3) weatherDesc = 'Cam Ranh • Mây rải rác';
@@ -634,7 +639,6 @@
                 }
             } catch (err) {
                 console.warn('Weather API fallback mode:', err);
-                // Keep default baseline values if network is offline
             }
         }
 
@@ -649,7 +653,7 @@
             if (clockEl) clockEl.innerText = `${hours}:${minutes}:${seconds}`;
 
             const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
-            const dateStr = now.toLocaleDateString('vi-VN', options);
+            const dateStr = now.toLocaleDateString(currentLangKey === 'vi' ? 'vi-VN' : 'en-US', options);
             const dateEl = document.getElementById('live-date');
             if (dateEl) dateEl.innerText = dateStr;
         }
@@ -682,8 +686,9 @@
 
         // Web Audio API Microphone Sensitivity Visualizer for Pulse Orb
         async function startPulseOrbAudio() {
-            const statusEl = document.getElementById('mic-status');
+            const statusEl = document.getElementById('mic-status-text');
             const orb = document.getElementById('pulse-orb');
+            const t = i18n[currentLangKey] || i18n.vi;
 
             try {
                 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -701,7 +706,7 @@
 
                 const dataArray = new Uint8Array(analyser.frequencyBinCount);
                 if (statusEl) {
-                    statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span><span>Đang nhận tín hiệu giọng nói...</span>`;
+                    statusEl.innerText = t.micListening || "CloryAI đang lắng nghe bạn...";
                 }
 
                 function renderOrbPulse() {
@@ -712,7 +717,6 @@
                     }
                     let average = sum / dataArray.length;
                     
-                    // Scale Orb dynamically from 1.0 up to 1.45 based on voice audio intensity
                     let scale = 1 + (average / 180);
                     let glowOpacity = Math.min(1, 0.4 + (average / 100));
 
@@ -726,12 +730,11 @@
                 renderOrbPulse();
 
             } catch (err) {
-                console.warn("Microphone access denied or simulated mode:", err);
+                console.warn("Microphone access simulated mode:", err);
                 if (statusEl) {
-                    statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span><span>Chế độ mô phỏng phản hồi giọng nói</span>`;
+                    statusEl.innerText = (t.micListening || "CloryAI đang lắng nghe bạn...") + " (Simulated)";
                 }
                 
-                // Fallback smooth animation if mic is disabled or blocked in iframe
                 let count = 0;
                 function simulatePulse() {
                     count += 0.05;
@@ -772,171 +775,418 @@
 
         document.addEventListener('click', () => closeLangDropdown());
 
-        // Multi-language Text Dictionary (8 Languages Supported)
+        // Multi-language Text Dictionary (9 Languages Supported)
         const i18n = {
             vi: {
                 welcomeTag: "Kính chào Quý khách",
                 welcomeTitle: "CHÀO MỪNG ĐẾN VỚI <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>SÂN BAY QUỐC TẾ CAM RANH</span>",
                 welcomeSub: "Trải nghiệm dịch vụ tiện ích hàng không đẳng cấp và sẵn sàng hỗ trợ thông tin 24/7 cho chuyến đi của bạn.",
+                terminalSub: "SÂN BAY QUỐC TẾ • GA QUỐC TẾ T2",
                 status: "NHÀ GA HOẠT ĐỘNG BÌNH THƯỜNG",
+                mapBadge: "Dẫn đường trực quan",
                 mapTitle: "BẢN ĐỒ SÂN BAY",
                 mapDesc: "Tìm cửa ra máy bay (Gates), nhà hàng, cửa hàng Duty Free, WC, ATM & sơ đồ nhà ga trực quan.",
                 mapBtn: "MỞ BẢN ĐỒ TƯƠNG TÁC",
+                aiBadge: "Trợ lý AI 24/7",
                 aiTitle: "TRỢ LÝ ẢO CLORY AI",
                 aiDesc: "Hỏi đáp giọng nói, sơ đồ nhà ga, vị trí cổng, thủ tục hành lý & thông tin du lịch Nha Trang.",
                 aiBtn: "TRÒ CHUYỆN VỚI CLORY AI",
                 amenitiesTitle: "Khu vực & Tiện ích",
+                amenitiesSub: "Dịch vụ tiện ích Tầng 1 & Tầng 2",
                 touchHint: "Chạm vào màn hình để bắt đầu thao tác",
                 closeBtn: "Đóng",
                 clorySub: "Trò chuyện cùng Trợ lý CloryAI",
+                micListening: "CloryAI đang lắng nghe bạn...",
                 food: "Ăn uống & Nhà hàng",
+                foodSub: "Tầng 1 & Tầng 2",
                 dutyfree: "Mua sắm Duty Free",
+                dutyfreeSub: "Sảnh Tầng 2",
                 lounge: "Phòng chờ CIP/VIP",
-                wc: "Khu vực Vệ sinh (WC)"
+                loungeSub: "Tầng 2 Ga Quốc tế",
+                wc: "Khu vực Vệ sinh (WC)",
+                wcSub: "Tất cả các tầng",
+                hotlineLabel: "Hotline Sân Bay:",
+                sosLabel: "Cấp cứu Y tế / SOS:",
+                infoLabel: "Quầy thông tin:",
+                infoVal: "Tầng 1 - Sảnh Đến",
+                modalMapSub: "Đang khởi chạy giao diện Bản đồ & Tìm đường...",
+                modalMapBodyTitle: "Đang chuyển sang Màn hình Bản đồ",
+                modalMapBodyDesc: "Bạn có thể phóng to, chọn Cửa ra máy bay (Gate) hoặc tìm kiếm các tiện ích như Nhà hàng, ATM, WC.",
+                modalMapBodyStatus: "Sẵn sàng kết nối sơ đồ Tầng 1 & Tầng 2",
+                modalAiSub: "Nhân viên hỗ trợ thông tin thông minh - Sân bay Cam Ranh",
+                faqTitle: "Gợi ý câu hỏi phổ biến:",
+                faq1: '"Cổng ra máy bay (Gates) nằm ở đâu?"',
+                faq2: '"Mật khẩu Wifi miễn phí sân bay là gì?"',
+                faq3: '"Xe bus & Taxi về trung tâm Nha Trang ở đâu?"',
+                faq4: '"Khu vực ăn uống, Cafe & WC ở tầng mấy?"',
+                faq5: '"Cửa hàng Mua sắm Duty Free ở đâu?"',
+                dropdownLabel: "Ngôn ngữ khác / More"
             },
             en: {
                 welcomeTag: "Welcome Valued Passengers",
                 welcomeTitle: "WELCOME TO <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>CAM RANH INTL AIRPORT</span>",
                 welcomeSub: "Experience world-class aviation services and 24/7 intelligent assistance for your journey.",
+                terminalSub: "INTERNATIONAL AIRPORT • TERMINAL T2",
                 status: "TERMINAL OPERATING NORMALLY",
+                mapBadge: "Visual Navigation",
                 mapTitle: "AIRPORT MAP & WAYFINDING",
                 mapDesc: "Locate boarding gates, dining, Duty Free shops, restrooms, ATMs & interactive terminal maps.",
                 mapBtn: "OPEN INTERACTIVE MAP",
+                aiBadge: "24/7 AI Assistant",
                 aiTitle: "CLORY AI ASSISTANT",
                 aiDesc: "Voice assistant for terminal maps, gate locations, baggage inquiries & Nha Trang travel guides.",
                 aiBtn: "TALK TO CLORY AI",
                 amenitiesTitle: "Areas & Amenities",
+                amenitiesSub: "Amenities on Floor 1 & Floor 2",
                 touchHint: "Touch screen to start interaction",
                 closeBtn: "Close",
                 clorySub: "Talk with CloryAI Assistant",
+                micListening: "CloryAI is listening to you...",
                 food: "Dining & Restaurants",
+                foodSub: "Floor 1 & Floor 2",
                 dutyfree: "Duty Free Shopping",
+                dutyfreeSub: "Floor 2 Hall",
                 lounge: "VIP / CIP Lounges",
-                wc: "Restrooms (WC)"
+                loungeSub: "Floor 2 Intl Terminal",
+                wc: "Restrooms (WC)",
+                wcSub: "All Floor Levels",
+                hotlineLabel: "Airport Hotline:",
+                sosLabel: "Medical SOS:",
+                infoLabel: "Information Desk:",
+                infoVal: "Floor 1 - Arrivals Hall",
+                modalMapSub: "Launching Map & Wayfinding Interface...",
+                modalMapBodyTitle: "Switching to Interactive Airport Map",
+                modalMapBodyDesc: "You can zoom, select Boarding Gates, or search for dining, ATMs, and restrooms.",
+                modalMapBodyStatus: "Ready connecting Floor 1 & Floor 2 terminal maps",
+                modalAiSub: "Smart Airport Information Assistant - Cam Ranh Airport",
+                faqTitle: "Suggested FAQ Questions:",
+                faq1: '"Where are the Boarding Gates located?"',
+                faq2: '"What is the free airport Wi-Fi password?"',
+                faq3: '"Where can I find buses and taxis to Nha Trang?"',
+                faq4: '"Which floors have dining, cafes, and restrooms?"',
+                faq5: '"Where are the Duty Free shopping stores?"',
+                dropdownLabel: "More Languages"
             },
             kr: {
                 welcomeTag: "환영합니다",
                 welcomeTitle: "깜라인 국제공항에 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>오신 것을 환영합니다</span>",
                 welcomeSub: "세계적 수준의 항공 서비스와 24시간 스마트 공항 안내 서비스를 경험해 보세요.",
+                terminalSub: "국제공항 • 제2터미널 (T2)",
                 status: "터미널 정상 운영 중",
+                mapBadge: "시각적 길안내",
                 mapTitle: "공항 지도 및 길안내",
                 mapDesc: "탑승구, 식당, 면세점, 화장실, ATM 및 터미널 지도를 검색하세요.",
                 mapBtn: "인터랙티브 지도 열기",
+                aiBadge: "24/7 AI 어시스턴트",
                 aiTitle: "CLORY AI 어시스턴트",
                 aiDesc: "음성 대화로 터미널 안내, 게이트 위치, 수하물 안내 및 나트랑 관광 정보를 확인하세요.",
                 aiBtn: "CLORY AI와 대화하기",
                 amenitiesTitle: "구역 및 편의시설",
+                amenitiesSub: "1층 및 2층 편의시설",
                 touchHint: "화면을 터치하여 시작하세요",
                 closeBtn: "닫기",
                 clorySub: "CloryAI 어시스턴트와 대화하기",
+                micListening: "CloryAI가 귀하의 음성을 듣고 있습니다...",
                 food: "식당 및 카페",
+                foodSub: "1층 및 2층",
                 dutyfree: "면세점 쇼핑",
+                dutyfreeSub: "2층 홀",
                 lounge: "VIP 라운지",
-                wc: "화장실 (WC)"
+                loungeSub: "국제선 2층",
+                wc: "화장실 (WC)",
+                wcSub: "전 층 보유",
+                hotlineLabel: "공항 핫라인:",
+                sosLabel: "응급 의료 SOS:",
+                infoLabel: "안내 데스크:",
+                infoVal: "1층 - 입국장 홀",
+                modalMapSub: "공항 지도 및 길안내 화면 시작 중...",
+                modalMapBodyTitle: "공항 지도 화면으로 이동 중",
+                modalMapBodyDesc: "확대/축소, 탑승게이트 선택, 식당 및 편의시설 검색이 가능합니다.",
+                modalMapBodyStatus: "1층 및 2층 터미널 지도 연결 완료",
+                modalAiSub: "스마트 공항 안내 어시스턴트 - 깜라인 공항",
+                faqTitle: "자주 묻는 질문:",
+                faq1: '"탑승게이트(Gates)는 어디에 있나요?"',
+                faq2: '"무료 공항 와이파이 비밀번호가 무엇인가요?"',
+                faq3: '"나트랑 시내로 가는 버스 및 택시는 어디서 타나요?"',
+                faq4: '"식당, 카페, 화장실은 몇 층에 있나요?"',
+                faq5: '"면세점 쇼핑 구역은 어디인가요?"',
+                dropdownLabel: "기타 언어 선택"
             },
             cn: {
                 welcomeTag: "尊贵的旅客，欢迎您",
                 welcomeTitle: "欢迎光临 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>金兰国际机场</span>",
                 welcomeSub: "体验世界级的航空服务，全天候24/7为您 provide 智能航站楼导航与 support。",
+                terminalSub: "国际机场 • T2国际航站楼",
                 status: "航站楼运行正常",
+                mapBadge: "直观导航",
                 mapTitle: "机场地图与导航",
                 mapDesc: "查找登机口、餐厅、免税店、洗手间、ATM及航站楼平面图。",
                 mapBtn: "打开互动地图",
+                aiBadge: "24/7 AI 助手",
                 aiTitle: "CLORY AI 智能助手",
                 aiDesc: "支持语音问答，查询航站楼地图、登机口位置、行李须知及芽庄旅游资讯。",
                 aiBtn: "与 CLORY AI 对话",
                 amenitiesTitle: "区域与服务设施",
+                amenitiesSub: "1层与2层便捷设施",
                 touchHint: "点击屏幕开始操作",
                 closeBtn: "关闭",
                 clorySub: "与 CloryAI 助手对话",
+                micListening: "CloryAI 正在倾听您的讲话...",
                 food: "餐饮与餐厅",
+                foodSub: "1层 & 2层",
                 dutyfree: "免税店购物",
+                dutyfreeSub: "2层大厅",
                 lounge: "贵宾休息室",
-                wc: "洗手间 (WC)"
+                loungeSub: "国际航站楼 2层",
+                wc: "洗手间 (WC)",
+                wcSub: "所有楼层",
+                hotlineLabel: "机场热线:",
+                sosLabel: "医疗急救 SOS:",
+                infoLabel: "问询柜台:",
+                infoVal: "1层 - 到达大厅",
+                modalMapSub: "正在启动地图与导航界面...",
+                modalMapBodyTitle: "正在切换至机场地图界面",
+                modalMapBodyDesc: "您可以放大缩小，选择登机口，或搜索餐厅、ATM及洗手间位置。",
+                modalMapBodyStatus: "已连接 1层与2层 航站楼地图",
+                modalAiSub: "智能机场信息助手 - 金兰国际机场",
+                faqTitle: "热门常见问题:",
+                faq1: '"登机口（Gates）在哪里？"',
+                faq2: '"机场免费 Wi-Fi 密码是什么？"',
+                faq3: '"前往芽庄市区的公交车和出租车在哪里？"',
+                faq4: '"餐饮、咖啡厅和洗手间在几楼？"',
+                faq5: '"免税店购物区在哪里？"',
+                dropdownLabel: "其他语言"
+            },
+            ru: {
+                welcomeTag: "Добро пожаловать",
+                welcomeTitle: "ДОБРО ПОЖАЛОВАТЬ В <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>АЭРОПОРТ КАМРАНЬ</span>",
+                welcomeSub: "Воспользуйтесь первоклассным обслуживанием и круглосуточной интеллектуальной поддержкой в пути.",
+                terminalSub: "МЕЖДУНАРОДНЫЙ АЭРОПОРТ • ТЕРМИНАЛ Т2",
+                status: "ТЕРМИНАЛ РАБОТАЕТ В ОБЫЧНОМ РЕЖИМЕ",
+                mapBadge: "Наглядная навигация",
+                mapTitle: "КАРТА АЭРОПОРТА И НАВИГАЦИЯ",
+                mapDesc: "Найдите выходы на посадку, рестораны, магазины Duty Free, туалеты и интерактивную карту.",
+                mapBtn: "ОТКРЫТЬ ИНТЕРАКТИВНУЮ КАРТУ",
+                aiBadge: "24/7 AI Помощник",
+                aiTitle: "ПОМОЩНИК CLORY AI",
+                aiDesc: "Голосовой помощник для карт терминала, выходов, багажа и гида по Нячангу.",
+                aiBtn: "ПОГОВОРИТЬ С CLORY AI",
+                amenitiesTitle: "Зоны и Услуги",
+                amenitiesSub: "Услуги на 1 и 2 этажах",
+                touchHint: "Коснитесь экрана для начала",
+                closeBtn: "Закрыть",
+                clorySub: "Чат с помощником CloryAI",
+                micListening: "CloryAI слушает вас...",
+                food: "Рестораны и Кафе",
+                foodSub: "1-й и 2-й этажи",
+                dutyfree: "Магазины Duty Free",
+                dutyfreeSub: "Зал 2-го этажа",
+                lounge: "VIP / CIP Залы",
+                loungeSub: "2-й этаж Терминала T2",
+                wc: "Туалеты (WC)",
+                wcSub: "На всех этажах",
+                hotlineLabel: "Горячая линия:",
+                sosLabel: "Медпомощь SOS:",
+                infoLabel: "Справочная стойка:",
+                infoVal: "1-й этаж - Зал прибытия",
+                modalMapSub: "Запуск интерфейса карты и навигации...",
+                modalMapBodyTitle: "Переход на карту аэропорта",
+                modalMapBodyDesc: "Вы можете приближать карту, выбирать выходы на посадку или искать кафе и банкоматы.",
+                modalMapBodyStatus: "Схемы 1 и 2 этажей готовы",
+                modalAiSub: "Интеллектуальный информационный помощник - Аэропорт Камрань",
+                faqTitle: "Популярные вопросы:",
+                faq1: '"Где находятся выходы на посадку (Gates)?"',
+                faq2: '"Какой пароль от бесплатного Wi-Fi аэропорта?"',
+                faq3: '"Где найти автобусы и такси до Нячанга?"',
+                faq4: '"На каких этажах рестораны, кафе и туалеты?"',
+                faq5: '"Где находятся магазины Duty Free?"',
+                dropdownLabel: "Другие языки"
             },
             jp: {
                 welcomeTag: "ようこそ",
                 welcomeTitle: "カムラン国際空港へ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ようこそ</span>",
                 welcomeSub: "世界クラスの航空サービスと24時間対応のスマート案内をご利用ください。",
+                terminalSub: "国際空港 • 第2ターミナル (T2)",
                 status: "ターミナル正常運行中",
+                mapBadge: "インタラクティブ案内",
                 mapTitle: "空港マップ＆案内",
                 mapDesc: "搭乗口、レストラン、免税店、お手洗い、ATMなどを検索できます。",
                 mapBtn: "マップを開く",
+                aiBadge: "24時間 AIアシスタント",
                 aiTitle: "CLORY AI アシスタント",
                 aiDesc: "音声案内で搭乗口、手荷物案内、ニャチャン観光情報をご案内します。",
                 aiBtn: "CLORY AIと話す",
                 amenitiesTitle: "エリア＆施設案内",
+                amenitiesSub: "1階・2階の各種施設",
                 touchHint: "画面をタッチしてスタート",
                 closeBtn: "閉じる",
                 clorySub: "CloryAIアシスタントと対話",
+                micListening: "CloryAIがあなたのお声を聴いています...",
                 food: "レストラン＆カフェ",
+                foodSub: "1階 ＆ 2階",
                 dutyfree: "免税店",
+                dutyfreeSub: "2階ロビー",
                 lounge: "VIPラウンジ",
-                wc: "お手洗い (WC)"
+                loungeSub: "国際線2階",
+                wc: "お手洗い (WC)",
+                wcSub: "全フロア",
+                hotlineLabel: "空港ホットライン:",
+                sosLabel: "救急・医療 SOS:",
+                infoLabel: "案内カウンター:",
+                infoVal: "1階 - 到着ロビー",
+                modalMapSub: "マップ案内画面を起動しています...",
+                modalMapBodyTitle: "空港マップ画面に切り替えています",
+                modalMapBodyDesc: "拡大・縮小、搭乗口の選択、レストランやお手洗いの検索が可能です。",
+                modalMapBodyStatus: "1階および2階フロアマップ準備完了",
+                modalAiSub: "スマート空港案内アシスタント - カムラン国際空港",
+                faqTitle: "よくあるご質問:",
+                faq1: '「搭乗口（Gates）はどこですか？」',
+                faq2: '「空港の無料Wi-Fiパスワードは何ですか？」',
+                faq3: '「ニャチャン市内行きのバスやタクシー乗り場はどこですか？」',
+                faq4: '「レストランやお手洗いは何階にありますか？」',
+                faq5: '「免税店はどこにありますか？」',
+                dropdownLabel: "その他の言語"
             },
             fr: {
                 welcomeTag: "Bienvenue",
                 welcomeTitle: "BIENVENUE À <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>L'AÉROPORT DE CAM RANH</span>",
                 welcomeSub: "Profitez de nos services aéroportuaires et de notre assistance intelligente 24/7.",
+                terminalSub: "AÉROPORT INTERNATIONAL • TERMINAL T2",
                 status: "AÉROGARE EN SERVICE NORMAL",
+                mapBadge: "Guidage Visuel",
                 mapTitle: "CARTE INTERACTIVE DE L'AÉROPORT",
                 mapDesc: "Localisez les portes d'embarquement, restaurants, magasins Duty Free et commodités.",
                 mapBtn: "OUVRIR LA CARTE",
+                aiBadge: "Assistant AI 24/7",
                 aiTitle: "ASSISTANT CLORY AI",
                 aiDesc: "Assistant vocal pour les plans du terminal, bagages et guides de Nha Trang.",
                 aiBtn: "PARLER À CLORY AI",
                 amenitiesTitle: "Zones & Services",
+                amenitiesSub: "Commodités au Niveau 1 & 2",
                 touchHint: "Touchez l'écran pour commencer",
                 closeBtn: "Fermer",
                 clorySub: "Discutez avec CloryAI",
+                micListening: "CloryAI vous écoute...",
                 food: "Restaurants & Cafés",
+                foodSub: "Niveau 1 & Niveau 2",
                 dutyfree: "Boutiques Duty Free",
+                dutyfreeSub: "Hall du Niveau 2",
                 lounge: "Salons VIP / CIP",
-                wc: "Toilettes (WC)"
+                loungeSub: "Niveau 2 Terminal Intl",
+                wc: "Toilettes (WC)",
+                wcSub: "Tous les niveaux",
+                hotlineLabel: "Ligne directe:",
+                sosLabel: "Urgence Médicale:",
+                infoLabel: "Point Information:",
+                infoVal: "Niveau 1 - Arrivées",
+                modalMapSub: "Chargement de la carte interactive...",
+                modalMapBodyTitle: "Bascule vers la carte de l'aéroport",
+                modalMapBodyDesc: "Vous pouvez zoomer, sélectionner vos portes d'embarquement ou chercher des commodités.",
+                modalMapBodyStatus: "Cartes des niveaux 1 et 2 connectées",
+                modalAiSub: "Assistant d'information aéroportuaire - Aéroport de Cam Ranh",
+                faqTitle: "Questions fréquentes:",
+                faq1: '"Où se trouvent les portes d\'embarquement (Gates) ?"',
+                faq2: '"Quel est le mot de passe du Wi-Fi gratuit ?"',
+                faq3: '"Où se trouvent les bus et taxis pour Nha Trang ?"',
+                faq4: '"À quels étages sont les cafés et toilettes ?"',
+                faq5: '"Où sont les boutiques Duty Free ?"',
+                dropdownLabel: "Autres langues"
             },
             de: {
                 welcomeTag: "Herzlich Willkommen",
                 welcomeTitle: "WILLKOMMEN AM <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>FLUGHAFEN CAM RANH</span>",
                 welcomeSub: "Erleben Sie erstklassigen Service und 24/7 intelligente Flughafen-Unterstützung.",
+                terminalSub: "INTERNATIONALER FLUGHAFEN • TERMINAL T2",
                 status: "TERMINAL-BETRIEB NORMAL",
+                mapBadge: "Visuelle Navigation",
                 mapTitle: "FLUGHAFENPLAN & NAVI",
                 mapDesc: "Finden Sie Gates, Restaurants, Duty Free Shops, Toiletten und Geldautomaten.",
                 mapBtn: "INTERAKTIVE KARTE ÖFFNEN",
+                aiBadge: "24/7 KI Assistent",
                 aiTitle: "CLORY AI ASSISTENT",
                 aiDesc: "Sprachassistent für Terminalpläne, Gates, Gepäck und Nha Trang Reisetipps.",
                 aiBtn: "MIT CLORY AI SPRECHEN",
                 amenitiesTitle: "Bereiche & Einrichtungen",
+                amenitiesSub: "Einrichtungen Ebene 1 & 2",
                 touchHint: "Zum Starten Bildschirm berühren",
                 closeBtn: "Schließen",
                 clorySub: "Sprechen Sie mit CloryAI",
+                micListening: "CloryAI hört Ihnen zu...",
                 food: "Gastronomie & Cafés",
+                foodSub: "Ebene 1 & Ebene 2",
                 dutyfree: "Duty-Free-Shops",
+                dutyfreeSub: "Ebene 2 Halle",
                 lounge: "VIP / CIP Lounges",
-                wc: "Toiletten (WC)"
+                loungeSub: "Ebene 2 Intl Terminal",
+                wc: "Toiletten (WC)",
+                wcSub: "Alle Etagen",
+                hotlineLabel: "Flughafen Hotline:",
+                sosLabel: "Medizinischer SOS:",
+                infoLabel: "Info-Schalter:",
+                infoVal: "Ebene 1 - Ankunft",
+                modalMapSub: "Kartensystem wird gestartet...",
+                modalMapBodyTitle: "Wechsel zur Flughafenkarte",
+                modalMapBodyDesc: "Sie können zoomen, Gates auswählen oder Toiletten und Restaurants suchen.",
+                modalMapBodyStatus: "Ebene 1 & 2 Karten verbunden",
+                modalAiSub: "Intelligenter Flughafen-Assistent - Flughafen Cam Ranh",
+                faqTitle: "Häufig gestellte Fragen:",
+                faq1: '"Wo befinden sich die Abfluggates (Gates)?"',
+                faq2: '"Wie lautet das Passwort für das freie WLAN?"',
+                faq3: '"Wo fahren Busse und Taxis nach Nha Trang ab?"',
+                faq4: '"Auf welchen Etagen gibt es Gastronomie und Toiletten?"',
+                faq5: '"Wo befinden sich die Duty-Free-Geschäfte?"',
+                dropdownLabel: "Weitere Sprachen"
             },
             th: {
                 welcomeTag: "ยินดีต้อนรับ",
                 welcomeTitle: "ยินดีต้อนรับสู่ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ท่าอากาศยานนานาชาติกามรัญ</span>",
                 welcomeSub: "สัมผัสบริการระดับโลกพร้อมระบบช่วยเหลือกิจการการบินตลอด 24 ชั่วโมง",
+                terminalSub: "ท่าอากาศยานนานาชาติ • อาคารผู้โดยสาร T2",
                 status: "อาคารผู้โดยสารเปิดให้บริการปกติ",
+                mapBadge: "ระบบนำทางเสมือน",
                 mapTitle: "แผนที่สนามบิน",
                 mapDesc: "ค้นหาประตูขึ้นเครื่อง ร้านอาหาร ร้านค้าปลอดภาษี ห้องน้ำ และตู้ ATM",
                 mapBtn: "เปิดแผนที่แบบโต้ตอบ",
+                aiBadge: "ผู้ช่วย AI 24/7",
                 aiTitle: "ผู้ช่วยเสมือน CLORY AI",
                 aiDesc: "สอบถามด้วยเสียงเกี่ยวกับแผนที่อาคาร ตำแหน่งประตู และข้อมูลท่องเที่ยวญาจาง",
                 aiBtn: "คุยกับ CLORY AI",
                 amenitiesTitle: "พื้นที่และสิ่งอำนวยความสะดวก",
+                amenitiesSub: "สิ่งอำนวยความสะดวก ชั้น 1 และ ชั้น 2",
                 touchHint: "แตะหน้าจอเพื่อเริ่มใช้งาน",
                 closeBtn: "ปิด",
                 clorySub: "พูดคุยกับผู้ช่วย CloryAI",
+                micListening: "CloryAI กำลังฟังคุณอยู่...",
                 food: "ร้านอาหารและคาเฟ่",
+                foodSub: "ชั้น 1 และ ชั้น 2",
                 dutyfree: "ร้านค้าปลอดภาษี",
+                dutyfreeSub: "โถงชั้น 2",
                 lounge: "ห้องรับรอง VIP",
-                wc: "ห้องน้ำ (WC)"
+                loungeSub: "ชั้น 2 อาคารระหว่างประเทศ",
+                wc: "ห้องน้ำ (WC)",
+                wcSub: "มีทุกชั้น",
+                hotlineLabel: "สายด่วนสนามบิน:",
+                sosLabel: "ปฐมพยาบาล SOS:",
+                infoLabel: "เคาน์เตอร์ประชาสัมพันธ์:",
+                infoVal: "ชั้น 1 - โถงผู้โดยสารขาเข้า",
+                modalMapSub: "กำลังเปิดระบบแผนที่นำทาง...",
+                modalMapBodyTitle: "กำลังเปลี่ยนไปยังหน้าจอแผนที่สนามบิน",
+                modalMapBodyDesc: "คุณสามารถขยาย ค้นหาประตูขึ้นเครื่อง หรือค้นหาร้านอาหารและห้องน้ำได้",
+                modalMapBodyStatus: "เชื่อมต่อแผนที่ชั้น 1 และชั้น 2 เรียบร้อยแล้ว",
+                modalAiSub: "ระบบผู้ช่วยอัจฉริยะ - ท่าอากาศยานนานาชาติกามรัญ",
+                faqTitle: "คำถามที่พบบ่อย:",
+                faq1: '"ประตูขึ้นเครื่อง (Gates) อยู่ที่ไหน?"',
+                faq2: '"รหัสผ่าน Wi-Fi ฟรีของสนามบินคืออะไร?"',
+                faq3: '"รถบัสและแท็กซี่ไปเมืองญาจางอยู่ที่ไหน?"',
+                faq4: '"ร้านอาหารและห้องน้ำอยู่ที่ชั้นไหน?"',
+                faq5: '"ร้านค้าปลอดภาษี (Duty Free) อยู่ที่ไหน?"',
+                dropdownLabel: "ภาษาอื่นๆ"
             }
         };
 
         function changeLang(langKey) {
+            currentLangKey = langKey;
+
             // Update Active UI Button States
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('bg-teal', 'text-white', 'shadow-md');
@@ -948,32 +1198,83 @@
                 activeBtn.classList.remove('text-slate-300');
             }
 
-            // Update UI Elements text
-            const t = i18n[langKey];
-            if(t) {
-                if(document.getElementById('welcome-tag')) document.getElementById('welcome-tag').innerText = t.welcomeTag;
-                if(document.getElementById('welcome-title')) document.getElementById('welcome-title').innerHTML = t.welcomeTitle;
-                if(document.getElementById('welcome-sub')) document.getElementById('welcome-sub').innerText = t.welcomeSub;
-                if(document.getElementById('status-text')) document.getElementById('status-text').innerText = t.status;
-                if(document.getElementById('card-map-title')) document.getElementById('card-map-title').innerText = t.mapTitle;
-                if(document.getElementById('card-map-desc')) document.getElementById('card-map-desc').innerText = t.mapDesc;
-                if(document.getElementById('card-map-btn')) document.getElementById('card-map-btn').innerText = t.mapBtn;
-                if(document.getElementById('card-ai-title')) document.getElementById('card-ai-title').innerText = t.aiTitle;
-                if(document.getElementById('card-ai-desc')) document.getElementById('card-ai-desc').innerText = t.aiDesc;
-                if(document.getElementById('card-ai-btn')) document.getElementById('card-ai-btn').innerText = t.aiBtn;
-                if(document.getElementById('amenities-board-title')) document.getElementById('amenities-board-title').innerText = t.amenitiesTitle;
-                if(document.getElementById('touch-hint')) document.getElementById('touch-hint').innerText = t.touchHint;
-                if(document.getElementById('modal-map-header-title')) document.getElementById('modal-map-header-title').innerText = t.mapTitle;
-                if(document.getElementById('modal-map-close-btn')) document.getElementById('modal-map-close-btn').innerText = t.closeBtn;
-                if(document.getElementById('modal-ai-close-btn')) document.getElementById('modal-ai-close-btn').innerText = t.closeBtn;
-                if(document.getElementById('clory-sub-text')) document.getElementById('clory-sub-text').innerText = t.clorySub;
-                
-                // Amenities Items Translation
-                if(document.getElementById('amenity-food')) document.getElementById('amenity-food').innerText = t.food || "Ăn uống & Nhà hàng";
-                if(document.getElementById('amenity-dutyfree')) document.getElementById('amenity-dutyfree').innerText = t.dutyfree || "Mua sắm Duty Free";
-                if(document.getElementById('amenity-lounge')) document.getElementById('amenity-lounge').innerText = t.lounge || "Phòng chờ CIP/VIP";
-                if(document.getElementById('amenity-wc')) document.getElementById('amenity-wc').innerText = t.wc || "Khu vực Vệ sinh (WC)";
+            const t = i18n[langKey] || i18n.vi;
+            
+            // Header
+            if(document.getElementById('header-terminal-sub')) document.getElementById('header-terminal-sub').innerText = t.terminalSub;
+            if(document.getElementById('status-text')) document.getElementById('status-text').innerText = t.status;
+            if(document.getElementById('lang-dropdown-label')) document.getElementById('lang-dropdown-label').innerText = t.dropdownLabel;
+
+            // Hero Banner
+            if(document.getElementById('welcome-tag')) document.getElementById('welcome-tag').innerText = t.welcomeTag;
+            if(document.getElementById('welcome-title')) document.getElementById('welcome-title').innerHTML = t.welcomeTitle;
+            if(document.getElementById('welcome-sub')) document.getElementById('welcome-sub').innerText = t.welcomeSub;
+
+            // Amenities Board
+            if(document.getElementById('amenities-board-title')) document.getElementById('amenities-board-title').innerText = t.amenitiesTitle;
+            if(document.getElementById('amenities-board-sub')) {
+                document.getElementById('amenities-board-sub').innerHTML = `<span class="w-2 h-2 rounded-full bg-teal inline-block"></span> ${t.amenitiesSub}`;
             }
+            if(document.getElementById('amenity-food')) document.getElementById('amenity-food').innerText = t.food;
+            if(document.getElementById('amenity-food-sub')) document.getElementById('amenity-food-sub').innerText = t.foodSub;
+            if(document.getElementById('amenity-dutyfree')) document.getElementById('amenity-dutyfree').innerText = t.dutyfree;
+            if(document.getElementById('amenity-dutyfree-sub')) document.getElementById('amenity-dutyfree-sub').innerText = t.dutyfreeSub;
+            if(document.getElementById('amenity-lounge')) document.getElementById('amenity-lounge').innerText = t.lounge;
+            if(document.getElementById('amenity-lounge-sub')) document.getElementById('amenity-lounge-sub').innerText = t.loungeSub;
+            if(document.getElementById('amenity-wc')) document.getElementById('amenity-wc').innerText = t.wc;
+            if(document.getElementById('amenity-wc-sub')) document.getElementById('amenity-wc-sub').innerText = t.wcSub;
+
+            // Right Feature Cards
+            if(document.getElementById('card-map-badge')) {
+                document.getElementById('card-map-badge').innerHTML = `<i data-lucide="navigation" class="w-3.5 h-3.5"></i> ${t.mapBadge}`;
+            }
+            if(document.getElementById('card-map-title')) document.getElementById('card-map-title').innerText = t.mapTitle;
+            if(document.getElementById('card-map-desc')) document.getElementById('card-map-desc').innerText = t.mapDesc;
+            if(document.getElementById('card-map-btn')) document.getElementById('card-map-btn').innerText = t.mapBtn;
+
+            if(document.getElementById('card-ai-badge')) {
+                document.getElementById('card-ai-badge').innerHTML = `<span class="w-2 h-2 rounded-full bg-gold"></span> ${t.aiBadge}`;
+            }
+            if(document.getElementById('card-ai-title')) document.getElementById('card-ai-title').innerText = t.aiTitle;
+            if(document.getElementById('card-ai-desc')) document.getElementById('card-ai-desc').innerText = t.aiDesc;
+            if(document.getElementById('card-ai-btn')) document.getElementById('card-ai-btn').innerText = t.aiBtn;
+
+            // Footer
+            if(document.getElementById('footer-hotline-label')) document.getElementById('footer-hotline-label').innerText = t.hotlineLabel;
+            if(document.getElementById('footer-sos-label')) document.getElementById('footer-sos-label').innerText = t.sosLabel;
+            if(document.getElementById('footer-info-label')) document.getElementById('footer-info-label').innerText = t.infoLabel;
+            if(document.getElementById('footer-info-val')) document.getElementById('footer-info-val').innerText = t.infoVal;
+            if(document.getElementById('touch-hint')) document.getElementById('touch-hint').innerText = t.touchHint;
+
+            // Map Modal
+            if(document.getElementById('modal-map-header-title')) document.getElementById('modal-map-header-title').innerText = t.mapTitle;
+            if(document.getElementById('modal-map-header-sub')) document.getElementById('modal-map-header-sub').innerText = t.modalMapSub;
+            if(document.getElementById('modal-map-body-title')) document.getElementById('modal-map-body-title').innerText = t.modalMapBodyTitle;
+            if(document.getElementById('modal-map-body-desc')) document.getElementById('modal-map-body-desc').innerText = t.modalMapBodyDesc;
+            if(document.getElementById('modal-map-body-status')) {
+                document.getElementById('modal-map-body-status').innerHTML = `<i data-lucide="check-circle" class="w-5 h-5"></i> ${t.modalMapBodyStatus}`;
+            }
+            if(document.getElementById('modal-map-close-btn')) document.getElementById('modal-map-close-btn').innerText = t.closeBtn;
+
+            // Clory AI Modal
+            if(document.getElementById('modal-ai-header-title')) document.getElementById('modal-ai-header-title').innerText = t.aiTitle;
+            if(document.getElementById('modal-ai-header-sub')) document.getElementById('modal-ai-header-sub').innerText = t.modalAiSub;
+            if(document.getElementById('clory-sub-text')) document.getElementById('clory-sub-text').innerText = t.clorySub;
+            if(document.getElementById('mic-status-text')) document.getElementById('mic-status-text').innerText = t.micListening;
+            if(document.getElementById('faq-title')) document.getElementById('faq-title').innerText = t.faqTitle;
+            if(document.getElementById('faq-1')) document.getElementById('faq-1').innerText = t.faq1;
+            if(document.getElementById('faq-2')) document.getElementById('faq-2').innerText = t.faq2;
+            if(document.getElementById('faq-3')) document.getElementById('faq-3').innerText = t.faq3;
+            if(document.getElementById('faq-4')) document.getElementById('faq-4').innerText = t.faq4;
+            if(document.getElementById('faq-5')) document.getElementById('faq-5').innerText = t.faq5;
+            if(document.getElementById('modal-ai-close-btn')) document.getElementById('modal-ai-close-btn').innerText = t.closeBtn;
+
+            // Re-render Lucide icons for dynamically added HTML
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
+            }
+            
+            updateClock();
         }
     </script>
 </body>
