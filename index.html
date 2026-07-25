@@ -8,7 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons UMD Build for Reliability -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <!-- JsSIP Library for WebRTC PJSIP Connection (jsDelivr + unpkg Fallback) -->
+    <!-- JsSIP Multi-CDN Loader with Automatic Failover -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.1/jssip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js"></script>
     <script src="https://unpkg.com/jssip@3.10.1/dist/jssip.min.js"></script>
     <!-- Google Fonts -->
@@ -667,23 +668,53 @@
             }
         });
 
-        // WebRTC JsSIP User Agent Initialization
+        // WebRTC JsSIP User Agent Initialization with Multi-CDN Failover
+        const cdnList = [
+            "https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.1/jssip.min.js",
+            "https://cdn.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js",
+            "https://unpkg.com/jssip@3.10.1/dist/jssip.min.js",
+            "https://fastly.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js"
+        ];
+
+        function loadJsSIP(cdnIndex = 0, onComplete) {
+            const SIPObj = window.JsSIP || (typeof JsSIP !== 'undefined' ? JsSIP : null);
+            if (SIPObj) {
+                if (onComplete) onComplete(SIPObj);
+                return;
+            }
+            if (cdnIndex >= cdnList.length) {
+                if (onComplete) onComplete(null);
+                return;
+            }
+
+            updateSipStatus('connecting', `Thử nạp CDN (${cdnIndex + 1}/${cdnList.length})...`);
+            const script = document.createElement('script');
+            script.src = cdnList[cdnIndex];
+            script.async = true;
+            script.onload = () => {
+                const loadedObj = window.JsSIP || (typeof JsSIP !== 'undefined' ? JsSIP : null);
+                if (loadedObj) {
+                    if (onComplete) onComplete(loadedObj);
+                } else {
+                    loadJsSIP(cdnIndex + 1, onComplete);
+                }
+            };
+            script.onerror = () => {
+                loadJsSIP(cdnIndex + 1, onComplete);
+            };
+            document.head.appendChild(script);
+        }
+
         function initSIPUA() {
-            if (typeof JsSIP === 'undefined') {
-                updateSipStatus('connecting', 'Đang nạp thư viện JsSIP...');
-                const sipScript = document.createElement('script');
-                sipScript.src = "https://cdn.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js";
-                sipScript.onload = () => {
-                    if (typeof JsSIP !== 'undefined') {
+            const SIPClass = window.JsSIP || (typeof JsSIP !== 'undefined' ? JsSIP : null);
+            if (!SIPClass) {
+                loadJsSIP(0, (SIPInstance) => {
+                    if (SIPInstance) {
                         initSIPUA();
                     } else {
-                        updateSipStatus('failed', 'Lỗi khởi tạo JsSIP');
+                        updateSipStatus('failed', 'Lỗi: Không thể nạp JsSIP từ CDN (Kiểm tra mạng / CSP)');
                     }
-                };
-                sipScript.onerror = () => {
-                    updateSipStatus('failed', 'Chưa tải được JsSIP từ CDN');
-                };
-                document.head.appendChild(sipScript);
+                });
                 return;
             }
 
@@ -700,7 +731,7 @@
             try {
                 updateSipStatus('connecting', 'Đang nối WSS...');
 
-                const socket = new JsSIP.WebSocketInterface(sipConfig.wssUrl.trim());
+                const socket = new SIPClass.WebSocketInterface(sipConfig.wssUrl.trim());
                 
                 // Process extension & domain
                 const ext = sipConfig.extension.trim();
@@ -734,7 +765,7 @@
                     }
                 };
 
-                ua = new JsSIP.UA(configuration);
+                ua = new SIPClass.UA(configuration);
 
                 // Detailed Connection Lifecycle Event Listeners
                 ua.on('connecting', () => updateSipStatus('connecting', 'Đang mở WSS...'));
