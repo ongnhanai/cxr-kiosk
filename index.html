@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sân bay Quốc tế Cam Ranh - Kiosk Cảm ứng 40"</title>
-    <!-- Polyfill/Shield for legacy WebRTC shims on modern browsers -->
+    <!-- Hidden Remote Audio Element for WebRTC Call Stream (Positioned off-screen without display:none) -->
+    <audio id="sip-remote-audio" autoplay playsinline style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></audio>
+
     <script>
         (function() {
             if (typeof window !== 'undefined' && navigator && navigator.mediaDevices) {
@@ -1013,10 +1014,20 @@
                 return;
             }
 
-            // Unlock browser audio playback policy on user interaction
+            // Unlock browser audio playback policy & initialize AudioContext on direct user gesture
             const remoteAudio = document.getElementById('sip-remote-audio');
             if (remoteAudio) {
+                remoteAudio.muted = false;
+                remoteAudio.volume = 1.0;
                 remoteAudio.play().catch(() => {});
+            }
+
+            if (!audioCtx) {
+                const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtxClass) audioCtx = new AudioCtxClass();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
             }
 
             const target = sipConfig.targetExt || '8000';
@@ -1043,7 +1054,11 @@
 
             const options = {
                 eventHandlers: eventHandlers,
-                mediaConstraints: { audio: true, video: false }
+                mediaConstraints: { audio: true, video: false },
+                rtcOfferConstraints: {
+                    offerToReceiveAudio: true,
+                    offerToReceiveVideo: false
+                }
             };
 
             activeSession = ua.call(`sip:${target}@${sipConfig.domain || 'camranh.aero'}`, options);
@@ -1058,14 +1073,41 @@
                 stopRingbackTone();
                 const remoteAudio = document.getElementById('sip-remote-audio');
                 if (remoteAudio && stream) {
+                    console.log("Connecting WebRTC remote stream to playback:", stream);
                     remoteAudio.srcObject = stream;
-                    remoteAudio.play().catch(err => console.warn("Audio play error:", err));
-                    
-                    if (audioCtx && analyser) {
+                    remoteAudio.muted = false;
+                    remoteAudio.volume = 1.0;
+
+                    if (audioCtx && audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+
+                    const playPromise = remoteAudio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(err => {
+                            console.warn("Remote audio play blocked, retrying on user click:", err);
+                            const resumeAudioOnClick = () => {
+                                remoteAudio.play().catch(() => {});
+                                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+                            };
+                            document.addEventListener('click', resumeAudioOnClick, { once: true });
+                        });
+                    }
+
+                    // Route remote stream to AudioContext for visualizer AND audio output
+                    if (audioCtx) {
                         try {
+                            if (!analyser) {
+                                analyser = audioCtx.createAnalyser();
+                                analyser.fftSize = 64;
+                            }
                             const streamSource = audioCtx.createMediaStreamSource(stream);
                             streamSource.connect(analyser);
-                        } catch(err) {}
+                            // CRITICAL: Connect analyser to audioCtx.destination to prevent WebAudio from swallowing the output sound!
+                            analyser.connect(audioCtx.destination);
+                        } catch(err) {
+                            console.warn("Analyser stream routing warning:", err);
+                        }
                     }
                 }
             };
@@ -1075,9 +1117,10 @@
                     const peerconnection = e.peerconnection;
                     if (peerconnection) {
                         peerconnection.addEventListener('track', (event) => {
-                            if (event.streams && event.streams[0]) {
-                                handleRemoteStream(event.streams[0]);
-                            }
+                            const stream = (event.streams && event.streams[0]) 
+                                           ? event.streams[0] 
+                                           : new MediaStream([event.track]);
+                            handleRemoteStream(stream);
                         });
 
                         peerconnection.addEventListener('addstream', (event) => {
@@ -1092,11 +1135,15 @@
                     stopRingbackTone();
                     if (session.connection) {
                         const receivers = session.connection.getReceivers ? session.connection.getReceivers() : [];
+                        const audioTracks = [];
                         receivers.forEach(receiver => {
                             if (receiver.track && receiver.track.kind === 'audio') {
-                                handleRemoteStream(new MediaStream([receiver.track]));
+                                audioTracks.push(receiver.track);
                             }
                         });
+                        if (audioTracks.length > 0) {
+                            handleRemoteStream(new MediaStream(audioTracks));
+                        }
                     }
                 });
 
