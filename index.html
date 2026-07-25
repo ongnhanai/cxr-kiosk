@@ -662,7 +662,7 @@
     </div>
 
     <!-- Hidden Remote Audio Element for WebRTC Call Stream -->
-    <audio id="sip-remote-audio" autoplay class="hidden"></audio>
+    <audio id="sip-remote-audio" autoplay playsinline class="hidden"></audio>
 
     <script>
         // Global State Variables
@@ -942,6 +942,65 @@
             }
         }
 
+        // Web Audio API Ringback Tone Generator for Dialing State
+        let ringbackAudioCtx = null;
+        let ringbackInterval = null;
+
+        function startRingbackTone() {
+            stopRingbackTone();
+            try {
+                const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtxClass) return;
+                ringbackAudioCtx = new AudioCtxClass();
+                
+                function playToneBurst() {
+                    if (!ringbackAudioCtx || ringbackAudioCtx.state === 'closed') return;
+                    if (ringbackAudioCtx.state === 'suspended') {
+                        ringbackAudioCtx.resume();
+                    }
+                    
+                    const now = ringbackAudioCtx.currentTime;
+                    const osc1 = ringbackAudioCtx.createOscillator();
+                    const osc2 = ringbackAudioCtx.createOscillator();
+                    const gain = ringbackAudioCtx.createGain();
+                    
+                    osc1.type = 'sine';
+                    osc1.frequency.setValueAtTime(440, now); // Standard 440 Hz
+                    osc2.type = 'sine';
+                    osc2.frequency.setValueAtTime(480, now); // Standard 480 Hz
+                    
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.setValueAtTime(0.08, now + 1.0);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.05);
+                    
+                    osc1.connect(gain);
+                    osc2.connect(gain);
+                    gain.connect(ringbackAudioCtx.destination);
+                    
+                    osc1.start(now);
+                    osc2.start(now);
+                    osc1.stop(now + 1.1);
+                    osc2.stop(now + 1.1);
+                }
+                
+                playToneBurst();
+                ringbackInterval = setInterval(playToneBurst, 3000);
+            } catch(e) {
+                console.warn("Ringback tone error:", e);
+            }
+        }
+
+        function stopRingbackTone() {
+            if (ringbackInterval) {
+                clearInterval(ringbackInterval);
+                ringbackInterval = null;
+            }
+            if (ringbackAudioCtx) {
+                try { ringbackAudioCtx.close(); } catch(e) {}
+                ringbackAudioCtx = null;
+            }
+        }
+
         // WebRTC Call Handlers
         function toggleSipCall() {
             if (activeSession) {
@@ -954,18 +1013,29 @@
                 return;
             }
 
+            // Unlock browser audio playback policy on user interaction
+            const remoteAudio = document.getElementById('sip-remote-audio');
+            if (remoteAudio) {
+                remoteAudio.play().catch(() => {});
+            }
+
             const target = sipConfig.targetExt || '8000';
+            startRingbackTone();
+
             const eventHandlers = {
                 'progress': () => updateSipStatus('connecting', `Đang đổ chuông ${target}...`),
                 'failed': (e) => {
+                    stopRingbackTone();
                     updateSipStatus('registered', `Ext ${sipConfig.extension} Online`);
                     resetCallUI();
                 },
                 'ended': () => {
+                    stopRingbackTone();
                     updateSipStatus('registered', `Ext ${sipConfig.extension} Online`);
                     resetCallUI();
                 },
                 'confirmed': () => {
+                    stopRingbackTone();
                     updateSipStatus('incall', `Đang thoại (${target})`);
                     startCallTimer();
                 }
@@ -983,31 +1053,67 @@
 
         function setupSessionHandlers(session) {
             if (!session) return;
+
+            const handleRemoteStream = (stream) => {
+                stopRingbackTone();
+                const remoteAudio = document.getElementById('sip-remote-audio');
+                if (remoteAudio && stream) {
+                    remoteAudio.srcObject = stream;
+                    remoteAudio.play().catch(err => console.warn("Audio play error:", err));
+                    
+                    if (audioCtx && analyser) {
+                        try {
+                            const streamSource = audioCtx.createMediaStreamSource(stream);
+                            streamSource.connect(analyser);
+                        } catch(err) {}
+                    }
+                }
+            };
+
             if (session.on) {
                 session.on('peerconnection', (e) => {
                     const peerconnection = e.peerconnection;
                     if (peerconnection) {
                         peerconnection.addEventListener('track', (event) => {
-                            const remoteAudio = document.getElementById('sip-remote-audio');
-                            if (remoteAudio && event.streams[0]) {
-                                remoteAudio.srcObject = event.streams[0];
-                                if (audioCtx && analyser) {
-                                    try {
-                                        const streamSource = audioCtx.createMediaStreamSource(event.streams[0]);
-                                        streamSource.connect(analyser);
-                                    } catch(err) {}
-                                }
+                            if (event.streams && event.streams[0]) {
+                                handleRemoteStream(event.streams[0]);
+                            }
+                        });
+
+                        peerconnection.addEventListener('addstream', (event) => {
+                            if (event.stream) {
+                                handleRemoteStream(event.stream);
                             }
                         });
                     }
                 });
 
-                session.on('ended', resetCallUI);
-                session.on('failed', resetCallUI);
+                session.on('confirmed', () => {
+                    stopRingbackTone();
+                    if (session.connection) {
+                        const receivers = session.connection.getReceivers ? session.connection.getReceivers() : [];
+                        receivers.forEach(receiver => {
+                            if (receiver.track && receiver.track.kind === 'audio') {
+                                handleRemoteStream(new MediaStream([receiver.track]));
+                            }
+                        });
+                    }
+                });
+
+                session.on('ended', () => {
+                    stopRingbackTone();
+                    resetCallUI();
+                });
+
+                session.on('failed', () => {
+                    stopRingbackTone();
+                    resetCallUI();
+                });
             }
         }
 
         function hangupSipCall() {
+            stopRingbackTone();
             if (activeSession && activeSession.terminate) {
                 activeSession.terminate();
             }
@@ -1045,6 +1151,7 @@
         }
 
         function resetCallUI() {
+            stopRingbackTone();
             if (callTimerInterval) clearInterval(callTimerInterval);
             document.getElementById('sip-incall-controls').classList.add('hidden');
             document.getElementById('sip-call-btn-label').innerText = "GỌI TỔNG ĐÀI HỖ TRỢ (LIVE)";
