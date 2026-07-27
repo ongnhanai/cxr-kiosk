@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kiosk Sân Bay Quốc Tế Cam Ranh - CXR Smart Hub</title>
 
-    <!-- Hidden / Off-screen Media Element for Remote WebRTC Video & Audio Stream -->
+    <!-- Hidden Media Element for Remote WebRTC Video & Audio Stream -->
     <video id="sip-remote-video" autoplay playsinline style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></video>
 
     <script>
@@ -134,6 +134,17 @@
                 transform: scale(1.8);
                 opacity: 0;
             }
+        }
+        /* Abstract Gradient Animation for Explore Nha Trang Card */
+        .bg-explore-gradient {
+            background: linear-gradient(135deg, rgba(0,168,150,0.85) 0%, rgba(244,162,97,0.8) 50%, rgba(231,111,81,0.85) 100%);
+            background-size: 200% 200%;
+            animation: exploreGradient 8s ease infinite;
+        }
+        @keyframes exploreGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 </head>
@@ -289,45 +300,57 @@
                     </span>
                 </div>
 
-                <!-- 4 Amenity Cards Grid -->
-                <div class="grid grid-cols-4 gap-3">
+                <!-- 5 Amenity Cards Grid (Including Explore Nha Trang - Khanh Hoa) -->
+                <div class="grid grid-cols-5 gap-2.5">
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
-                        <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-gold mb-2 group-hover:scale-105 transition-transform">
-                            <i data-lucide="utensils" class="w-5 h-5"></i>
+                        <div class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-gold mb-2 group-hover:scale-105 transition-transform">
+                            <i data-lucide="utensils" class="w-4.5 h-4.5"></i>
                         </div>
                         <div>
-                            <div class="text-white font-bold text-xs group-hover:text-gold transition-colors" id="amenity-1-title">Dining & Cafés</div>
-                            <div class="text-slate-400 text-[10px] mt-0.5" id="amenity-1-sub">Level 1 & Level 2</div>
+                            <div class="text-white font-bold text-[11px] leading-tight group-hover:text-gold transition-colors" id="amenity-1-title">Dining & Cafés</div>
+                            <div class="text-slate-400 text-[9.5px] mt-0.5" id="amenity-1-sub">Level 1 & 2</div>
                         </div>
                     </div>
 
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
-                        <div class="w-10 h-10 rounded-xl bg-teal/20 border border-teal/30 flex items-center justify-center text-teal mb-2 group-hover:scale-105 transition-transform">
-                            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                        <div class="w-9 h-9 rounded-xl bg-teal/20 border border-teal/30 flex items-center justify-center text-teal mb-2 group-hover:scale-105 transition-transform">
+                            <i data-lucide="shopping-bag" class="w-4.5 h-4.5"></i>
                         </div>
                         <div>
-                            <div class="text-white font-bold text-xs group-hover:text-teal transition-colors" id="amenity-2-title">Duty Free Shops</div>
-                            <div class="text-slate-400 text-[10px] mt-0.5" id="amenity-2-sub">Level 2 Departure</div>
+                            <div class="text-white font-bold text-[11px] leading-tight group-hover:text-teal transition-colors" id="amenity-2-title">Duty Free Shops</div>
+                            <div class="text-slate-400 text-[9.5px] mt-0.5" id="amenity-2-sub">Level 2 Departure</div>
                         </div>
                     </div>
 
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 mb-2 group-hover:scale-105 transition-transform">
-                            <i data-lucide="armchair" class="w-5 h-5"></i>
+                        <div class="w-9 h-9 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 mb-2 group-hover:scale-105 transition-transform">
+                            <i data-lucide="armchair" class="w-4.5 h-4.5"></i>
                         </div>
                         <div>
-                            <div class="text-white font-bold text-xs group-hover:text-indigo-300 transition-colors" id="amenity-3-title">CIP/VIP Lounge</div>
-                            <div class="text-slate-400 text-[10px] mt-0.5" id="amenity-3-sub">Level 2 Terminal T2</div>
+                            <div class="text-white font-bold text-[11px] leading-tight group-hover:text-indigo-300 transition-colors" id="amenity-3-title">CIP/VIP Lounge</div>
+                            <div class="text-slate-400 text-[9.5px] mt-0.5" id="amenity-3-sub">Level 2 T2</div>
                         </div>
                     </div>
 
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
-                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 mb-2 group-hover:scale-105 transition-transform">
-                            <i data-lucide="bath" class="w-5 h-5"></i>
+                        <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 mb-2 group-hover:scale-105 transition-transform">
+                            <i data-lucide="bath" class="w-4.5 h-4.5"></i>
                         </div>
                         <div>
-                            <div class="text-white font-bold text-xs group-hover:text-cyan-300 transition-colors" id="amenity-4-title">Restrooms (WC)</div>
-                            <div class="text-slate-400 text-[10px] mt-0.5" id="amenity-4-sub">All Terminal Floors</div>
+                            <div class="text-white font-bold text-[11px] leading-tight group-hover:text-cyan-300 transition-colors" id="amenity-4-title">Restrooms (WC)</div>
+                            <div class="text-slate-400 text-[9.5px] mt-0.5" id="amenity-4-sub">All Terminal Floors</div>
+                        </div>
+                    </div>
+
+                    <!-- NEW TILE: Explore Nha Trang - Khanh Hoa (Abstract Gradient: Teal + Gold + Light Orange) -->
+                    <div onclick="openExploreModal()" class="bg-explore-gradient border border-white/30 p-3 rounded-2xl flex flex-col justify-between hover:brightness-110 transition cursor-pointer group shadow-lg shadow-teal/20 relative overflow-hidden">
+                        <div class="absolute -top-6 -right-6 w-16 h-16 bg-white/20 rounded-full blur-md pointer-events-none"></div>
+                        <div class="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-white mb-2 group-hover:scale-110 transition-transform">
+                            <i data-lucide="palmtree" class="w-4.5 h-4.5 text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-white font-extrabold text-[11px] leading-tight drop-shadow-sm" id="amenity-5-title">Explore Nha Trang</div>
+                            <div class="text-white/80 text-[9.5px] mt-0.5 font-medium" id="amenity-5-sub">Khanh Hoa Guide</div>
                         </div>
                     </div>
                 </div>
@@ -468,6 +491,96 @@
 
             <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
                 <button onclick="closeMapModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition" id="modal-map-close-btn">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="explore-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-lg hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-navy border-2 border-gold/60 rounded-3xl w-[90vw] h-[90vh] flex flex-col overflow-hidden shadow-2xl relative">
+            <!-- Modal Header -->
+            <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="p-3 bg-gradient-to-br from-teal via-gold to-gold-accent rounded-xl text-white shadow-lg">
+                        <i data-lucide="palmtree" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white" id="modal-explore-header-title">EXPLORE NHA TRANG - KHANH HOA</h3>
+                        <p class="text-xs text-slate-400" id="modal-explore-header-sub">Pristine beaches, rich cultural heritage & coastal travel guides</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <a href="https://camranh.aero/vi/explore" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-teal/20 hover:bg-teal/30 text-teal border border-teal/40 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        <span id="btn-explore-web">camranh.aero/explore</span>
+                    </a>
+                    <button onclick="closeExploreModal()" class="p-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Body: Swipe & Touch Navigation Carousel -->
+            <div class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 p-8 flex flex-col justify-between relative overflow-hidden" id="explore-carousel-area">
+                
+                <!-- Left Nav Arrow Button -->
+                <button onclick="prevExploreSlide()" class="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-black/60 border border-white/20 hover:border-gold hover:bg-gold/20 text-white flex items-center justify-center transition shadow-2xl touch-effect">
+                    <i data-lucide="chevron-left" class="w-8 h-8"></i>
+                </button>
+
+                <!-- Right Nav Arrow Button -->
+                <button onclick="nextExploreSlide()" class="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-black/60 border border-white/20 hover:border-gold hover:bg-gold/20 text-white flex items-center justify-center transition shadow-2xl touch-effect">
+                    <i data-lucide="chevron-right" class="w-8 h-8"></i>
+                </button>
+
+                <!-- Slide Article Content Container -->
+                <div class="flex-1 flex items-center justify-center px-16 relative z-10">
+                    <div id="explore-article-card" class="w-full max-w-4xl glass-dark border border-white/15 rounded-3xl p-8 grid grid-cols-12 gap-8 items-center shadow-2xl transition-all duration-300">
+                        <!-- Left Article Image -->
+                        <div class="col-span-5 relative rounded-2xl overflow-hidden h-72 border border-white/15 shadow-xl group">
+                            <img id="explore-img" src="" alt="Nha Trang Destination" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                            <span id="explore-category-badge" class="absolute top-3 left-3 bg-teal/80 border border-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                Destination Guide
+                            </span>
+                        </div>
+
+                        <!-- Right Article Summary -->
+                        <div class="col-span-7 space-y-4 flex flex-col justify-between h-full py-2">
+                            <div>
+                                <div class="inline-flex items-center space-x-2 bg-gold/20 border border-gold/40 px-3 py-1 rounded-full text-gold text-xs font-bold mb-3">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                                    <span id="explore-location-tag">Khanh Hoa, Vietnam</span>
+                                </div>
+                                <h4 id="explore-title" class="text-2xl xl:text-3xl font-extrabold text-white leading-tight">
+                                    Ponagar Cham Towers
+                                </h4>
+                                <p id="explore-desc" class="text-slate-300 text-sm mt-3 leading-relaxed">
+                                    Experience ancient Cham architecture dating back to the 8th century, perched on Cu Lao hill overlooking the Cai River in Nha Trang.
+                                </p>
+                            </div>
+
+                            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                                <span class="text-slate-400 text-xs flex items-center gap-1.5" id="explore-swipe-hint">
+                                    <i data-lucide="hand" class="w-4 h-4 text-teal"></i> Swipe left/right or use arrows
+                                </span>
+                                <a href="https://camranh.aero/vi/explore" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-gradient-to-r from-teal to-teal-hover hover:brightness-110 text-white text-xs font-bold rounded-xl shadow-lg transition flex items-center gap-2">
+                                    <span id="btn-read-more">Read Full Article</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide Indicators (Dynamic Dots) -->
+                <div class="relative z-10 flex items-center justify-center space-x-2 pt-4" id="explore-dots-container"></div>
+            </div>
+
+            <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
+                <button onclick="closeExploreModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition" id="modal-explore-close-btn">
                     Close
                 </button>
             </div>
@@ -683,7 +796,6 @@
         
         let isAudioEnabled = true;
         let isVideoEnabled = false;
-        let localMediaStream = null;
 
         let sipConfig = {
             wssUrl: localStorage.getItem('cxr_sip_wss') || '',
@@ -693,6 +805,59 @@
             targetExt: localStorage.getItem('cxr_sip_target') || '6666'
         };
 
+        // Explore Nha Trang Articles Data Array
+        const exploreArticles = [
+            {
+                category: "Cultural Heritage",
+                titleEn: "Ponagar Cham Towers",
+                titleVi: "Tháp Bà Ponagar Nha Trang",
+                descEn: "Ancient Cham Hindu architecture dating back to the 8th century, perched on Cu Lao hill overlooking the Cai River.",
+                descVi: "Quần thể kiến trúc Chăm Pa cổ kính từ thế kỷ VIII, tọa lạc trên đồi Cù Lao soi bóng bên dòng sông Cái.",
+                img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=1000&auto=format&fit=crop",
+                location: "Nha Trang City • 35km from CXR"
+            },
+            {
+                category: "Marine Sanctuary",
+                titleEn: "Hon Mun Marine Reserve",
+                titleVi: "Khu Bảo Tồn Biển Đảo Hòn Mun",
+                descEn: "Crystal clear turquoise waters with over 350 species of rare coral reefs, a premier diving and snorkeling sanctuary.",
+                descVi: "Làn nước xanh ngọc bích cùng hơn 350 loài san hô quý hiếm, thiên đường lặn biển ngắm sinh vật biển hấp dẫn.",
+                img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1000&auto=format&fit=crop",
+                location: "Nha Trang Bay • Boat Access"
+            },
+            {
+                category: "Island Entertainment",
+                titleEn: "VinWonders Hon Tre Island",
+                titleVi: "VinWonders Đảo Hòn Tre",
+                descEn: "World-class amusement park featuring a sea-crossing cable car, waterpark, Tata Show & botanical gardens.",
+                descVi: "Tổ hợp giải trí đẳng cấp thế giới với cáp treo vượt biển, công viên nước, Tata Show đỉnh cao và đồi vạn hoa.",
+                img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop",
+                location: "Hon Tre Island • Cable Car"
+            },
+            {
+                category: "Pristine Beaches",
+                titleEn: "Bai Dai Beach Cam Ranh",
+                titleVi: "Biển Bãi Dài Cam Ranh",
+                descEn: "Miles of powdery white sands and gentle crystal waters located right next to Cam Ranh International Airport.",
+                descVi: "Bãi cát trắng mịn trải dài mênh mông cùng làn nước trong xanh ngắt nằm ngay liền kề Sân bay Quốc tế Cam Ranh.",
+                img: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=1000&auto=format&fit=crop",
+                location: "Cam Ranh Peninsula • 5km from CXR"
+            },
+            {
+                category: "Local Culinary",
+                titleEn: "Nha Trang Seafood & Nem Nuong",
+                titleVi: "Ẩm Thực Nem Nướng & Hải Sản Nha Trang",
+                descEn: "Savor fresh grilled seafood, famous Ninh Hoa grilled pork rolls (Nem Nuong), and savory Banh Can pancakes.",
+                descVi: "Thưởng thức hải sản tươi sống đậm vị biển, nem nướng Ninh Hòa trứ danh và bánh căn giòn rụm thơm lừng.",
+                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop",
+                location: "Khanh Hoa Gastronomy"
+            }
+        ];
+
+        let exploreCurrentIndex = 0;
+        let touchStartX = 0;
+        let touchEndX = 0;
+
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof lucide !== 'undefined' && lucide.createIcons) {
                 lucide.createIcons();
@@ -701,6 +866,7 @@
             startHeroAutoCycle();
             fetchRealtimeWeather();
             initSipFormFields();
+            initExploreModalListeners();
             
             // Asynchronously wait for JsSIP with multi-stage CDN loader
             waitForJsSIP((SIPClass) => {
@@ -711,6 +877,90 @@
                 }
             });
         });
+
+        function openExploreModal() {
+            exploreCurrentIndex = 0;
+            renderExploreSlide();
+            renderExploreDots();
+            document.getElementById('explore-modal').classList.remove('hidden');
+        }
+
+        function closeExploreModal() {
+            document.getElementById('explore-modal').classList.add('hidden');
+        }
+
+        function renderExploreSlide() {
+            const article = exploreArticles[exploreCurrentIndex];
+            const imgEl = document.getElementById('explore-img');
+            const badgeEl = document.getElementById('explore-category-badge');
+            const locEl = document.getElementById('explore-location-tag');
+            const titleEl = document.getElementById('explore-title');
+            const descEl = document.getElementById('explore-desc');
+
+            if (imgEl) imgEl.src = article.img;
+            if (badgeEl) badgeEl.innerText = article.category;
+            if (locEl) locEl.innerText = article.location;
+            if (titleEl) titleEl.innerText = currentLang === 'vi' ? article.titleVi : article.titleEn;
+            if (descEl) descEl.innerText = currentLang === 'vi' ? article.descVi : article.descEn;
+
+            renderExploreDots();
+        }
+
+        function renderExploreDots() {
+            const container = document.getElementById('explore-dots-container');
+            if (!container) return;
+            container.innerHTML = '';
+            exploreArticles.forEach((_, idx) => {
+                const dot = document.createElement('button');
+                dot.onclick = () => { exploreCurrentIndex = idx; renderExploreSlide(); };
+                dot.className = idx === exploreCurrentIndex 
+                    ? 'w-8 h-2.5 rounded-full bg-gold shadow-lg shadow-gold/50 transition-all' 
+                    : 'w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all';
+                container.appendChild(dot);
+            });
+        }
+
+        function nextExploreSlide() {
+            exploreCurrentIndex = (exploreCurrentIndex + 1) % exploreArticles.length;
+            renderExploreSlide();
+        }
+
+        function prevExploreSlide() {
+            exploreCurrentIndex = (exploreCurrentIndex - 1 + exploreArticles.length) % exploreArticles.length;
+            renderExploreSlide();
+        }
+
+        function initExploreModalListeners() {
+            const area = document.getElementById('explore-carousel-area');
+            if (area) {
+                area.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+
+                area.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipeGesture();
+                }, { passive: true });
+            }
+
+            document.addEventListener('keydown', (e) => {
+                const exploreModal = document.getElementById('explore-modal');
+                if (exploreModal && !exploreModal.classList.contains('hidden')) {
+                    if (e.key === 'ArrowRight') nextExploreSlide();
+                    if (e.key === 'ArrowLeft') prevExploreSlide();
+                    if (e.key === 'Escape') closeExploreModal();
+                }
+            });
+        }
+
+        function handleSwipeGesture() {
+            const threshold = 50;
+            if (touchEndX < touchStartX - threshold) {
+                nextExploreSlide();
+            } else if (touchEndX > touchStartX + threshold) {
+                prevExploreSlide();
+            }
+        }
 
         function getSIPClass() {
             if (typeof window.JsSIP !== 'undefined') return window.JsSIP;
@@ -892,7 +1142,6 @@
             if (!dot || !txt) return;
 
             const t = i18n[currentLang] || i18n['en'];
-
             dot.className = "w-2.5 h-2.5 rounded-full ";
 
             switch (state) {
@@ -975,7 +1224,6 @@
         function toggleAudioTrack() {
             isAudioEnabled = !isAudioEnabled;
             const btn = document.getElementById('btn-toggle-mic');
-            const lbl = document.getElementById('lbl-mic');
             const t = i18n[currentLang] || i18n['en'];
 
             if (isAudioEnabled) {
@@ -1006,7 +1254,6 @@
                 videoDisplay.classList.remove('hidden');
                 pulseContainer.classList.add('hidden');
 
-                // Request Camera Access for Local PIP
                 try {
                     const videoStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
                     if (localVideoEl) {
@@ -1229,7 +1476,6 @@
             document.getElementById('sip-call-btn-label').innerText = t.callBtn;
             activeSession = null;
 
-            // Clean up local camera PIP stream
             const localVideoEl = document.getElementById('sip-local-video');
             if (localVideoEl && localVideoEl.srcObject) {
                 const tracks = localVideoEl.srcObject.getTracks();
@@ -1329,7 +1575,6 @@
         function openCloryModal() {
             document.getElementById('clory-modal').classList.remove('hidden');
             
-            // Auto register SIP connection immediately on opening modal
             if (!ua && sipConfig.wssUrl && sipConfig.extension) {
                 initSIPUA();
             }
@@ -1337,7 +1582,6 @@
         }
 
         function closeCloryModal() {
-            // Auto terminate active call when closing CloryAI pop-up
             if (activeSession) {
                 hangupSipCall();
             }
@@ -1484,6 +1728,8 @@
                 amenity3Sub: "Level 2 Terminal T2",
                 amenity4Title: "Restrooms (WC)",
                 amenity4Sub: "All Terminal Floors",
+                amenity5Title: "Explore Nha Trang",
+                amenity5Sub: "Khanh Hoa Guide",
                 wifiLabel: "Free Wi-Fi Highspeed",
                 touchHint: "Touch screen to start interaction",
                 closeBtn: "Close",
@@ -1506,7 +1752,11 @@
                 faq2: '"What is the airport free Wi-Fi password?"',
                 faq3: '"Where can I find buses or taxis to Nha Trang city?"',
                 faq4: '"Which level has dining cafés & restrooms?"',
-                faq5: '"Where are the Duty Free shopping areas?"'
+                faq5: '"Where are the Duty Free shopping areas?"',
+                exploreHeaderTitle: "EXPLORE NHA TRANG - KHANH HOA",
+                exploreHeaderSub: "Pristine beaches, rich cultural heritage & coastal travel guides",
+                readMore: "Read Full Article",
+                swipeHint: "Swipe left/right or use arrows"
             },
             vi: {
                 welcomeTag: "Kính chào Quý khách",
@@ -1531,6 +1781,8 @@
                 amenity3Sub: "Tầng 2 Ga Quốc tế T2",
                 amenity4Title: "Khu vực Vệ sinh (WC)",
                 amenity4Sub: "Tất cả các tầng nhà ga",
+                amenity5Title: "Khám phá Nha Trang",
+                amenity5Sub: "Cẩm nang Khánh Hòa",
                 wifiLabel: "Wi-Fi Miễn phí Tốc độ cao",
                 touchHint: "Chạm vào màn hình để bắt đầu thao tác",
                 closeBtn: "Đóng",
@@ -1553,7 +1805,11 @@
                 faq2: '"Mật khẩu Wifi miễn phí sân bay là gì?"',
                 faq3: '"Xe bus & Taxi về trung tâm Nha Trang ở đâu?"',
                 faq4: '"Khu vực ăn uống, Cafe & WC ở tầng mấy?"',
-                faq5: '"Cửa hàng Mua sắm Duty Free ở đâu?"'
+                faq5: '"Cửa hàng Mua sắm Duty Free ở đâu?"',
+                exploreHeaderTitle: "KHÁM PHÁ NHA TRANG - KHÁNH HÒA",
+                exploreHeaderSub: "Biển ngọc, di sản văn hóa & cẩm nang du lịch Khánh Hòa",
+                readMore: "Xem bài viết chi tiết",
+                swipeHint: "Vuốt trái/phải hoặc dùng mũi tên"
             },
             kr: {
                 welcomeTag: "환영합니다",
@@ -1578,6 +1834,8 @@
                 amenity3Sub: "2층 T2 터미널",
                 amenity4Title: "화장실 (WC)",
                 amenity4Sub: "모든 층",
+                amenity5Title: "나트랑 탐험",
+                amenity5Sub: "칸호아 가이드",
                 wifiLabel: "무료 고속 Wi-Fi",
                 touchHint: "화면을 터치하여 시작하세요",
                 closeBtn: "닫기",
@@ -1600,7 +1858,11 @@
                 faq2: '"공항 무료 Wi-Fi 비밀번호는 무엇인가요?"',
                 faq3: '"나트랑 시내로 가는 버스나 택시는 어디서 타나요?"',
                 faq4: '"식당과 화장실은 몇 층에 있나요?"',
-                faq5: '"면세점은 어디에 있나요?"'
+                faq5: '"면세점은 어디에 있나요?"',
+                exploreHeaderTitle: "나트랑 - 칸호아 탐험",
+                exploreHeaderSub: "아름다운 해변, 문화 유산 및 여행 가이드",
+                readMore: "전체 기사 보기",
+                swipeHint: "좌우로 스와이프하거나 화살표 사용"
             },
             cn: {
                 welcomeTag: "尊贵的旅客，欢迎您",
@@ -1625,6 +1887,8 @@
                 amenity3Sub: "2层 T2 航站楼",
                 amenity4Title: "洗手间 (WC)",
                 amenity4Sub: "所有楼层",
+                amenity5Title: "芽庄探索",
+                amenity5Sub: "庆和旅游指南",
                 wifiLabel: "免费高速 Wi-Fi",
                 touchHint: "点击屏幕开始操作",
                 closeBtn: "关闭",
@@ -1647,7 +1911,11 @@
                 faq2: '"机场免费 Wi-Fi 密码是什么？"',
                 faq3: '"去芽庄市区的巴士和出租车在哪里？"',
                 faq4: '"餐厅和洗手间在几楼？"',
-                faq5: '"免税店在什么位置？"'
+                faq5: '"免税店在什么位置？"',
+                exploreHeaderTitle: "芽庄 - 庆和探索",
+                exploreHeaderSub: "蔚蓝海滩、文化遗产与旅游攻略",
+                readMore: "阅读全文",
+                swipeHint: "左右滑动或使用箭头"
             },
             ru: {
                 welcomeTag: "Добро пожаловать",
@@ -1672,6 +1940,8 @@
                 amenity3Sub: "Этаж 2 Терминал T2",
                 amenity4Title: "Туалеты (WC)",
                 amenity4Sub: "На всех этажах",
+                amenity5Title: "Нячанг Гид",
+                amenity5Sub: "Кханьхоа Путеводитель",
                 wifiLabel: "Бесплатный Wi-Fi",
                 touchHint: "Коснитесь экрана для старта",
                 closeBtn: "Закрыть",
@@ -1694,7 +1964,11 @@
                 faq2: '"Какой пароль от бесплатного Wi-Fi?"',
                 faq3: '"Где найти автобус или такси в Нячанг?"',
                 faq4: '"На каком этаже находятся кафе и туалеты?"',
-                faq5: '"Где находятся магазины Duty Free?"'
+                faq5: '"Где находятся магазины Duty Free?"',
+                exploreHeaderTitle: "НЯЧАНГ - КХАНЬХОА ГИД",
+                exploreHeaderSub: "Чистейшие пляжи, культурное наследие и гид по региону",
+                readMore: "Читать полностью",
+                swipeHint: "Смахните влево/вправо или используйте стрелки"
             },
             jp: {
                 welcomeTag: "ようこそ",
@@ -1719,6 +1993,8 @@
                 amenity3Sub: "2階 第2ターミナル",
                 amenity4Title: "お手洗い (WC)",
                 amenity4Sub: "全フロア",
+                amenity5Title: "ニャチャン散策",
+                amenity5Sub: "カインホアガイド",
                 wifiLabel: "無料高速 Wi-Fi",
                 touchHint: "画面をタッチしてスタート",
                 closeBtn: "閉じる",
@@ -1741,7 +2017,11 @@
                 faq2: '"無料Wi-Fiのパスワードは何ですか？"',
                 faq3: '"ニャチャン市内行きのバスやタクシーはどこですか？"',
                 faq4: '"カフェやトイレは何階にありますか？"',
-                faq5: '"免税店はどこにありますか？"'
+                faq5: '"免税店はどこにありますか？"',
+                exploreHeaderTitle: "ニャチャン・カインホアガイド",
+                exploreHeaderSub: "美しいビーチ、文化遺産、観光情報",
+                readMore: "記事を全部読む",
+                swipeHint: "左右にスワイプするか矢印を使用"
             },
             fr: {
                 welcomeTag: "Bienvenue",
@@ -1766,6 +2046,8 @@
                 amenity3Sub: "Niveau 2 Terminal T2",
                 amenity4Title: "Toilettes (WC)",
                 amenity4Sub: "Tous les étages",
+                amenity5Title: "Découvrir Nha Trang",
+                amenity5Sub: "Guide Khanh Hoa",
                 wifiLabel: "Wi-Fi Gratuit",
                 touchHint: "Touchez l'écran pour commencer",
                 closeBtn: "Fermer",
@@ -1788,7 +2070,11 @@
                 faq2: '"Quel est le mot de passe du Wi-Fi gratuit ?"',
                 faq3: '"Où prendre le bus ou le taxi pour Nha Trang ?"',
                 faq4: '"À quel étage se trouvent les cafés et toilettes ?"',
-                faq5: '"Où sont situées les boutiques Duty Free ?"'
+                faq5: '"Où sont situées les boutiques Duty Free ?"',
+                exploreHeaderTitle: "DÉCOUVRIR NHA TRANG - KHANH HOA",
+                exploreHeaderSub: "Plages magnifiques, patrimoine culturel & guides de voyage",
+                readMore: "Lire l'article complet",
+                swipeHint: "Balayez vers la gauche/droite ou utilisez les flèches"
             },
             de: {
                 welcomeTag: "Herzlich Willkommen",
@@ -1813,6 +2099,8 @@
                 amenity3Sub: "Ebene 2 Terminal T2",
                 amenity4Title: "Toiletten (WC)",
                 amenity4Sub: "Alle Etagen",
+                amenity5Title: "Nha Trang Entdecken",
+                amenity5Sub: "Khanh Hoa Guide",
                 wifiLabel: "Kostenloses WLAN",
                 touchHint: "Zum Starten Bildschirm berühren",
                 closeBtn: "Schließen",
@@ -1835,7 +2123,11 @@
                 faq2: '"Wie lautet das WLAN-Passwort?"',
                 faq3: '"Wo fahren Busse und Taxis nach Nha Trang?"',
                 faq4: '"Auf welcher Ebene sind Cafés und Toiletten?"',
-                faq5: '"Wo sind die Duty Free Shops?"'
+                faq5: '"Wo sind die Duty Free Shops?"',
+                exploreHeaderTitle: "NHA TRANG - KHANH HOA ENTDECKEN",
+                exploreHeaderSub: "Traumstrände, Kulturerbe & Reiseführer",
+                readMore: "Vollständigen Artikel lesen",
+                swipeHint: "Wischen Sie nach links/rechts oder nutzen Sie Pfeile"
             },
             th: {
                 welcomeTag: "ยินดีต้อนรับ",
@@ -1860,6 +2152,8 @@
                 amenity3Sub: "ชั้น 2 อาคาร T2",
                 amenity4Title: "ห้องน้ำ (WC)",
                 amenity4Sub: "ทุกชั้น",
+                amenity5Title: "สำรวจญาจาง",
+                amenity5Sub: "คู่มือคั้ญฮวา",
                 wifiLabel: "Wi-Fi ความเร็วสูงฟรี",
                 touchHint: "แตะหน้าจอเพื่อเริ่มใช้งาน",
                 closeBtn: "ปิด",
@@ -1882,7 +2176,11 @@
                 faq2: '"รหัสผ่าน Wi-Fi ฟรีของสนามบินคืออะไร?"',
                 faq3: '"รถบัสและแท็กซี่ไปเมืองญาจางอยู่ที่ไหน?"',
                 faq4: '"ร้านอาหารและห้องน้ำอยู่ชั้นไหน?"',
-                faq5: '"ร้านค้าปลอดภาษีอยู่ที่ไหน?"'
+                faq5: '"ร้านค้าปลอดภาษีอยู่ที่ไหน?"',
+                exploreHeaderTitle: "สำรวจญาจาง - คั้ญฮวา",
+                exploreHeaderSub: "ชายหาดสวยงาม มรดกทางวัฒนธรรม และคู่มือการเดินทาง",
+                readMore: "อ่านบทความฉบับเต็ม",
+                swipeHint: "ปัดซ้าย/ขวา หรือใช้ลูกศร"
             }
         };
 
@@ -1925,6 +2223,8 @@
             if(document.getElementById('amenity-3-sub')) document.getElementById('amenity-3-sub').innerText = t.amenity3Sub;
             if(document.getElementById('amenity-4-title')) document.getElementById('amenity-4-title').innerText = t.amenity4Title;
             if(document.getElementById('amenity-4-sub')) document.getElementById('amenity-4-sub').innerText = t.amenity4Sub;
+            if(document.getElementById('amenity-5-title')) document.getElementById('amenity-5-title').innerText = t.amenity5Title;
+            if(document.getElementById('amenity-5-sub')) document.getElementById('amenity-5-sub').innerText = t.amenity5Sub;
             
             if(document.getElementById('wifi-label')) document.getElementById('wifi-label').innerText = t.wifiLabel;
             if(document.getElementById('touch-hint')) document.getElementById('touch-hint').innerText = t.touchHint;
@@ -1945,6 +2245,12 @@
             if(document.getElementById('lbl-mic')) document.getElementById('lbl-mic').innerText = isAudioEnabled ? t.micOn : t.micOff;
             if(document.getElementById('lbl-cam')) document.getElementById('lbl-cam').innerText = isVideoEnabled ? t.camOn : t.camOff;
 
+            if(document.getElementById('modal-explore-header-title')) document.getElementById('modal-explore-header-title').innerText = t.exploreHeaderTitle;
+            if(document.getElementById('modal-explore-header-sub')) document.getElementById('modal-explore-header-sub').innerText = t.exploreHeaderSub;
+            if(document.getElementById('modal-explore-close-btn')) document.getElementById('modal-explore-close-btn').innerText = t.closeBtn;
+            if(document.getElementById('btn-read-more')) document.getElementById('btn-read-more').innerText = t.readMore;
+            if(document.getElementById('explore-swipe-hint')) document.getElementById('explore-swipe-hint').innerHTML = `<i data-lucide="hand" class="w-4 h-4 text-teal"></i> ${t.swipeHint}`;
+
             if(document.getElementById('faq-header')) document.getElementById('faq-header').innerText = t.faqHeader;
             if(document.getElementById('faq-1')) document.getElementById('faq-1').innerText = t.faq1;
             if(document.getElementById('faq-2')) document.getElementById('faq-2').innerText = t.faq2;
@@ -1957,6 +2263,8 @@
             } else {
                 updateSipStatus('unregistered');
             }
+
+            renderExploreSlide();
 
             if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
             updateClock();
