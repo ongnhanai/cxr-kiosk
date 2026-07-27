@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CXR AI Kiosk - CloryAI AeroHub Agent & Flights Board</title>
+    <title>CXR AI Kiosk - CloryAI AeroHub Agent</title>
 
-    <!-- Hidden Media Element for Remote WebRTC Video & Audio Stream -->
+    <!-- Hidden / Off-screen Media Element for Remote WebRTC Video & Audio Stream -->
     <video id="sip-remote-video" autoplay playsinline style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></video>
 
+    <!-- Polyfill for MediaDevices getUserMedia -->
     <script>
         (function() {
             if (typeof window !== 'undefined' && navigator && navigator.mediaDevices) {
@@ -157,19 +158,18 @@
         <div class="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/60 to-transparent"></div>
     </div>
 
-    <!-- Header Navigation Bar -->
-    <header class="relative z-30 w-full bg-navy-dark/90 backdrop-blur-xl border-b border-white/10 px-8 py-3.5 flex items-center justify-between shadow-2xl">
+    <header class="relative z-30 w-full bg-navy-dark/90 backdrop-blur-xl border-b border-white/10 px-8 py-4 flex items-center justify-between shadow-2xl">
         <!-- Logo & Airport Info -->
         <div class="flex items-center space-x-6">
             <div class="flex items-center space-x-4 bg-white/10 p-2.5 px-4 rounded-2xl border border-white/15">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-teal via-teal-hover to-navy flex items-center justify-center shadow-lg shadow-teal/30">
-                    <i data-lucide="plane-takeoff" class="w-6 h-6 text-white"></i>
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal via-teal-hover to-navy flex items-center justify-center shadow-lg shadow-teal/30">
+                    <i data-lucide="plane-takeoff" class="w-7 h-7 text-white"></i>
                 </div>
                 <div>
-                    <h1 class="text-white font-extrabold text-lg tracking-wide uppercase flex items-center gap-2">
-                        CAM RANH <span class="text-gold font-bold text-xs bg-gold/20 px-2 py-0.5 rounded-md border border-gold/40">CXR</span>
+                    <h1 class="text-white font-extrabold text-xl tracking-wide uppercase flex items-center gap-2">
+                        CAM RANH <span class="text-gold font-bold text-sm bg-gold/20 px-2 py-0.5 rounded-md border border-gold/40">CXR</span>
                     </h1>
-                    <p class="text-slate-300 text-[11px] font-medium tracking-wider" id="header-terminal-sub">INTERNATIONAL AIRPORT • TERMINAL T2</p>
+                    <p class="text-slate-300 text-xs font-medium tracking-wider" id="header-terminal-sub">INTERNATIONAL AIRPORT • TERMINAL T2</p>
                 </div>
             </div>
             
@@ -182,46 +182,40 @@
             </div>
         </div>
 
-        <div class="flex items-center space-x-5">
-            <!-- Flight Schedule Quick Launcher Header Button -->
-            <button onclick="openFlightInfoWebModal()" class="px-3.5 py-2 bg-teal/20 hover:bg-teal/30 border border-teal/40 rounded-2xl text-xs font-bold text-teal flex items-center space-x-2 transition touch-effect">
-                <i data-lucide="plane" class="w-4 h-4"></i>
-                <span id="btn-header-flights">Flight Board</span>
-            </button>
-
+        <div class="flex items-center space-x-6">
             <!-- Weather Widget (Realtime Open-Meteo API) -->
-            <div class="flex items-center space-x-3 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-2xl">
-                <i data-lucide="sun" id="weather-icon" class="w-6 h-6 text-gold animate-spin-slow"></i>
+            <div class="flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl">
+                <i data-lucide="sun" id="weather-icon" class="w-7 h-7 text-gold animate-spin-slow"></i>
                 <div>
-                    <div class="text-white font-bold text-base leading-none" id="weather-temp">30°C</div>
-                    <div class="text-slate-400 text-[10px] font-medium" id="weather-loc">Cam Ranh • Sunny</div>
+                    <div class="text-white font-bold text-lg leading-none" id="weather-temp">30°C</div>
+                    <div class="text-slate-400 text-[11px] font-medium" id="weather-loc">Cam Ranh • Sunny</div>
                 </div>
             </div>
 
             <!-- Live Clock -->
-            <div class="text-right border-l border-white/10 pl-5">
-                <div id="live-clock" class="text-white font-mono font-extrabold text-xl tracking-wider leading-none">14:30:25</div>
-                <div id="live-date" class="text-slate-300 text-[11px] mt-1 font-medium">Friday, 24/07/2026</div>
+            <div class="text-right border-l border-white/10 pl-6">
+                <div id="live-clock" class="text-white font-mono font-extrabold text-2xl tracking-wider leading-none">14:30:25</div>
+                <div id="live-date" class="text-slate-300 text-xs mt-1 font-medium">Friday, 24/07/2026</div>
             </div>
 
-            <!-- Multi-language Switcher -->
+            <!-- Multi-language Switcher (English First Order) -->
             <div class="relative flex items-center bg-black/40 p-1.5 rounded-2xl border border-white/15 space-x-1 z-50" id="lang-selector">
-                <button onclick="changeLang('en')" id="btn-en" class="lang-btn active-lang px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-1 bg-teal text-white shadow-md">
+                <button onclick="changeLang('en')" id="btn-en" class="lang-btn active-lang px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-teal text-white shadow-md">
                     <span>🇬🇧</span> <span>ENG</span>
                 </button>
-                <button onclick="changeLang('vi')" id="btn-vi" class="lang-btn px-2.5 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1">
+                <button onclick="changeLang('vi')" id="btn-vi" class="lang-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1.5">
                     <span>🇻🇳</span> <span>VIE</span>
                 </button>
-                <button onclick="changeLang('kr')" id="btn-kr" class="lang-btn px-2.5 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1">
+                <button onclick="changeLang('kr')" id="btn-kr" class="lang-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1.5">
                     <span>🇰🇷</span> <span>KOR</span>
                 </button>
-                <button onclick="changeLang('cn')" id="btn-cn" class="lang-btn px-2.5 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1">
+                <button onclick="changeLang('cn')" id="btn-cn" class="lang-btn px-3 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition-all flex items-center space-x-1.5">
                     <span>🇨🇳</span> <span>CHN</span>
                 </button>
 
                 <!-- Dropdown Trigger Button for Additional 5 Languages -->
                 <div class="relative inline-block text-left">
-                    <button onclick="toggleLangDropdown(event)" id="btn-more-lang" class="px-2 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 border border-white/10">
+                    <button onclick="toggleLangDropdown(event)" id="btn-more-lang" class="px-2.5 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 border border-white/10">
                         <i data-lucide="globe" class="w-3.5 h-3.5 text-gold"></i>
                         <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400"></i>
                     </button>
@@ -229,19 +223,19 @@
                     <!-- Language Dropdown Menu -->
                     <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-52 bg-navy-dark/95 border border-white/20 rounded-2xl shadow-2xl backdrop-blur-xl z-[100] overflow-hidden py-1">
                         <div class="px-3 py-1.5 text-[10px] uppercase font-bold text-slate-400 border-b border-white/10" id="dropdown-header-title">Other Languages / Ngôn ngữ khác</div>
-                        <button onclick="changeLang('ru'); closeLangDropdown();" id="btn-ru" class="lang-btn w-full px-3 py-2 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
+                        <button onclick="changeLang('ru'); closeLangDropdown();" id="btn-ru" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
                             <span>🇷🇺</span> <span class="font-semibold">Русский (RUS)</span>
                         </button>
-                        <button onclick="changeLang('jp'); closeLangDropdown();" id="btn-jp" class="lang-btn w-full px-3 py-2 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
+                        <button onclick="changeLang('jp'); closeLangDropdown();" id="btn-jp" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
                             <span>🇯🇵</span> <span class="font-semibold">日本語 (JPN)</span>
                         </button>
-                        <button onclick="changeLang('fr'); closeLangDropdown();" id="btn-fr" class="lang-btn w-full px-3 py-2 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
+                        <button onclick="changeLang('fr'); closeLangDropdown();" id="btn-fr" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
                             <span>🇫🇷</span> <span class="font-semibold">Français (FRA)</span>
                         </button>
-                        <button onclick="changeLang('de'); closeLangDropdown();" id="btn-de" class="lang-btn w-full px-3 py-2 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
+                        <button onclick="changeLang('de'); closeLangDropdown();" id="btn-de" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
                             <span>🇩🇪</span> <span class="font-semibold">Deutsch (GER)</span>
                         </button>
-                        <button onclick="changeLang('th'); closeLangDropdown();" id="btn-th" class="lang-btn w-full px-3 py-2 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition border-t border-white/5">
+                        <button onclick="changeLang('th'); closeLangDropdown();" id="btn-th" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition border-t border-white/5">
                             <span>🇹🇭</span> <span class="font-semibold">ไทย (THA)</span>
                         </button>
                     </div>
@@ -250,199 +244,213 @@
         </div>
     </header>
 
-    <main class="relative z-10 flex-1 p-6 xl:p-8 grid grid-cols-12 gap-6 xl:gap-8 items-stretch overflow-hidden">
+    <main class="relative z-10 flex-1 p-8 grid grid-cols-12 gap-8 items-stretch overflow-hidden">
         
-        <!-- LEFT COLUMN (60% Width): Hero Banner, Flight Quick-Bar & Amenities -->
-        <section class="col-span-7 flex flex-col justify-between space-y-5">
+        <!-- LEFT COLUMN (60% Width): Auto-cycling Hero Banner & Terminal Amenities -->
+        <section class="col-span-7 flex flex-col justify-between space-y-6">
             
             <!-- Hero Banner Card -->
-            <div class="glass-dark rounded-3xl p-7 border border-white/15 shadow-2xl relative overflow-hidden flex-1 flex flex-col justify-between group">
+            <div class="glass-dark rounded-3xl p-8 border border-white/15 shadow-2xl relative overflow-hidden flex-1 flex flex-col justify-between group">
                 <div class="absolute -top-24 -left-24 w-72 h-72 bg-teal/20 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-gold/15 rounded-full blur-3xl pointer-events-none"></div>
                 
                 <div class="relative z-10 transition-opacity duration-500" id="hero-content-container">
-                    <div class="inline-flex items-center space-x-2 bg-gradient-to-r from-gold/30 to-gold/10 border border-gold/40 px-3.5 py-1 rounded-full mb-3">
-                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold"></i>
-                        <span class="text-gold text-[11px] font-bold tracking-widest uppercase" id="welcome-tag">Welcome Valued Passengers</span>
+                    <div class="inline-flex items-center space-x-2 bg-gradient-to-r from-gold/30 to-gold/10 border border-gold/40 px-4 py-1.5 rounded-full mb-4">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-gold"></i>
+                        <span class="text-gold text-xs font-bold tracking-widest uppercase" id="welcome-tag">Welcome Valued Passengers</span>
                     </div>
 
-                    <h2 class="text-3xl xl:text-4xl font-black text-white leading-tight tracking-tight mb-2" id="welcome-title">
+                    <h2 class="text-4xl xl:text-5xl font-black text-white leading-tight tracking-tight mb-3" id="welcome-title">
                         WELCOME TO <br>
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold">CAM RANH INTL AIRPORT</span>
                     </h2>
 
-                    <p class="text-slate-300 text-sm max-w-xl font-normal leading-relaxed" id="welcome-sub">
+                    <p class="text-slate-300 text-base max-w-xl font-normal leading-relaxed" id="welcome-sub">
                         Experience world-class aviation services and 24/7 intelligent assistance for your journey.
                     </p>
                 </div>
 
                 <!-- Carousel Footer: Wi-Fi Highlight & Dots -->
-                <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between">
+                <div class="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between">
                     <div class="flex items-center space-x-6">
                         <div class="flex items-center space-x-3">
-                            <div class="w-9 h-9 rounded-full bg-teal/20 border border-teal/40 flex items-center justify-center text-teal">
-                                <i data-lucide="wifi" class="w-4.5 h-4.5"></i>
+                            <div class="w-10 h-10 rounded-full bg-teal/20 border border-teal/40 flex items-center justify-center text-teal">
+                                <i data-lucide="wifi" class="w-5 h-5"></i>
                             </div>
                             <div>
                                 <div class="text-white text-xs font-bold" id="wifi-label">Free Wi-Fi Highspeed</div>
-                                <div class="text-slate-400 text-[10px]">@CamRanh_Airport_Free</div>
+                                <div class="text-slate-400 text-[11px]">@CamRanh_Airport_Free</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Dynamic Slide Dots -->
+                    <!-- Slide Controls Indicators (Dynamic 9 Dots) -->
                     <div class="flex space-x-1.5" id="carousel-dots"></div>
                 </div>
             </div>
 
-            <!-- Quick Flight Schedule Bar -->
-            <div onclick="openFlightInfoWebModal()" class="glass-dark rounded-2xl p-3.5 border border-teal/30 hover:border-teal transition cursor-pointer flex items-center justify-between group shadow-lg">
-                <div class="flex items-center space-x-3.5">
-                    <div class="w-10 h-10 rounded-xl bg-teal/20 border border-teal/40 flex items-center justify-center text-teal group-hover:scale-105 transition-transform">
-                        <i data-lucide="plane-takeoff" class="w-5 h-5"></i>
+            <!-- Terminal Amenities Board -->
+            <div class="glass-dark rounded-3xl p-5 border border-white/15 shadow-xl">
+                <div class="flex items-center justify-between mb-3 px-1">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="compass" class="w-5 h-5 text-teal animate-pulse"></i>
+                        <h3 class="text-white font-bold text-sm tracking-wide uppercase" id="amenities-board-title">Areas & Amenities</h3>
                     </div>
-                    <div>
-                        <div class="text-white font-bold text-xs uppercase tracking-wide flex items-center gap-2" id="quick-flight-label">
-                            LIVE FLIGHT BOARD <span class="bg-emerald-500/20 text-emerald-300 text-[9px] px-2 py-0.5 rounded border border-emerald-500/30 font-mono">REALTIME</span>
-                        </div>
-                        <div class="text-slate-300 text-[11px] mt-0.5" id="quick-flight-sub">
-                            VN1346 • VietJet VJ772 • Korean Air KE468 • Asiana OZ774 ...
-                        </div>
-                    </div>
+                    <span class="text-xs text-slate-400 flex items-center gap-1" id="amenities-sub-label">
+                        <span class="w-2 h-2 rounded-full bg-teal inline-block"></span> Services at Terminal 1 & 2
+                    </span>
                 </div>
-                <div class="flex items-center space-x-2 text-teal group-hover:translate-x-1 transition-transform">
-                    <span class="text-xs font-bold uppercase tracking-wider hidden sm:inline" id="quick-flight-btn">Check Flights</span>
-                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+
+                <!-- 5 Amenity Cards Grid -->
+                <div class="grid grid-cols-5 gap-2.5">
+                    <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
+                        <div class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-gold mb-2 group-hover:scale-105 transition-transform">
+                            <i data-lucide="utensils" class="w-4.5 h-4.5"></i>
+                        </div>
+                        <div>
+                            <div class="text-white font-bold text-[11px] leading-tight group-hover:text-gold transition-colors" id="amenity-1-title">Dining & Cafés</div>
+                            <div class="text-slate-400 text-[9.5px] mt-0.5" id="amenity-1-sub">Level 1 & 2</div>
+                        </div>
+                    </div>
+
+                    <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
+                        <div class="w-9 h-9 rounded-xl bg-teal/20 border border-teal/30 flex items-center justify-center text-teal mb-2 group-hover:scale-105 transition-transform">
+                            <i data-lucide="shopping-bag" class="w-4.5 h-4.5"></i>
+                        </div>
+                        <div>
+                            <div class="text-white font-bold text-[11px] leading-tight group-hover:text-teal transition-colors" id="amenity-2-title">Duty Free Shops</div>
+                            <div class="text-slate-400 text-[9.5px] mt-0.5" id="amenity-2-sub">Level 2 Departure</div>
+                        </div>
+                    </div>
+
+                    <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
+                        <div class="w-9 h-9 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-300 mb-2 group-hover:scale-105 transition-transform">
+                            <i data-lucide="armchair" class="w-4.5 h-4.5"></i>
+                        </div>
+                        <div>
+                            <div class="text-white font-bold text-[11px] leading-tight group-hover:text-indigo-300 transition-colors" id="amenity-3-title">CIP/VIP Lounge</div>
+                            <div class="text-slate-400 text-[9.5px] mt-0.5" id="amenity-3-sub">Level 2 T2</div>
+                        </div>
+                    </div>
+
+                    <!-- Restroom (WC) Tile -->
+                    <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
+                        <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 mb-2 group-hover:scale-105 transition-transform">
+                            <i data-lucide="toilet" class="w-4.5 h-4.5"></i>
+                        </div>
+                        <div>
+                            <div class="text-white font-bold text-[11px] leading-tight group-hover:text-cyan-300 transition-colors" id="amenity-4-title">Restrooms (WC)</div>
+                            <div class="text-slate-400 text-[9.5px] mt-0.5" id="amenity-4-sub">All Terminal Floors</div>
+                        </div>
+                    </div>
+
+                    <!-- Explore Nha Trang - Khanh Hoa Tile -->
+                    <div onclick="openExploreModal()" class="bg-explore-gradient border border-white/30 p-3 rounded-2xl flex flex-col justify-between hover:brightness-110 transition cursor-pointer group shadow-lg shadow-teal/20 relative overflow-hidden">
+                        <div class="absolute -top-6 -right-6 w-16 h-16 bg-white/20 rounded-full blur-md pointer-events-none"></div>
+                        <div class="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-white mb-2 group-hover:scale-110 transition-transform">
+                            <i data-lucide="palmtree" class="w-4.5 h-4.5 text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-white font-extrabold text-[11px] leading-tight drop-shadow-sm" id="amenity-5-title">Explore Nha Trang</div>
+                            <div class="text-white/80 text-[9.5px] mt-0.5 font-medium" id="amenity-5-sub">Khanh Hoa Guide</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Terminal Amenities Board -->
-            <div class="glass-dark rounded-3xl p-4 xl:p-5 border border-white/15 shadow-xl">
-        <!-- RIGHT COLUMN (40% Width): Map CTA Card, Flight Info Card & Clory AI Call CTA Card -->
-        <section class="col-span-5 flex flex-col space-y-3.5 xl:space-y-4">
+        </section>
+
+        <section class="col-span-5 flex flex-col space-y-6">
             
             <!-- BUTTON 1: INTERACTIVE MAP LAUNCH CARD -->
             <div onclick="openMapModal()" 
-                 class="touch-effect flex-1 rounded-3xl p-5 xl:p-6 bg-gradient-to-br from-navy-light via-navy to-slate-900 border-2 border-teal/40 hover:border-teal shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
+                 class="touch-effect flex-1 rounded-3xl p-7 bg-gradient-to-br from-navy-light via-navy to-slate-900 border-2 border-teal/40 hover:border-teal shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
                 
-                <div class="absolute top-0 right-0 -mr-10 -mt-10 w-48 h-48 bg-teal/20 rounded-full blur-2xl group-hover:bg-teal/30 transition-all"></div>
-                <div class="absolute bottom-3 right-3 opacity-15 group-hover:opacity-30 transition-all duration-500 transform group-hover:scale-110">
-                    <i data-lucide="map-pin" class="w-32 h-32 text-teal"></i>
+                <div class="absolute top-0 right-0 -mr-10 -mt-10 w-56 h-56 bg-teal/20 rounded-full blur-2xl group-hover:bg-teal/30 transition-all"></div>
+                <div class="absolute bottom-4 right-4 opacity-15 group-hover:opacity-30 transition-all duration-500 transform group-hover:scale-110">
+                    <i data-lucide="map-pin" class="w-48 h-48 text-teal"></i>
                 </div>
 
                 <div class="relative z-10 flex items-center justify-between">
-                    <div class="w-11 h-11 xl:w-12 xl:h-12 rounded-2xl bg-teal/20 border border-teal/50 flex items-center justify-center text-teal shadow-lg shadow-teal/20 group-hover:scale-110 transition-transform">
-                        <i data-lucide="map" class="w-6 h-6"></i>
+                    <div class="w-16 h-16 rounded-2xl bg-teal/20 border border-teal/50 flex items-center justify-center text-teal shadow-lg shadow-teal/20 group-hover:scale-110 transition-transform">
+                        <i data-lucide="map" class="w-9 h-9"></i>
                     </div>
-                    <span class="bg-teal/20 border border-teal/40 text-teal text-[10px] xl:text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5" id="badge-map">
+                    <span class="bg-teal/20 border border-teal/40 text-teal text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5" id="badge-map">
                         <i data-lucide="navigation" class="w-3.5 h-3.5"></i> Interactive Navigation
                     </span>
                 </div>
 
-                <div class="relative z-10 my-1.5">
-                    <h3 class="text-xl xl:text-2xl font-black text-white group-hover:text-teal transition-colors tracking-tight" id="card-map-title">
+                <div class="relative z-10 my-4">
+                    <h3 class="text-3xl font-black text-white group-hover:text-teal transition-colors tracking-tight" id="card-map-title">
                         AIRPORT MAP & WAYFINDING
                     </h3>
-                    <p class="text-slate-300 text-[11px] xl:text-xs mt-1 leading-snug" id="card-map-desc">
+                    <p class="text-slate-300 text-sm mt-2 leading-relaxed" id="card-map-desc">
                         Locate boarding gates, dining, Duty Free shops, restrooms, ATMs & interactive terminal maps.
                     </p>
                 </div>
 
-                <div class="relative z-10 flex items-center justify-between bg-white/10 group-hover:bg-teal group-hover:text-white p-2.5 xl:p-3 rounded-2xl border border-white/15 transition-all">
-                    <span class="font-extrabold text-xs uppercase tracking-wider text-white" id="card-map-btn">OPEN INTERACTIVE MAP</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4 text-teal group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                <div class="relative z-10 flex items-center justify-between bg-white/10 group-hover:bg-teal group-hover:text-white p-4 rounded-2xl border border-white/15 transition-all">
+                    <span class="font-extrabold text-sm uppercase tracking-wider text-white" id="card-map-btn">OPEN INTERACTIVE MAP</span>
+                    <i data-lucide="arrow-right" class="w-6 h-6 text-teal group-hover:text-white group-hover:translate-x-1 transition-all"></i>
                 </div>
             </div>
 
-            <!-- BUTTON 2: LIVE FLIGHT INFO LAUNCH CARD (NEW) -->
-            <div onclick="openFlightInfoWebModal()" 
-                 class="touch-effect flex-1 rounded-3xl p-5 xl:p-6 bg-gradient-to-br from-navy via-slate-900 to-teal/20 border-2 border-emerald-500/50 hover:border-emerald-400 shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
-                
-                <div class="absolute top-0 right-0 -mr-10 -mt-10 w-48 h-48 bg-emerald-500/20 rounded-full blur-2xl group-hover:bg-emerald-500/30 transition-all"></div>
-                <div class="absolute bottom-3 right-3 opacity-15 group-hover:opacity-30 transition-all duration-500 transform group-hover:scale-110">
-                    <i data-lucide="plane-takeoff" class="w-32 h-32 text-emerald-400"></i>
-                </div>
-
-                <div class="relative z-10 flex items-center justify-between">
-                    <div class="w-11 h-11 xl:w-12 xl:h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/50 flex items-center justify-center text-emerald-300 shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">
-                        <i data-lucide="plane" class="w-6 h-6"></i>
-                    </div>
-                    <span class="bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[10px] xl:text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5 animate-pulse" id="badge-flight-info">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Live Schedule camranh.aero
-                    </span>
-                </div>
-
-                <div class="relative z-10 my-1.5">
-                    <h3 class="text-xl xl:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors tracking-tight" id="card-flight-info-title">
-                        FLIGHT INFORMATION
-                    </h3>
-                    <p class="text-slate-300 text-[11px] xl:text-xs mt-1 leading-snug" id="card-flight-info-desc">
-                        Real-time departure & arrival schedule directly from official Cam Ranh International Airport.
-                    </p>
-                </div>
-
-                <div class="relative z-10 flex items-center justify-between bg-white/10 group-hover:bg-emerald-500 group-hover:text-navy p-2.5 xl:p-3 rounded-2xl border border-white/15 transition-all">
-                    <span class="font-extrabold text-xs uppercase tracking-wider text-white group-hover:text-navy" id="card-flight-info-btn">CHECK LIVE FLIGHTS</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4 text-emerald-300 group-hover:text-navy group-hover:translate-x-1 transition-all"></i>
-                </div>
-            </div>
-
-            <!-- BUTTON 3: CLORY AI ASSISTANT LAUNCH CARD -->
+            <!-- BUTTON 2: CLORY AI ASSISTANT LAUNCH CARD -->
             <div onclick="openCloryModal()" 
-                 class="touch-effect flex-1 rounded-3xl p-5 xl:p-6 bg-gradient-to-br from-navy-dark via-navy to-indigo-950 border-2 border-gold/40 hover:border-gold shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
+                 class="touch-effect flex-1 rounded-3xl p-7 bg-gradient-to-br from-navy-dark via-navy to-indigo-950 border-2 border-gold/40 hover:border-gold shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
                 
-                <div class="absolute top-0 right-0 -mr-10 -mt-10 w-48 h-48 bg-gold/20 rounded-full blur-2xl group-hover:bg-gold/30 transition-all"></div>
+                <div class="absolute top-0 right-0 -mr-10 -mt-10 w-56 h-56 bg-gold/20 rounded-full blur-2xl group-hover:bg-gold/30 transition-all"></div>
                 
-                <div class="absolute bottom-0 right-2 w-36 h-40 pointer-events-none opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 flex items-end">
+                <div class="absolute bottom-0 right-2 w-44 h-52 pointer-events-none opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500 flex items-end">
                     <div class="relative w-full h-full flex items-end justify-center">
-                        <div class="w-28 h-36 bg-gradient-to-t from-navy to-teal/30 rounded-t-full border border-gold/30 flex items-center justify-center overflow-hidden shadow-2xl">
-                            <i data-lucide="bot" class="w-16 h-16 text-gold animate-float"></i>
+                        <div class="w-36 h-44 bg-gradient-to-t from-navy to-teal/30 rounded-t-full border border-gold/30 flex items-center justify-center overflow-hidden shadow-2xl">
+                            <i data-lucide="bot" class="w-24 h-24 text-gold animate-float"></i>
                         </div>
                     </div>
                 </div>
 
                 <div class="relative z-10 flex items-center justify-between">
-                    <div class="w-11 h-11 xl:w-12 xl:h-12 rounded-2xl bg-gold/20 border border-gold/50 flex items-center justify-center text-gold shadow-lg shadow-gold/20 group-hover:scale-110 transition-transform">
-                        <i data-lucide="bot" class="w-6 h-6"></i>
+                    <div class="w-16 h-16 rounded-2xl bg-gold/20 border border-gold/50 flex items-center justify-center text-gold shadow-lg shadow-gold/20 group-hover:scale-110 transition-transform">
+                        <i data-lucide="bot" class="w-9 h-9"></i>
                     </div>
-                    <span class="bg-gold/20 border border-gold/40 text-gold text-[10px] xl:text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5 animate-pulse" id="badge-ai">
+                    <span class="bg-gold/20 border border-gold/40 text-gold text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 animate-pulse" id="badge-ai">
                         <span class="w-2 h-2 rounded-full bg-gold"></span> Voice & Video Call 24/7
                     </span>
                 </div>
 
-                <div class="relative z-10 my-1.5 max-w-[65%]">
-                    <h3 class="text-xl xl:text-2xl font-black text-white group-hover:text-gold transition-colors tracking-tight" id="card-ai-title">
+                <div class="relative z-10 my-4 max-w-[65%]">
+                    <h3 class="text-3xl font-black text-white group-hover:text-gold transition-colors tracking-tight" id="card-ai-title">
                         CLORY AI ASSISTANT
                     </h3>
-                    <p class="text-slate-300 text-[11px] xl:text-xs mt-1 leading-snug" id="card-ai-desc">
-                        Voice & Video assistant for terminal maps, gate locations & Nha Trang travel guides.
+                    <p class="text-slate-300 text-sm mt-2 leading-relaxed" id="card-ai-desc">
+                        Voice & Video assistant for terminal maps, gate locations, baggage inquiries & Nha Trang travel guides.
                     </p>
                 </div>
 
-                <div class="relative z-10 flex items-center justify-between bg-white/10 group-hover:bg-gold group-hover:text-navy p-2.5 xl:p-3 rounded-2xl border border-white/15 transition-all">
-                    <span class="font-extrabold text-xs uppercase tracking-wider text-white group-hover:text-navy" id="card-ai-btn">TALK TO CLORY AI</span>
-                    <i data-lucide="video" class="w-4 h-4 text-gold group-hover:text-navy group-hover:scale-110 transition-all"></i>
+                <div class="relative z-10 flex items-center justify-between bg-white/10 group-hover:bg-gold group-hover:text-navy p-4 rounded-2xl border border-white/15 transition-all">
+                    <span class="font-extrabold text-sm uppercase tracking-wider text-white group-hover:text-navy" id="card-ai-btn">TALK TO CLORY AI</span>
+                    <i data-lucide="video" class="w-6 h-6 text-gold group-hover:text-navy group-hover:scale-110 transition-all"></i>
                 </div>
             </div>
 
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="relative z-10 w-full bg-navy-dark/95 border-t border-white/10 px-8 py-2.5 flex items-center justify-between">
+    <footer class="relative z-10 w-full bg-navy-dark/95 border-t border-white/10 px-8 py-3 flex items-center justify-between">
+        <!-- Hotlines & Contacts -->
         <div class="flex items-center space-x-8 text-xs text-slate-300">
             <div class="flex items-center space-x-2">
-                <i data-lucide="phone-call" class="w-3.5 h-3.5 text-gold"></i>
+                <i data-lucide="phone-call" class="w-4 h-4 text-gold"></i>
                 <span class="font-medium" id="footer-hotline-label">Airport Hotline:</span>
                 <span class="text-white font-bold font-mono">(+84) 258 397 7988</span>
             </div>
             <div class="flex items-center space-x-2">
-                <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-red-400"></i>
+                <i data-lucide="shield-alert" class="w-4 h-4 text-red-400"></i>
                 <span class="font-medium" id="footer-sos-label">Medical / SOS:</span>
                 <span class="text-red-400 font-bold font-mono">(+84) 258 397 7987</span>
             </div>
             <div class="flex items-center space-x-2">
-                <i data-lucide="info" class="w-3.5 h-3.5 text-teal"></i>
+                <i data-lucide="info" class="w-4 h-4 text-teal"></i>
                 <span class="font-medium" id="footer-info-label">Info Desk:</span>
                 <span class="text-white font-semibold" id="footer-info-val">Level 1 - Arrivals</span>
             </div>
@@ -450,140 +458,110 @@
 
         <div class="flex items-center space-x-6">
             <div class="text-slate-400 text-[11px]">
-                © 2026 CloryAI AeroHub Agent. Powered by <a href="https://www.dntg.com.vn" target="_blank" rel="noopener noreferrer" class="text-teal hover:underline font-bold">DNTG</a>.
+                © 2026 CloryAI AeroHub Agent. Powered by <a href="https://www.dntg.com.vn" target="_blank" rel="noopener noreferrer" class="text-teal hover:underline font-bold">DNTG</a>. All rights reserved.
             </div>
-            <div class="flex items-center space-x-2 bg-white/5 border border-white/10 px-3 py-1 rounded-full">
+            <div class="flex items-center space-x-2.5 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full">
                 <i data-lucide="hand" class="w-3.5 h-3.5 text-teal animate-bounce"></i>
-                <span class="text-[11px] text-slate-300 font-medium" id="touch-hint">Touch screen to start interaction</span>
+                <span class="text-xs text-slate-300 font-medium" id="touch-hint">Touch screen to start interaction</span>
             </div>
         </div>
     </footer>
 
-    <!-- MODAL 1: INTERACTIVE MAP MODAL -->
     <div id="map-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
-    <!-- MODAL 1B: OFFICIAL FLIGHT INFO WEB MODAL (camranh.aero 90vw x 90vh) -->
-    <div id="flight-info-web-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
-        <div class="bg-navy border-2 border-emerald-400 rounded-3xl w-[90vw] h-[90vh] flex flex-col overflow-hidden shadow-2xl relative">
-            
-            <!-- Modal Header Toolbar -->
-            <div class="p-4 bg-navy-dark border-b border-white/10 flex items-center justify-between">
+        <div class="bg-navy border-2 border-teal rounded-3xl w-[90vw] h-[90vh] flex flex-col overflow-hidden shadow-2xl relative">
+            <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="p-2.5 bg-emerald-500/20 border border-emerald-500/40 rounded-xl text-emerald-300">
-                        <i data-lucide="plane-takeoff" class="w-5 h-5"></i>
-                    </div>
+                    <div class="p-3 bg-teal/20 rounded-xl text-teal"><i data-lucide="map" class="w-6 h-6"></i></div>
                     <div>
-                        <h3 class="text-lg font-extrabold text-white flex items-center gap-2" id="modal-flight-web-title">
-                            CAM RANH INTL AIRPORT FLIGHT INFORMATION
-                        </h3>
-                        <div class="flex items-center space-x-3 text-xs text-slate-400 mt-0.5">
-                            <span id="modal-flight-web-sub">Official Live Data from camranh.aero</span>
-                            <span class="text-slate-600">•</span>
-                            <span class="text-emerald-300 font-mono text-[11px] flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                                <span id="flight-auto-refresh-label">Auto-refreshing every 60s</span>
-                            </span>
-                        </div>
+                        <h3 class="text-xl font-bold text-white" id="modal-map-header-title">AIRPORT MAP & WAYFINDING</h3>
+                        <p class="text-xs text-slate-400" id="modal-map-header-sub">Cam Ranh International Airport Map System</p>
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-3">
-                    <!-- Manual Refresh Button -->
-                    <button onclick="refreshFlightInfoIframe()" 
-                            class="px-3.5 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 rounded-xl text-xs font-bold transition flex items-center space-x-2 touch-effect">
-                        <i data-lucide="rotate-cw" id="icon-refresh-flight" class="w-4 h-4"></i>
-                        <span id="btn-refresh-flight-label">Làm mới / Refresh</span>
-                    </button>
-
-                    <!-- Close Modal Button -->
-                    <button onclick="closeFlightInfoWebModal()" class="p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
-                </div>
+                <button onclick="closeMapModal()" class="p-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
             </div>
 
-            <!-- Modal Iframe Body -->
             <div class="flex-1 bg-slate-900 relative overflow-hidden">
-                <iframe id="iframe-flight-info"
-                        src="https://camranh.aero/vi" 
-                        title="Cam Ranh Airport Official Flight Schedule" 
+                <iframe id="iframe-interactive-map"
+                        src="https://camranh.aero/mapv2/" 
+                        title="Cam Ranh Airport Interactive Map" 
                         class="w-full h-full border-0"
                         allow="geolocation; autoplay"></iframe>
             </div>
 
-            <!-- Modal Footer -->
-            <div class="p-3 bg-navy-dark border-t border-white/10 flex items-center justify-between">
-                <div class="flex items-center space-x-4 text-slate-400 text-xs font-mono">
-                    <span id="flight-info-source-badge" class="flex items-center gap-1.5 text-teal font-semibold">
-                        <i data-lucide="globe" class="w-3.5 h-3.5"></i> camranh.aero/vi
-                    </span>
-                    <span id="flight-info-last-update" class="text-slate-300">Cập nhật lúc: --:--:--</span>
-                </div>
-
-                <div class="flex space-x-2">
-                    <button onclick="refreshFlightInfoIframe()" class="px-4 py-2 bg-teal/20 hover:bg-teal/30 text-teal border border-teal/40 font-bold rounded-xl text-xs transition flex items-center gap-1.5">
-                        <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i> <span id="btn-footer-refresh">Làm mới</span>
-                    </button>
-                    <button onclick="closeFlightInfoWebModal()" class="px-5 py-2 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs transition" id="modal-flight-web-close-btn">
-                        Đóng / Close
-                    </button>
-                </div>
+            <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
+                <button onclick="closeMapModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition" id="modal-map-close-btn">
+                    Close
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL 2: EXPLORE NHA TRANG GUIDE MODAL -->
     <div id="explore-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-lg hidden flex items-center justify-center p-4 transition-opacity">
         <div class="bg-navy border-2 border-gold/60 rounded-3xl w-[92vw] h-[92vh] flex flex-col overflow-hidden shadow-2xl relative">
-            <div class="p-4 bg-navy-dark border-b border-white/10 flex items-center justify-between">
+            <!-- Modal Header -->
+            <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="p-2.5 bg-gradient-to-br from-teal via-gold to-gold-accent rounded-xl text-white shadow-lg">
-                        <i data-lucide="palmtree" class="w-5 h-5"></i>
+                    <div class="p-3 bg-gradient-to-br from-teal via-gold to-gold-accent rounded-xl text-white shadow-lg">
+                        <i data-lucide="palmtree" class="w-6 h-6"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold text-white" id="modal-explore-header-title">EXPLORE NHA TRANG - KHANH HOA</h3>
+                        <h3 class="text-xl font-bold text-white" id="modal-explore-header-title">EXPLORE NHA TRANG - KHANH HOA</h3>
                         <p class="text-xs text-slate-400" id="modal-explore-header-sub">Pristine beaches, rich cultural heritage & coastal travel guides</p>
                     </div>
                 </div>
 
-                <button onclick="closeExploreModal()" class="p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
+                <div class="flex items-center space-x-3">
+                    <button onclick="closeExploreModal()" class="p-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- Modal View Container -->
+            <!-- Modal View Container: Switches between Article Grid & In-Modal Article Detail View -->
             <div class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 flex flex-col justify-between relative overflow-hidden">
                 
-                <!-- VIEW STATE 1: Grid View -->
-                <div id="explore-grid-view" class="flex-1 p-5 flex flex-col justify-between relative h-full">
-                    <button onclick="prevExplorePage()" class="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/70 border border-white/20 hover:border-gold hover:bg-gold/30 text-white flex items-center justify-center transition shadow-2xl touch-effect">
-                        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                <!-- VIEW STATE 1: 4-Articles Grid View with Pagination -->
+                <div id="explore-grid-view" class="flex-1 p-6 flex flex-col justify-between relative h-full">
+                    
+                    <!-- Left Nav Arrow Button -->
+                    <button onclick="prevExplorePage()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/70 border border-white/20 hover:border-gold hover:bg-gold/30 text-white flex items-center justify-center transition shadow-2xl touch-effect">
+                        <i data-lucide="chevron-left" class="w-7 h-7"></i>
                     </button>
 
-                    <button onclick="nextExplorePage()" class="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/70 border border-white/20 hover:border-gold hover:bg-gold/30 text-white flex items-center justify-center transition shadow-2xl touch-effect">
-                        <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                    <!-- Right Nav Arrow Button -->
+                    <button onclick="nextExplorePage()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/70 border border-white/20 hover:border-gold hover:bg-gold/30 text-white flex items-center justify-center transition shadow-2xl touch-effect">
+                        <i data-lucide="chevron-right" class="w-7 h-7"></i>
                     </button>
 
-                    <div class="flex-1 px-8 py-1 overflow-hidden" id="explore-carousel-area">
+                    <!-- 4-Articles Grid View (2x2 Grid per page) -->
+                    <div class="flex-1 px-10 py-1 overflow-hidden" id="explore-carousel-area">
                         <div id="explore-grid-container" class="grid grid-cols-2 gap-4 h-full">
-                            <!-- 4 Article Cards injected dynamically -->
+                            <!-- 4 Interactive Article Cards rendered dynamically via JS -->
                         </div>
                     </div>
 
-                    <div class="relative z-10 flex items-center justify-between px-10 pt-2 border-t border-white/10">
+                    <!-- Slide Indicators & Page Controls (Dynamic Dots) -->
+                    <div class="relative z-10 flex items-center justify-between px-12 pt-2 border-t border-white/10">
                         <span class="text-slate-400 text-xs flex items-center gap-1.5" id="explore-swipe-hint">
                             <i data-lucide="hand" class="w-4 h-4 text-teal"></i> Swipe left/right or use arrow buttons
                         </span>
+
                         <div class="flex items-center space-x-2" id="explore-dots-container"></div>
+
                         <span class="text-gold font-mono text-xs font-bold bg-gold/10 px-3 py-1 rounded-full border border-gold/30" id="explore-page-counter">
                             Page 1 of 3
                         </span>
                     </div>
                 </div>
 
-                <!-- VIEW STATE 2: Reader Detail View -->
-                <div id="explore-detail-view" class="hidden flex-1 p-6 overflow-y-auto flex flex-col space-y-5 relative h-full bg-slate-950/90 backdrop-blur-md">
-                    <div class="flex items-center justify-between pb-3 border-b border-white/15 sticky top-0 bg-slate-950/95 z-20 py-1">
-                        <button onclick="backToExploreGrid()" class="px-4 py-2 bg-teal/20 hover:bg-teal/30 text-teal border border-teal/40 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 touch-effect shadow-lg">
+                <!-- VIEW STATE 2: In-Modal Rich Article Reader Detail View (No new tabs on Kiosk) -->
+                <div id="explore-detail-view" class="hidden flex-1 p-8 overflow-y-auto flex flex-col space-y-6 relative h-full bg-slate-950/90 backdrop-blur-md">
+                    <!-- Top Back Navigation Bar -->
+                    <div class="flex items-center justify-between pb-4 border-b border-white/15 sticky top-0 bg-slate-950/95 z-20 py-2">
+                        <button onclick="backToExploreGrid()" class="px-5 py-2.5 bg-teal/20 hover:bg-teal/30 text-teal border border-teal/40 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 touch-effect shadow-lg">
                             <i data-lucide="arrow-left" class="w-4 h-4"></i>
                             <span id="btn-article-back">Quay lại danh sách</span>
                         </button>
@@ -592,13 +570,17 @@
                             <span id="article-detail-category" class="bg-gold/20 text-gold border border-gold/40 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                                 CATEGORY
                             </span>
-                            <span id="article-detail-date" class="text-slate-400 text-xs font-mono">2026</span>
+                            <span id="article-detail-date" class="text-slate-400 text-xs font-mono">
+                                2026
+                            </span>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-12 gap-6 items-start">
-                        <div class="col-span-5 space-y-3">
-                            <div class="relative rounded-2xl overflow-hidden border-2 border-teal/40 shadow-2xl h-56">
+                    <!-- Article Hero Image & Details -->
+                    <div class="grid grid-cols-12 gap-8 items-start">
+                        <!-- Hero Image & Metadata -->
+                        <div class="col-span-5 space-y-4">
+                            <div class="relative rounded-2xl overflow-hidden border-2 border-teal/40 shadow-2xl h-64">
                                 <img id="article-detail-img" src="" alt="Article Banner" class="w-full h-full object-cover">
                                 <div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/20 text-white text-xs font-bold flex items-center gap-1.5">
                                     <i data-lucide="map-pin" class="w-3.5 h-3.5 text-gold"></i>
@@ -606,122 +588,133 @@
                                 </div>
                             </div>
 
-                            <div class="bg-white/5 border border-white/10 rounded-2xl p-3.5 space-y-1">
-                                <div class="text-slate-400 text-[11px] flex items-center gap-2">
-                                    <i data-lucide="globe" class="w-3.5 h-3.5 text-teal"></i>
-                                    <span>Official Source:</span>
+                            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2">
+                                <div class="text-slate-400 text-xs flex items-center gap-2">
+                                    <i data-lucide="globe" class="w-4 h-4 text-teal"></i>
+                                    <span>Official Source / Nguồn bài viết:</span>
                                 </div>
-                                <span id="article-detail-url" class="text-teal text-[11px] font-mono font-bold break-all block select-text">
+                                <span id="article-detail-url" class="text-teal text-xs font-mono font-bold break-all block select-text">
                                     camranh.aero/explore/article
                                 </span>
                             </div>
                         </div>
 
-                        <div class="col-span-7 space-y-3 text-slate-200">
-                            <h2 id="article-detail-title" class="text-2xl font-black text-white leading-tight">
+                        <!-- Article Content Body -->
+                        <div class="col-span-7 space-y-4 text-slate-200">
+                            <h2 id="article-detail-title" class="text-2xl xl:text-3xl font-black text-white leading-tight">
                                 Article Title
                             </h2>
 
-                            <p id="article-detail-lead" class="text-gold font-medium text-xs xl:text-sm leading-relaxed italic border-l-4 border-gold pl-3 py-0.5">
+                            <p id="article-detail-lead" class="text-gold font-medium text-sm leading-relaxed italic border-l-4 border-gold pl-4 py-1">
                                 Article Lead Paragraph Summary...
                             </p>
 
-                            <div id="article-detail-body" class="text-slate-300 text-xs xl:text-sm leading-relaxed space-y-2.5 font-normal max-h-[35vh] overflow-y-auto pr-2">
-                                <!-- Paragraphs injected here -->
+                            <div id="article-detail-body" class="text-slate-300 text-sm leading-relaxed space-y-3 font-normal max-h-[38vh] overflow-y-auto pr-2">
+                                <!-- Article Body Paragraphs dynamically injected -->
                             </div>
                         </div>
                     </div>
 
-                    <div class="pt-3 border-t border-white/10 flex items-center justify-between">
+                    <!-- Article Footer Actions with Previous (<) and Next (>) Article Arrows -->
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <button onclick="prevArticleDetail()" class="px-3.5 py-2 bg-white/10 hover:bg-gold/30 border border-white/20 text-white font-bold rounded-xl text-xs transition flex items-center gap-1.5 touch-effect">
+                            <button onclick="prevArticleDetail()" class="px-4 py-2.5 bg-white/10 hover:bg-gold/30 hover:border-gold border border-white/20 text-white font-bold rounded-xl text-xs transition flex items-center gap-2 touch-effect shadow-md">
                                 <i data-lucide="chevron-left" class="w-4 h-4 text-gold"></i>
                                 <span id="btn-prev-article">Bài trước</span>
                             </button>
-                            <button onclick="nextArticleDetail()" class="px-3.5 py-2 bg-white/10 hover:bg-gold/30 border border-white/20 text-white font-bold rounded-xl text-xs transition flex items-center gap-1.5 touch-effect">
+                            <button onclick="nextArticleDetail()" class="px-4 py-2.5 bg-white/10 hover:bg-gold/30 hover:border-gold border border-white/20 text-white font-bold rounded-xl text-xs transition flex items-center gap-2 touch-effect shadow-md">
                                 <span id="btn-next-article">Bài tiếp theo</span>
                                 <i data-lucide="chevron-right" class="w-4 h-4 text-gold"></i>
                             </button>
                         </div>
-                        <span class="text-slate-400 text-[11px] font-mono">Cam Ranh International Terminal (CRTC)</span>
+                        <span class="text-slate-400 text-xs font-mono">Cam Ranh International Terminal (CRTC) • Explore Guide</span>
                     </div>
                 </div>
 
             </div>
 
-            <div class="p-3 bg-navy-dark border-t border-white/10 flex justify-end">
-                <button onclick="closeExploreModal()" class="px-5 py-2 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs transition" id="modal-explore-close-btn">
+            <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
+                <button onclick="closeExploreModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition" id="modal-explore-close-btn">
                     Close
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL 3: CLORY AI VOICE & VIDEO CALL MODAL -->
-    <div id="clory-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-6 transition-opacity">
+    <div id="clory-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-8 transition-opacity">
         <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-5xl h-[82vh] flex flex-col overflow-hidden shadow-2xl relative">
             <!-- Modal Header -->
-            <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
+            <div class="p-6 bg-navy-dark border-b border-white/10 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="p-2.5 bg-gold/20 rounded-xl text-gold"><i data-lucide="bot" class="w-6 h-6"></i></div>
+                    <div class="p-3 bg-gold/20 rounded-xl text-gold"><i data-lucide="bot" class="w-6 h-6"></i></div>
                     <div>
-                        <h3 class="text-lg font-bold text-white" id="modal-ai-header-title">CLORY AI ASSISTANT</h3>
+                        <h3 class="text-xl font-bold text-white" id="modal-ai-header-title">CLORY AI ASSISTANT</h3>
                         <p class="text-xs text-slate-400" id="modal-ai-header-sub">Cam Ranh International Airport • CXR Smart Agent</p>
                     </div>
                 </div>
                 
                 <div class="flex items-center space-x-3">
-                    <!-- SIP Registration Badge -->
-                    <div id="sip-status-badge" onclick="openSipConfigModal()" class="cursor-pointer bg-white/5 border border-white/15 hover:bg-white/10 px-3 py-1.5 rounded-xl flex items-center space-x-2 transition">
+                    <!-- SIP Registration Status Badge -->
+                    <div id="sip-status-badge" onclick="openSipConfigModal()" class="cursor-pointer bg-white/5 border border-white/15 hover:bg-white/10 px-3.5 py-1.5 rounded-xl flex items-center space-x-2 transition">
                         <span id="sip-status-dot" class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
                         <span id="sip-status-text" class="text-xs font-mono font-bold text-slate-300">CloryAI Offline</span>
                         <i data-lucide="settings" class="w-3.5 h-3.5 text-gold ml-1"></i>
                     </div>
 
-                    <button onclick="closeCloryModal()" class="p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
-                        <i data-lucide="x" class="w-5 h-5"></i>
+                    <button onclick="closeCloryModal()" class="p-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
+                        <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Call Body -->
-            <div class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 p-6 flex items-center justify-between relative">
-                <!-- Left Section: Visualizer & Video Display -->
-                <div class="w-1/2 flex flex-col items-center justify-center border-r border-white/10 pr-6 relative">
+            <!-- CloryAI Voice & Video Call Body -->
+            <div class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 p-8 flex items-center justify-between relative">
+                <!-- Left Section: Pulse Orb Visualizer or Video Display Box -->
+                <div class="w-1/2 flex flex-col items-center justify-center border-r border-white/10 pr-8 relative">
                     
-                    <div id="video-display-container" class="relative w-full max-w-sm h-52 bg-slate-900/90 rounded-2xl border border-teal/40 overflow-hidden shadow-2xl hidden mb-3 flex items-center justify-center">
+                    <!-- Local Webcam Video Preview Box (PIP) & Local Audio Visualizer -->
+                    <div id="video-display-container" class="relative w-full max-w-sm h-56 bg-slate-900/90 rounded-2xl border border-teal/40 overflow-hidden shadow-2xl hidden mb-3 flex items-center justify-center">
+                        <!-- Remote Video Feed -->
                         <video id="video-remote-view" autoplay playsinline class="w-full h-full object-cover"></video>
-                        <video id="sip-local-video" autoplay playsinline muted class="absolute bottom-2 right-2 w-24 h-16 bg-black/80 rounded-xl border-2 border-teal object-cover shadow-lg hidden z-20"></video>
                         
-                        <div class="absolute top-2.5 left-2.5 bg-black/60 border border-white/20 px-2.5 py-0.5 rounded-full text-[10px] font-mono text-teal flex items-center gap-1.5 z-10">
+                        <!-- Local Video PIP Feed -->
+                        <video id="sip-local-video" autoplay playsinline muted class="absolute bottom-2 right-2 w-28 h-20 bg-black/80 rounded-xl border-2 border-teal object-cover shadow-lg hidden z-20"></video>
+                        
+                        <!-- Video Status Overlay Tag -->
+                        <div class="absolute top-3 left-3 bg-black/60 border border-white/20 px-3 py-1 rounded-full text-[10px] font-mono text-teal flex items-center gap-1.5 z-10">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                             <span>Live Video HD</span>
                         </div>
                     </div>
 
-                    <!-- Audio Mode Pulse Orb Container -->
-                    <div id="pulse-orb-container" class="relative w-48 h-48 flex items-center justify-center mb-2">
-                        <div id="orb-wave-outer" class="absolute w-44 h-44 rounded-full border border-teal/40 bg-teal/10 orb-wave-1 pointer-events-none"></div>
-                        <div id="orb-wave-mid" class="absolute w-32 h-32 rounded-full border border-gold/40 bg-gold/10 orb-wave-2 pointer-events-none"></div>
+                    <!-- Dynamic Pulse Orb Sphere Container (Audio Mode) -->
+                    <div id="pulse-orb-container" class="relative w-52 h-52 flex items-center justify-center mb-2">
+                        <div id="orb-wave-outer" class="absolute w-48 h-48 rounded-full border border-teal/40 bg-teal/10 orb-wave-1 pointer-events-none"></div>
+                        <div id="orb-wave-mid" class="absolute w-36 h-36 rounded-full border border-gold/40 bg-gold/10 orb-wave-2 pointer-events-none"></div>
                         
-                        <div id="pulse-orb" class="relative z-10 w-24 h-24 rounded-full bg-gradient-to-tr from-teal via-cyan-400 to-gold shadow-[0_0_50px_rgba(0,168,150,0.8)] border-2 border-white/80 flex items-center justify-center transition-all duration-100 ease-out">
-                            <i data-lucide="mic" id="orb-mic-icon" class="w-9 h-9 text-navy font-bold animate-pulse"></i>
+                        <!-- Core Glowing Teal Orb -->
+                        <div id="pulse-orb" class="relative z-10 w-28 h-28 rounded-full bg-gradient-to-tr from-teal via-cyan-400 to-gold shadow-[0_0_50px_rgba(0,168,150,0.8)] border-2 border-white/80 flex items-center justify-center transition-all duration-100 ease-out">
+                            <i data-lucide="mic" id="orb-mic-icon" class="w-10 h-10 text-navy font-bold animate-pulse"></i>
                         </div>
                     </div>
 
-                    <div id="sip-incall-timer-box" class="hidden mb-2">
-                        <span id="sip-call-timer" class="font-mono text-xs font-extrabold text-gold px-3.5 py-1 bg-black/60 border border-gold/40 rounded-full shadow-lg">00:00</span>
+                    <!-- In-Call Timer Positioned Immediately Below Orb/Video -->
+                    <div id="sip-incall-timer-box" class="hidden mb-3">
+                        <span id="sip-call-timer" class="font-mono text-sm font-extrabold text-gold px-4 py-1.5 bg-black/60 border border-gold/40 rounded-full shadow-lg">00:00</span>
                     </div>
 
+                    <!-- Voice Status Indicator & WebRTC Call Action -->
                     <div class="text-center z-10 w-full max-w-sm">
-                        <div class="text-white font-bold text-sm" id="clory-sub-text">Clory is ready to assist...</div>
-                        <p class="text-teal text-[10px] mt-0.5 font-mono flex items-center justify-center gap-1.5 mb-3" id="mic-status">
+                        <div class="text-white font-bold text-base" id="clory-sub-text">Clory is ready to assist...</div>
+                        <p class="text-teal text-[11px] mt-0.5 font-mono flex items-center justify-center gap-1.5 mb-3" id="mic-status">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                             <span>Listening to audio...</span>
                         </p>
 
-                        <!-- Controls -->
-                        <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col items-center space-y-2">
+                        <!-- WebRTC Voice & Video Call Control Panel -->
+                        <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col items-center space-y-2.5">
+                            
+                            <!-- Toggle Media Controls (Voice & Video Selectors) -->
                             <div class="w-full grid grid-cols-2 gap-2">
                                 <button id="btn-toggle-mic" onclick="toggleAudioTrack()" class="w-full py-2 px-3 bg-emerald-500/20 border border-emerald-500/40 hover:bg-emerald-500/30 text-emerald-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5">
                                     <i data-lucide="mic" class="w-3.5 h-3.5"></i>
@@ -733,13 +726,15 @@
                                 </button>
                             </div>
 
+                            <!-- Primary Call Button -->
                             <button id="btn-sip-call" onclick="toggleSipCall()" class="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-500 to-teal text-white font-extrabold text-xs rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition flex items-center justify-center space-x-2">
                                 <i data-lucide="phone-call" class="w-4 h-4"></i>
                                 <span id="sip-call-btn-label">CALL NOW</span>
                             </button>
                             
+                            <!-- Active Call End Button -->
                             <div id="sip-incall-controls" class="hidden w-full pt-1">
-                                <button onclick="hangupSipCall()" class="w-full py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs flex items-center justify-center gap-1.5 font-bold shadow-lg">
+                                <button onclick="hangupSipCall()" class="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs flex items-center justify-center gap-1.5 font-bold shadow-lg">
                                     <i data-lucide="phone-off" class="w-4 h-4"></i> Hang Up
                                 </button>
                             </div>
@@ -747,93 +742,42 @@
                     </div>
                 </div>
 
-                <!-- Right Section: FAQ Prompts -->
-                <div class="w-1/2 pl-6 flex flex-col justify-center space-y-2.5">
-                    <h5 class="text-gold font-bold text-xs uppercase tracking-wider" id="faq-header">Popular Questions:</h5>
-                    <div class="p-2.5 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
+                <!-- Right Section: FAQ Quick Prompt Chips -->
+                <div class="w-1/2 pl-8 flex flex-col justify-center space-y-3">
+                    <h5 class="text-gold font-bold text-sm uppercase tracking-wider" id="faq-header">Popular Questions:</h5>
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
                         <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> <span id="faq-1">"Where are the boarding gates located?"</span>
                     </div>
-                    <div class="p-2.5 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
                         <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> <span id="faq-2">"What is the airport free Wi-Fi password?"</span>
                     </div>
-                    <div class="p-2.5 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
                         <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> <span id="faq-3">"Where can I find buses or taxis to Nha Trang city?"</span>
                     </div>
-                    <div class="p-2.5 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
                         <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> <span id="faq-4">"Which level has dining cafés & restrooms?"</span>
                     </div>
-                    <div class="p-2.5 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
                         <i data-lucide="message-square" class="w-4 h-4 text-teal"></i> <span id="faq-5">"Where are the Duty Free shopping areas?"</span>
                     </div>
                 </div>
             </div>
 
-            <div class="p-3 bg-navy-dark border-t border-white/10 flex justify-end">
-                <button onclick="closeCloryModal()" class="px-5 py-2 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs transition" id="modal-ai-close-btn">
+            <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
+                <button onclick="closeCloryModal()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-sm transition" id="modal-ai-close-btn">
                     Close
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL 4: LIVE FLIGHT BOARD & SCHEDULE SEARCH MODAL -->
-    <div id="flights-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-lg hidden flex items-center justify-center p-6 transition-opacity">
-        <div class="bg-navy border-2 border-teal rounded-3xl w-full max-w-5xl h-[85vh] flex flex-col overflow-hidden shadow-2xl relative">
-            <!-- Header -->
-            <div class="p-4 bg-navy-dark border-b border-white/10 flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="p-2.5 bg-teal/20 rounded-xl text-teal"><i data-lucide="plane" class="w-6 h-6"></i></div>
-                    <div>
-                        <h3 class="text-lg font-bold text-white" id="modal-flight-header-title">LIVE FLIGHT INFORMATION BOARD</h3>
-                        <p class="text-xs text-slate-400" id="modal-flight-header-sub">Cam Ranh International Airport (CXR) • Realtime Schedule</p>
-                    </div>
-                </div>
-
-                <button onclick="closeFlightsModal()" class="p-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <!-- Flight Filter Bar -->
-            <div class="p-4 bg-navy/90 border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
-                <div class="flex items-center bg-black/40 p-1 rounded-xl border border-white/15 space-x-1">
-                    <button onclick="setFlightType('departures')" id="btn-flight-dep" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-teal text-white shadow transition">
-                        <i data-lucide="plane-takeoff" class="w-3.5 h-3.5 inline mr-1"></i> Departures / Đi
-                    </button>
-                    <button onclick="setFlightType('arrivals')" id="btn-flight-arr" class="px-4 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">
-                        <i data-lucide="plane-landing" class="w-3.5 h-3.5 inline mr-1"></i> Arrivals / Đến
-                    </button>
-                </div>
-
-                <div class="flex-1 max-w-sm relative">
-                    <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
-                    <input type="text" id="flight-search-input" oninput="filterFlightList()" placeholder="Search flight no, city, airline..." 
-                           class="w-full bg-black/40 border border-white/15 rounded-xl pl-9 pr-3 py-1.5 text-xs text-white outline-none focus:border-teal font-mono">
-                </div>
-            </div>
-
-            <!-- Flight Schedule Table List -->
-            <div class="flex-1 overflow-y-auto p-4 space-y-2" id="flights-list-container">
-                <!-- Injected via JS -->
-            </div>
-
-            <div class="p-3 bg-navy-dark border-t border-white/10 flex items-center justify-between">
-                <div class="text-slate-400 text-xs font-mono" id="flight-list-count">Showing 8 flights</div>
-                <button onclick="closeFlightsModal()" class="px-5 py-2 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs transition">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL 5: SIP CONFIG MODAL -->
     <div id="sip-config-modal" class="fixed inset-0 z-[120] bg-black/85 backdrop-blur-lg hidden flex items-center justify-center p-6 transition-opacity">
         <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl relative">
-            <div class="p-4 bg-navy-dark border-b border-white/10 flex items-center justify-between">
+            <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="p-2.5 bg-gold/20 rounded-xl text-gold"><i data-lucide="phone-forwarded" class="w-5 h-5"></i></div>
                     <div>
-                        <h4 class="text-base font-bold text-white">Cấu hình WebRTC SIP (PJSIP)</h4>
+                        <h4 class="text-lg font-bold text-white">Cấu hình WebRTC SIP (PJSIP)</h4>
                         <p class="text-xs text-slate-400">Kết nối Extension đến VitalPBX / Asterisk Server</p>
                     </div>
                 </div>
@@ -843,47 +787,47 @@
             </div>
 
             <!-- SIP Config Form -->
-            <div class="p-5 space-y-3.5 text-xs text-slate-200">
+            <div class="p-6 space-y-4 text-xs text-slate-200">
                 <div>
                     <label class="block font-bold text-slate-300 mb-1">WebSocket WSS Server URL:</label>
                     <input type="text" id="sip-cfg-wss" placeholder="wss://pbx.camranh.aero:8089/ws" 
-                           class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-1.5 text-white font-mono focus:border-teal outline-none">
+                           class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-teal outline-none">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold text-slate-300 mb-1">SIP Extension / User:</label>
                         <input type="text" id="sip-cfg-ext" placeholder="1001" 
-                               class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-1.5 text-white font-mono focus:border-teal outline-none">
+                               class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-teal outline-none">
                     </div>
                     <div>
                         <label class="block font-bold text-slate-300 mb-1">SIP Password / Secret:</label>
                         <input type="password" id="sip-cfg-pass" placeholder="••••••••" 
-                               class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-1.5 text-white font-mono focus:border-teal outline-none">
+                               class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-teal outline-none">
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold text-slate-300 mb-1">SIP Domain / Realm:</label>
                         <input type="text" id="sip-cfg-domain" placeholder="pbx.camranh.aero" 
-                               class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-1.5 text-white font-mono focus:border-teal outline-none">
+                               class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-teal outline-none">
                     </div>
                     <div>
                         <label class="block font-bold text-slate-300 mb-1">Số gọi mặc định (Voice Agent):</label>
                         <input type="text" id="sip-cfg-target" placeholder="6666" 
-                               class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-1.5 text-white font-mono focus:border-teal outline-none">
+                               class="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-white font-mono focus:border-teal outline-none">
                     </div>
                 </div>
             </div>
 
             <div class="p-4 bg-navy-dark border-t border-white/10 flex items-center justify-between">
-                <button onclick="unregisterSip()" class="px-3.5 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 rounded-xl text-xs font-bold transition">
+                <button onclick="unregisterSip()" class="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 rounded-xl text-xs font-bold transition">
                     Ngắt kết nối
                 </button>
                 <div class="flex space-x-2">
-                    <button onclick="closeSipConfigModal()" class="px-3.5 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold transition">
+                    <button onclick="closeSipConfigModal()" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold transition">
                         Hủy
                     </button>
-                    <button onclick="saveAndRegisterSip()" class="px-4 py-1.5 bg-teal hover:bg-teal-hover text-white rounded-xl text-xs font-bold transition shadow-lg">
+                    <button onclick="saveAndRegisterSip()" class="px-5 py-2 bg-teal hover:bg-teal-hover text-white rounded-xl text-xs font-bold transition shadow-lg">
                         Lưu & Đăng ký SIP
                     </button>
                 </div>
@@ -907,9 +851,6 @@
         let isAudioEnabled = true;
         let isVideoEnabled = false;
 
-        // Flight Information Auto-Refresh Timer
-        let flightAutoRefreshTimer = null;
-
         let sipConfig = {
             wssUrl: localStorage.getItem('cxr_sip_wss') || '',
             extension: localStorage.getItem('cxr_sip_ext') || '1001',
@@ -918,18 +859,6 @@
             targetExt: localStorage.getItem('cxr_sip_target') || '6666'
         };
 
-        let currentFlightType = 'departures';
-        const flightData = [
-            { id: "VN1346", type: "departures", time: "14:45", airline: "Vietnam Airlines", dest: "Ho Chi Minh (SGN)", gate: "G03", status: "Boarding", statusColor: "emerald" },
-            { id: "VJ772", type: "departures", time: "15:10", airline: "VietJet Air", dest: "Ha Noi (HAN)", gate: "G05", status: "On Time", statusColor: "teal" },
-            { id: "KE468", type: "departures", time: "15:30", airline: "Korean Air", dest: "Seoul Incheon (ICN)", gate: "G08", status: "Gate Open", statusColor: "emerald" },
-            { id: "OZ774", type: "departures", time: "16:05", airline: "Asiana Airlines", dest: "Seoul Incheon (ICN)", gate: "G09", status: "Scheduled", statusColor: "slate" },
-            { id: "QH1421", type: "departures", time: "16:40", airline: "Bamboo Airways", dest: "Da Nang (DAD)", gate: "G02", status: "Scheduled", statusColor: "slate" },
-            { id: "VJ831", type: "arrivals", time: "14:15", airline: "VietJet Air", dest: "Taipei (TPE)", gate: "A02", status: "Landed", statusColor: "emerald" },
-            { id: "VN1345", type: "arrivals", time: "14:35", airline: "Vietnam Airlines", dest: "Ho Chi Minh (SGN)", gate: "A01", status: "Landed", statusColor: "emerald" },
-            { id: "LJ081", type: "arrivals", time: "15:00", airline: "Jin Air", dest: "Busan (PUS)", gate: "A04", status: "Approaching", statusColor: "amber" }
-        ];
-
         const exploreArticles = [
             {
                 id: "caraworld-summer-hits-2026",
@@ -937,10 +866,10 @@
                 date: "22 July 2026",
                 titleEn: "CaraWorld Summer Hits 2026: Elevating Bai Dai as a Dynamic Coastal Hub",
                 titleVi: "CaraWorld Summer Hits 2026: Nâng tầm Bãi Dài thành trung tâm giải trí ven biển",
-                descEn: "As Bai Dai transforms into a year-round integrated entertainment and resort destination, Cam Ranh International Terminal (CRTC) proudly connects global travelers.",
-                descVi: "Khi Bãi Dài vươn mình thành tổ hợp giải trí nghỉ dưỡng sôi động quanh năm, Nhà ga Quốc tế Cam Ranh (CRTC) tự hào kết nối du khách toàn cầu.",
-                contentEn: "As Bai Dai transforms into a year-round integrated entertainment and resort destination, Cam Ranh International Terminal (CRTC) proudly serves as the premier aviation gateway.\n\nFeaturing international DJ lineups, beachside carnivals, and mega water sports tournaments, CaraWorld establishes Bai Dai as a world-class entertainment destination just 5 minutes away from Cam Ranh Airport.",
-                contentVi: "Khi Bãi Dài biến đổi thành điểm đến giải trí và nghỉ dưỡng tích hợp quanh năm, Nhà ga Quốc tế Cam Ranh (CRTC) tự hào đóng vai trò là cửa ngõ hàng không hàng đầu.\n\nQuy tụ dàn DJ quốc tế, lễ hội đường phố ven biển và các giải đấu thể thao dưới nước quy mô lớn, CaraWorld khẳng định vị thế Bãi Dài như một trung tâm giải trí đẳng cấp thế giới chỉ cách Sân bay Cam Ranh 5 phút di chuyển.",
+                descEn: "As Bai Dai transforms into a year-round integrated entertainment and resort destination, Cam Ranh International Terminal (CRTC) proudly connects global travelers to vibrant coastal celebrations.",
+                descVi: "Khi Bãi Dài vươn mình thành tổ hợp giải trí nghỉ dưỡng sôi động quanh năm, Nhà ga Quốc tế Cam Ranh (CRTC) tự hào kết nối du khách toàn cầu đến với đại tiệc mùa hè CaraWorld Summer Hits 2026.",
+                contentEn: "As Bai Dai transforms into a year-round integrated entertainment and resort destination, Cam Ranh International Terminal (CRTC) proudly serves as the premier aviation gateway, connecting global travelers to vibrant coastal celebrations like CaraWorld Summer Hits 2026.\n\nFeaturing international DJ lineups, beachside carnivals, and mega water sports tournaments, CaraWorld establishes Bai Dai as a world-class entertainment destination just 5 minutes away from Cam Ranh Airport.",
+                contentVi: "Khi Bãi Dài biến đổi thành điểm đến giải trí và nghỉ dưỡng tích hợp quanh năm, Nhà ga Quốc tế Cam Ranh (CRTC) tự hào đóng vai trò là cửa ngõ hàng không hàng đầu, kết nối du khách toàn cầu đến với những lễ hội ven biển sôi động như CaraWorld Summer Hits 2026.\n\nQuy tụ dàn DJ quốc tế, lễ hội đường phố ven biển và các giải đấu thể thao dưới nước quy mô lớn, CaraWorld khẳng định vị thế Bãi Dài như một trung tâm giải trí đẳng cấp thế giới chỉ cách Sân bay Cam Ranh 5 phút di chuyển.",
                 img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
                 location: "Bai Dai • Cam Ranh Peninsula",
                 url: "https://camranh.aero/en/explore/article/caraworld-summer-hits-2026-elevating-bai-dai-as-a-dynamic-coastal-hub"
@@ -951,13 +880,13 @@
                 date: "18 July 2026",
                 titleEn: "Khanh Hoa Sea Festival 2026 Triumph: 787,000+ Visitors Drive $51M+ Tourism Surge",
                 titleVi: "Lễ hội Biển Khánh Hòa 2026 rực rỡ: Hơn 787.000 lượt khách, doanh thu 51 triệu USD",
-                descEn: "The resounding success of the 2026 Sea Festival reaffirms Khanh Hoa's position as a premier global marine destination.",
-                descVi: "Thành công rực rỡ của Lễ hội Biển 2026 tiếp tục khẳng định vị thế của Khánh Hòa là điểm đến du lịch biển hàng đầu.",
-                contentEn: "The resounding success of the 2026 Sea Festival reaffirms Khanh Hoa's position as a premier global marine and mega-event destination. CRTC played a pivotal role in seamlessly welcoming travelers.\n\nOver 787,000 international and domestic visitors generated $51M+ in regional tourism revenue.",
-                contentVi: "Thành công rực rỡ của Lễ hội Biển 2026 tiếp tục khẳng định vị thế của Khánh Hòa như một điểm đến sự kiện và du lịch biển đẳng cấp quốc tế. CRTC đóng vai trò then chốt đón tiếp du khách.\n\nHơn 787.000 lượt du khách đã mang lại hơn 51 triệu USD doanh thu du lịch cho tỉnh.",
+                descEn: "The resounding success of the 2026 Sea Festival reaffirms Khanh Hoa's position as a premier global marine and mega-event destination.",
+                descVi: "Thành công rực rỡ của Lễ hội Biển 2026 tiếp tục khẳng định vị thế của Khánh Hòa là điểm đến du lịch biển và lễ hội quy mô lớn hàng đầu khu vực.",
+                contentEn: "The resounding success of the 2026 Sea Festival reaffirms Khanh Hoa's position as a premier global marine and mega-event destination. As the primary aviation gateway, Cam Ranh International Terminal (CRTC) played a pivotal role in seamlessly welcoming tens of thousands of international travelers.\n\nOver 787,000 international and domestic visitors generated $51M+ in regional tourism revenue, featuring drone light shows, traditional agarwood ceremonies, and ocean culinary markets.",
+                contentVi: "Thành công rực rỡ của Lễ hội Biển 2026 tiếp tục khẳng định vị thế của Khánh Hòa như một điểm đến sự kiện và du lịch biển đẳng cấp quốc tế. Với vai trò cửa ngõ hàng không chính, Nhà ga Quốc tế Cam Ranh (CRTC) đóng vai trò then chốt trong việc đón tiếp hàng vạn lượt khách quốc tế.\n\nHơn 787.000 lượt du khách trong và ngoài nước đã mang lại hơn 51 triệu USD doanh thu du lịch cho tỉnh, nổi bật với màn trình diễn drone ánh sáng kịch tính, lễ hội Trầm Hương và chợ ẩm thực biển rực rỡ.",
                 img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800&auto=format&fit=crop",
                 location: "Nha Trang Coastal Square",
-                url: "https://camranh.aero/en/explore/article/khanh-hoa-sea-festival-2026-triumph"
+                url: "https://camranh.aero/en/explore/article/khanh-hoa-sea-festival-2026-triumph-787000-visitors-drive-51m-tourism-surge"
             },
             {
                 id: "nha-trang-khanh-hoa-highlights",
@@ -966,9 +895,9 @@
                 titleEn: "Nha Trang – Khanh Hoa: World-Ranked Coastal Highlights",
                 titleVi: "Nha Trang – Khánh Hòa: Điểm sáng du lịch biển tầm vóc quốc tế",
                 descEn: "A destination where globally recognized natural beauty, vibrant marine life, and refined coastal hospitality come together.",
-                descVi: "Điểm đến kết hợp hoàn hảo giữa vẻ đẹp thiên nhiên kỳ vĩ, hệ sinh thái biển phong phú và dịch vụ nghỉ dưỡng cao cấp.",
-                contentEn: "More than a destination of scenic beauty, Nha Trang – Khanh Hoa is a place where travelers can immerse themselves in an unspoiled marine ecosystem.\n\nFrom turquoise waters to luxury island resorts and ancient Ponagar Cham Towers.",
-                contentVi: "Không chỉ là một điểm đến với cảnh quan thơ mộng, Nha Trang – Khánh Hòa còn là nơi du khách đắm mình vào hệ sinh thái biển nguyên sơ.\n\nTừ làn nước xanh ngọc bích đến các khu nghỉ dưỡng đảo sang trọng và quần thể Tháp Bà Ponagar cổ kính.",
+                descVi: "Điểm đến kết hợp hoàn hảo giữa vẻ đẹp thiên nhiên kỳ vĩ được thế giới công nhận, hệ sinh thái biển phong phú và dịch vụ nghỉ dưỡng cao cấp.",
+                contentEn: "More than a destination of scenic beauty, Nha Trang – Khanh Hoa is a place where travelers can immerse themselves in an unspoiled marine ecosystem while enjoying the sophistication of refined coastal living.\n\nFrom the calm turquoise waters of Nha Trang Bay to luxury island resorts and ancient Ponagar Cham Towers, Khanh Hoa offers an incredible mix of heritage and tropical leisure.",
+                contentVi: "Không chỉ là một điểm đến với cảnh quan thơ mộng, Nha Trang – Khánh Hòa còn là nơi du khách đắm mình vào hệ sinh thái biển nguyên sơ và tận hưởng phong cách sống nghỉ dưỡng ven biển tinh tế.\n\nTừ làn nước xanh ngọc bích của Vịnh Nha Trang đến các khu nghỉ dưỡng đảo sang trọng và quần thể Tháp Bà Ponagar cổ kính, Khánh Hòa mang lại sự kết hợp tuyệt vời giữa di sản và du lịch nghỉ dưỡng nhiệt đới.",
                 img: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=800&auto=format&fit=crop",
                 location: "Nha Trang Bay • Khanh Hoa",
                 url: "https://camranh.aero/en/explore/article/nha-trang-khanh-hoa-world-ranked-coastal-highlights"
@@ -977,15 +906,127 @@
                 id: "northern-nha-trang-discovery",
                 category: "Destination",
                 date: "12 July 2026",
-                titleEn: "Discovering Northern Nha Trang: New-generation beach destination",
-                titleVi: "Khám phá Bắc Nha Trang: Điểm đến ven biển thế hệ mới",
-                descEn: "Northern Nha Trang is rising as a perfect intersection between pristine nature and Do Theater architecture.",
-                descVi: "Bắc Nha Trang đang trở thành tâm điểm giao thoa giữa thiên nhiên hoang sơ và Nhà hát Đó độc đáo.",
-                contentEn: "Transforming from traditional resort spaces, Northern Nha Trang is rising as a perfect cultural intersection.\n\nThe signature hallmark is its deep connection with local cultural values, highlighted by Do Theater.",
-                contentVi: "Vượt khỏi không gian nghỉ dưỡng truyền thống, Bắc Nha Trang đang vươn mình trở thành điểm giao thoa văn hóa hoàn hảo.\n\nDấu ấn độc đáo nâng tầm Bắc Nha Trang chính là Nhà hát Đó truyền cảm hứng từ chiếc Đó đánh bắt cá.",
+                titleEn: "Discovering Northern Nha Trang: New-generation beach destination reaching global heights",
+                titleVi: "Khám phá Bắc Nha Trang: Điểm đến ven biển thế hệ mới vươn tầm quốc tế",
+                descEn: "Transforming from traditional resort spaces, Northern Nha Trang is rising as a perfect intersection between pristine nature and Do Theater architecture.",
+                descVi: "Vượt khỏi mô hình nghỉ dưỡng truyền thống, Bắc Nha Trang đang trở thành tâm điểm giao thoa giữa thiên nhiên hoang sơ, Nhà hát Đó độc đáo và nhịp sống văn hóa hiện đại.",
+                contentEn: "Transforming from traditional resort spaces, Northern Nha Trang is rising as a perfect intersection between pristine nature and a vibrant cultural rhythm. Serving as the connecting gateway, Cam Ranh International Terminal (CRTC) is the first touchpoint for global explorers.\n\nThe signature hallmark of Northern Nha Trang is its deep connection with local cultural values, highlighted by the Do Theater—an architectural icon inspired by traditional Vietnamese fishing tools, hosting world-class indigenous stage art.",
+                contentVi: "Vượt khỏi không gian nghỉ dưỡng truyền thống, Bắc Nha Trang đang vươn mình trở thành điểm giao thoa hoàn hảo giữa thiên nhiên nguyên sơ và nhịp sống văn hóa sôi động. Với vai trò bệ phóng kết nối, Nhà ga Quốc tế Cam Ranh (CRTC) chính là điểm chạm đầu tiên cho du khách toàn cầu.\n\nDấu ấn độc đáo nâng tầm Bắc Nha Trang chính là sự kết nối sâu sắc với văn hóa địa phương, nổi bật là Nhà hát Đó — biểu tượng kiến trúc truyền cảm hứng từ chiếc Đó đánh bắt cá dân gian Việt Nam, nơi trình diễn các show nghệ thuật bản địa đỉnh cao.",
                 img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=800&auto=format&fit=crop",
                 location: "Northern Nha Trang • Do Theater",
-                url: "https://camranh.aero/en/explore/article/discovering-northern-nha-trang"
+                url: "https://camranh.aero/en/explore/article/discovering-northern-nha-trang-the-new-generation-beach-destination-reaching-global-heights"
+            },
+            {
+                id: "dong-hoi-cam-ranh-flight-corridor",
+                category: "Aviation",
+                date: "09 July 2026",
+                titleEn: "Bridging Heritage and Coastal Paradises: The New Dong Hoi – Cam Ranh Flight Corridor",
+                titleVi: "Kết nối di sản và thiên đường biển: Đường bay mới Đồng Hới – Cam Ranh",
+                descEn: "The direct flight route connecting Khanh Hoa and the Central Heritage region opens a dynamic new chapter for inter-regional tourism.",
+                descVi: "Đường bay trực tiếp kết nối Khánh Hòa và vùng di sản Miền Trung mở ra chương mới cho du lịch liên vùng và giao lưu văn hóa.",
+                contentEn: "Launching on August 16, the new Dong Hoi – Cam Ranh route marks a significant milestone in Vietnam's aviation landscape. Operating three round-trip flights weekly, this service bridges the South-Central coast and the North-Central cave heritage heartland (Phong Nha - Ke Bang).\n\nCam Ranh International Terminal (CRTC) stands ready to facilitate this seamless connectivity, transforming regional travel into a world-class passenger experience.",
+                contentVi: "Khởi công từ giữa tháng 8, đường bay mới Đồng Hới – Cam Ranh đánh dấu cột mốc quan trọng trong bản đồ hàng không Việt Nam. Khai thác 3 chuyến khứ hồi mỗi tuần, đường bay kết nối trực tiếp vùng biển Nam Trung Bộ và trái tim di sản hang động Bắc Trung Bộ (Phong Nha - Kẻ Bàng).\n\nNhà ga Quốc tế Cam Ranh (CRTC) sẵn sàng đảm bảo quy trình vận hành chu đáo, mang đến hành trình bay liên vùng thông suốt và đẳng cấp cho du khách.",
+                img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800&auto=format&fit=crop",
+                location: "CRTC Terminal T2 & Dong Hoi",
+                url: "https://camranh.aero/en/explore/article/bridging-heritage-and-coastal-paradises-the-new-dong-hoi-cam-ranh-flight-corridor"
+            },
+            {
+                id: "japanese-market-push",
+                category: "Tourism",
+                date: "05 July 2026",
+                titleEn: "Unlocking the Land of the Rising Sun: Khanh Hoa's Strategic Push for the Japanese Market",
+                titleVi: "Mở cửa thị trường Nhật Bản: Chiến lược thu hút du khách xứ Phù Tang của Khánh Hòa",
+                descEn: "Recognizing Japan as a high-potential tourism market, Khanh Hoa deploys targeted promotion strategies to captivate travelers.",
+                descVi: "Nhận định Nhật Bản là thị trường du lịch chất lượng cao đầy tiềm năng, Khánh Hòa triển khai chiến lược quảng bá trọng điểm thu hút du khách Nhật.",
+                contentEn: "Recognizing Japan as a high-potential, quality-driven tourism market, Khanh Hoa is deploying targeted promotion strategies to captivate travelers from Japan. As the region's premier aviation gateway, Cam Ranh International Terminal (CRTC) stands at the forefront of this initiative.\n\nWith direct flight charters, multi-lingual Japanese concierge services, and tailored eco-wellness cultural packages, CXR Airport is bridging Tokyo, Osaka, and Fukuoka directly with Nha Trang.",
+                contentVi: "Nhận định Nhật Bản là thị trường du lịch chất lượng cao giàu tiềm năng, Khánh Hòa tích cực triển khai các chiến lược xúc tiến thương mại và quảng bá thu hút du khách xứ sở Phù Tang. Với vai trò cửa ngõ hàng không hiện đại, Nhà ga Quốc tế Cam Ranh (CRTC) tiên phong dẫn đầu nỗ lực này.\n\nThông qua các chuyến bay charter trực tiếp, hệ thống hỗ trợ ngôn ngữ tiếng Nhật tại nhà ga và gói du lịch sinh thái nghỉ dưỡng được thiết kế riêng, CXR Airport đang đưa Tokyo, Osaka và Fukuoka tiến gần hơn với thiên đường biển Nha Trang.",
+                img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop",
+                location: "Khanh Hoa Tourism Promotion",
+                url: "https://camranh.aero/en/explore/article/unlocking-the-land-of-the-rising-sun-khanh-hoas-strategic-push-for-the-japanese-market"
+            },
+            {
+                id: "lonely-planet-top-10-beaches",
+                category: "Awards",
+                date: "01 July 2026",
+                titleEn: "Khanh Hoa's Global Recognition: Two Beaches Named in Lonely Planet's Top 10",
+                titleVi: "Vươn tầm thế giới: 2 bãi biển Khánh Hòa lọt Top 10 Lonely Planet",
+                descEn: "With two magnificent coastlines honored by Lonely Planet among Vietnam's finest, Khanh Hoa solidifies its status as a world-class destination.",
+                descVi: "Với hai bờ biển tuyệt đẹp được Lonely Planet vinh danh hàng đầu Việt Nam, Khánh Hòa tiếp tục khẳng định vị thế điểm đến biển thế giới.",
+                contentEn: "With two magnificent coastlines (Bai Dai Beach & Doc Let Beach) honored by Lonely Planet among Vietnam's top 10 finest beaches, Khanh Hoa continues to solidify its status as a world-class marine destination.\n\nCam Ranh International Terminal (CRTC) proudly welcomes global travelers to experience these internationally acclaimed turquoise shores right upon touchdown.",
+                contentVi: "Với hai dải bờ biển tuyệt đẹp (Bãi Dài Cam Ranh & Bãi biển Dốc Lết) vừa được tạp chí du lịch Lonely Planet vinh danh trong Top 10 bãi biển đẹp nhất Việt Nam, Khánh Hòa tiếp tục khẳng định vị thế thương hiệu du lịch biển toàn cầu.\n\nNhà ga Quốc tế Cam Ranh (CRTC) tự hào là nơi chào đón du khách quốc tế bước vào hành trình khám phá những bờ biển xanh ngọc bích ngay khi hạ cánh.",
+                img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=800&auto=format&fit=crop",
+                location: "Bai Dai & Doc Let Beach",
+                url: "https://camranh.aero/en/explore/article/khanh-hoas-global-recognition-two-beaches-named-in-lonely-planets-top-10"
+            },
+            {
+                id: "tropical-water-sports-nha-trang",
+                category: "Sports & Eco",
+                date: "28 June 2026",
+                titleEn: "Tropical Water Sports Paradise: Energize Your Beach Getaway in Nha Trang",
+                titleVi: "Bay đến Nha Trang: Bật tung năng lượng với thiên đường thể thao biển nhiệt đới",
+                descEn: "Dive into coral reefs at Hon Mun, ocean SUP paddling, parasailing, and kite surfing across crystal turquoise waters.",
+                descVi: "Lặn ngắm san hô Hòn Mun, chèo SUP bờ biển, dù lượn trên không và lướt ván diều tại Bãi Dài cùng vô vàn hoạt động biển kịch tính.",
+                contentEn: "Nha Trang offers an exhilarating water sports ecosystem for adventure seekers: 1. Coral diving at Hon Mun Marine Reserve; 2. Coastal SUP paddling at sunrise; 3. Parasailing over Nha Trang Bay; 4. Ocean surfing and kite surfing at Bai Dai.\n\nCRTC Airport connects international sports enthusiasts directly into this dynamic tropical adventure.",
+                contentVi: "Nha Trang mang đến hệ sinh thái thể thao dưới nước đầy phấn khích cho du khách đam mê phiêu lưu: 1. Lặn ngắm san hô tại Khu bảo tồn Hòn Mun; 2. Chèo SUP đón bình minh ven biển; 3. Dù lượn trên không ngắm toàn cảnh Vịnh Nha Trang; 4. Lướt ván diều tại Bãi Dài.\n\nCXR Airport chính là bệ phóng kết nối du khách quốc tế bước ngay vào chuỗi hoạt động nhiệt đới bùng nổ năng lượng này.",
+                img: "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?q=80&w=800&auto=format&fit=crop",
+                location: "Hon Mun & Nha Trang Coast",
+                url: "https://camranh.aero/vi/explore/article/bay-den-nha-trang-bat-tung-nang-luong-voi-thien-duong-the-thao-bien-nhiet-doi"
+            },
+            {
+                id: "healing-nature-khanh-hoa",
+                category: "Wellness",
+                date: "24 June 2026",
+                titleEn: "Finding Peace in Nature: Healing & Recharge Journeys in Khanh Hoa",
+                titleVi: "Tìm về thiên nhiên: Hành trình tái tạo năng lượng giữa không gian xanh Khánh Hòa",
+                descEn: "Unwind with eco-wellness retreats at Ba Ho Stream, Kong Forest adventure park, and Yang Bay hot mineral waterfall springs.",
+                descVi: "Chữa lành tâm hồn tại Suối Ba Hồ, công viên thám hiểm Kong Forest và suối khoáng nóng thác Yang Bay giữa thiên nhiên tĩnh lặng.",
+                contentEn: "If you are seeking a wellness getaway beyond traditional spa treatments, Khanh Hoa offers a natural reset journey: 1. Ba Ho Stream trekking & crystal freshwater lakes; 2. Kong Forest Hon Ba zipline canopy flights & ATV trails; 3. Yang Bay natural hot mineral waterfall therapy.\n\nDisconnect from daily stress and recharge your body and soul amid untouched mountain greenery.",
+                contentVi: "Nếu bạn tìm kiếm chuyến nghỉ dưỡng chữa lành vượt khỏi liệu trình spa thông thường, Khánh Hòa mang đến hành trình 'reset' tự nhiên: 1. Trekking Suối Ba Hồ và bơi lội giữa lòng hồ tự nhiên; 2. Thám hiểm Kong Forest Hòn Bà với Zipline xuyên tán rừng & ATV; 3. Thủy liệu pháp suối khoáng nóng tự nhiên Thác Yang Bay.\n\nTách biệt khỏi áp lực đô thị để tìm lại sự cân bằng trọn vẹn giữa đại ngàn tĩnh lặng.",
+                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop",
+                location: "Ba Ho Stream, Kong Forest & Yang Bay",
+                url: "https://camranh.aero/vi/explore/article/tim-ve-thien-nhien-hanh-trinh-tai-tao-nang-luong-giua-khong-gian-xanh-khanh-hoa"
+            },
+            {
+                id: "coastal-flavors-food-festival",
+                category: "Cuisine",
+                date: "20 June 2026",
+                titleEn: "Awakening all senses with 'Coastal Flavors - Summer Melodies' Food Festival in Nha Trang",
+                titleVi: "Đánh thức giác quan với Lễ hội Ẩm thực 'Hương vị biển - Giai điệu mùa hè'",
+                descEn: "Savor fresh seafood specialties, regional delicacies, and live acoustic music performances along Nha Trang's beach promenade.",
+                descVi: "Thưởng thức hải sản tươi ngon, đặc sản vùng miền và âm nhạc sống động ven biển Nha Trang trong lễ hội mùa hè rực rỡ.",
+                contentEn: "Immerse yourself in the explosive 'Coastal Flavors - Summer Melodies' Food Festival, part of Khanh Hoa Sea Festival. Featuring live seafood grilling stations, Khanh Hoa bird's nest drinks, and beachfront musical stages.\n\nCRTC Airport acts as the culinary gateway bringing global food lovers into an unforgettable sensory journey.",
+                contentVi: "Hòa mình vào không gian rực rỡ của Lễ hội Ẩm thực 'Hương vị biển - Giai điệu mùa hè' thuộc khuôn khổ Lễ hội Biển. Trải nghiệm quầy biểu diễn chế biến hải sản tươi sống tại chỗ, thức uống Yến sào Khánh Hòa và sân khấu âm nhạc bãi biển.\n\nCRTC Airport là điểm chạm đưa thực khách toàn cầu bước vào hành trình bùng nổ vị giác và âm thanh.",
+                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop",
+                location: "Nha Trang Coastal Square",
+                url: "https://camranh.aero/en/explore/article/awakening-all-senses-with-coastal-flavors-summer-melodies-food-festival"
+            },
+            {
+                id: "7-iconic-vietnamese-culinary-experiences",
+                category: "Cuisine",
+                date: "16 June 2026",
+                titleEn: "Awakening the palate: 7 iconic culinary experiences bringing Vietnam to the world",
+                titleVi: "7 trải nghiệm ẩm thực biểu tượng đưa hương vị Việt Nam ra thế giới",
+                descEn: "Recommended by Food & Wine magazine, explore Nem Nuong Ninh Hoa, Banh Can, bird's nest soup, and fresh seafood feasts.",
+                descVi: "Đội ngũ Food & Wine vinh danh Nem nướng Ninh Hòa, Bánh căn, Yến sào Khánh Hòa và yến tiệc hải sản tươi sống.",
+                contentEn: "Highlighted by Food & Wine magazine, Khanh Hoa's iconic gastronomy includes: 1. Grilled Ninh Hoa pork rolls (Nem Nuong); 2. Crispy seafood Banh Can pancakes; 3. Fresh lobster feasts in Cam Ranh Bay; 4. Premium Agarwood Bird's Nest soup.\n\nDiscover authentic local flavors that make Khanh Hoa a top culinary destination in Southeast Asia.",
+                contentVi: "Được tạp chí Food & Wine danh tiếng gợi ý, di sản ẩm thực Khánh Hòa chinh phục thực khách quốc tế bởi: 1. Nem nướng Ninh Hòa chuẩn vị; 2. Bánh căn hải sản giòn rụm; 3. Yến tiệc tôm hùm tươi sống Vịnh Cam Ranh; 4. Yến sào Khánh Hòa bổ dưỡng.\n\nKhám phá vị ngon nguyên bản tôn vinh nét đẹp văn hóa xứ Trầm Hương.",
+                img: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=800&auto=format&fit=crop",
+                location: "Khanh Hoa Gastronomy",
+                url: "https://camranh.aero/en/explore/article/awakening-the-palate-7-iconic-culinary-experiences-bringing-vietnam-to-the-world"
+            },
+            {
+                id: "vietnamese-coffee-culture-khanh-hoa",
+                category: "Culture",
+                date: "10 June 2026",
+                titleEn: "Vietnamese coffee prestige on the global map and its cultural allure in Khanh Hoa",
+                titleVi: "Cà phê Việt Nam trên bản đồ thế giới & Nét quyến rũ văn hóa tại Khánh Hòa",
+                descEn: "Discover rich Robusta drip coffee, egg coffee, and seaside sunrise coffee culture along Tran Phu Boulevard in Nha Trang.",
+                descVi: "Khám phá hương vị cà phê phin Robusta đậm đà, cà phê trứng và văn hóa thưởng thức cà phê ngắm bình minh trên đường Trần Phú.",
+                contentEn: "Vietnam's Robusta coffee beans assert global leadership while offering a signature cultural trait in Khanh Hoa. Experience traditional drip phin coffee, creamy egg coffee, and beachfront morning coffee rituals watching the sunrise over Nha Trang Bay.",
+                contentVi: "Hạt cà phê Robusta Việt Nam khẳng định vị thế hàng đầu thế giới đồng thời tạo nên nét văn hóa đặc trưng cuốn hút du khách tại Khánh Hòa. Thưởng thức phin cà phê nhỏ giọt đậm đà, cà phê trứng béo ngậy và tách cà phê ngắm bình minh trên biển Nha Trang.",
+                img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=800&auto=format&fit=crop",
+                location: "Coastal Coffee Promenade",
+                url: "https://camranh.aero/en/explore/article/vietnamese-coffee-prestige-on-the-global-map-and-its-cultural-allure-in-khanh-hoa"
             }
         ];
 
@@ -1004,7 +1045,6 @@
             fetchRealtimeWeather();
             initSipFormFields();
             initExploreModalListeners();
-            renderFlightList();
             
             // Asynchronously wait for JsSIP with multi-stage CDN loader
             waitForJsSIP((SIPClass) => {
@@ -1015,128 +1055,6 @@
                 }
             });
         });
-
-        // OFFICIAL FLIGHT INFO WEB MODAL FUNCTIONS
-        function openFlightInfoWebModal() {
-            refreshFlightInfoIframe();
-            document.getElementById('flight-info-web-modal').classList.remove('hidden');
-
-            // Clear any existing timer and setup new 1-minute (60,000 ms) auto-refresh
-            if (flightAutoRefreshTimer) clearInterval(flightAutoRefreshTimer);
-            flightAutoRefreshTimer = setInterval(() => {
-                refreshFlightInfoIframe();
-            }, 60000);
-        }
-
-        function closeFlightInfoWebModal() {
-            document.getElementById('flight-info-web-modal').classList.add('hidden');
-            if (flightAutoRefreshTimer) {
-                clearInterval(flightAutoRefreshTimer);
-                flightAutoRefreshTimer = null;
-            }
-        }
-
-        function refreshFlightInfoIframe() {
-            const iframe = document.getElementById('iframe-flight-info');
-            const icon = document.getElementById('icon-refresh-flight');
-
-            if (icon) {
-                icon.classList.add('animate-spin');
-                setTimeout(() => icon.classList.remove('animate-spin'), 1000);
-            }
-
-            if (iframe) {
-                // Refresh iframe content with cache-busting timestamp parameter
-                const baseUrl = 'https://camranh.aero/vi';
-                iframe.src = `${baseUrl}?_t=${Date.now()}#flights`;
-            }
-
-            const lastUpdateEl = document.getElementById('flight-info-last-update');
-            if (lastUpdateEl) {
-                const now = new Date();
-                const timeStr = now.toLocaleTimeString();
-                lastUpdateEl.innerText = `Cập nhật lúc: ${timeStr}`;
-            }
-        }
-
-        function openFlightsModal() {
-            renderFlightList();
-            document.getElementById('flights-modal').classList.remove('hidden');
-        }
-
-        function closeFlightsModal() {
-            document.getElementById('flights-modal').classList.add('hidden');
-        }
-
-        function setFlightType(type) {
-            currentFlightType = type;
-            const btnDep = document.getElementById('btn-flight-dep');
-            const btnArr = document.getElementById('btn-flight-arr');
-
-            if (type === 'departures') {
-                btnDep.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-teal text-white shadow transition";
-                btnArr.className = "px-4 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition";
-            } else {
-                btnArr.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-teal text-white shadow transition";
-                btnDep.className = "px-4 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition";
-            }
-            renderFlightList();
-        }
-
-        function filterFlightList() {
-            renderFlightList();
-        }
-
-        function renderFlightList() {
-            const container = document.getElementById('flights-list-container');
-            const query = (document.getElementById('flight-search-input')?.value || '').toLowerCase().trim();
-            if (!container) return;
-
-            const filtered = flightData.filter(f => {
-                const matchesType = f.type === currentFlightType;
-                const matchesQuery = !query || f.id.toLowerCase().includes(query) || f.airline.toLowerCase().includes(query) || f.dest.toLowerCase().includes(query);
-                return matchesType && matchesQuery;
-            });
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<div class="p-8 text-center text-slate-400 text-xs">No flights found matching your query.</div>`;
-                return;
-            }
-
-            container.innerHTML = filtered.map(f => `
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-3.5 flex items-center justify-between hover:bg-white/10 transition">
-                    <div class="flex items-center space-x-4">
-                        <div class="font-mono text-gold font-extrabold text-sm bg-gold/10 px-3 py-1.5 rounded-xl border border-gold/30">
-                            ${f.time}
-                        </div>
-                        <div>
-                            <div class="text-white font-bold text-sm flex items-center gap-2">
-                                <span>${f.id}</span>
-                                <span class="text-slate-400 text-xs font-normal">• ${f.airline}</span>
-                            </div>
-                            <div class="text-slate-300 text-xs mt-0.5 flex items-center gap-1.5">
-                                <i data-lucide="map-pin" class="w-3 h-3 text-teal"></i> ${f.dest}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center space-x-4">
-                        <div class="text-right">
-                            <div class="text-slate-400 text-[10px] uppercase font-bold">Gate</div>
-                            <div class="text-white font-mono font-bold text-xs">${f.gate}</div>
-                        </div>
-                        <span class="px-3 py-1 rounded-full text-[11px] font-bold border bg-${f.statusColor}-500/20 text-${f.statusColor}-300 border-${f.statusColor}-500/40">
-                            ${f.status}
-                        </span>
-                    </div>
-                </div>
-            `).join('');
-
-            const countEl = document.getElementById('flight-list-count');
-            if (countEl) countEl.innerText = `Showing ${filtered.length} flight(s)`;
-
-            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
-        }
 
         function openExploreModal() {
             exploreCurrentPage = 0;
@@ -1160,32 +1078,34 @@
             const t = i18n[currentLang] || i18n['en'];
 
             container.innerHTML = pageArticles.map(article => `
-                <div class="bg-white/5 border border-white/15 rounded-2xl p-3.5 flex flex-col justify-between hover:bg-white/10 transition group shadow-xl relative overflow-hidden">
-                    <div class="flex items-start space-x-3.5">
-                        <div onclick="viewArticleDetail('${article.id}')" class="relative w-32 h-24 rounded-xl overflow-hidden shrink-0 border border-white/15 shadow-md cursor-pointer">
+                <div class="bg-white/5 border border-white/15 rounded-2xl p-4 flex flex-col justify-between hover:bg-white/10 transition group shadow-xl relative overflow-hidden">
+                    <div class="flex items-start space-x-4">
+                        <div onclick="viewArticleDetail('${article.id}')" class="relative w-36 h-28 rounded-xl overflow-hidden shrink-0 border border-white/15 shadow-md cursor-pointer">
                             <img src="${article.img}" alt="${article.titleEn}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                             <span class="absolute top-1.5 left-1.5 bg-teal/90 border border-white/20 backdrop-blur-md text-white text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
                                 ${article.category}
                             </span>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <div class="inline-flex items-center space-x-1 text-gold text-[10px] font-semibold mb-0.5">
+                            <div class="inline-flex items-center space-x-1 text-gold text-[10px] font-semibold mb-1">
                                 <i data-lucide="map-pin" class="w-3 h-3"></i>
                                 <span>${article.location}</span>
                             </div>
-                            <h4 onclick="viewArticleDetail('${article.id}')" class="text-white font-bold text-xs xl:text-sm leading-snug group-hover:text-gold transition-colors line-clamp-2 cursor-pointer">
+                            <h4 onclick="viewArticleDetail('${article.id}')" class="text-white font-bold text-sm leading-snug group-hover:text-gold transition-colors line-clamp-2 cursor-pointer">
                                 ${currentLang === 'vi' ? article.titleVi : article.titleEn}
                             </h4>
-                            <p class="text-slate-300 text-[11px] mt-1 line-clamp-2 leading-relaxed">
+                            <p class="text-slate-300 text-xs mt-1.5 line-clamp-2 leading-relaxed">
                                 ${currentLang === 'vi' ? article.descVi : article.descEn}
                             </p>
                         </div>
                     </div>
 
-                    <div class="pt-2 mt-2 border-t border-white/10 flex items-center justify-between">
+                    <div class="pt-3 mt-2 border-t border-white/10 flex items-center justify-between">
                         <span class="text-[10px] text-slate-400 font-mono">${article.date}</span>
+                        
+                        <!-- Open directly inside Kiosk Pop-up Reader -->
                         <button onclick="viewArticleDetail('${article.id}')" 
-                                class="px-3 py-1 bg-gradient-to-r from-teal to-teal-hover hover:brightness-110 text-white text-[11px] font-bold rounded-xl shadow-md transition flex items-center gap-1 touch-effect">
+                                class="px-3.5 py-1.5 bg-gradient-to-r from-teal to-teal-hover hover:brightness-110 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-1.5 touch-effect">
                             <span>${t.readMore}</span>
                             <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
                         </button>
@@ -1196,7 +1116,7 @@
             renderExploreDots();
 
             const counterEl = document.getElementById('explore-page-counter');
-            if (counterEl) counterEl.innerText = `Page ${exploreCurrentPage + 1} of ${totalPages || 1}`;
+            if (counterEl) counterEl.innerText = `Page ${exploreCurrentPage + 1} of ${totalPages}`;
 
             if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
         }
@@ -1220,6 +1140,7 @@
             if (currentDetailIndex < 0 || currentDetailIndex >= exploreArticles.length) return;
             const article = exploreArticles[currentDetailIndex];
 
+            // Populate Article Details
             document.getElementById('article-detail-title').innerText = currentLang === 'vi' ? article.titleVi : article.titleEn;
             document.getElementById('article-detail-lead').innerText = currentLang === 'vi' ? article.descVi : article.descEn;
             document.getElementById('article-detail-category').innerText = article.category;
@@ -1228,9 +1149,10 @@
             document.getElementById('article-detail-img').src = article.img;
             document.getElementById('article-detail-url').innerText = article.url;
 
+            // Format Article Content Paragraphs
             const rawContent = currentLang === 'vi' ? article.contentVi : article.contentEn;
             const paragraphs = rawContent.split('\n\n');
-            document.getElementById('article-detail-body').innerHTML = paragraphs.map(p => `<p class="leading-relaxed mb-2">${p}</p>`).join('');
+            document.getElementById('article-detail-body').innerHTML = paragraphs.map(p => `<p class="leading-relaxed mb-3">${p}</p>`).join('');
 
             if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
         }
@@ -1268,20 +1190,20 @@
                 const dot = document.createElement('button');
                 dot.onclick = () => { exploreCurrentPage = i; renderExploreGridPage(); };
                 dot.className = i === exploreCurrentPage 
-                    ? 'w-7 h-2 rounded-full bg-gold shadow-lg shadow-gold/50 transition-all' 
-                    : 'w-2 h-2 rounded-full bg-white/30 hover:bg-white/60 transition-all';
+                    ? 'w-8 h-2.5 rounded-full bg-gold shadow-lg shadow-gold/50 transition-all' 
+                    : 'w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all';
                 container.appendChild(dot);
             }
         }
 
         function nextExplorePage() {
-            const totalPages = Math.ceil(exploreArticles.length / ARTICLES_PER_PAGE) || 1;
+            const totalPages = Math.ceil(exploreArticles.length / ARTICLES_PER_PAGE);
             exploreCurrentPage = (exploreCurrentPage + 1) % totalPages;
             renderExploreGridPage();
         }
 
         function prevExplorePage() {
-            const totalPages = Math.ceil(exploreArticles.length / ARTICLES_PER_PAGE) || 1;
+            const totalPages = Math.ceil(exploreArticles.length / ARTICLES_PER_PAGE);
             exploreCurrentPage = (exploreCurrentPage - 1 + totalPages) % totalPages;
             renderExploreGridPage();
         }
@@ -1576,6 +1498,7 @@
             }
         }
 
+        // Toggle Microphone Audio State
         function toggleAudioTrack() {
             isAudioEnabled = !isAudioEnabled;
             const btn = document.getElementById('btn-toggle-mic');
@@ -1928,6 +1851,7 @@
 
         function openCloryModal() {
             document.getElementById('clory-modal').classList.remove('hidden');
+            
             if (!ua && sipConfig.wssUrl && sipConfig.extension) {
                 initSIPUA();
             }
@@ -2021,7 +1945,7 @@
             container.innerHTML = '';
             supportedLangs.forEach((lang, idx) => {
                 const dot = document.createElement('span');
-                dot.className = idx === cycleLangIndex ? 'w-7 h-2 rounded-full bg-teal transition-all' : 'w-2 h-2 rounded-full bg-white/30 transition-all';
+                dot.className = idx === cycleLangIndex ? 'w-8 h-2 rounded-full bg-teal transition-all' : 'w-2 h-2 rounded-full bg-white/30 transition-all';
                 dot.id = `dot-${idx}`;
                 container.appendChild(dot);
             });
@@ -2052,7 +1976,7 @@
             supportedLangs.forEach((l, idx) => {
                 const dot = document.getElementById(`dot-${idx}`);
                 if (dot) {
-                    dot.className = idx === cycleLangIndex ? 'w-7 h-2 rounded-full bg-teal transition-all' : 'w-2 h-2 rounded-full bg-white/30 transition-all';
+                    dot.className = idx === cycleLangIndex ? 'w-8 h-2 rounded-full bg-teal transition-all' : 'w-2 h-2 rounded-full bg-white/30 transition-all';
                 }
             });
         }
@@ -2067,18 +1991,10 @@
                 mapDesc: "Locate boarding gates, dining, Duty Free shops, restrooms, ATMs & interactive terminal maps.",
                 mapBtn: "OPEN INTERACTIVE MAP",
                 badgeMap: "Interactive Navigation",
-                flightInfoTitle: "FLIGHT INFORMATION",
-                flightInfoDesc: "Real-time departure & arrival schedule directly from official Cam Ranh International Airport.",
-                flightInfoBtn: "CHECK LIVE FLIGHTS",
-                badgeFlightInfo: "Live Schedule camranh.aero",
                 aiTitle: "CLORY AI ASSISTANT",
                 aiDesc: "Voice & Video assistant for terminal maps, gate locations, baggage inquiries & Nha Trang travel guides.",
                 aiBtn: "TALK TO CLORY AI",
                 badgeAi: "Voice & Video Call 24/7",
-                modalFlightWebTitle: "CAM RANH INTL AIRPORT FLIGHT INFORMATION",
-                modalFlightWebSub: "Official Live Data from camranh.aero",
-                autoRefreshLabel: "Auto-refreshing every 60s",
-                btnRefreshLabel: "Refresh",
                 amenitiesTitle: "Areas & Amenities",
                 amenitiesSub: "Services at Terminal 1 & 2",
                 amenity1Title: "Dining & Cafés",
@@ -2131,18 +2047,10 @@
                 mapDesc: "Tìm cửa ra máy bay (Gates), nhà hàng, cửa hàng Duty Free, WC, ATM & sơ đồ nhà ga trực quan.",
                 mapBtn: "MỞ BẢN ĐỒ TƯƠNG TÁC",
                 badgeMap: "Dẫn đường trực quan",
-                flightInfoTitle: "THÔNG TIN CHUYẾN BAY",
-                flightInfoDesc: "Tra cứu lịch bay đi và đến mới nhất trực tiếp từ Cảng Hàng không Quốc tế Cam Ranh.",
-                flightInfoBtn: "XEM CHUYẾN BAY TRỰC TUYẾN",
-                badgeFlightInfo: "Lịch bay camranh.aero",
                 aiTitle: "TRỢ LÝ ẢO CLORY AI",
                 aiDesc: "Hỏi đáp giọng nói & Video call, sơ đồ nhà ga, vị trí cổng, thủ tục hành lý & thông tin du lịch Nha Trang.",
                 aiBtn: "TRÒ CHUYỆN VỚI CLORY AI",
                 badgeAi: "Gọi Voice & Video 24/7",
-                modalFlightWebTitle: "THÔNG TIN CHUYẾN BAY SÂN BAY CAM RANH",
-                modalFlightWebSub: "Dữ liệu thời gian thực từ camranh.aero",
-                autoRefreshLabel: "Tự động làm mới mỗi 60s",
-                btnRefreshLabel: "Làm mới",
                 amenitiesTitle: "Khu vực & Tiện ích",
                 amenitiesSub: "Dịch vụ tiện ích Tầng 1 & Tầng 2",
                 amenity1Title: "Ăn uống & Nhà hàng",
@@ -2195,18 +2103,10 @@
                 mapDesc: "탑승구, 식당, 면세점, 화장실, ATM 및 터미널 지도를 검색하세요.",
                 mapBtn: "인터랙티브 지도 열기",
                 badgeMap: "실시간 길안내",
-                flightInfoTitle: "운항 정보",
-                flightInfoDesc: "깜라인 국제공항의 실시간 출도착 운항 스케줄을 확인하세요.",
-                flightInfoBtn: "실시간 운항 조회",
-                badgeFlightInfo: "실시간 스케줄 camranh.aero",
                 aiTitle: "CLORY AI 어시스턴트",
                 aiDesc: "음성 및 비디오 통화로 터미널 안내, 게이트 위치, 수하물 안내 및 나트랑 관광 정보를 확인하세요.",
                 aiBtn: "CLORY AI와 대화하기",
                 badgeAi: "24/7 음성 & 영상 통화",
-                modalFlightWebTitle: "깜라인 국제공항 운항 정보",
-                modalFlightWebSub: "camranh.aero 실시간 데이터",
-                autoRefreshLabel: "60초마다 자동 갱신",
-                btnRefreshLabel: "새로고침",
                 amenitiesTitle: "구역 및 편의시설",
                 amenitiesSub: "터미널 1 및 2 편의 서비스",
                 amenity1Title: "식당 및 카페",
@@ -2259,18 +2159,10 @@
                 mapDesc: "查找登机口、餐厅、免税店、洗手间、ATM及航站楼平面图。",
                 mapBtn: "打开互动地图",
                 badgeMap: "互动地图导航",
-                flightInfoTitle: "航班动态",
-                flightInfoDesc: "查看金兰国际机场官方实时起降航班时刻表。",
-                flightInfoBtn: "查看实时航班",
-                badgeFlightInfo: "实时时刻表 camranh.aero",
                 aiTitle: "CLORY AI 智能助手",
                 aiDesc: "支持语音与视频通话，查询航站楼地图、登机口位置、行李须知及芽庄旅游资讯。",
                 aiBtn: "与 CLORY AI 对话",
                 badgeAi: "24/7 语音与视频通话",
-                modalFlightWebTitle: "金兰国际机场航班动态",
-                modalFlightWebSub: "camranh.aero 官方实时数据",
-                autoRefreshLabel: "每60秒自动刷新",
-                btnRefreshLabel: "刷新",
                 amenitiesTitle: "区域与服务设施",
                 amenitiesSub: "1号及2号航站楼服务",
                 amenity1Title: "餐饮与咖啡",
@@ -2313,6 +2205,286 @@
                 prevArticle: "上一篇",
                 nextArticle: "下一篇",
                 swipeHint: "左右滑动或使用箭头按钮"
+            },
+            ru: {
+                welcomeTag: "Добро пожаловать",
+                welcomeTitle: "ДОБРО ПОЖАЛОВАТЬ В <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>АЭРОПОРТ КАМРАНЬ</span>",
+                welcomeSub: "Наслаждайтесь премиальным сервисом и круглосуточной умной помощью во время вашего путешествия.",
+                status: "ТЕРМИНАЛ РАБОТАЕТ В ОБЫЧНОМ РЕЖИМЕ",
+                mapTitle: "КАРТА АЭРОПОРТА И НАВИГАЦИЯ",
+                mapDesc: "Найдите выходы на посадку, рестораны, Duty Free, туалеты и банкоматы.",
+                mapBtn: "ОТКРЫТЬ ИНТЕРАКТИВНУЮ КАРТУ",
+                badgeMap: "Интерактивная навигация",
+                aiTitle: "ИИ-ПОМОЩНИК CLORY AI",
+                aiDesc: "Голосовые и видеозвонки: карты терминала, выходы, багаж и гид по Нячангу.",
+                aiBtn: "ГОВОРИТЬ С CLORY AI",
+                badgeAi: "Голос и Видео 24/7",
+                amenitiesTitle: "Зоны и Услуги",
+                amenitiesSub: "Сервисы Терминалов 1 и 2",
+                amenity1Title: "Рестораны и Кафе",
+                amenity1Sub: "Этаж 1 и Этаж 2",
+                amenity2Title: "Магазины Duty Free",
+                amenity2Sub: "Этаж 2 (Зона вылета)",
+                amenity3Title: "VIP-Зал CIP/VIP",
+                amenity3Sub: "Этаж 2 Терминал T2",
+                amenity4Title: "Туалеты (WC)",
+                amenity4Sub: "На всех этажах",
+                amenity5Title: "Нячанг Гид",
+                amenity5Sub: "Кханьхоа Путеводитель",
+                wifiLabel: "Бесплатный Wi-Fi",
+                touchHint: "Коснитесь экрана для старта",
+                closeBtn: "Закрыть",
+                clorySub: "Clory готова помочь вам...",
+                callBtn: "ПОЗВОНИТЬ СЕЙЧАС",
+                micOn: "Микр: Вкл",
+                micOff: "Микр: Выкл",
+                camOn: "Камера: Вкл",
+                camOff: "Камера: Выкл",
+                sipOffline: "CloryAI Офлайн",
+                sipRegistered: "CloryAI Онлайн",
+                hotlineLabel: "Горячая линия:",
+                sosLabel: "Медпомощь / SOS:",
+                infoLabel: "Справочная:",
+                infoVal: "Этаж 1 - Зал прибытия",
+                terminalSub: "МЕЖДУНАРОДНЫЙ АЭРОПОРТ • ТЕРМИНАЛ T2",
+                dropdownHeader: "Другие языки / More",
+                faqHeader: "Популярные вопросы:",
+                faq1: '"Где находятся выходы на посадку?"',
+                faq2: '"Какой пароль от бесплатного Wi-Fi?"',
+                faq3: '"Где найти автобус или такси в Нячанг?"',
+                faq4: '"На каком этаже находятся кафе и туалеты?"',
+                faq5: '"Где находятся магазины Duty Free?"',
+                exploreHeaderTitle: "НЯЧАНГ - КХАНЬХОА ГИД",
+                exploreHeaderSub: "Чистейшие пляжи, культурное наследие и гид по региону",
+                readMore: "Читать",
+                backBtn: "Назад к списку",
+                prevArticle: "Пред. статья",
+                nextArticle: "След. статья",
+                swipeHint: "Смахните влево/вправо или используйте стрелки"
+            },
+            jp: {
+                welcomeTag: "ようこそ",
+                welcomeTitle: "カムラン国際空港へ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ようこそ</span>",
+                welcomeSub: "世界クラスの航空サービスと24時間対応のスマート案内をご利用ください。",
+                status: "ターミナル正常運行中",
+                mapTitle: "空港マップ＆案内",
+                mapDesc: "搭乗口、レストラン、免税店、お手洗い、ATMなどを検索できます。",
+                mapBtn: "マップを開く",
+                badgeMap: "マップナビゲーション",
+                aiTitle: "CLORY AI アシスタント",
+                aiDesc: "音声・ビデオ通話で搭乗口、手荷物案内、ニャチャン観光情報をご案内します。",
+                aiBtn: "CLORY AIと話す",
+                badgeAi: "24/7 音声＆ビデオ通話",
+                amenitiesTitle: "エリア＆施設案内",
+                amenitiesSub: "第1・第2ターミナルサービス",
+                amenity1Title: "お食事・カフェ",
+                amenity1Sub: "1階 & 2階",
+                amenity2Title: "免税店 Duty Free",
+                amenity2Sub: "2階 出発エリア",
+                amenity3Title: "VIPラウンジ",
+                amenity3Sub: "2階 第2ターミナル",
+                amenity4Title: "お手洗い (WC)",
+                amenity4Sub: "全フロア",
+                amenity5Title: "ニャチャン散策",
+                amenity5Sub: "カインホアガイド",
+                wifiLabel: "無料高速 Wi-Fi",
+                touchHint: "画面をタッチしてスタート",
+                closeBtn: "閉じる",
+                clorySub: "Cloryがサポートする準備ができました...",
+                callBtn: "今すぐ電話",
+                micOn: "マイク: オン",
+                micOff: "マイク: オフ",
+                camOn: "カメラ: オン",
+                camOff: "カメラ: オフ",
+                sipOffline: "CloryAI オフライン",
+                sipRegistered: "CloryAI オンライン",
+                hotlineLabel: "空港ホットライン:",
+                sosLabel: "救急 / SOS:",
+                infoLabel: "案内カウンター:",
+                infoVal: "1階 到着ロビー",
+                terminalSub: "国際空港 • 第2ターミナル",
+                dropdownHeader: "その他の言語 / More",
+                faqHeader: "よくある質問:",
+                faq1: '"搭乗口はどこにありますか？"',
+                faq2: '"無料Wi-Fiのパスワードは何ですか？"',
+                faq3: '"ニャチャン市内行きのバスやタクシーはどこですか？"',
+                faq4: '"カフェやトイレは何階にありますか？"',
+                faq5: '"免税店はどこにありますか？"',
+                exploreHeaderTitle: "ニャチャン・カインホアガイド",
+                exploreHeaderSub: "美しいビーチ、文化遺産、観光情報",
+                readMore: "記事を読む",
+                backBtn: "記事一覧に戻る",
+                prevArticle: "前の記事",
+                nextArticle: "次の記事",
+                swipeHint: "左右にスワイプするか矢印ボタンを使用"
+            },
+            fr: {
+                welcomeTag: "Bienvenue",
+                welcomeTitle: "BIENVENUE À <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>L'AÉROPORT DE CAM RANH</span>",
+                welcomeSub: "Profitez de nos services aéroportuaires et de notre assistance intelligente 24/7.",
+                status: "AÉROGARE EN SERVICE NORMAL",
+                mapTitle: "CARTE INTERACTIVE DE L'AÉROPORT",
+                mapDesc: "Localisez les portes d'embarquement, restaurants, magasins Duty Free et commodités.",
+                mapBtn: "OUVRIR LA CARTE",
+                badgeMap: "Navigation interactive",
+                aiTitle: "ASSISTANT CLORY AI",
+                aiDesc: "Appels vocaux et vidéo pour les plans du terminal, bagages et guides de Nha Trang.",
+                aiBtn: "PARLER À CLORY AI",
+                badgeAi: "Appel Vocal & Vidéo 24/7",
+                amenitiesTitle: "Zones & Services",
+                amenitiesSub: "Services aux T1 & T2",
+                amenity1Title: "Restaurants & Cafés",
+                amenity1Sub: "Niveau 1 & Niveau 2",
+                amenity2Title: "Boutiques Duty Free",
+                amenity2Sub: "Niveau 2 Départs",
+                amenity3Title: "Salon VIP / CIP",
+                amenity3Sub: "Niveau 2 Terminal T2",
+                amenity4Title: "Toilettes (WC)",
+                amenity4Sub: "Tous les étages",
+                amenity5Title: "Découvrir Nha Trang",
+                amenity5Sub: "Guide Khanh Hoa",
+                wifiLabel: "Wi-Fi Gratuit",
+                touchHint: "Touchez l'écran pour commencer",
+                closeBtn: "Fermer",
+                clorySub: "Clory est prête à vous aider...",
+                callBtn: "APPELER MAINTENANT",
+                micOn: "Mic: Activé",
+                micOff: "Mic: Désactivé",
+                camOn: "Cam: Activée",
+                camOff: "Cam: Désactivée",
+                sipOffline: "CloryAI Hors ligne",
+                sipRegistered: "CloryAI En ligne",
+                hotlineLabel: "Ligne directe:",
+                sosLabel: "Urgences / SOS:",
+                infoLabel: "Bureau d'information:",
+                infoVal: "Niveau 1 - Arrivées",
+                terminalSub: "AÉROPORT INTERNATIONAL • T2",
+                dropdownHeader: "Autres langues / More",
+                faqHeader: "Questions fréquentes:",
+                faq1: '"Où se trouvent les portes d\'embarquement ?"',
+                faq2: '"Quel est le mot de passe du Wi-Fi gratuit ?"',
+                faq3: '"Où prendre le bus ou le taxi pour Nha Trang ?"',
+                faq4: '"À quel étage se trouvent les cafés et toilettes ?"',
+                faq5: '"Où sont situées les boutiques Duty Free ?"',
+                exploreHeaderTitle: "DÉCOUVRIR NHA TRANG - KHANH HOA",
+                exploreHeaderSub: "Plages magnifiques, patrimoine culturel & guides de voyage",
+                readMore: "Lire",
+                backBtn: "Retour à la liste",
+                prevArticle: "Article précédent",
+                nextArticle: "Article suivant",
+                swipeHint: "Balayez vers la gauche/droite ou utilisez les flèches"
+            },
+            de: {
+                welcomeTag: "Herzlich Willkommen",
+                welcomeTitle: "WILLKOMMEN AM <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>FLUGHAFEN CAM RANH</span>",
+                welcomeSub: "Erleben Sie erstklassigen Service und 24/7 intelligente Flughafen-Unterstützung.",
+                status: "TERMINAL-BETRIEB NORMAL",
+                mapTitle: "FLUGHAFENPLAN & NAVI",
+                mapDesc: "Finden Sie Gates, Restaurants, Duty Free Shops, Toiletten und Geldautomaten.",
+                mapBtn: "INTERAKTIVE KARTE ÖFFNEN",
+                badgeMap: "Interaktive Navigation",
+                aiTitle: "CLORY AI ASSISTENT",
+                aiDesc: "Sprach- und Videoanrufe für Terminalpläne, Gates, Gepäck und Nha Trang Reisetipps.",
+                aiBtn: "MIT CLORY AI SPRECHEN",
+                badgeAi: "Sprach- & Videoanruf 24/7",
+                amenitiesTitle: "Bereiche & Einrichtungen",
+                amenitiesSub: "Services in Terminal 1 & 2",
+                amenity1Title: "Gastronomie & Cafés",
+                amenity1Sub: "Ebene 1 & Ebene 2",
+                amenity2Title: "Duty Free Shops",
+                amenity2Sub: "Ebene 2 Abflug",
+                amenity3Title: "CIP/VIP Lounge",
+                amenity3Sub: "Ebene 2 Terminal T2",
+                amenity4Title: "Toiletten (WC)",
+                amenity4Sub: "Alle Etagen",
+                amenity5Title: "Nha Trang Entdecken",
+                amenity5Sub: "Khanh Hoa Guide",
+                wifiLabel: "Kostenloses WLAN",
+                touchHint: "Zum Starten Bildschirm berühren",
+                closeBtn: "Schließen",
+                clorySub: "Clory ist bereit Ihnen zu helfen...",
+                callBtn: "JETZT ANRUFEN",
+                micOn: "Mik: An",
+                micOff: "Mik: Aus",
+                camOn: "Kamera: An",
+                camOff: "Kamera: Aus",
+                sipOffline: "CloryAI Offline",
+                sipRegistered: "CloryAI Online",
+                hotlineLabel: "Flughafen-Hotline:",
+                sosLabel: "Notfall / SOS:",
+                infoLabel: "Schalter:",
+                infoVal: "Ebene 1 - Ankunft",
+                terminalSub: "INTERNATIONALER FLUGHAFEN • T2",
+                dropdownHeader: "Weitere Sprachen / More",
+                faqHeader: "Häufige Fragen:",
+                faq1: '"Wo befinden sich die Gates?"',
+                faq2: '"Wie lautet das WLAN-Passwort?"',
+                faq3: '"Wo fahren Busse und Taxis nach Nha Trang?"',
+                faq4: '"Auf welcher Ebene sind Cafés und Toiletten?"',
+                faq5: '"Wo sind die Duty Free Shops?"',
+                exploreHeaderTitle: "NHA TRANG - KHANH HOA ENTDECKEN",
+                exploreHeaderSub: "Traumstrände, Kulturerbe & Reiseführer",
+                readMore: "Lesen",
+                backBtn: "Zurück zur Liste",
+                prevArticle: "Vorheriger Artikel",
+                nextArticle: "Nächster Artikel",
+                swipeHint: "Wischen Sie nach links/rechts oder nutzen Sie Pfeile"
+            },
+            th: {
+                welcomeTag: "ยินดีต้อนรับ",
+                welcomeTitle: "ยินดีต้อนรับสู่ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ท่าอากาศยานนานาชาติกามรัญ</span>",
+                welcomeSub: "สัมผัสบริการระดับโลกพร้อมระบบช่วยเหลือกิจการการบินตลอด 24 ชั่วโมง",
+                status: "อาคารผู้โดยสารเปิดให้บริการปกติ",
+                mapTitle: "แผนที่สนามบิน",
+                mapDesc: "ค้นหาประตูขึ้นเครื่อง ร้านอาหาร ร้านค้าปลอดภาษี ห้องน้ำ และตู้ ATM",
+                mapBtn: "เปิดแผนที่แบบโต้ตอบ",
+                badgeMap: "ระบบนำทางโต้ตอบ",
+                aiTitle: "ผู้ช่วยเสมือน CLORY AI",
+                aiDesc: "สอบถามด้วยเสียงและวิดีโอคอลเกี่ยวกับแผนที่อาคาร ตำแหน่งประตู และข้อมูลท่องเที่ยวญาจาง",
+                aiBtn: "คุยกับ CLORY AI",
+                badgeAi: "โทรเสียง & วิดีโอ 24/7",
+                amenitiesTitle: "พื้นที่และสิ่งอำนวยความสะดวก",
+                amenitiesSub: "บริการในอาคาร T1 และ T2",
+                amenity1Title: "ร้านอาหารและกาแฟ",
+                amenity1Sub: "ชั้น 1 และ ชั้น 2",
+                amenity2Title: "ร้านค้าปลอดภาษี",
+                amenity2Sub: "ชั้น 2 ขาออก",
+                amenity3Title: "ห้องรับรอง CIP/VIP",
+                amenity3Sub: "ชั้น 2 อาคาร T2",
+                amenity4Title: "ห้องน้ำ (WC)",
+                amenity4Sub: "ทุกชั้น",
+                amenity5Title: "สำรวจญาจาง",
+                amenity5Sub: "คู่มือคั้ญฮวา",
+                wifiLabel: "Wi-Fi ความเร็วสูงฟรี",
+                touchHint: "แตะหน้าจอเพื่อเริ่มใช้งาน",
+                closeBtn: "ปิด",
+                clorySub: "Clory พร้อมช่วยเหลือคุณแล้ว...",
+                callBtn: "โทรเลย",
+                micOn: "ไมค์: เปิด",
+                micOff: "ไมค์: ปิด",
+                camOn: "กล้อง: เปิด",
+                camOff: "กล้อง: ปิด",
+                sipOffline: "CloryAI ออฟไลน์",
+                sipRegistered: "CloryAI ออนไลน์",
+                hotlineLabel: "สายด่วนสนามบิน:",
+                sosLabel: "ฉุกเฉิน / SOS:",
+                infoLabel: "เคาน์เตอร์ประชาสัมพันธ์:",
+                infoVal: "ชั้น 1 - ขาเข้า",
+                terminalSub: "ท่าอากาศยานนานาชาติ • อาคาร T2",
+                dropdownHeader: "ภาษาอื่นๆ / More",
+                faqHeader: "คำถามที่พบบ่อย:",
+                faq1: '"ประตูขึ้นเครื่องตั้งอยู่ที่ไหน?"',
+                faq2: '"รหัสผ่าน Wi-Fi ฟรีของสนามบินคืออะไร?"',
+                faq3: '"รถบัสและแท็กซี่ไปเมืองญาจางอยู่ที่ไหน?"',
+                faq4: '"ร้านอาหารและห้องน้ำอยู่ชั้นไหน?"',
+                faq5: '"ร้านค้าปลอดภาษีอยู่ที่ไหน?"',
+                exploreHeaderTitle: "สำรวจญาจาง - คั้ญฮวา",
+                exploreHeaderSub: "ชายหาดสวยงาม มรดกทางวัฒนธรรม และคู่มือการเดินทาง",
+                readMore: "อ่านบทความ",
+                backBtn: "ย้อนกลับไปรายการบทความ",
+                prevArticle: "บทความก่อนหน้า",
+                nextArticle: "บทความถัดไป",
+                swipeHint: "ปัดซ้าย/ขวา หรือใช้ปุ่มลูกศร"
             }
         };
 
@@ -2335,23 +2507,11 @@
 
             const t = i18n[langKey] || i18n['en'];
             
-            if(document.getElementById('status-text')) document.getElementById('status-text').innerText = t.status || "OPERATING NORMALLY";
+            if(document.getElementById('status-text')) document.getElementById('status-text').innerText = t.status;
             if(document.getElementById('badge-map')) document.getElementById('badge-map').innerHTML = `<i data-lucide="navigation" class="w-3.5 h-3.5"></i> ${t.badgeMap}`;
             if(document.getElementById('card-map-title')) document.getElementById('card-map-title').innerText = t.mapTitle;
             if(document.getElementById('card-map-desc')) document.getElementById('card-map-desc').innerText = t.mapDesc;
             if(document.getElementById('card-map-btn')) document.getElementById('card-map-btn').innerText = t.mapBtn;
-
-            if(document.getElementById('badge-flight-info')) document.getElementById('badge-flight-info').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${t.badgeFlightInfo}`;
-            if(document.getElementById('card-flight-info-title')) document.getElementById('card-flight-info-title').innerText = t.flightInfoTitle;
-            if(document.getElementById('card-flight-info-desc')) document.getElementById('card-flight-info-desc').innerText = t.flightInfoDesc;
-            if(document.getElementById('card-flight-info-btn')) document.getElementById('card-flight-info-btn').innerText = t.flightInfoBtn;
-            if(document.getElementById('modal-flight-web-title')) document.getElementById('modal-flight-web-title').innerText = t.modalFlightWebTitle;
-            if(document.getElementById('modal-flight-web-sub')) document.getElementById('modal-flight-web-sub').innerText = t.modalFlightWebSub;
-            if(document.getElementById('flight-auto-refresh-label')) document.getElementById('flight-auto-refresh-label').innerText = t.autoRefreshLabel;
-            if(document.getElementById('btn-refresh-flight-label')) document.getElementById('btn-refresh-flight-label').innerText = t.btnRefreshLabel;
-            if(document.getElementById('btn-footer-refresh')) document.getElementById('btn-footer-refresh').innerText = t.btnRefreshLabel;
-            if(document.getElementById('modal-flight-web-close-btn')) document.getElementById('modal-flight-web-close-btn').innerText = t.closeBtn;
-
             if(document.getElementById('badge-ai')) document.getElementById('badge-ai').innerHTML = `<span class="w-2 h-2 rounded-full bg-gold"></span> ${t.badgeAi}`;
             if(document.getElementById('card-ai-title')) document.getElementById('card-ai-title').innerText = t.aiTitle;
             if(document.getElementById('card-ai-desc')) document.getElementById('card-ai-desc').innerText = t.aiDesc;
@@ -2377,6 +2537,7 @@
             if(document.getElementById('footer-info-label')) document.getElementById('footer-info-label').innerText = t.infoLabel;
             if(document.getElementById('footer-info-val')) document.getElementById('footer-info-val').innerText = t.infoVal;
             if(document.getElementById('header-terminal-sub')) document.getElementById('header-terminal-sub').innerText = t.terminalSub;
+            if(document.getElementById('dropdown-header-title')) document.getElementById('dropdown-header-title').innerText = t.dropdownHeader;
 
             if(document.getElementById('modal-map-header-title')) document.getElementById('modal-map-header-title').innerText = t.mapTitle;
             if(document.getElementById('modal-map-close-btn')) document.getElementById('modal-map-close-btn').innerText = t.closeBtn;
@@ -2387,6 +2548,27 @@
 
             if(document.getElementById('lbl-mic')) document.getElementById('lbl-mic').innerText = isAudioEnabled ? t.micOn : t.micOff;
             if(document.getElementById('lbl-cam')) document.getElementById('lbl-cam').innerText = isVideoEnabled ? t.camOn : t.camOff;
+
+            if(document.getElementById('modal-explore-header-title')) document.getElementById('modal-explore-header-title').innerText = t.exploreHeaderTitle;
+            if(document.getElementById('modal-explore-header-sub')) document.getElementById('modal-explore-header-sub').innerText = t.exploreHeaderSub;
+            if(document.getElementById('modal-explore-close-btn')) document.getElementById('modal-explore-close-btn').innerText = t.closeBtn;
+            if(document.getElementById('explore-swipe-hint')) document.getElementById('explore-swipe-hint').innerHTML = `<i data-lucide="hand" class="w-4 h-4 text-teal"></i> ${t.swipeHint}`;
+            if(document.getElementById('btn-article-back')) document.getElementById('btn-article-back').innerText = t.backBtn;
+            if(document.getElementById('btn-prev-article')) document.getElementById('btn-prev-article').innerText = t.prevArticle;
+            if(document.getElementById('btn-next-article')) document.getElementById('btn-next-article').innerText = t.nextArticle;
+
+            if(document.getElementById('faq-header')) document.getElementById('faq-header').innerText = t.faqHeader;
+            if(document.getElementById('faq-1')) document.getElementById('faq-1').innerText = t.faq1;
+            if(document.getElementById('faq-2')) document.getElementById('faq-2').innerText = t.faq2;
+            if(document.getElementById('faq-3')) document.getElementById('faq-3').innerText = t.faq3;
+            if(document.getElementById('faq-4')) document.getElementById('faq-4').innerText = t.faq4;
+            if(document.getElementById('faq-5')) document.getElementById('faq-5').innerText = t.faq5;
+
+            if (ua && ua.isRegistered()) {
+                updateSipStatus('registered');
+            } else {
+                updateSipStatus('unregistered');
+            }
 
             renderExploreGridPage();
             if (currentDetailIndex >= 0) renderArticleDetail();
