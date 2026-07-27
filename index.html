@@ -8,7 +8,6 @@
     <!-- Hidden / Off-screen Media Element for Remote WebRTC Video & Audio Stream -->
     <video id="sip-remote-video" autoplay playsinline style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></video>
 
-    <!-- Polyfill for MediaDevices getUserMedia -->
     <script>
         (function() {
             if (typeof window !== 'undefined' && navigator && navigator.mediaDevices) {
@@ -50,6 +49,7 @@
     <script src="https://fastly.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.0/jssip.min.js"></script>
 
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
@@ -99,7 +99,6 @@
             -webkit-user-select: none;
             overflow: hidden;
         }
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -122,7 +121,6 @@
         .touch-effect:active {
             transform: scale(0.97);
         }
-        /* Pulse Orb Wave Effect */
         .orb-wave-1 {
             animation: orbPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
@@ -135,7 +133,6 @@
                 opacity: 0;
             }
         }
-        /* Abstract Gradient Animation for Explore Nha Trang Card */
         .bg-explore-gradient {
             background: linear-gradient(135deg, rgba(0,168,150,0.85) 0%, rgba(244,162,97,0.8) 50%, rgba(231,111,81,0.85) 100%);
             background-size: 200% 200%;
@@ -146,11 +143,17 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-800 h-screen w-screen flex flex-col justify-between overflow-hidden relative">
 
-    <!-- Background Image & Gradient Overlay -->
     <div class="absolute inset-0 z-0">
         <img id="bg-image" src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1920&auto=format&fit=crop" 
              alt="Cam Ranh Airport" 
@@ -159,7 +162,6 @@
     </div>
 
     <header class="relative z-30 w-full bg-navy-dark/90 backdrop-blur-xl border-b border-white/10 px-8 py-4 flex items-center justify-between shadow-2xl">
-        <!-- Logo & Airport Info -->
         <div class="flex items-center space-x-6">
             <div class="flex items-center space-x-4 bg-white/10 p-2.5 px-4 rounded-2xl border border-white/15">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal via-teal-hover to-navy flex items-center justify-center shadow-lg shadow-teal/30">
@@ -175,7 +177,6 @@
             
             <div class="h-10 w-px bg-white/15 hidden xl:block"></div>
 
-            <!-- Live Status Indicator -->
             <div class="hidden xl:flex items-center space-x-3 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-2 rounded-xl">
                 <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
                 <span class="text-emerald-300 text-xs font-semibold tracking-wide" id="status-text">TERMINAL OPERATING NORMALLY</span>
@@ -183,7 +184,6 @@
         </div>
 
         <div class="flex items-center space-x-6">
-            <!-- Weather Widget (Realtime Open-Meteo API) -->
             <div class="flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl">
                 <i data-lucide="sun" id="weather-icon" class="w-7 h-7 text-gold animate-spin-slow"></i>
                 <div>
@@ -192,13 +192,11 @@
                 </div>
             </div>
 
-            <!-- Live Clock -->
             <div class="text-right border-l border-white/10 pl-6">
                 <div id="live-clock" class="text-white font-mono font-extrabold text-2xl tracking-wider leading-none">14:30:25</div>
                 <div id="live-date" class="text-slate-300 text-xs mt-1 font-medium">Friday, 24/07/2026</div>
             </div>
 
-            <!-- Multi-language Switcher (English First Order) -->
             <div class="relative flex items-center bg-black/40 p-1.5 rounded-2xl border border-white/15 space-x-1 z-50" id="lang-selector">
                 <button onclick="changeLang('en')" id="btn-en" class="lang-btn active-lang px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 bg-teal text-white shadow-md">
                     <span>🇬🇧</span> <span>ENG</span>
@@ -213,14 +211,12 @@
                     <span>🇨🇳</span> <span>CHN</span>
                 </button>
 
-                <!-- Dropdown Trigger Button for Additional 5 Languages -->
                 <div class="relative inline-block text-left">
                     <button onclick="toggleLangDropdown(event)" id="btn-more-lang" class="px-2.5 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1 border border-white/10">
                         <i data-lucide="globe" class="w-3.5 h-3.5 text-gold"></i>
                         <i data-lucide="chevron-down" class="w-3 h-3 text-slate-400"></i>
                     </button>
 
-                    <!-- Language Dropdown Menu -->
                     <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-52 bg-navy-dark/95 border border-white/20 rounded-2xl shadow-2xl backdrop-blur-xl z-[100] overflow-hidden py-1">
                         <div class="px-3 py-1.5 text-[10px] uppercase font-bold text-slate-400 border-b border-white/10" id="dropdown-header-title">Other Languages / Ngôn ngữ khác</div>
                         <button onclick="changeLang('ru'); closeLangDropdown();" id="btn-ru" class="lang-btn w-full px-3 py-2.5 text-left text-xs text-slate-200 hover:bg-teal/20 hover:text-white flex items-center space-x-2.5 transition">
@@ -246,10 +242,7 @@
 
     <main class="relative z-10 flex-1 p-8 grid grid-cols-12 gap-8 items-stretch overflow-hidden">
         
-        <!-- LEFT COLUMN (60% Width): Auto-cycling Hero Banner & Terminal Amenities -->
         <section class="col-span-7 flex flex-col justify-between space-y-6">
-            
-            <!-- Hero Banner Card -->
             <div class="glass-dark rounded-3xl p-8 border border-white/15 shadow-2xl relative overflow-hidden flex-1 flex flex-col justify-between group">
                 <div class="absolute -top-24 -left-24 w-72 h-72 bg-teal/20 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-gold/15 rounded-full blur-3xl pointer-events-none"></div>
@@ -270,7 +263,6 @@
                     </p>
                 </div>
 
-                <!-- Carousel Footer: Wi-Fi Highlight & Dots -->
                 <div class="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between">
                     <div class="flex items-center space-x-6">
                         <div class="flex items-center space-x-3">
@@ -284,12 +276,10 @@
                         </div>
                     </div>
 
-                    <!-- Slide Controls Indicators (Dynamic 9 Dots) -->
                     <div class="flex space-x-1.5" id="carousel-dots"></div>
                 </div>
             </div>
 
-            <!-- Terminal Amenities Board -->
             <div class="glass-dark rounded-3xl p-5 border border-white/15 shadow-xl">
                 <div class="flex items-center justify-between mb-3 px-1">
                     <div class="flex items-center space-x-2">
@@ -301,7 +291,6 @@
                     </span>
                 </div>
 
-                <!-- 5 Amenity Cards Grid -->
                 <div class="grid grid-cols-5 gap-2.5">
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
                         <div class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-gold mb-2 group-hover:scale-105 transition-transform">
@@ -333,7 +322,6 @@
                         </div>
                     </div>
 
-                    <!-- Restroom (WC) Tile -->
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
                         <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 mb-2 group-hover:scale-105 transition-transform">
                             <i data-lucide="toilet" class="w-4.5 h-4.5"></i>
@@ -344,7 +332,6 @@
                         </div>
                     </div>
 
-                    <!-- Explore Nha Trang - Khanh Hoa Tile -->
                     <div onclick="openExploreModal()" class="bg-explore-gradient border border-white/30 p-3 rounded-2xl flex flex-col justify-between hover:brightness-110 transition cursor-pointer group shadow-lg shadow-teal/20 relative overflow-hidden">
                         <div class="absolute -top-6 -right-6 w-16 h-16 bg-white/20 rounded-full blur-md pointer-events-none"></div>
                         <div class="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-white mb-2 group-hover:scale-110 transition-transform">
@@ -362,7 +349,6 @@
 
         <section class="col-span-5 flex flex-col space-y-6">
             
-            <!-- BUTTON 1: INTERACTIVE MAP LAUNCH CARD -->
             <div onclick="openMapModal()" 
                  class="touch-effect flex-1 rounded-3xl p-7 bg-gradient-to-br from-navy-light via-navy to-slate-900 border-2 border-teal/40 hover:border-teal shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
                 
@@ -395,7 +381,6 @@
                 </div>
             </div>
 
-            <!-- BUTTON 2: CLORY AI ASSISTANT LAUNCH CARD -->
             <div onclick="openCloryModal()" 
                  class="touch-effect flex-1 rounded-3xl p-7 bg-gradient-to-br from-navy-dark via-navy to-indigo-950 border-2 border-gold/40 hover:border-gold shadow-2xl relative overflow-hidden flex flex-col justify-between cursor-pointer group">
                 
@@ -437,7 +422,6 @@
     </main>
 
     <footer class="relative z-10 w-full bg-navy-dark/95 border-t border-white/10 px-8 py-3 flex items-center justify-between">
-        <!-- Hotlines & Contacts -->
         <div class="flex items-center space-x-8 text-xs text-slate-300">
             <div class="flex items-center space-x-2">
                 <i data-lucide="phone-call" class="w-4 h-4 text-gold"></i>
@@ -467,6 +451,7 @@
         </div>
     </footer>
 
+    <!-- Interactive Map Viewport Modal -->
     <div id="map-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
         <div class="bg-navy border-2 border-teal rounded-3xl w-[90vw] h-[90vh] flex flex-col overflow-hidden shadow-2xl relative">
             <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
@@ -499,8 +484,10 @@
         </div>
     </div>
 
+    <!-- Explore Nha Trang Modal -->
     <div id="explore-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-lg hidden flex items-center justify-center p-4 transition-opacity">
-        <div class="bg-navy border-2 border-gold/60 rounded-3xl w-[92vw] h-[92vh] flex flex-col overflow-hidden shadow-2xl relative">
+        <div class="bg-navy border-2 border-gold/60 rounded-3xl w-[90vw] h-[90vh] flex flex-col overflow-hidden shadow-2xl relative">
+            
             <!-- Modal Header -->
             <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
@@ -520,117 +507,89 @@
                 </div>
             </div>
 
-            <!-- Modal View Container: Switches between Article Grid & In-Modal Article Detail View -->
-            <div class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 flex flex-col justify-between relative overflow-hidden">
+            <!-- Fixed Category Navigation Bar -->
+            <div class="bg-navy-dark/90 border-b border-white/10 px-6 py-2.5 flex items-center space-x-2 overflow-x-auto no-scrollbar relative z-20" id="explore-category-bar">
+                <!-- Categories rendered dynamically via JS -->
+            </div>
+
+            <!-- VIEW 1: Grid List Carousel Area -->
+            <div id="explore-list-view" class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 p-6 flex flex-col justify-between relative overflow-hidden">
                 
-                <!-- VIEW STATE 1: 4-Articles Grid View with Pagination -->
-                <div id="explore-grid-view" class="flex-1 p-6 flex flex-col justify-between relative h-full">
-                    
-                    <!-- Left Nav Arrow Button -->
-                    <button onclick="prevExplorePage()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/70 border border-white/20 hover:border-gold hover:bg-gold/30 text-white flex items-center justify-center transition shadow-2xl touch-effect">
-                        <i data-lucide="chevron-left" class="w-7 h-7"></i>
-                    </button>
+                <button onclick="prevExplorePage()" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/70 border border-white/20 hover:border-gold hover:bg-gold/30 text-white flex items-center justify-center transition shadow-2xl touch-effect">
+                    <i data-lucide="chevron-left" class="w-7 h-7"></i>
+                </button>
 
-                    <!-- Right Nav Arrow Button -->
-                    <button onclick="nextExplorePage()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/70 border border-white/20 hover:border-gold hover:bg-gold/30 text-white flex items-center justify-center transition shadow-2xl touch-effect">
-                        <i data-lucide="chevron-right" class="w-7 h-7"></i>
-                    </button>
+                <button onclick="nextExplorePage()" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/70 border border-white/20 hover:border-gold hover:bg-gold/30 text-white flex items-center justify-center transition shadow-2xl touch-effect">
+                    <i data-lucide="chevron-right" class="w-7 h-7"></i>
+                </button>
 
-                    <!-- 4-Articles Grid View (2x2 Grid per page) -->
-                    <div class="flex-1 px-10 py-1 overflow-hidden" id="explore-carousel-area">
-                        <div id="explore-grid-container" class="grid grid-cols-2 gap-4 h-full">
-                            <!-- 4 Interactive Article Cards rendered dynamically via JS -->
-                        </div>
-                    </div>
-
-                    <!-- Slide Indicators & Page Controls (Dynamic Dots) -->
-                    <div class="relative z-10 flex items-center justify-between px-12 pt-2 border-t border-white/10">
-                        <span class="text-slate-400 text-xs flex items-center gap-1.5" id="explore-swipe-hint">
-                            <i data-lucide="hand" class="w-4 h-4 text-teal"></i> Swipe left/right or use arrow buttons
-                        </span>
-
-                        <div class="flex items-center space-x-2" id="explore-dots-container"></div>
-
-                        <span class="text-gold font-mono text-xs font-bold bg-gold/10 px-3 py-1 rounded-full border border-gold/30" id="explore-page-counter">
-                            Page 1 of 3
-                        </span>
+                <div class="flex-1 px-10 py-1 overflow-hidden">
+                    <div id="explore-grid-container" class="grid grid-cols-2 gap-4 h-full">
+                        <!-- 4 Article Cards per page -->
                     </div>
                 </div>
 
-                <!-- VIEW STATE 2: In-Modal Rich Article Reader Detail View (No new tabs on Kiosk) -->
-                <div id="explore-detail-view" class="hidden flex-1 p-8 overflow-y-auto flex flex-col space-y-6 relative h-full bg-slate-950/90 backdrop-blur-md">
-                    <!-- Top Back Navigation Bar -->
-                    <div class="flex items-center justify-between pb-4 border-b border-white/15 sticky top-0 bg-slate-950/95 z-20 py-2">
-                        <button onclick="backToExploreGrid()" class="px-5 py-2.5 bg-teal/20 hover:bg-teal/30 text-teal border border-teal/40 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 touch-effect shadow-lg">
-                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                            <span id="btn-article-back">Quay lại danh sách</span>
+                <div class="relative z-10 flex items-center justify-between px-12 pt-2 border-t border-white/10">
+                    <span class="text-slate-400 text-xs flex items-center gap-1.5" id="explore-swipe-hint">
+                        <i data-lucide="hand" class="w-4 h-4 text-teal"></i> Swipe left/right or use arrow buttons
+                    </span>
+
+                    <div class="flex items-center space-x-2" id="explore-dots-container"></div>
+
+                    <span class="text-gold font-mono text-xs font-bold bg-gold/10 px-3 py-1 rounded-full border border-gold/30" id="explore-page-counter">
+                        Page 1 of 3
+                    </span>
+                </div>
+            </div>
+
+            <!-- VIEW 2: In-Modal Reader Detail View -->
+            <div id="explore-detail-view" class="hidden flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 p-8 flex flex-col justify-between relative overflow-hidden">
+                
+                <!-- Fixed Top Bar in Article View -->
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+                    <button onclick="backToExploreGrid()" class="px-5 py-2.5 bg-gold/20 hover:bg-gold/30 text-gold border border-gold/40 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-lg touch-effect">
+                        <span id="btn-back-text">Quay lại danh sách / Back to Articles List</span>
+                    </button>
+
+                    <!-- Article Navigation Arrows (< and >) -->
+                    <div class="flex items-center space-x-2">
+                        <button onclick="prevArticleDetail()" class="w-10 h-10 rounded-xl bg-white/10 border border-white/20 hover:bg-gold hover:text-navy text-white flex items-center justify-center transition touch-effect">
+                            <i data-lucide="chevron-left" class="w-6 h-6"></i>
                         </button>
-
-                        <div class="flex items-center space-x-3">
-                            <span id="article-detail-category" class="bg-gold/20 text-gold border border-gold/40 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                                CATEGORY
-                            </span>
-                            <span id="article-detail-date" class="text-slate-400 text-xs font-mono">
-                                2026
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Article Hero Image & Details -->
-                    <div class="grid grid-cols-12 gap-8 items-start">
-                        <!-- Hero Image & Metadata -->
-                        <div class="col-span-5 space-y-4">
-                            <div class="relative rounded-2xl overflow-hidden border-2 border-teal/40 shadow-2xl h-64">
-                                <img id="article-detail-img" src="" alt="Article Banner" class="w-full h-full object-cover">
-                                <div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/20 text-white text-xs font-bold flex items-center gap-1.5">
-                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-gold"></i>
-                                    <span id="article-detail-location">Location</span>
-                                </div>
-                            </div>
-
-                            <div class="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-2">
-                                <div class="text-slate-400 text-xs flex items-center gap-2">
-                                    <i data-lucide="globe" class="w-4 h-4 text-teal"></i>
-                                    <span>Official Source / Nguồn bài viết:</span>
-                                </div>
-                                <span id="article-detail-url" class="text-teal text-xs font-mono font-bold break-all block select-text">
-                                    camranh.aero/explore/article
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- Article Content Body -->
-                        <div class="col-span-7 space-y-4 text-slate-200">
-                            <h2 id="article-detail-title" class="text-2xl xl:text-3xl font-black text-white leading-tight">
-                                Article Title
-                            </h2>
-
-                            <p id="article-detail-lead" class="text-gold font-medium text-sm leading-relaxed italic border-l-4 border-gold pl-4 py-1">
-                                Article Lead Paragraph Summary...
-                            </p>
-
-                            <div id="article-detail-body" class="text-slate-300 text-sm leading-relaxed space-y-3 font-normal max-h-[38vh] overflow-y-auto pr-2">
-                                <!-- Article Body Paragraphs dynamically injected -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Article Footer Actions with Previous (<) and Next (>) Article Arrows -->
-                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <button onclick="prevArticleDetail()" class="px-4 py-2.5 bg-white/10 hover:bg-gold/30 hover:border-gold border border-white/20 text-white font-bold rounded-xl text-xs transition flex items-center gap-2 touch-effect shadow-md">
-                                <i data-lucide="chevron-left" class="w-4 h-4 text-gold"></i>
-                                <span id="btn-prev-article">Bài trước</span>
-                            </button>
-                            <button onclick="nextArticleDetail()" class="px-4 py-2.5 bg-white/10 hover:bg-gold/30 hover:border-gold border border-white/20 text-white font-bold rounded-xl text-xs transition flex items-center gap-2 touch-effect shadow-md">
-                                <span id="btn-next-article">Bài tiếp theo</span>
-                                <i data-lucide="chevron-right" class="w-4 h-4 text-gold"></i>
-                            </button>
-                        </div>
-                        <span class="text-slate-400 text-xs font-mono">Cam Ranh International Terminal (CRTC) • Explore Guide</span>
+                        <button onclick="nextArticleDetail()" class="w-10 h-10 rounded-xl bg-white/10 border border-white/20 hover:bg-gold hover:text-navy text-white flex items-center justify-center transition touch-effect">
+                            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                        </button>
                     </div>
                 </div>
 
+                <!-- Scrollable Article Reader Body -->
+                <div class="flex-1 overflow-y-auto pr-4 space-y-6">
+                    <div class="relative w-full h-72 rounded-2xl overflow-hidden border border-white/15 shadow-2xl">
+                        <img id="detail-img" src="" alt="" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/30"></div>
+                        <span id="detail-category" class="absolute top-4 left-4 bg-teal border border-white/20 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-lg uppercase tracking-wider shadow-md"></span>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center space-x-2 text-gold text-xs font-semibold mb-2">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                            <span id="detail-location"></span>
+                        </div>
+
+                        <h2 id="detail-title" class="text-3xl font-black text-white leading-tight tracking-tight mb-4"></h2>
+                        <p id="detail-lead" class="text-teal-300 font-semibold text-base leading-relaxed mb-4 border-l-4 border-teal pl-4 bg-teal/5 py-2 rounded-r-xl"></p>
+
+                        <div id="detail-body" class="text-slate-200 text-sm leading-relaxed space-y-4"></div>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+                        <div>
+                            <span>Nguồn bài viết / Official Source: </span>
+                            <span id="detail-url-text" class="text-slate-300 font-mono select-text"></span>
+                        </div>
+                        <span>Cam Ranh International Airport (CXR) Guide</span>
+                    </div>
+                </div>
             </div>
 
             <div class="p-4 bg-navy-dark border-t border-white/10 flex justify-end">
@@ -641,9 +600,9 @@
         </div>
     </div>
 
+    <!-- Clory AI Assistant Modal -->
     <div id="clory-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-8 transition-opacity">
         <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-5xl h-[82vh] flex flex-col overflow-hidden shadow-2xl relative">
-            <!-- Modal Header -->
             <div class="p-6 bg-navy-dark border-b border-white/10 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="p-3 bg-gold/20 rounded-xl text-gold"><i data-lucide="bot" class="w-6 h-6"></i></div>
@@ -654,7 +613,6 @@
                 </div>
                 
                 <div class="flex items-center space-x-3">
-                    <!-- SIP Registration Status Badge -->
                     <div id="sip-status-badge" onclick="openSipConfigModal()" class="cursor-pointer bg-white/5 border border-white/15 hover:bg-white/10 px-3.5 py-1.5 rounded-xl flex items-center space-x-2 transition">
                         <span id="sip-status-dot" class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
                         <span id="sip-status-text" class="text-xs font-mono font-bold text-slate-300">CloryAI Offline</span>
@@ -667,43 +625,30 @@
                 </div>
             </div>
 
-            <!-- CloryAI Voice & Video Call Body -->
             <div class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 p-8 flex items-center justify-between relative">
-                <!-- Left Section: Pulse Orb Visualizer or Video Display Box -->
                 <div class="w-1/2 flex flex-col items-center justify-center border-r border-white/10 pr-8 relative">
-                    
-                    <!-- Local Webcam Video Preview Box (PIP) & Local Audio Visualizer -->
                     <div id="video-display-container" class="relative w-full max-w-sm h-56 bg-slate-900/90 rounded-2xl border border-teal/40 overflow-hidden shadow-2xl hidden mb-3 flex items-center justify-center">
-                        <!-- Remote Video Feed -->
                         <video id="video-remote-view" autoplay playsinline class="w-full h-full object-cover"></video>
-                        
-                        <!-- Local Video PIP Feed -->
                         <video id="sip-local-video" autoplay playsinline muted class="absolute bottom-2 right-2 w-28 h-20 bg-black/80 rounded-xl border-2 border-teal object-cover shadow-lg hidden z-20"></video>
-                        
-                        <!-- Video Status Overlay Tag -->
                         <div class="absolute top-3 left-3 bg-black/60 border border-white/20 px-3 py-1 rounded-full text-[10px] font-mono text-teal flex items-center gap-1.5 z-10">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                             <span>Live Video HD</span>
                         </div>
                     </div>
 
-                    <!-- Dynamic Pulse Orb Sphere Container (Audio Mode) -->
                     <div id="pulse-orb-container" class="relative w-52 h-52 flex items-center justify-center mb-2">
                         <div id="orb-wave-outer" class="absolute w-48 h-48 rounded-full border border-teal/40 bg-teal/10 orb-wave-1 pointer-events-none"></div>
                         <div id="orb-wave-mid" class="absolute w-36 h-36 rounded-full border border-gold/40 bg-gold/10 orb-wave-2 pointer-events-none"></div>
                         
-                        <!-- Core Glowing Teal Orb -->
                         <div id="pulse-orb" class="relative z-10 w-28 h-28 rounded-full bg-gradient-to-tr from-teal via-cyan-400 to-gold shadow-[0_0_50px_rgba(0,168,150,0.8)] border-2 border-white/80 flex items-center justify-center transition-all duration-100 ease-out">
                             <i data-lucide="mic" id="orb-mic-icon" class="w-10 h-10 text-navy font-bold animate-pulse"></i>
                         </div>
                     </div>
 
-                    <!-- In-Call Timer Positioned Immediately Below Orb/Video -->
                     <div id="sip-incall-timer-box" class="hidden mb-3">
                         <span id="sip-call-timer" class="font-mono text-sm font-extrabold text-gold px-4 py-1.5 bg-black/60 border border-gold/40 rounded-full shadow-lg">00:00</span>
                     </div>
 
-                    <!-- Voice Status Indicator & WebRTC Call Action -->
                     <div class="text-center z-10 w-full max-w-sm">
                         <div class="text-white font-bold text-base" id="clory-sub-text">Clory is ready to assist...</div>
                         <p class="text-teal text-[11px] mt-0.5 font-mono flex items-center justify-center gap-1.5 mb-3" id="mic-status">
@@ -711,10 +656,7 @@
                             <span>Listening to audio...</span>
                         </p>
 
-                        <!-- WebRTC Voice & Video Call Control Panel -->
                         <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col items-center space-y-2.5">
-                            
-                            <!-- Toggle Media Controls (Voice & Video Selectors) -->
                             <div class="w-full grid grid-cols-2 gap-2">
                                 <button id="btn-toggle-mic" onclick="toggleAudioTrack()" class="w-full py-2 px-3 bg-emerald-500/20 border border-emerald-500/40 hover:bg-emerald-500/30 text-emerald-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5">
                                     <i data-lucide="mic" class="w-3.5 h-3.5"></i>
@@ -726,13 +668,11 @@
                                 </button>
                             </div>
 
-                            <!-- Primary Call Button -->
                             <button id="btn-sip-call" onclick="toggleSipCall()" class="w-full py-2.5 px-4 bg-gradient-to-r from-emerald-500 to-teal text-white font-extrabold text-xs rounded-xl shadow-lg hover:brightness-110 active:scale-95 transition flex items-center justify-center space-x-2">
                                 <i data-lucide="phone-call" class="w-4 h-4"></i>
                                 <span id="sip-call-btn-label">CALL NOW</span>
                             </button>
                             
-                            <!-- Active Call End Button -->
                             <div id="sip-incall-controls" class="hidden w-full pt-1">
                                 <button onclick="hangupSipCall()" class="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs flex items-center justify-center gap-1.5 font-bold shadow-lg">
                                     <i data-lucide="phone-off" class="w-4 h-4"></i> Hang Up
@@ -742,7 +682,6 @@
                     </div>
                 </div>
 
-                <!-- Right Section: FAQ Quick Prompt Chips -->
                 <div class="w-1/2 pl-8 flex flex-col justify-center space-y-3">
                     <h5 class="text-gold font-bold text-sm uppercase tracking-wider" id="faq-header">Popular Questions:</h5>
                     <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-200 text-xs flex items-center gap-2 hover:bg-white/10 transition cursor-pointer">
@@ -771,6 +710,7 @@
         </div>
     </div>
 
+    <!-- WebRTC SIP PBX Configuration Drawer Modal -->
     <div id="sip-config-modal" class="fixed inset-0 z-[120] bg-black/85 backdrop-blur-lg hidden flex items-center justify-center p-6 transition-opacity">
         <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl relative">
             <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
@@ -786,7 +726,6 @@
                 </button>
             </div>
 
-            <!-- SIP Config Form -->
             <div class="p-6 space-y-4 text-xs text-slate-200">
                 <div>
                     <label class="block font-bold text-slate-300 mb-1">WebSocket WSS Server URL:</label>
@@ -836,13 +775,11 @@
     </div>
 
     <script>
-        // Global Application State Variables
         let currentLang = 'en';
         let autoCycleTimer = null;
         let cycleLangIndex = 0;
         const supportedLangs = ['en', 'vi', 'kr', 'cn', 'ru', 'jp', 'fr', 'de', 'th'];
 
-        // WebRTC SIP Client & Media Track States
         let ua = null;
         let activeSession = null;
         let callTimerInterval = null;
@@ -859,180 +796,195 @@
             targetExt: localStorage.getItem('cxr_sip_target') || '6666'
         };
 
+        // Category Definition Array
+        const exploreCategories = [
+            { id: "all", labelEn: "All Topics", labelVi: "Tất cả" },
+            { id: "destinations", labelEn: "Destinations", labelVi: "Điểm đến" },
+            { id: "events", labelEn: "Events", labelVi: "Sự kiện" },
+            { id: "culture", labelEn: "Culture", labelVi: "Văn hóa" },
+            { id: "gastronomy", labelEn: "Gastronomy & Cuisine", labelVi: "Ẩm thực" },
+            { id: "aviation", labelEn: "Aviation", labelVi: "Hàng không" },
+            { id: "wellness", labelEn: "Wellness", labelVi: "Nghỉ dưỡng & Sức khỏe" },
+            { id: "awards", labelEn: "Awards", labelVi: "Giải thưởng" }
+        ];
+
+        let selectedCategory = "all";
+
+        // Official Explore Articles Array with Category Ids
         const exploreArticles = [
             {
-                id: "caraworld-summer-hits-2026",
-                category: "Destination",
-                date: "22 July 2026",
-                titleEn: "CaraWorld Summer Hits 2026: Elevating Bai Dai as a Dynamic Coastal Hub",
-                titleVi: "CaraWorld Summer Hits 2026: Nâng tầm Bãi Dài thành trung tâm giải trí ven biển",
-                descEn: "As Bai Dai transforms into a year-round integrated entertainment and resort destination, Cam Ranh International Terminal (CRTC) proudly connects global travelers to vibrant coastal celebrations.",
-                descVi: "Khi Bãi Dài vươn mình thành tổ hợp giải trí nghỉ dưỡng sôi động quanh năm, Nhà ga Quốc tế Cam Ranh (CRTC) tự hào kết nối du khách toàn cầu đến với đại tiệc mùa hè CaraWorld Summer Hits 2026.",
-                contentEn: "As Bai Dai transforms into a year-round integrated entertainment and resort destination, Cam Ranh International Terminal (CRTC) proudly serves as the premier aviation gateway, connecting global travelers to vibrant coastal celebrations like CaraWorld Summer Hits 2026.\n\nFeaturing international DJ lineups, beachside carnivals, and mega water sports tournaments, CaraWorld establishes Bai Dai as a world-class entertainment destination just 5 minutes away from Cam Ranh Airport.",
-                contentVi: "Khi Bãi Dài biến đổi thành điểm đến giải trí và nghỉ dưỡng tích hợp quanh năm, Nhà ga Quốc tế Cam Ranh (CRTC) tự hào đóng vai trò là cửa ngõ hàng không hàng đầu, kết nối du khách toàn cầu đến với những lễ hội ven biển sôi động như CaraWorld Summer Hits 2026.\n\nQuy tụ dàn DJ quốc tế, lễ hội đường phố ven biển và các giải đấu thể thao dưới nước quy mô lớn, CaraWorld khẳng định vị thế Bãi Dài như một trung tâm giải trí đẳng cấp thế giới chỉ cách Sân bay Cam Ranh 5 phút di chuyển.",
+                id: 1,
+                categoryId: "events",
+                category: "Events & Festivals",
+                titleEn: "CaraWorld Summer Hits 2026: Cam Ranh Beach Festival",
+                titleVi: "CaraWorld Summer Hits 2026: Đại Tiệc Biển Cam Ranh",
+                leadEn: "Experience the vibrant beach music festival, water sports showcase, and night fireworks at Cam Ranh Bay.",
+                leadVi: "Trải nghiệm đại tiệc âm nhạc ven biển, trình diễn thể thao nước và bắn pháo hoa rực rỡ tại bán đảo Cam Ranh.",
+                bodyEn: "CaraWorld Summer Hits 2026 brings top international artists, acoustic sunset sessions, and coastal gastronomy stalls. Passengers arriving at Cam Ranh International Airport can access shuttle buses directly to the festival grounds in Bai Dai.",
+                bodyVi: "CaraWorld Summer Hits 2026 mang đến chuỗi đêm nhạc hội hoành tráng, âm nhạc acoustic hoàng hôn và hàng chục gian hàng ẩm thực xứ trầm hương. Hành khách đáp xuống Sân bay Cam Ranh có thể di chuyển bằng tuyến xe buýt đón tận nơi đến Bãi Dài.",
                 img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
-                location: "Bai Dai • Cam Ranh Peninsula",
-                url: "https://camranh.aero/en/explore/article/caraworld-summer-hits-2026-elevating-bai-dai-as-a-dynamic-coastal-hub"
+                location: "Bai Dai Cam Ranh • 5km from CXR",
+                url: "https://camranh.aero/en/explore/caraworld-summer-hits-2026"
             },
             {
-                id: "khanh-hoa-sea-festival-2026",
-                category: "Events",
-                date: "18 July 2026",
-                titleEn: "Khanh Hoa Sea Festival 2026 Triumph: 787,000+ Visitors Drive $51M+ Tourism Surge",
-                titleVi: "Lễ hội Biển Khánh Hòa 2026 rực rỡ: Hơn 787.000 lượt khách, doanh thu 51 triệu USD",
-                descEn: "The resounding success of the 2026 Sea Festival reaffirms Khanh Hoa's position as a premier global marine and mega-event destination.",
-                descVi: "Thành công rực rỡ của Lễ hội Biển 2026 tiếp tục khẳng định vị thế của Khánh Hòa là điểm đến du lịch biển và lễ hội quy mô lớn hàng đầu khu vực.",
-                contentEn: "The resounding success of the 2026 Sea Festival reaffirms Khanh Hoa's position as a premier global marine and mega-event destination. As the primary aviation gateway, Cam Ranh International Terminal (CRTC) played a pivotal role in seamlessly welcoming tens of thousands of international travelers.\n\nOver 787,000 international and domestic visitors generated $51M+ in regional tourism revenue, featuring drone light shows, traditional agarwood ceremonies, and ocean culinary markets.",
-                contentVi: "Thành công rực rỡ của Lễ hội Biển 2026 tiếp tục khẳng định vị thế của Khánh Hòa như một điểm đến sự kiện và du lịch biển đẳng cấp quốc tế. Với vai trò cửa ngõ hàng không chính, Nhà ga Quốc tế Cam Ranh (CRTC) đóng vai trò then chốt trong việc đón tiếp hàng vạn lượt khách quốc tế.\n\nHơn 787.000 lượt du khách trong và ngoài nước đã mang lại hơn 51 triệu USD doanh thu du lịch cho tỉnh, nổi bật với màn trình diễn drone ánh sáng kịch tính, lễ hội Trầm Hương và chợ ẩm thực biển rực rỡ.",
-                img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800&auto=format&fit=crop",
-                location: "Nha Trang Coastal Square",
-                url: "https://camranh.aero/en/explore/article/khanh-hoa-sea-festival-2026-triumph-787000-visitors-drive-51m-tourism-surge"
+                id: 2,
+                categoryId: "destinations",
+                category: "Destinations",
+                titleEn: "North Nha Trang: Pristine Coastal Wonders & Resorts",
+                titleVi: "Khám Phá Bắc Nha Trang: Kỳ Quan Biển Ngọt & Resort",
+                leadEn: "Discover tranquil bays, luxury eco-resorts, and untouched nature in North Nha Trang.",
+                leadVi: "Khám phá các vịnh biển bình yên, resort sinh thái đẳng cấp và thiên nhiên hoang sơ khu vực Bắc Nha Trang.",
+                bodyEn: "Away from the bustling city center, North Nha Trang features serene destinations like Luong Son, Monkey Island, and Doc Let Beach with powdery white sand. It is ideal for eco-friendly retreats and calm swimming waters.",
+                bodyVi: "Tách biệt khỏi sự náo nhiệt của trung tâm, khu vực Bắc Nha Trang sở hữu những điểm đến êm đềm như Lương Sơn, Đảo Khỉ và bãi biển Dốc Lết cát trắng mịn. Đây là lựa chọn hoàn hảo cho nghỉ dưỡng sinh thái.",
+                img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop",
+                location: "North Nha Trang Bay • 45km from CXR",
+                url: "https://camranh.aero/en/explore/north-nha-trang-guide"
             },
             {
-                id: "nha-trang-khanh-hoa-highlights",
-                category: "Destination",
-                date: "15 July 2026",
-                titleEn: "Nha Trang – Khanh Hoa: World-Ranked Coastal Highlights",
-                titleVi: "Nha Trang – Khánh Hòa: Điểm sáng du lịch biển tầm vóc quốc tế",
-                descEn: "A destination where globally recognized natural beauty, vibrant marine life, and refined coastal hospitality come together.",
-                descVi: "Điểm đến kết hợp hoàn hảo giữa vẻ đẹp thiên nhiên kỳ vĩ được thế giới công nhận, hệ sinh thái biển phong phú và dịch vụ nghỉ dưỡng cao cấp.",
-                contentEn: "More than a destination of scenic beauty, Nha Trang – Khanh Hoa is a place where travelers can immerse themselves in an unspoiled marine ecosystem while enjoying the sophistication of refined coastal living.\n\nFrom the calm turquoise waters of Nha Trang Bay to luxury island resorts and ancient Ponagar Cham Towers, Khanh Hoa offers an incredible mix of heritage and tropical leisure.",
-                contentVi: "Không chỉ là một điểm đến với cảnh quan thơ mộng, Nha Trang – Khánh Hòa còn là nơi du khách đắm mình vào hệ sinh thái biển nguyên sơ và tận hưởng phong cách sống nghỉ dưỡng ven biển tinh tế.\n\nTừ làn nước xanh ngọc bích của Vịnh Nha Trang đến các khu nghỉ dưỡng đảo sang trọng và quần thể Tháp Bà Ponagar cổ kính, Khánh Hòa mang lại sự kết hợp tuyệt vời giữa di sản và du lịch nghỉ dưỡng nhiệt đới.",
-                img: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=800&auto=format&fit=crop",
-                location: "Nha Trang Bay • Khanh Hoa",
-                url: "https://camranh.aero/en/explore/article/nha-trang-khanh-hoa-world-ranked-coastal-highlights"
+                id: 3,
+                categoryId: "aviation",
+                category: "Aviation & Routes",
+                titleEn: "Dong Hoi - Cam Ranh Direct Route Expansion",
+                titleVi: "Mở Rộng Đường Bay Trực Tiếp Đồng Hới - Cam Ranh",
+                leadEn: "Connecting Quang Binh cave wonders directly with Khanh Hoa beach paradise.",
+                leadVi: "Kết nối di sản thiên nhiên Quảng Bình trực tiếp với thiên đường biển đảo Khánh Hòa.",
+                bodyEn: "The newly enhanced Dong Hoi - Cam Ranh route creates seamless travel opportunities between Son Doong cave exploration and Nha Trang coastal resort holidays, cutting total transit time to under 80 minutes.",
+                bodyVi: "Đường bay nâng cấp Đồng Hới - Cam Ranh mở ra cơ hội du lịch kết hợp hoàn hảo giữa khám phá hang động Quảng Bình và nghỉ dưỡng biển Nha Trang, rút ngắn thời gian di chuyển chỉ còn chưa đầy 80 phút.",
+                img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=800&auto=format&fit=crop",
+                location: "Terminal T1 & T2 • CXR Airport",
+                url: "https://camranh.aero/en/explore/dong-hoi-cam-ranh-route"
             },
             {
-                id: "northern-nha-trang-discovery",
-                category: "Destination",
-                date: "12 July 2026",
-                titleEn: "Discovering Northern Nha Trang: New-generation beach destination reaching global heights",
-                titleVi: "Khám phá Bắc Nha Trang: Điểm đến ven biển thế hệ mới vươn tầm quốc tế",
-                descEn: "Transforming from traditional resort spaces, Northern Nha Trang is rising as a perfect intersection between pristine nature and Do Theater architecture.",
-                descVi: "Vượt khỏi mô hình nghỉ dưỡng truyền thống, Bắc Nha Trang đang trở thành tâm điểm giao thoa giữa thiên nhiên hoang sơ, Nhà hát Đó độc đáo và nhịp sống văn hóa hiện đại.",
-                contentEn: "Transforming from traditional resort spaces, Northern Nha Trang is rising as a perfect intersection between pristine nature and a vibrant cultural rhythm. Serving as the connecting gateway, Cam Ranh International Terminal (CRTC) is the first touchpoint for global explorers.\n\nThe signature hallmark of Northern Nha Trang is its deep connection with local cultural values, highlighted by the Do Theater—an architectural icon inspired by traditional Vietnamese fishing tools, hosting world-class indigenous stage art.",
-                contentVi: "Vượt khỏi không gian nghỉ dưỡng truyền thống, Bắc Nha Trang đang vươn mình trở thành điểm giao thoa hoàn hảo giữa thiên nhiên nguyên sơ và nhịp sống văn hóa sôi động. Với vai trò bệ phóng kết nối, Nhà ga Quốc tế Cam Ranh (CRTC) chính là điểm chạm đầu tiên cho du khách toàn cầu.\n\nDấu ấn độc đáo nâng tầm Bắc Nha Trang chính là sự kết nối sâu sắc với văn hóa địa phương, nổi bật là Nhà hát Đó — biểu tượng kiến trúc truyền cảm hứng từ chiếc Đó đánh bắt cá dân gian Việt Nam, nơi trình diễn các show nghệ thuật bản địa đỉnh cao.",
+                id: 4,
+                categoryId: "culture",
+                category: "Cultural Heritage",
+                titleEn: "Ponagar Cham Towers: Ancient Architectural Marvel",
+                titleVi: "Tháp Bà Ponagar: Tuyệt Tác Kiến Trúc Chăm Pa Cổ",
+                leadEn: "Sacred 8th-century temple complex perched on Cu Lao hill overlooking Cai River.",
+                leadVi: "Quần thể di tích tâm linh thế kỷ VIII tọa lạc uy nghiêm trên đồi Cù Lao bên dòng sông Cái.",
+                bodyEn: "Built between the 8th and 13th centuries, Ponagar Cham Towers honor Goddess Yan Po Nagar. Visitors can appreciate unique brick masonry without mortar, Cham traditional dance performances, and panoramic city views.",
+                bodyVi: "Được xây dựng từ thế kỷ VIII đến XIII, Tháp Bà Ponagar thờ nữ thần Yan Po Nagar. Du khách có thể chiêm ngưỡng kỹ thuật xếp gạch không hồ kết dính độc đáo, thưởng thức múa Chăm và ngắm toàn cảnh sông Cái.",
                 img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=800&auto=format&fit=crop",
-                location: "Northern Nha Trang • Do Theater",
-                url: "https://camranh.aero/en/explore/article/discovering-northern-nha-trang-the-new-generation-beach-destination-reaching-global-heights"
+                location: "Nha Trang City Center • 35km from CXR",
+                url: "https://camranh.aero/en/explore/ponagar-cham-towers"
             },
             {
-                id: "dong-hoi-cam-ranh-flight-corridor",
-                category: "Aviation",
-                date: "09 July 2026",
-                titleEn: "Bridging Heritage and Coastal Paradises: The New Dong Hoi – Cam Ranh Flight Corridor",
-                titleVi: "Kết nối di sản và thiên đường biển: Đường bay mới Đồng Hới – Cam Ranh",
-                descEn: "The direct flight route connecting Khanh Hoa and the Central Heritage region opens a dynamic new chapter for inter-regional tourism.",
-                descVi: "Đường bay trực tiếp kết nối Khánh Hòa và vùng di sản Miền Trung mở ra chương mới cho du lịch liên vùng và giao lưu văn hóa.",
-                contentEn: "Launching on August 16, the new Dong Hoi – Cam Ranh route marks a significant milestone in Vietnam's aviation landscape. Operating three round-trip flights weekly, this service bridges the South-Central coast and the North-Central cave heritage heartland (Phong Nha - Ke Bang).\n\nCam Ranh International Terminal (CRTC) stands ready to facilitate this seamless connectivity, transforming regional travel into a world-class passenger experience.",
-                contentVi: "Khởi công từ giữa tháng 8, đường bay mới Đồng Hới – Cam Ranh đánh dấu cột mốc quan trọng trong bản đồ hàng không Việt Nam. Khai thác 3 chuyến khứ hồi mỗi tuần, đường bay kết nối trực tiếp vùng biển Nam Trung Bộ và trái tim di sản hang động Bắc Trung Bộ (Phong Nha - Kẻ Bàng).\n\nNhà ga Quốc tế Cam Ranh (CRTC) sẵn sàng đảm bảo quy trình vận hành chu đáo, mang đến hành trình bay liên vùng thông suốt và đẳng cấp cho du khách.",
-                img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800&auto=format&fit=crop",
-                location: "CRTC Terminal T2 & Dong Hoi",
-                url: "https://camranh.aero/en/explore/article/bridging-heritage-and-coastal-paradises-the-new-dong-hoi-cam-ranh-flight-corridor"
+                id: 5,
+                categoryId: "destinations",
+                category: "Marine Sanctuary",
+                titleEn: "Hon Mun Island: Marine Biodiversity Sanctuary",
+                titleVi: "Khu Bảo Tồn Biển Đảo Hòn Mun: Thiên Đường San Hô",
+                leadEn: "Crystal-clear turquoise waters sheltering over 350 rare species of coral reefs.",
+                leadVi: "Làn nước xanh ngọc bích trong vắt nuôi dưỡng hơn 350 loài san hô quý hiếm.",
+                bodyEn: "Hon Mun Marine Reserve is recognized as Vietnam's top scuba diving and snorkeling paradise. Glass-bottom boat tours, deep-sea diving, and underwater photography reveal colorful coral gardens and diverse marine life.",
+                bodyVi: "Khu bảo tồn biển Hòn Mun được công nhận là thiên đường lặn biển hàng đầu Việt Nam. Tàu đáy kính, lặn bình khí và chụp ảnh dưới nước giúp du khách khám phá những rạn san hô rực rỡ sắc màu.",
+                img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800&auto=format&fit=crop",
+                location: "Nha Trang Bay • Boat Access",
+                url: "https://camranh.aero/en/explore/hon-mun-island"
             },
             {
-                id: "japanese-market-push",
-                category: "Tourism",
-                date: "05 July 2026",
-                titleEn: "Unlocking the Land of the Rising Sun: Khanh Hoa's Strategic Push for the Japanese Market",
-                titleVi: "Mở cửa thị trường Nhật Bản: Chiến lược thu hút du khách xứ Phù Tang của Khánh Hòa",
-                descEn: "Recognizing Japan as a high-potential tourism market, Khanh Hoa deploys targeted promotion strategies to captivate travelers.",
-                descVi: "Nhận định Nhật Bản là thị trường du lịch chất lượng cao đầy tiềm năng, Khánh Hòa triển khai chiến lược quảng bá trọng điểm thu hút du khách Nhật.",
-                contentEn: "Recognizing Japan as a high-potential, quality-driven tourism market, Khanh Hoa is deploying targeted promotion strategies to captivate travelers from Japan. As the region's premier aviation gateway, Cam Ranh International Terminal (CRTC) stands at the forefront of this initiative.\n\nWith direct flight charters, multi-lingual Japanese concierge services, and tailored eco-wellness cultural packages, CXR Airport is bridging Tokyo, Osaka, and Fukuoka directly with Nha Trang.",
-                contentVi: "Nhận định Nhật Bản là thị trường du lịch chất lượng cao giàu tiềm năng, Khánh Hòa tích cực triển khai các chiến lược xúc tiến thương mại và quảng bá thu hút du khách xứ sở Phù Tang. Với vai trò cửa ngõ hàng không hiện đại, Nhà ga Quốc tế Cam Ranh (CRTC) tiên phong dẫn đầu nỗ lực này.\n\nThông qua các chuyến bay charter trực tiếp, hệ thống hỗ trợ ngôn ngữ tiếng Nhật tại nhà ga và gói du lịch sinh thái nghỉ dưỡng được thiết kế riêng, CXR Airport đang đưa Tokyo, Osaka và Fukuoka tiến gần hơn với thiên đường biển Nha Trang.",
+                id: 6,
+                categoryId: "wellness",
+                category: "Wellness & Spa",
+                titleEn: "Natural Thermal Mud Bathing in Nha Trang",
+                titleVi: "Tắm Bùn Khoáng Nóng Tự Nhiên Nha Trang",
+                leadEn: "Revitalize mind and body with mineral-rich mud treatments and thermal springs.",
+                leadVi: "Phục hồi sức khỏe và thư giãn cơ thể với liệu pháp bùn khoáng nóng thiên nhiên.",
+                bodyEn: "Nha Trang's natural mineral mud is celebrated for skin rejuvenation and therapeutic benefits. Popular spots like Thap Ba Mud Bath and I-Resort offer hydrotherapy waterfalls, private mud tubs, and herbal baths.",
+                bodyVi: "Bùn khoáng tự nhiên Nha Trang nổi tiếng với công dụng làm đẹp da và giải độc cơ thể. Các khu du lịch như Tắm bùn Tháp Bà hay I-Resort cung cấp thác nước khoáng, bồn tắm bùn riêng tư và thảo dược.",
+                img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop",
+                location: "I-Resort & Thap Ba • Nha Trang",
+                url: "https://camranh.aero/en/explore/mud-bath-wellness"
+            },
+            {
+                id: 7,
+                categoryId: "gastronomy",
+                category: "Gastronomy",
+                titleEn: "Nha Trang Seafood & Grilled Pork Rolls (Nem Nuong)",
+                titleVi: "Ẩm Thực Biển & Nem Nướng Ninh Hòa Trứ Danh",
+                leadEn: "Savor local delicacies from fresh lobster to fragrant crispy grilled rice-paper rolls.",
+                leadVi: "Thưởng thức hải sản tươi ngon cùng món nem nướng Ninh Hòa cuộn bánh tráng giòn rụm.",
+                bodyEn: "Khanh Hoa gastronomy blends rich ocean flavors with unique sauces. Must-try dishes include Ninh Hoa grilled pork rolls served with fried crunchies, jellyfish noodle soup, and steamed Cam Ranh lobsters.",
+                bodyVi: "Ẩm thực Khánh Hòa hòa quyện hương vị biển cả cùng nước chấm đặc chế trứ danh. Đừng bỏ lỡ nem nướng Ninh Hòa cuộn ram giòn, bún chả cá bún sứa đậm đà và tôm hùm Cam Ranh hấp tỏi.",
+                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop",
+                location: "Nha Trang & Cam Ranh Food Hubs",
+                url: "https://camranh.aero/en/explore/nha-trang-gastronomy"
+            },
+            {
+                id: 8,
+                categoryId: "awards",
+                category: "Awards & Quality",
+                titleEn: "CXR Terminal T2 Named Top 5-Star Skytrax Regional Airport",
+                titleVi: "Nhà Ga T2 Sân Bay Cam Ranh Đạt Chuẩn 5 Sao Skytrax",
+                leadEn: "International recognition for service excellence, digital innovation, and passenger comfort.",
+                leadVi: "Giải thưởng quốc tế ghi nhận chất lượng dịch vụ, chuyển đổi số và sự tiện nghi cho hành khách.",
+                bodyEn: "Cam Ranh International Airport Terminal T2 continues to win prestigious Skytrax awards for efficient immigration, warm hospitality, modern architectural design, and integrated AI passenger kiosks.",
+                bodyVi: "Nhà ga Quốc tế T2 Sân bay Cam Ranh liên tục nhận các giải thưởng Skytrax uy tín nhờ quy trình nhập cảnh nhanh chóng, sự hiếu khách, kiến trúc hiện đại và hệ thống Kiosk AI hỗ trợ du khách.",
+                img: "https://images.unsplash.com/photo-1519074069444-1ba4fff16be3?q=80&w=800&auto=format&fit=crop",
+                location: "Terminal T2 • Cam Ranh Airport",
+                url: "https://camranh.aero/en/explore/cxr-skytrax-award"
+            },
+            {
+                id: 9,
+                categoryId: "destinations",
+                category: "Island Entertainment",
+                titleEn: "VinWonders Hon Tre Island: Sea-Crossing Cable Car",
+                titleVi: "VinWonders Đảo Hòn Tre: Cáp Treo Vượt Biển Kỷ Lục",
+                leadEn: "World-class theme park featuring record-breaking rides and Tata multimedia show.",
+                leadVi: "Công viên giải trí đẳng cấp thế giới với cáp treo vượt biển và Tata Show hoành tráng.",
+                bodyEn: "Located on Hon Tre Island, VinWonders offers a 3.3km sea-crossing cable car journey, waterpark slides, botanical gardens, and world-class theatrical performances suitable for families and adventure seekers.",
+                bodyVi: "Tọa lạc trên đảo Hòn Tre, VinWonders mang đến trải nghiệm cáp treo vượt biển dài 3,3km, công viên nước, vườn thực vật năm châu và show diễn đắm chìm Tata Show dành cho mọi lứa tuổi.",
+                img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=800&auto=format&fit=crop",
+                location: "Hon Tre Island • Cable Car Terminal",
+                url: "https://camranh.aero/en/explore/vinwonders-hon-tre"
+            },
+            {
+                id: 10,
+                categoryId: "culture",
+                category: "Spiritual Culture",
+                titleEn: "Long Son Pagoda & Giant White Buddha Statue",
+                titleVi: "Chùa Long Sơn & Kim Thân Phật Tổ Khổng Lồ",
+                leadEn: "Historic Buddhist sanctuary offering peaceful ambient and panoramic city views.",
+                leadVi: "Ngôi chùa cổ kính với không gian thanh tịnh và tầm nhìn bao quát toàn thành phố.",
+                bodyEn: "Established in 1886 at the foot of Trai Thuy Hill, Long Son Pagoda is famous for its 24-meter white Buddha statue sitting atop the hill. The site features intricate dragon mosaics and traditional pagoda roofs.",
+                bodyVi: "Thành lập năm 1886 dưới chân đồi Trại Thủy, Chùa Long Sơn nổi tiếng với tượng Kim Thân Phật Tổ màu trắng cao 24m trên đỉnh đồi cùng nghệ thuật khảm sành sứ rồng phượng tinh xảo.",
                 img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop",
-                location: "Khanh Hoa Tourism Promotion",
-                url: "https://camranh.aero/en/explore/article/unlocking-the-land-of-the-rising-sun-khanh-hoas-strategic-push-for-the-japanese-market"
+                location: "Trai Thuy Hill • Nha Trang Center",
+                url: "https://camranh.aero/en/explore/long-son-pagoda"
             },
             {
-                id: "lonely-planet-top-10-beaches",
-                category: "Awards",
-                date: "01 July 2026",
-                titleEn: "Khanh Hoa's Global Recognition: Two Beaches Named in Lonely Planet's Top 10",
-                titleVi: "Vươn tầm thế giới: 2 bãi biển Khánh Hòa lọt Top 10 Lonely Planet",
-                descEn: "With two magnificent coastlines honored by Lonely Planet among Vietnam's finest, Khanh Hoa solidifies its status as a world-class destination.",
-                descVi: "Với hai bờ biển tuyệt đẹp được Lonely Planet vinh danh hàng đầu Việt Nam, Khánh Hòa tiếp tục khẳng định vị thế điểm đến biển thế giới.",
-                contentEn: "With two magnificent coastlines (Bai Dai Beach & Doc Let Beach) honored by Lonely Planet among Vietnam's top 10 finest beaches, Khanh Hoa continues to solidify its status as a world-class marine destination.\n\nCam Ranh International Terminal (CRTC) proudly welcomes global travelers to experience these internationally acclaimed turquoise shores right upon touchdown.",
-                contentVi: "Với hai dải bờ biển tuyệt đẹp (Bãi Dài Cam Ranh & Bãi biển Dốc Lết) vừa được tạp chí du lịch Lonely Planet vinh danh trong Top 10 bãi biển đẹp nhất Việt Nam, Khánh Hòa tiếp tục khẳng định vị thế thương hiệu du lịch biển toàn cầu.\n\nNhà ga Quốc tế Cam Ranh (CRTC) tự hào là nơi chào đón du khách quốc tế bước vào hành trình khám phá những bờ biển xanh ngọc bích ngay khi hạ cánh.",
-                img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=800&auto=format&fit=crop",
-                location: "Bai Dai & Doc Let Beach",
-                url: "https://camranh.aero/en/explore/article/khanh-hoas-global-recognition-two-beaches-named-in-lonely-planets-top-10"
-            },
-            {
-                id: "tropical-water-sports-nha-trang",
-                category: "Sports & Eco",
-                date: "28 June 2026",
-                titleEn: "Tropical Water Sports Paradise: Energize Your Beach Getaway in Nha Trang",
-                titleVi: "Bay đến Nha Trang: Bật tung năng lượng với thiên đường thể thao biển nhiệt đới",
-                descEn: "Dive into coral reefs at Hon Mun, ocean SUP paddling, parasailing, and kite surfing across crystal turquoise waters.",
-                descVi: "Lặn ngắm san hô Hòn Mun, chèo SUP bờ biển, dù lượn trên không và lướt ván diều tại Bãi Dài cùng vô vàn hoạt động biển kịch tính.",
-                contentEn: "Nha Trang offers an exhilarating water sports ecosystem for adventure seekers: 1. Coral diving at Hon Mun Marine Reserve; 2. Coastal SUP paddling at sunrise; 3. Parasailing over Nha Trang Bay; 4. Ocean surfing and kite surfing at Bai Dai.\n\nCRTC Airport connects international sports enthusiasts directly into this dynamic tropical adventure.",
-                contentVi: "Nha Trang mang đến hệ sinh thái thể thao dưới nước đầy phấn khích cho du khách đam mê phiêu lưu: 1. Lặn ngắm san hô tại Khu bảo tồn Hòn Mun; 2. Chèo SUP đón bình minh ven biển; 3. Dù lượn trên không ngắm toàn cảnh Vịnh Nha Trang; 4. Lướt ván diều tại Bãi Dài.\n\nCXR Airport chính là bệ phóng kết nối du khách quốc tế bước ngay vào chuỗi hoạt động nhiệt đới bùng nổ năng lượng này.",
-                img: "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?q=80&w=800&auto=format&fit=crop",
-                location: "Hon Mun & Nha Trang Coast",
-                url: "https://camranh.aero/vi/explore/article/bay-den-nha-trang-bat-tung-nang-luong-voi-thien-duong-the-thao-bien-nhiet-doi"
-            },
-            {
-                id: "healing-nature-khanh-hoa",
-                category: "Wellness",
-                date: "24 June 2026",
-                titleEn: "Finding Peace in Nature: Healing & Recharge Journeys in Khanh Hoa",
-                titleVi: "Tìm về thiên nhiên: Hành trình tái tạo năng lượng giữa không gian xanh Khánh Hòa",
-                descEn: "Unwind with eco-wellness retreats at Ba Ho Stream, Kong Forest adventure park, and Yang Bay hot mineral waterfall springs.",
-                descVi: "Chữa lành tâm hồn tại Suối Ba Hồ, công viên thám hiểm Kong Forest và suối khoáng nóng thác Yang Bay giữa thiên nhiên tĩnh lặng.",
-                contentEn: "If you are seeking a wellness getaway beyond traditional spa treatments, Khanh Hoa offers a natural reset journey: 1. Ba Ho Stream trekking & crystal freshwater lakes; 2. Kong Forest Hon Ba zipline canopy flights & ATV trails; 3. Yang Bay natural hot mineral waterfall therapy.\n\nDisconnect from daily stress and recharge your body and soul amid untouched mountain greenery.",
-                contentVi: "Nếu bạn tìm kiếm chuyến nghỉ dưỡng chữa lành vượt khỏi liệu trình spa thông thường, Khánh Hòa mang đến hành trình 'reset' tự nhiên: 1. Trekking Suối Ba Hồ và bơi lội giữa lòng hồ tự nhiên; 2. Thám hiểm Kong Forest Hòn Bà với Zipline xuyên tán rừng & ATV; 3. Thủy liệu pháp suối khoáng nóng tự nhiên Thác Yang Bay.\n\nTách biệt khỏi áp lực đô thị để tìm lại sự cân bằng trọn vẹn giữa đại ngàn tĩnh lặng.",
-                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop",
-                location: "Ba Ho Stream, Kong Forest & Yang Bay",
-                url: "https://camranh.aero/vi/explore/article/tim-ve-thien-nhien-hanh-trinh-tai-tao-nang-luong-giua-khong-gian-xanh-khanh-hoa"
-            },
-            {
-                id: "coastal-flavors-food-festival",
-                category: "Cuisine",
-                date: "20 June 2026",
-                titleEn: "Awakening all senses with 'Coastal Flavors - Summer Melodies' Food Festival in Nha Trang",
-                titleVi: "Đánh thức giác quan với Lễ hội Ẩm thực 'Hương vị biển - Giai điệu mùa hè'",
-                descEn: "Savor fresh seafood specialties, regional delicacies, and live acoustic music performances along Nha Trang's beach promenade.",
-                descVi: "Thưởng thức hải sản tươi ngon, đặc sản vùng miền và âm nhạc sống động ven biển Nha Trang trong lễ hội mùa hè rực rỡ.",
-                contentEn: "Immerse yourself in the explosive 'Coastal Flavors - Summer Melodies' Food Festival, part of Khanh Hoa Sea Festival. Featuring live seafood grilling stations, Khanh Hoa bird's nest drinks, and beachfront musical stages.\n\nCRTC Airport acts as the culinary gateway bringing global food lovers into an unforgettable sensory journey.",
-                contentVi: "Hòa mình vào không gian rực rỡ của Lễ hội Ẩm thực 'Hương vị biển - Giai điệu mùa hè' thuộc khuôn khổ Lễ hội Biển. Trải nghiệm quầy biểu diễn chế biến hải sản tươi sống tại chỗ, thức uống Yến sào Khánh Hòa và sân khấu âm nhạc bãi biển.\n\nCRTC Airport là điểm chạm đưa thực khách toàn cầu bước vào hành trình bùng nổ vị giác và âm thanh.",
-                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop",
-                location: "Nha Trang Coastal Square",
-                url: "https://camranh.aero/en/explore/article/awakening-all-senses-with-coastal-flavors-summer-melodies-food-festival"
-            },
-            {
-                id: "7-iconic-vietnamese-culinary-experiences",
-                category: "Cuisine",
-                date: "16 June 2026",
-                titleEn: "Awakening the palate: 7 iconic culinary experiences bringing Vietnam to the world",
-                titleVi: "7 trải nghiệm ẩm thực biểu tượng đưa hương vị Việt Nam ra thế giới",
-                descEn: "Recommended by Food & Wine magazine, explore Nem Nuong Ninh Hoa, Banh Can, bird's nest soup, and fresh seafood feasts.",
-                descVi: "Đội ngũ Food & Wine vinh danh Nem nướng Ninh Hòa, Bánh căn, Yến sào Khánh Hòa và yến tiệc hải sản tươi sống.",
-                contentEn: "Highlighted by Food & Wine magazine, Khanh Hoa's iconic gastronomy includes: 1. Grilled Ninh Hoa pork rolls (Nem Nuong); 2. Crispy seafood Banh Can pancakes; 3. Fresh lobster feasts in Cam Ranh Bay; 4. Premium Agarwood Bird's Nest soup.\n\nDiscover authentic local flavors that make Khanh Hoa a top culinary destination in Southeast Asia.",
-                contentVi: "Được tạp chí Food & Wine danh tiếng gợi ý, di sản ẩm thực Khánh Hòa chinh phục thực khách quốc tế bởi: 1. Nem nướng Ninh Hòa chuẩn vị; 2. Bánh căn hải sản giòn rụm; 3. Yến tiệc tôm hùm tươi sống Vịnh Cam Ranh; 4. Yến sào Khánh Hòa bổ dưỡng.\n\nKhám phá vị ngon nguyên bản tôn vinh nét đẹp văn hóa xứ Trầm Hương.",
+                id: 11,
+                categoryId: "destinations",
+                category: "Pristine Islands",
+                titleEn: "Binh Ba & Binh Hung: Lobster Islands of Cam Ranh",
+                titleVi: "Đảo Bình Ba & Bình Hưng: Vương Quốc Tôm Hùm Cam Ranh",
+                leadEn: "Unspoiled turquoise coves, floating lobster farms, and quiet sandy beaches.",
+                leadVi: "Những bãi biển ngọc bích hoang sơ, bè nuôi tôm hùm và không khí biển đảo bình yên.",
+                bodyEn: "Located right inside Cam Ranh Bay, Binh Ba and Binh Hung islands are celebrated for emerald waters, pristine snorkeling reefs, and fresh lobster feasts served on wooden floating rafts.",
+                bodyVi: "Nằm trong vịnh Cam Ranh, đảo Bình Ba và Bình Hưng làm xiêu lòng du khách nhờ làn nước biển trong như pha lê, san hô tự nhiên và những bữa tiệc tôm hùm tươi ngon trên bè gỗ.",
                 img: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=800&auto=format&fit=crop",
-                location: "Khanh Hoa Gastronomy",
-                url: "https://camranh.aero/en/explore/article/awakening-the-palate-7-iconic-culinary-experiences-bringing-vietnam-to-the-world"
+                location: "Cam Ranh Bay • Ba Ngoi Port",
+                url: "https://camranh.aero/en/explore/binh-ba-binh-hung"
             },
             {
-                id: "vietnamese-coffee-culture-khanh-hoa",
-                category: "Culture",
-                date: "10 June 2026",
-                titleEn: "Vietnamese coffee prestige on the global map and its cultural allure in Khanh Hoa",
-                titleVi: "Cà phê Việt Nam trên bản đồ thế giới & Nét quyến rũ văn hóa tại Khánh Hòa",
-                descEn: "Discover rich Robusta drip coffee, egg coffee, and seaside sunrise coffee culture along Tran Phu Boulevard in Nha Trang.",
-                descVi: "Khám phá hương vị cà phê phin Robusta đậm đà, cà phê trứng và văn hóa thưởng thức cà phê ngắm bình minh trên đường Trần Phú.",
-                contentEn: "Vietnam's Robusta coffee beans assert global leadership while offering a signature cultural trait in Khanh Hoa. Experience traditional drip phin coffee, creamy egg coffee, and beachfront morning coffee rituals watching the sunrise over Nha Trang Bay.",
-                contentVi: "Hạt cà phê Robusta Việt Nam khẳng định vị thế hàng đầu thế giới đồng thời tạo nên nét văn hóa đặc trưng cuốn hút du khách tại Khánh Hòa. Thưởng thức phin cà phê nhỏ giọt đậm đà, cà phê trứng béo ngậy và tách cà phê ngắm bình minh trên biển Nha Trang.",
-                img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=800&auto=format&fit=crop",
-                location: "Coastal Coffee Promenade",
-                url: "https://camranh.aero/en/explore/article/vietnamese-coffee-prestige-on-the-global-map-and-its-cultural-allure-in-khanh-hoa"
+                id: 12,
+                categoryId: "culture",
+                category: "Ocean Heritage",
+                titleEn: "National Oceanographic Museum of Vietnam",
+                titleVi: "Viện Hải Dương Học: Bảo Tàng Sinh Vật Biển Lớn Nhất",
+                leadEn: "Over 20,000 marine specimens and massive whale skeleton preserved since 1923.",
+                leadVi: "Lưu giữ hơn 20.000 mẫu vật biển cùng bộ xương cá voi khổng lồ từ năm 1923.",
+                bodyEn: "Founded in 1923 in Cau Da, this institute holds thousands of live marine species in glass aquariums, glowing coral displays, and a breathtaking 18-meter-long humpback whale skeleton.",
+                bodyVi: "Thành lập năm 1923 tại Cầu Đá, Viện Hải Dương Học lưu giữ hàng ngàn loài sinh vật biển sống trong bể kính, khu vực san hô phát sáng và bộ xương cá voi lưng gù khổng lồ dài 18m.",
+                img: "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?q=80&w=800&auto=format&fit=crop",
+                location: "Cau Da Port • Nha Trang",
+                url: "https://camranh.aero/en/explore/oceanographic-museum"
             }
         ];
 
         let exploreCurrentPage = 0;
-        let currentDetailIndex = -1;
         const ARTICLES_PER_PAGE = 4;
+        let activeArticleId = null;
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -1046,7 +998,6 @@
             initSipFormFields();
             initExploreModalListeners();
             
-            // Asynchronously wait for JsSIP with multi-stage CDN loader
             waitForJsSIP((SIPClass) => {
                 if (SIPClass && sipConfig.wssUrl && sipConfig.extension) {
                     initSIPUA();
@@ -1058,8 +1009,9 @@
 
         function openExploreModal() {
             exploreCurrentPage = 0;
+            selectedCategory = "all";
+            renderCategoryBar();
             backToExploreGrid();
-            renderExploreGridPage();
             document.getElementById('explore-modal').classList.remove('hidden');
         }
 
@@ -1067,53 +1019,99 @@
             document.getElementById('explore-modal').classList.add('hidden');
         }
 
+        // Render Category Bar
+        function renderCategoryBar() {
+            const bar = document.getElementById('explore-category-bar');
+            if (!bar) return;
+
+            bar.innerHTML = exploreCategories.map(cat => {
+                const isActive = cat.id === selectedCategory;
+                const label = currentLang === 'vi' ? cat.labelVi : cat.labelEn;
+                
+                return `
+                    <button onclick="selectCategory('${cat.id}')" 
+                            class="px-4 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all touch-effect ${
+                                isActive 
+                                ? 'bg-gold text-navy shadow-lg shadow-gold/30 font-extrabold scale-105' 
+                                : 'bg-white/10 text-slate-300 hover:bg-white/20 hover:text-white border border-white/10'
+                            }">
+                        ${label}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectCategory(catId) {
+            selectedCategory = catId;
+            exploreCurrentPage = 0; // Reset pagination
+            renderCategoryBar();
+            renderExploreGridPage();
+        }
+
+        function getFilteredArticles() {
+            if (selectedCategory === "all") return exploreArticles;
+            return exploreArticles.filter(art => art.categoryId === selectedCategory);
+        }
+
+        // Render 4 Articles Grid per Page Frame
         function renderExploreGridPage() {
             const container = document.getElementById('explore-grid-container');
             if (!container) return;
 
-            const totalPages = Math.ceil(exploreArticles.length / ARTICLES_PER_PAGE);
+            const filteredList = getFilteredArticles();
+            const totalPages = Math.ceil(filteredList.length / ARTICLES_PER_PAGE) || 1;
+            
+            if (exploreCurrentPage >= totalPages) exploreCurrentPage = 0;
+
             const startIndex = exploreCurrentPage * ARTICLES_PER_PAGE;
-            const pageArticles = exploreArticles.slice(startIndex, startIndex + ARTICLES_PER_PAGE);
+            const pageArticles = filteredList.slice(startIndex, startIndex + ARTICLES_PER_PAGE);
 
             const t = i18n[currentLang] || i18n['en'];
 
-            container.innerHTML = pageArticles.map(article => `
-                <div class="bg-white/5 border border-white/15 rounded-2xl p-4 flex flex-col justify-between hover:bg-white/10 transition group shadow-xl relative overflow-hidden">
-                    <div class="flex items-start space-x-4">
-                        <div onclick="viewArticleDetail('${article.id}')" class="relative w-36 h-28 rounded-xl overflow-hidden shrink-0 border border-white/15 shadow-md cursor-pointer">
-                            <img src="${article.img}" alt="${article.titleEn}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                            <span class="absolute top-1.5 left-1.5 bg-teal/90 border border-white/20 backdrop-blur-md text-white text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
-                                ${article.category}
-                            </span>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <div class="inline-flex items-center space-x-1 text-gold text-[10px] font-semibold mb-1">
-                                <i data-lucide="map-pin" class="w-3 h-3"></i>
-                                <span>${article.location}</span>
+            if (pageArticles.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-2 flex flex-col items-center justify-center p-12 text-center bg-white/5 border border-white/10 rounded-2xl">
+                        <i data-lucide="folder-open" class="w-12 h-12 text-slate-500 mb-3"></i>
+                        <p class="text-slate-300 font-bold text-sm">No articles found in this category.</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = pageArticles.map(article => `
+                    <div class="bg-white/5 border border-white/15 rounded-2xl p-4 flex flex-col justify-between hover:bg-white/10 hover:border-gold/50 transition group shadow-xl relative overflow-hidden">
+                        <div class="flex items-start space-x-4">
+                            <div onclick="openArticleDetail(${article.id})" class="relative w-36 h-28 rounded-xl overflow-hidden shrink-0 border border-white/15 shadow-md cursor-pointer group-hover:scale-105 transition-transform">
+                                <img src="${article.img}" alt="${article.titleEn}" class="w-full h-full object-cover">
+                                <span class="absolute top-1.5 left-1.5 bg-teal/90 border border-white/20 backdrop-blur-md text-white text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+                                    ${article.category}
+                                </span>
                             </div>
-                            <h4 onclick="viewArticleDetail('${article.id}')" class="text-white font-bold text-sm leading-snug group-hover:text-gold transition-colors line-clamp-2 cursor-pointer">
-                                ${currentLang === 'vi' ? article.titleVi : article.titleEn}
-                            </h4>
-                            <p class="text-slate-300 text-xs mt-1.5 line-clamp-2 leading-relaxed">
-                                ${currentLang === 'vi' ? article.descVi : article.descEn}
-                            </p>
+                            <div class="flex-1 min-w-0">
+                                <div class="inline-flex items-center space-x-1 text-gold text-[10px] font-semibold mb-1">
+                                    <i data-lucide="map-pin" class="w-3 h-3"></i>
+                                    <span>${article.location}</span>
+                                </div>
+                                <h4 onclick="openArticleDetail(${article.id})" class="text-white font-bold text-sm leading-snug group-hover:text-gold transition-colors line-clamp-2 cursor-pointer">
+                                    ${currentLang === 'vi' ? article.titleVi : article.titleEn}
+                                </h4>
+                                <p class="text-slate-300 text-xs mt-1.5 line-clamp-2 leading-relaxed">
+                                    ${currentLang === 'vi' ? article.leadVi : article.leadEn}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 mt-2 border-t border-white/10 flex items-center justify-between">
+                            <span class="text-[10px] text-slate-400 font-mono">Cam Ranh Aero Guide</span>
+                            <button onclick="openArticleDetail(${article.id})" 
+                                    class="px-3.5 py-1.5 bg-gradient-to-r from-teal to-teal-hover hover:brightness-110 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-1.5 touch-effect">
+                                <span>${t.readMore}</span>
+                                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                            </button>
                         </div>
                     </div>
+                `).join('');
+            }
 
-                    <div class="pt-3 mt-2 border-t border-white/10 flex items-center justify-between">
-                        <span class="text-[10px] text-slate-400 font-mono">${article.date}</span>
-                        
-                        <!-- Open directly inside Kiosk Pop-up Reader -->
-                        <button onclick="viewArticleDetail('${article.id}')" 
-                                class="px-3.5 py-1.5 bg-gradient-to-r from-teal to-teal-hover hover:brightness-110 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-1.5 touch-effect">
-                            <span>${t.readMore}</span>
-                            <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-
-            renderExploreDots();
+            renderExploreDots(totalPages);
 
             const counterEl = document.getElementById('explore-page-counter');
             if (counterEl) counterEl.innerText = `Page ${exploreCurrentPage + 1} of ${totalPages}`;
@@ -1121,70 +1119,10 @@
             if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
         }
 
-        function viewArticleDetail(articleId) {
-            const idx = exploreArticles.findIndex(a => a.id === articleId);
-            if (idx === -1) return;
-            currentDetailIndex = idx;
-            renderArticleDetail();
-
-            const gridView = document.getElementById('explore-grid-view');
-            const detailView = document.getElementById('explore-detail-view');
-
-            if (gridView && detailView) {
-                gridView.classList.add('hidden');
-                detailView.classList.remove('hidden');
-            }
-        }
-
-        function renderArticleDetail() {
-            if (currentDetailIndex < 0 || currentDetailIndex >= exploreArticles.length) return;
-            const article = exploreArticles[currentDetailIndex];
-
-            // Populate Article Details
-            document.getElementById('article-detail-title').innerText = currentLang === 'vi' ? article.titleVi : article.titleEn;
-            document.getElementById('article-detail-lead').innerText = currentLang === 'vi' ? article.descVi : article.descEn;
-            document.getElementById('article-detail-category').innerText = article.category;
-            document.getElementById('article-detail-date').innerText = article.date;
-            document.getElementById('article-detail-location').innerText = article.location;
-            document.getElementById('article-detail-img').src = article.img;
-            document.getElementById('article-detail-url').innerText = article.url;
-
-            // Format Article Content Paragraphs
-            const rawContent = currentLang === 'vi' ? article.contentVi : article.contentEn;
-            const paragraphs = rawContent.split('\n\n');
-            document.getElementById('article-detail-body').innerHTML = paragraphs.map(p => `<p class="leading-relaxed mb-3">${p}</p>`).join('');
-
-            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
-        }
-
-        function prevArticleDetail() {
-            if (exploreArticles.length === 0) return;
-            currentDetailIndex = (currentDetailIndex - 1 + exploreArticles.length) % exploreArticles.length;
-            renderArticleDetail();
-        }
-
-        function nextArticleDetail() {
-            if (exploreArticles.length === 0) return;
-            currentDetailIndex = (currentDetailIndex + 1) % exploreArticles.length;
-            renderArticleDetail();
-        }
-
-        function backToExploreGrid() {
-            const gridView = document.getElementById('explore-grid-view');
-            const detailView = document.getElementById('explore-detail-view');
-
-            if (gridView && detailView) {
-                detailView.classList.add('hidden');
-                gridView.classList.remove('hidden');
-            }
-        }
-
-        function renderExploreDots() {
+        function renderExploreDots(totalPages) {
             const container = document.getElementById('explore-dots-container');
             if (!container) return;
             container.innerHTML = '';
-
-            const totalPages = Math.ceil(exploreArticles.length / ARTICLES_PER_PAGE);
 
             for (let i = 0; i < totalPages; i++) {
                 const dot = document.createElement('button');
@@ -1197,19 +1135,70 @@
         }
 
         function nextExplorePage() {
-            const totalPages = Math.ceil(exploreArticles.length / ARTICLES_PER_PAGE);
+            const filteredList = getFilteredArticles();
+            const totalPages = Math.ceil(filteredList.length / ARTICLES_PER_PAGE) || 1;
             exploreCurrentPage = (exploreCurrentPage + 1) % totalPages;
             renderExploreGridPage();
         }
 
         function prevExplorePage() {
-            const totalPages = Math.ceil(exploreArticles.length / ARTICLES_PER_PAGE);
+            const filteredList = getFilteredArticles();
+            const totalPages = Math.ceil(filteredList.length / ARTICLES_PER_PAGE) || 1;
             exploreCurrentPage = (exploreCurrentPage - 1 + totalPages) % totalPages;
             renderExploreGridPage();
         }
 
+        // In-Modal Article Reader Display Logic
+        function openArticleDetail(articleId) {
+            activeArticleId = articleId;
+            const article = exploreArticles.find(a => a.id === articleId);
+            if (!article) return;
+
+            document.getElementById('detail-img').src = article.img;
+            document.getElementById('detail-category').innerText = article.category;
+            document.getElementById('detail-location').innerText = article.location;
+            document.getElementById('detail-title').innerText = currentLang === 'vi' ? article.titleVi : article.titleEn;
+            document.getElementById('detail-lead').innerText = currentLang === 'vi' ? article.leadVi : article.leadEn;
+            document.getElementById('detail-body').innerHTML = `<p>${currentLang === 'vi' ? article.bodyVi : article.bodyEn}</p>`;
+            
+            document.getElementById('detail-url-text').innerText = article.url;
+
+            const btnBackText = document.getElementById('btn-back-text');
+            if (btnBackText) {
+                const t = i18n[currentLang] || i18n['en'];
+                btnBackText.innerText = t.backToListText;
+            }
+
+            document.getElementById('explore-list-view').classList.add('hidden');
+            document.getElementById('explore-detail-view').classList.remove('hidden');
+
+            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+        }
+
+        function nextArticleDetail() {
+            const filteredList = getFilteredArticles();
+            if (!filteredList.length) return;
+            let currentIndex = filteredList.findIndex(a => a.id === activeArticleId);
+            let nextIndex = (currentIndex + 1) % filteredList.length;
+            openArticleDetail(filteredList[nextIndex].id);
+        }
+
+        function prevArticleDetail() {
+            const filteredList = getFilteredArticles();
+            if (!filteredList.length) return;
+            let currentIndex = filteredList.findIndex(a => a.id === activeArticleId);
+            let prevIndex = (currentIndex - 1 + filteredList.length) % filteredList.length;
+            openArticleDetail(filteredList[prevIndex].id);
+        }
+
+        function backToExploreGrid() {
+            document.getElementById('explore-detail-view').classList.add('hidden');
+            document.getElementById('explore-list-view').classList.remove('hidden');
+            renderExploreGridPage();
+        }
+
         function initExploreModalListeners() {
-            const area = document.getElementById('explore-carousel-area');
+            const area = document.getElementById('explore-list-view');
             if (area) {
                 area.addEventListener('touchstart', (e) => {
                     touchStartX = e.changedTouches[0].screenX;
@@ -1498,7 +1487,6 @@
             }
         }
 
-        // Toggle Microphone Audio State
         function toggleAudioTrack() {
             isAudioEnabled = !isAudioEnabled;
             const btn = document.getElementById('btn-toggle-mic');
@@ -1851,7 +1839,6 @@
 
         function openCloryModal() {
             document.getElementById('clory-modal').classList.remove('hidden');
-            
             if (!ua && sipConfig.wssUrl && sipConfig.extension) {
                 initSIPUA();
             }
@@ -2033,10 +2020,8 @@
                 exploreHeaderTitle: "EXPLORE NHA TRANG - KHANH HOA",
                 exploreHeaderSub: "Pristine beaches, rich cultural heritage & coastal travel guides",
                 readMore: "Read Article",
-                backBtn: "Back to Articles List",
-                prevArticle: "Previous Article",
-                nextArticle: "Next Article",
-                swipeHint: "Swipe left/right or use arrow buttons"
+                swipeHint: "Swipe left/right or use arrow buttons",
+                backToListText: "Quay lại danh sách / Back to Articles List"
             },
             vi: {
                 welcomeTag: "Kính chào Quý khách",
@@ -2089,10 +2074,8 @@
                 exploreHeaderTitle: "KHÁM PHÁ NHA TRANG - KHÁNH HÒA",
                 exploreHeaderSub: "Biển ngọc, di sản văn hóa & cẩm nang du lịch Khánh Hòa",
                 readMore: "Xem bài viết",
-                backBtn: "Quay lại danh sách",
-                prevArticle: "Bài trước",
-                nextArticle: "Bài tiếp theo",
-                swipeHint: "Vuốt trái/phải hoặc dùng nút mũi tên"
+                swipeHint: "Vuốt trái/phải hoặc dùng nút mũi tên",
+                backToListText: "Quay lại danh sách / Back to Articles List"
             },
             kr: {
                 welcomeTag: "환영합니다",
@@ -2145,10 +2128,8 @@
                 exploreHeaderTitle: "나트랑 - 칸호아 탐험",
                 exploreHeaderSub: "아름다운 해변, 문화 유산 및 여행 가이드",
                 readMore: "기사 보기",
-                backBtn: "목록으로 돌아가기",
-                prevArticle: "이전 기사",
-                nextArticle: "다음 기사",
-                swipeHint: "좌우로 스와이프하거나 화살표 버튼 사용"
+                swipeHint: "좌우로 스와이프하거나 화살표 버튼 사용",
+                backToListText: "Quay lại danh sách / Back to Articles List"
             },
             cn: {
                 welcomeTag: "尊贵的旅客，欢迎您",
@@ -2201,10 +2182,8 @@
                 exploreHeaderTitle: "芽庄 - 庆和探索",
                 exploreHeaderSub: "蔚蓝海滩、文化遗产与旅游攻略",
                 readMore: "阅读文章",
-                backBtn: "返回文章列表",
-                prevArticle: "上一篇",
-                nextArticle: "下一篇",
-                swipeHint: "左右滑动或使用箭头按钮"
+                swipeHint: "左右滑动或使用箭头按钮",
+                backToListText: "Quay lại danh sách / Back to Articles List"
             },
             ru: {
                 welcomeTag: "Добро пожаловать",
@@ -2257,10 +2236,8 @@
                 exploreHeaderTitle: "НЯЧАНГ - КХАНЬХОА ГИД",
                 exploreHeaderSub: "Чистейшие пляжи, культурное наследие и гид по региону",
                 readMore: "Читать",
-                backBtn: "Назад к списку",
-                prevArticle: "Пред. статья",
-                nextArticle: "След. статья",
-                swipeHint: "Смахните влево/вправо или используйте стрелки"
+                swipeHint: "Смахните влево/вправо или используйте стрелки",
+                backToListText: "Quay lại danh sách / Back to Articles List"
             },
             jp: {
                 welcomeTag: "ようこそ",
@@ -2313,10 +2290,8 @@
                 exploreHeaderTitle: "ニャチャン・カインホアガイド",
                 exploreHeaderSub: "美しいビーチ、文化遺産、観光情報",
                 readMore: "記事を読む",
-                backBtn: "記事一覧に戻る",
-                prevArticle: "前の記事",
-                nextArticle: "次の記事",
-                swipeHint: "左右にスワイプするか矢印ボタンを使用"
+                swipeHint: "左右にスワイプするか矢印ボタンを使用",
+                backToListText: "Quay lại danh sách / Back to Articles List"
             },
             fr: {
                 welcomeTag: "Bienvenue",
@@ -2369,10 +2344,8 @@
                 exploreHeaderTitle: "DÉCOUVRIR NHA TRANG - KHANH HOA",
                 exploreHeaderSub: "Plages magnifiques, patrimoine culturel & guides de voyage",
                 readMore: "Lire",
-                backBtn: "Retour à la liste",
-                prevArticle: "Article précédent",
-                nextArticle: "Article suivant",
-                swipeHint: "Balayez vers la gauche/droite ou utilisez les flèches"
+                swipeHint: "Balayez vers la gauche/droite ou utilisez les flèches",
+                backToListText: "Quay lại danh sách / Back to Articles List"
             },
             de: {
                 welcomeTag: "Herzlich Willkommen",
@@ -2425,10 +2398,8 @@
                 exploreHeaderTitle: "NHA TRANG - KHANH HOA ENTDECKEN",
                 exploreHeaderSub: "Traumstrände, Kulturerbe & Reiseführer",
                 readMore: "Lesen",
-                backBtn: "Zurück zur Liste",
-                prevArticle: "Vorheriger Artikel",
-                nextArticle: "Nächster Artikel",
-                swipeHint: "Wischen Sie nach links/rechts oder nutzen Sie Pfeile"
+                swipeHint: "Wischen Sie nach links/rechts oder nutzen Sie Pfeile",
+                backToListText: "Quay lại danh sách / Back to Articles List"
             },
             th: {
                 welcomeTag: "ยินดีต้อนรับ",
@@ -2481,10 +2452,8 @@
                 exploreHeaderTitle: "สำรวจญาจาง - คั้ญฮวา",
                 exploreHeaderSub: "ชายหาดสวยงาม มรดกทางวัฒนธรรม และคู่มือการเดินทาง",
                 readMore: "อ่านบทความ",
-                backBtn: "ย้อนกลับไปรายการบทความ",
-                prevArticle: "บทความก่อนหน้า",
-                nextArticle: "บทความถัดไป",
-                swipeHint: "ปัดซ้าย/ขวา หรือใช้ปุ่มลูกศร"
+                swipeHint: "ปัดซ้าย/ขวา หรือใช้ปุ่มลูกศร",
+                backToListText: "Quay lại danh sách / Back to Articles List"
             }
         };
 
@@ -2553,9 +2522,8 @@
             if(document.getElementById('modal-explore-header-sub')) document.getElementById('modal-explore-header-sub').innerText = t.exploreHeaderSub;
             if(document.getElementById('modal-explore-close-btn')) document.getElementById('modal-explore-close-btn').innerText = t.closeBtn;
             if(document.getElementById('explore-swipe-hint')) document.getElementById('explore-swipe-hint').innerHTML = `<i data-lucide="hand" class="w-4 h-4 text-teal"></i> ${t.swipeHint}`;
-            if(document.getElementById('btn-article-back')) document.getElementById('btn-article-back').innerText = t.backBtn;
-            if(document.getElementById('btn-prev-article')) document.getElementById('btn-prev-article').innerText = t.prevArticle;
-            if(document.getElementById('btn-next-article')) document.getElementById('btn-next-article').innerText = t.nextArticle;
+
+            if(document.getElementById('btn-back-text')) document.getElementById('btn-back-text').innerText = t.backToListText;
 
             if(document.getElementById('faq-header')) document.getElementById('faq-header').innerText = t.faqHeader;
             if(document.getElementById('faq-1')) document.getElementById('faq-1').innerText = t.faq1;
@@ -2570,8 +2538,12 @@
                 updateSipStatus('unregistered');
             }
 
+            renderCategoryBar();
             renderExploreGridPage();
-            if (currentDetailIndex >= 0) renderArticleDetail();
+
+            if (activeArticleId) {
+                openArticleDetail(activeArticleId);
+            }
 
             if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
             updateClock();
