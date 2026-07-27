@@ -161,6 +161,7 @@
         <div class="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/60 to-transparent"></div>
     </div>
 
+    <!-- App Header Bar -->
     <header class="relative z-30 w-full bg-navy-dark/90 backdrop-blur-xl border-b border-white/10 px-8 py-4 flex items-center justify-between shadow-2xl">
         <div class="flex items-center space-x-6">
             <div class="flex items-center space-x-4 bg-white/10 p-2.5 px-4 rounded-2xl border border-white/15">
@@ -240,6 +241,7 @@
         </div>
     </header>
 
+    <!-- Main Content Area -->
     <main class="relative z-10 flex-1 p-8 grid grid-cols-12 gap-8 items-stretch overflow-hidden">
         
         <section class="col-span-7 flex flex-col justify-between space-y-6">
@@ -280,6 +282,7 @@
                 </div>
             </div>
 
+            <!-- Areas & Amenities Quick Menu -->
             <div class="glass-dark rounded-3xl p-5 border border-white/15 shadow-xl">
                 <div class="flex items-center justify-between mb-3 px-1">
                     <div class="flex items-center space-x-2">
@@ -347,6 +350,7 @@
 
         </section>
 
+        <!-- Right Action Cards Area -->
         <section class="col-span-5 flex flex-col space-y-6">
             
             <div onclick="openMapModal()" 
@@ -421,6 +425,7 @@
         </section>
     </main>
 
+    <!-- App Footer -->
     <footer class="relative z-10 w-full bg-navy-dark/95 border-t border-white/10 px-8 py-3 flex items-center justify-between">
         <div class="flex items-center space-x-8 text-xs text-slate-300">
             <div class="flex items-center space-x-2">
@@ -537,7 +542,7 @@
                     <div class="flex items-center space-x-2" id="explore-dots-container"></div>
 
                     <span class="text-gold font-mono text-xs font-bold bg-gold/10 px-3 py-1 rounded-full border border-gold/30" id="explore-page-counter">
-                        Page 1 of 3
+                        Page 1 of 6
                     </span>
                 </div>
             </div>
@@ -810,175 +815,343 @@
 
         let selectedCategory = "all";
 
-        // Official Explore Articles Array with Category Ids
+        // Official 24 Latest Full Articles Array with Comprehensive Text Body
         const exploreArticles = [
             {
                 id: 1,
                 categoryId: "events",
                 category: "Events & Festivals",
-                titleEn: "CaraWorld Summer Hits 2026: Cam Ranh Beach Festival",
-                titleVi: "CaraWorld Summer Hits 2026: Đại Tiệc Biển Cam Ranh",
+                titleEn: "CaraWorld Summer Hits 2026: Elevating Bai Dai as a Dynamic Coastal Hub",
+                titleVi: "CaraWorld Summer Hits 2026: Nâng Tầm Bãi Dài Thành Đại Đô Thị Biển Sôi Động",
                 leadEn: "Experience the vibrant beach music festival, water sports showcase, and night fireworks at Cam Ranh Bay.",
                 leadVi: "Trải nghiệm đại tiệc âm nhạc ven biển, trình diễn thể thao nước và bắn pháo hoa rực rỡ tại bán đảo Cam Ranh.",
-                bodyEn: "CaraWorld Summer Hits 2026 brings top international artists, acoustic sunset sessions, and coastal gastronomy stalls. Passengers arriving at Cam Ranh International Airport can access shuttle buses directly to the festival grounds in Bai Dai.",
-                bodyVi: "CaraWorld Summer Hits 2026 mang đến chuỗi đêm nhạc hội hoành tráng, âm nhạc acoustic hoàng hôn và hàng chục gian hàng ẩm thực xứ trầm hương. Hành khách đáp xuống Sân bay Cam Ranh có thể di chuyển bằng tuyến xe buýt đón tận nơi đến Bãi Dài.",
+                bodyEn: "<p>CaraWorld Summer Hits 2026 brings top international artists, acoustic sunset sessions, and coastal gastronomy stalls to Bai Dai. As Bai Dai transforms into a year-round integrated entertainment and resort destination, Cam Ranh International Terminal (CRTC) proudly serves as the premier aviation gateway, connecting global travelers to vibrant coastal celebrations.</p><p>Passengers arriving at Cam Ranh International Airport can access dedicated shuttle buses directly to the festival grounds in Bai Dai within 10 minutes. The festival features world-class sound stages, interactive beach games, lighting installations, and fresh local seafood dining options for all age groups.</p>",
+                bodyVi: "<p>CaraWorld Summer Hits 2026 mang đến chuỗi đêm nhạc hội hoành tráng quy tụ các nghệ sĩ hàng đầu, những buổi diễn nhạc acoustic hoàng hôn và hàng chục gian hàng ẩm thực xứ trầm hương. Khi Bãi Dài chuyển mình thành trung tâm du lịch giải trí tích hợp quanh năm, Nhà ga Quốc tế Cam Ranh (CRTC) tự hào là cửa ngõ hàng không kết nối du khách toàn cầu.</p><p>Hành khách đáp xuống Sân bay Cam Ranh có thể dễ dàng di chuyển bằng các tuyến xe buýt đón tận nơi đến Bãi Dài chỉ trong 10 phút. Lễ hội được đầu tư quy mô với sân khấu âm thanh ánh sáng hiện đại, trò chơi thể thao nước, triển lãm nghệ thuật sáng tạo và không gian tiệc nướng hải sản ngoài trời.</p>",
                 img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
                 location: "Bai Dai Cam Ranh • 5km from CXR",
-                url: "https://camranh.aero/en/explore/caraworld-summer-hits-2026"
+                url: "https://camranh.aero/explore/article/caraworld-summer-hits-2026"
             },
             {
                 id: 2,
-                categoryId: "destinations",
-                category: "Destinations",
-                titleEn: "North Nha Trang: Pristine Coastal Wonders & Resorts",
-                titleVi: "Khám Phá Bắc Nha Trang: Kỳ Quan Biển Ngọt & Resort",
-                leadEn: "Discover tranquil bays, luxury eco-resorts, and untouched nature in North Nha Trang.",
-                leadVi: "Khám phá các vịnh biển bình yên, resort sinh thái đẳng cấp và thiên nhiên hoang sơ khu vực Bắc Nha Trang.",
-                bodyEn: "Away from the bustling city center, North Nha Trang features serene destinations like Luong Son, Monkey Island, and Doc Let Beach with powdery white sand. It is ideal for eco-friendly retreats and calm swimming waters.",
-                bodyVi: "Tách biệt khỏi sự náo nhiệt của trung tâm, khu vực Bắc Nha Trang sở hữu những điểm đến êm đềm như Lương Sơn, Đảo Khỉ và bãi biển Dốc Lết cát trắng mịn. Đây là lựa chọn hoàn hảo cho nghỉ dưỡng sinh thái.",
-                img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop",
-                location: "North Nha Trang Bay • 45km from CXR",
-                url: "https://camranh.aero/en/explore/north-nha-trang-guide"
+                categoryId: "events",
+                category: "Mega Events",
+                titleEn: "Khanh Hoa Sea Festival 2026 Triumph: 787,000+ Visitors Drive $51M+ Tourism Surge",
+                titleVi: "Lễ Hội Biển Khánh Hòa 2026 Rực Rỡ: Thu Hút 787.000+ Lượt Khách, Doanh Thu Đạt 51 Triệu USD",
+                leadEn: "The resounding success of the 2026 Sea Festival reaffirms Khanh Hoa's position as a premier global marine destination.",
+                leadVi: "Thành công rực rỡ của Lễ hội Biển 2026 khẳng định vị thế của Khánh Hòa trên bản đồ du lịch sự kiện biển quốc tế.",
+                bodyEn: "<p>The resounding success of the 2026 Sea Festival reaffirms Khanh Hoa's position as a premier global marine and mega-event destination. As the primary aviation gateway, Cam Ranh International Terminal (CRTC) played a pivotal role in seamlessly welcoming tens of thousands of international travelers to this record-breaking summer celebration.</p><p>During the week-long festival, central Nha Trang hosted street carnivals, drone light shows with 2,000 drones, traditional basket boat races, and international ocean art exhibitions. Tourism revenues surged past $51 million, marking a historical milestone for the coastal province.</p>",
+                bodyVi: "<p>Lễ hội Biển Khánh Hòa 2026 đã diễn ra vô cùng thành công, khẳng định vị thế thương hiệu du lịch biển hàng đầu châu Á. Là cửa ngõ hàng không quốc tế chính, Nhà ga CRTC đã chuẩn bị chu đáo cơ sở hạ tầng, đảm bảo quy trình phục vụ hàng trăm ngàn lượt khách quốc tế và nội địa thông suốt.</p><p>Trong tuần lễ hội, thành phố Nha Trang bừng sáng với các chương trình diễu hành đường phố, trình diễn ánh sáng drone 2.000 thiết bị, đua thuyền thúng truyền thống và triển lãm nghệ thuật sinh thái biển, mang lại doanh thu kỷ lục hơn 51 triệu USD.</p>",
+                img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop",
+                location: "Nha Trang Coastal Square • 35km from CXR",
+                url: "https://camranh.aero/explore/article/khanh-hoa-sea-festival-2026-triumph"
             },
             {
                 id: 3,
                 categoryId: "aviation",
-                category: "Aviation & Routes",
-                titleEn: "Dong Hoi - Cam Ranh Direct Route Expansion",
-                titleVi: "Mở Rộng Đường Bay Trực Tiếp Đồng Hới - Cam Ranh",
-                leadEn: "Connecting Quang Binh cave wonders directly with Khanh Hoa beach paradise.",
-                leadVi: "Kết nối di sản thiên nhiên Quảng Bình trực tiếp với thiên đường biển đảo Khánh Hòa.",
-                bodyEn: "The newly enhanced Dong Hoi - Cam Ranh route creates seamless travel opportunities between Son Doong cave exploration and Nha Trang coastal resort holidays, cutting total transit time to under 80 minutes.",
-                bodyVi: "Đường bay nâng cấp Đồng Hới - Cam Ranh mở ra cơ hội du lịch kết hợp hoàn hảo giữa khám phá hang động Quảng Bình và nghỉ dưỡng biển Nha Trang, rút ngắn thời gian di chuyển chỉ còn chưa đầy 80 phút.",
+                category: "Aviation Corridor",
+                titleEn: "Bridging Heritage and Coastal Paradises: The New Dong Hoi – Cam Ranh Flight Corridor",
+                titleVi: "Kết Nối Di Sản Và Biển Ngọc: Đường Bay Mới Đồng Hới – Cam Ranh",
+                leadEn: "Connecting Quang Binh cave wonders directly with Khanh Hoa beach paradise in under 80 minutes.",
+                leadVi: "Kết nối di sản hang động Quảng Bình trực tiếp với thiên đường biển đảo Khánh Hòa chỉ trong 80 phút.",
+                bodyEn: "<p>The upcoming direct flight route connecting Khanh Hoa and the Central Heritage region opens a dynamic new chapter for inter-regional tourism and cultural exchange. As the premier aviation gateway, Cam Ranh International Terminal (CRTC) proudly stands ready to facilitate this seamless connectivity, transforming regional travel into a world-class passenger experience.</p><p>Travelers can now seamlessly combine the world's largest natural cave tours in Phong Nha - Ke Bang with relaxing ocean retreats in Nha Trang and Cam Ranh without lengthy road layovers, cutting total travel time down to under 80 minutes.</p>",
+                bodyVi: "<p>Đường bay trực tiếp Đồng Hới - Cam Ranh chính thức đi vào hoạt động mở ra chương mới cho sự hợp tác phát triển du lịch liên vùng giữa Di sản thiên nhiên thế giới Phong Nha - Kẻ Bàng và thiên đường biển Nha Trang - Khánh Hòa. CRTC cam kết mang đến chất lượng phục vụ hàng không chuẩn quốc tế.</p><p>Tuyến bay này giúp du khách quốc tế dễ dàng thiết kế hành trình 'Hai điểm đến - Một chuyến đi' kết hợp giữa thám hiểm hang động kỳ vĩ và nghỉ dưỡng biển xanh nắng vàng chỉ trong vòng chưa đầy 80 phút bay.</p>",
                 img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=800&auto=format&fit=crop",
                 location: "Terminal T1 & T2 • CXR Airport",
-                url: "https://camranh.aero/en/explore/dong-hoi-cam-ranh-route"
+                url: "https://camranh.aero/explore/article/dong-hoi-cam-ranh-flight-corridor"
             },
             {
                 id: 4,
-                categoryId: "culture",
-                category: "Cultural Heritage",
-                titleEn: "Ponagar Cham Towers: Ancient Architectural Marvel",
-                titleVi: "Tháp Bà Ponagar: Tuyệt Tác Kiến Trúc Chăm Pa Cổ",
-                leadEn: "Sacred 8th-century temple complex perched on Cu Lao hill overlooking Cai River.",
-                leadVi: "Quần thể di tích tâm linh thế kỷ VIII tọa lạc uy nghiêm trên đồi Cù Lao bên dòng sông Cái.",
-                bodyEn: "Built between the 8th and 13th centuries, Ponagar Cham Towers honor Goddess Yan Po Nagar. Visitors can appreciate unique brick masonry without mortar, Cham traditional dance performances, and panoramic city views.",
-                bodyVi: "Được xây dựng từ thế kỷ VIII đến XIII, Tháp Bà Ponagar thờ nữ thần Yan Po Nagar. Du khách có thể chiêm ngưỡng kỹ thuật xếp gạch không hồ kết dính độc đáo, thưởng thức múa Chăm và ngắm toàn cảnh sông Cái.",
-                img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=800&auto=format&fit=crop",
-                location: "Nha Trang City Center • 35km from CXR",
-                url: "https://camranh.aero/en/explore/ponagar-cham-towers"
+                categoryId: "aviation",
+                category: "Global Markets",
+                titleEn: "Unlocking the Land of the Rising Sun: Khanh Hoa's Strategic Push for Japanese Market",
+                titleVi: "Chinh Phục Thị Trường Nhật Bản: Chiến Lược Kết Nối Hàng Không Khánh Hòa",
+                leadEn: "Deploying targeted promotion strategies to captivate high-spending travelers from major Japanese cities.",
+                leadVi: "Triển khai chiến lược xúc tiến thương mại và mở đường bay trực tiếp nối liền các thành phố lớn của Nhật Bản.",
+                bodyEn: "<p>Recognizing Japan as a high-potential, quality-driven tourism market, Khanh Hoa is deploying targeted promotion strategies to captivate travelers from the Land of the Rising Sun. As the region's premier aviation gateway, Cam Ranh International Terminal (CRTC) stands at the forefront of this initiative, actively driving route development to bridge Tokyo, Osaka, and Fukuoka directly with our coastal paradise.</p><p>Japanese tourists are particularly drawn to Khanh Hoa's luxury wellness retreats, thermal mud baths, golf courses, and rich seafood gastronomy. Direct flights significantly boost stay duration and off-peak season visitor numbers.</p>",
+                bodyVi: "<p>Xác định Nhật Bản là thị trường du lịch trọng điểm có mức chi tiêu cao, tỉnh Khánh Hòa hợp tác cùng CRTC đẩy mạnh chương trình xúc tiến du lịch và xúc tiến mở đường bay thẳng nối liền Tokyo, Osaka và Fukuoka với Cam Ranh.</p><p>Du khách Nhật Bản đặc biệt ưa chuộng các gói du lịch nghỉ dưỡng sức khỏe, tắm bùn khoáng nóng, sân golf chuẩn quốc tế và ẩm thực hải sản phong phú. Đường bay thẳng hứa hẹn thúc đẩy tăng trưởng du khách bền vững quanh năm.</p>",
+                img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=800&auto=format&fit=crop",
+                location: "Cam Ranh International Terminal T2",
+                url: "https://camranh.aero/explore/article/khanh-hoa-push-for-japanese-market"
             },
             {
                 id: 5,
-                categoryId: "destinations",
-                category: "Marine Sanctuary",
-                titleEn: "Hon Mun Island: Marine Biodiversity Sanctuary",
-                titleVi: "Khu Bảo Tồn Biển Đảo Hòn Mun: Thiên Đường San Hô",
-                leadEn: "Crystal-clear turquoise waters sheltering over 350 rare species of coral reefs.",
-                leadVi: "Làn nước xanh ngọc bích trong vắt nuôi dưỡng hơn 350 loài san hô quý hiếm.",
-                bodyEn: "Hon Mun Marine Reserve is recognized as Vietnam's top scuba diving and snorkeling paradise. Glass-bottom boat tours, deep-sea diving, and underwater photography reveal colorful coral gardens and diverse marine life.",
-                bodyVi: "Khu bảo tồn biển Hòn Mun được công nhận là thiên đường lặn biển hàng đầu Việt Nam. Tàu đáy kính, lặn bình khí và chụp ảnh dưới nước giúp du khách khám phá những rạn san hô rực rỡ sắc màu.",
-                img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800&auto=format&fit=crop",
-                location: "Nha Trang Bay • Boat Access",
-                url: "https://camranh.aero/en/explore/hon-mun-island"
+                categoryId: "awards",
+                category: "Global Recognition",
+                titleEn: "Khanh Hoa's Global Recognition: Two Beaches Named in Lonely Planet's Top 10",
+                titleVi: "Khánh Hòa Được Vinh Danh Quốc Tế: 2 Bãi Biển Lọt Top 10 Lonely Planet",
+                leadEn: "Bai Dai and Doc Let honored as two of Vietnam's most pristine and breathtaking coastal paradises.",
+                leadVi: "Bãi Dài và Dốc Lết tự hào lọt vào danh sách những bãi biển đẹp nhất Việt Nam do Lonely Planet bình chọn.",
+                bodyEn: "<p>With two magnificent coastlines honored by Lonely Planet among Vietnam's finest, Khanh Hoa continues to solidify its status as a world-class marine destination. As the premier aviation gateway, Cam Ranh International Terminal (CRTC) proudly welcomes global travelers to experience these internationally acclaimed shores.</p><p>Bai Dai, located right next to Cam Ranh Airport, is praised for its calm waters and luxury resort strip, while Doc Let in the north captures hearts with fine white sand and shallow crystal-clear turquoise waters.</p>",
+                bodyVi: "<p>Tạp chí du lịch hàng đầu thế giới Lonely Planet vừa chính thức vinh danh Bãi Dài và Dốc Lết thuộc tỉnh Khánh Hòa vào Top 10 bãi biển tuyệt đẹp nhất Việt Nam, tiếp tục củng cố vị thế thiên đường nghỉ dưỡng biển quốc tế.</p><p>Bãi Dài nằm sát Sân bay Cam Ranh nổi tiếng với bãi cát vàng mịn và quần thể resort 5 sao cao cấp, trong khi Dốc Lết thu hút du khách nhờ làn nước biển trong suốt như pha lê cùng nhịp sống làng chài yên bình.</p>",
+                img: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=800&auto=format&fit=crop",
+                location: "Bai Dai & Doc Let Beaches",
+                url: "https://camranh.aero/explore/article/khanh-hoa-lonely-planet-top-10"
             },
             {
                 id: 6,
-                categoryId: "wellness",
-                category: "Wellness & Spa",
-                titleEn: "Natural Thermal Mud Bathing in Nha Trang",
-                titleVi: "Tắm Bùn Khoáng Nóng Tự Nhiên Nha Trang",
-                leadEn: "Revitalize mind and body with mineral-rich mud treatments and thermal springs.",
-                leadVi: "Phục hồi sức khỏe và thư giãn cơ thể với liệu pháp bùn khoáng nóng thiên nhiên.",
-                bodyEn: "Nha Trang's natural mineral mud is celebrated for skin rejuvenation and therapeutic benefits. Popular spots like Thap Ba Mud Bath and I-Resort offer hydrotherapy waterfalls, private mud tubs, and herbal baths.",
-                bodyVi: "Bùn khoáng tự nhiên Nha Trang nổi tiếng với công dụng làm đẹp da và giải độc cơ thể. Các khu du lịch như Tắm bùn Tháp Bà hay I-Resort cung cấp thác nước khoáng, bồn tắm bùn riêng tư và thảo dược.",
-                img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop",
-                location: "I-Resort & Thap Ba • Nha Trang",
-                url: "https://camranh.aero/en/explore/mud-bath-wellness"
+                categoryId: "destinations",
+                category: "Green Discoveries",
+                titleEn: "Thuan Bac: A Colorful Journey of Discovery and Rustic Serenity",
+                titleVi: "Thuận Bắc: Hành Trình Khám Phá Sắc Màu & Vẻ Đẹp Bình Yên Cổ Kính",
+                leadEn: "Stepping away from bustling resorts to experience wind energy farms, vineyards, and Raglai culture.",
+                leadVi: "Rời xa sự náo nhiệt để khám phá cánh đồng điện gió, trang trại nho và văn hóa Raglai đặc sắc.",
+                bodyEn: "<p>Stepping away from bustling resorts, Thuan Bac captivates travelers with its timeless heritage, pristine nature, and innovative green tourism. As the premier aviation gateway, Cam Ranh International Terminal (CRTC) proudly connects global explorers to this uniquely peaceful and culturally rich destination.</p><p>Located just an hour's drive south of Cam Ranh Airport, Thuan Bac features gigantic wind turbine fields, lush green grape vineyards, sheep farms, and authentic cultural performances by the local Raglai ethnic group.</p>",
+                bodyVi: "<p>Tách biệt khỏi các khu nghỉ dưỡng sầm uất, Thuận Bắc cuốn hút du khách bởi vẻ đẹp hoang sơ, di sản văn hóa độc đáo và các mô hình du lịch sinh thái xanh. Sân bay Cam Ranh là điểm xuất phát thuận tiện nhất để du khách bắt đầu hành trình này.</p><p>Chỉ cách Sân bay Cam Ranh 1 giờ di chuyển về phía nam, Thuận Bắc sở hữu những cánh đồng quạt gió khổng lồ đẹp như châu Âu, trang trại nho xanh mướt, đồng cừu thơ mộng và không gian văn hóa bản địa Raglai đậm đà bản sắc.</p>",
+                img: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=800&auto=format&fit=crop",
+                location: "Thuan Bac Region • 40km South of CXR",
+                url: "https://camranh.aero/explore/article/thuan-bac-rustic-serenity"
             },
             {
                 id: 7,
                 categoryId: "gastronomy",
-                category: "Gastronomy",
-                titleEn: "Nha Trang Seafood & Grilled Pork Rolls (Nem Nuong)",
-                titleVi: "Ẩm Thực Biển & Nem Nướng Ninh Hòa Trứ Danh",
-                leadEn: "Savor local delicacies from fresh lobster to fragrant crispy grilled rice-paper rolls.",
-                leadVi: "Thưởng thức hải sản tươi ngon cùng món nem nướng Ninh Hòa cuộn bánh tráng giòn rụm.",
-                bodyEn: "Khanh Hoa gastronomy blends rich ocean flavors with unique sauces. Must-try dishes include Ninh Hoa grilled pork rolls served with fried crunchies, jellyfish noodle soup, and steamed Cam Ranh lobsters.",
-                bodyVi: "Ẩm thực Khánh Hòa hòa quyện hương vị biển cả cùng nước chấm đặc chế trứ danh. Đừng bỏ lỡ nem nướng Ninh Hòa cuộn ram giòn, bún chả cá bún sứa đậm đà và tôm hùm Cam Ranh hấp tỏi.",
+                category: "Gastronomy Festival",
+                titleEn: "Coastal Flavors - Summer Melodies Food Festival in Nha Trang",
+                titleVi: "Lễ Hội Ẩm Thực 'Hương Vị Biển Cả - Giai Điệu Mùa Hè' Tại Nha Trang",
+                leadEn: "Immerse in explosive culinary tastes, fresh seafood creations, and live ocean-front music.",
+                leadVi: "Hòa mình vào không gian ẩm thực biển bùng nổ hương vị kết hợp âm nhạc hè sôi động.",
+                bodyEn: "<p>Following the vibrant heat of the summer event series, tourists can immerse themselves in the space of the 'Coastal Flavors - Summer Melodies' Food Festival in Nha Trang. Maintaining its role as the international trade gateway, Cam Ranh International Terminal (CRTC) serves as the launchpad bringing global diners into an explosive journey of tastes and sounds.</p><p>The festival features over 100 booths from master chefs across Vietnam, highlighting live lobster cooking demos, bird's nest desserts, traditional fish sauce tasting, and craft beers along the beach promenade.</p>",
+                bodyVi: "<p>Nối tiếp chuỗi sự kiện mùa hè rực rỡ, du khách đắm chìm trong không gian Lễ hội Ẩm thực 'Hương Vị Biển Cả - Giai Điệu Mùa Hè' tại công viên bờ biển Nha Trang. CRTC đóng vai trò cầu nối đưa thực khách quốc tế trải nghiệm nét tinh hoa ẩm thực xứ trầm.</p><p>Lễ hội quy tụ hơn 100 gian hàng ẩm thực với màn trình diễn chế biến tôm hùm trực tiếp của các siêu đầu bếp, các món yến sào cao cấp, nước mắm truyền thống và bia thủ công mát lạnh ngay bên bờ biển.</p>",
                 img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop",
-                location: "Nha Trang & Cam Ranh Food Hubs",
-                url: "https://camranh.aero/en/explore/nha-trang-gastronomy"
+                location: "Nha Trang Beach Park • 35km from CXR",
+                url: "https://camranh.aero/explore/article/coastal-flavors-food-festival"
             },
             {
                 id: 8,
-                categoryId: "awards",
-                category: "Awards & Quality",
-                titleEn: "CXR Terminal T2 Named Top 5-Star Skytrax Regional Airport",
-                titleVi: "Nhà Ga T2 Sân Bay Cam Ranh Đạt Chuẩn 5 Sao Skytrax",
-                leadEn: "International recognition for service excellence, digital innovation, and passenger comfort.",
-                leadVi: "Giải thưởng quốc tế ghi nhận chất lượng dịch vụ, chuyển đổi số và sự tiện nghi cho hành khách.",
-                bodyEn: "Cam Ranh International Airport Terminal T2 continues to win prestigious Skytrax awards for efficient immigration, warm hospitality, modern architectural design, and integrated AI passenger kiosks.",
-                bodyVi: "Nhà ga Quốc tế T2 Sân bay Cam Ranh liên tục nhận các giải thưởng Skytrax uy tín nhờ quy trình nhập cảnh nhanh chóng, sự hiếu khách, kiến trúc hiện đại và hệ thống Kiosk AI hỗ trợ du khách.",
-                img: "https://images.unsplash.com/photo-1519074069444-1ba4fff16be3?q=80&w=800&auto=format&fit=crop",
-                location: "Terminal T2 • Cam Ranh Airport",
-                url: "https://camranh.aero/en/explore/cxr-skytrax-award"
+                categoryId: "gastronomy",
+                category: "Culinary Heritage",
+                titleEn: "Awakening the Palate: 7 Iconic Culinary Experiences in Khanh Hoa",
+                titleVi: "Đánh Thức Giác Quan: 7 Trải Nghiệm Ẩm Thực Biển Không Thể Bỏ Qua Tại Khánh Hòa",
+                leadEn: "Recommended by Food and Wine magazine as unmissable cultural touchpoints for international travelers.",
+                leadVi: "Được tạp chí Food and Wine gợi ý như những dấu ấn văn hóa ẩm thực độc đáo hàng đầu.",
+                bodyEn: "<p>Suggested by the prestigious Food and Wine magazine as unmissable cultural touchpoints, discovering Vietnam's iconic culinary experiences offers international tourists an authentic lens. Serving as a vital trade gateway, Cam Ranh International Terminal (CRTC) brings global travelers into this flavorful adventure.</p><p>Key highlights include Ninh Hoa grilled pork rolls (Nem Nuong), crispy jellyfish noodle soup (Bun Sua), steamed Cam Ranh lobsters, Mai fish salad, and swallow bird's nest soup harvested from ocean island caves.</p>",
+                bodyVi: "<p>Được vinh danh trên tạp chí quốc tế Food and Wine, hành trình khám phá 7 trải nghiệm ẩm thực biểu tượng của Khánh Hòa mang lại góc nhìn chân thực và đầy màu sắc cho du khách. CRTC tự hào là cửa ngõ đón chào thực khách bốn phương.</p><p>Danh sách không thể bỏ qua gồm: Nem nướng Ninh Hòa giòn rụm, Bún sứa chả cá đậm đà, Tôm hùm Cam Ranh hấp tỏi, Gỏi cá Mai tươi ngon và Bát súp yến sào thiên nhiên khai thác từ các đảo yến ngoài khơi.</p>",
+                img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=800&auto=format&fit=crop",
+                location: "Khanh Hoa Gastronomy Hubs",
+                url: "https://camranh.aero/explore/article/7-iconic-culinary-experiences"
             },
             {
                 id: 9,
-                categoryId: "destinations",
-                category: "Island Entertainment",
-                titleEn: "VinWonders Hon Tre Island: Sea-Crossing Cable Car",
-                titleVi: "VinWonders Đảo Hòn Tre: Cáp Treo Vượt Biển Kỷ Lục",
-                leadEn: "World-class theme park featuring record-breaking rides and Tata multimedia show.",
-                leadVi: "Công viên giải trí đẳng cấp thế giới với cáp treo vượt biển và Tata Show hoành tráng.",
-                bodyEn: "Located on Hon Tre Island, VinWonders offers a 3.3km sea-crossing cable car journey, waterpark slides, botanical gardens, and world-class theatrical performances suitable for families and adventure seekers.",
-                bodyVi: "Tọa lạc trên đảo Hòn Tre, VinWonders mang đến trải nghiệm cáp treo vượt biển dài 3,3km, công viên nước, vườn thực vật năm châu và show diễn đắm chìm Tata Show dành cho mọi lứa tuổi.",
-                img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=800&auto=format&fit=crop",
-                location: "Hon Tre Island • Cable Car Terminal",
-                url: "https://camranh.aero/en/explore/vinwonders-hon-tre"
+                categoryId: "culture",
+                category: "Coffee Culture",
+                titleEn: "Vietnamese Coffee Prestige on the Global Map & Its Culture in Khanh Hoa",
+                titleVi: "Vị Thế Cà Phê Việt Trên Bản Đồ Thế Giới & Nét Văn Hóa Cà Phê Biển Khánh Hòa",
+                leadEn: "Exploring Robusta bean mastery, egg coffee artisans, and ocean-view coffee houses.",
+                leadVi: "Khám phá hương vị Robusta đượm đà, cà phê trứng nghệ thuật và các quán cà phê hướng biển tuyệt đẹp.",
+                bodyEn: "<p>Maintaining its position as the global runner-up in coffee production, Vietnam's Robusta beans serve as a signature cultural trait captivating tourists in Khanh Hoa. Coastal coffee shops along Tran Phu boulevard blend aromatic coffee brewing with panoramic ocean breezes.</p><p>Visitors can savor traditional phin drip coffee, creamy egg coffee, or iced coconut coffee while enjoying sunset views over Nha Trang Bay before heading to Cam Ranh Terminal for their departure flight.</p>",
+                bodyVi: "<p>Giữ vững vị thế á quân xuất khẩu cà phê toàn cầu, những hạt cà phê Robusta Việt Nam không chỉ khẳng định giá trị kinh tế mà còn là nét văn hóa đặc sắc làm xiêu lòng du khách khi đến Khánh Hòa. Các quán cà phê ven biển dọc đường Trần Phú mang lại không gian thư thái tuyệt vời.</p><p>Du khách có thể thưởng thức cà phê phin truyền thống, cà phê trứng béo ngậy hay cà phê cốt dừa mát lạnh trong tiếng sóng biển trước khi quay trở lại Sân bay Cam Ranh.</p>",
+                img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop",
+                location: "Nha Trang & Cam Ranh Coffee Lounges",
+                url: "https://camranh.aero/explore/article/vietnamese-coffee-culture-khanh-hoa"
             },
             {
                 id: 10,
-                categoryId: "culture",
-                category: "Spiritual Culture",
-                titleEn: "Long Son Pagoda & Giant White Buddha Statue",
-                titleVi: "Chùa Long Sơn & Kim Thân Phật Tổ Khổng Lồ",
-                leadEn: "Historic Buddhist sanctuary offering peaceful ambient and panoramic city views.",
-                leadVi: "Ngôi chùa cổ kính với không gian thanh tịnh và tầm nhìn bao quát toàn thành phố.",
-                bodyEn: "Established in 1886 at the foot of Trai Thuy Hill, Long Son Pagoda is famous for its 24-meter white Buddha statue sitting atop the hill. The site features intricate dragon mosaics and traditional pagoda roofs.",
-                bodyVi: "Thành lập năm 1886 dưới chân đồi Trại Thủy, Chùa Long Sơn nổi tiếng với tượng Kim Thân Phật Tổ màu trắng cao 24m trên đỉnh đồi cùng nghệ thuật khảm sành sứ rồng phượng tinh xảo.",
-                img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop",
-                location: "Trai Thuy Hill • Nha Trang Center",
-                url: "https://camranh.aero/en/explore/long-son-pagoda"
+                categoryId: "destinations",
+                category: "Livable Cities",
+                titleEn: "Nha Trang: From a Tourism Paradise to a Livable Bay City Where Happiness Begins",
+                titleVi: "Nha Trang: Từ 'Thiên Đường Du Lịch' Đến Thành Phố Vịnh Biển Đáng Sống Bậc Nhất",
+                leadEn: "Urban modernization aligned with ecological preservation and high-tech aviation infrastructure.",
+                leadVi: "Đô thị hóa hiện đại gắn liền với bảo tồn sinh thái và hạ tầng hàng không thông minh.",
+                bodyEn: "<p>Nha Trang is rapidly evolving from a classic vacation spot into an international livable bay city. Strategic urban planning, green coastal parks, smart transportation, and international schooling options attract global digital nomads and investors.</p><p>Cam Ranh International Terminal serves as the high-capacity modern gateway supporting this transformational growth with world-class passenger facilities and automated digital services.</p>",
+                bodyVi: "<p>Nha Trang đang chuyển mình mạnh mẽ từ một trung tâm du lịch thuần túy trở thành thành phố vịnh biển đáng sống tầm cỡ quốc tế. Quy hoạch đô thị xanh, công viên ven biển, giao thông thông minh và môi trường sống trong lành thu hút cộng đồng chuyên gia toàn cầu.</p><p>Nhà ga Quốc tế Cam Ranh đóng vai trò hạ tầng chiến lược, cung cấp các dịch vụ hàng không tự động hóa hiện đại phục vụ sự phát triển bền vững của toàn tỉnh.</p>",
+                img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop",
+                location: "Nha Trang Bay Metropolis",
+                url: "https://camranh.aero/explore/article/nha-trang-livable-bay-city"
             },
             {
                 id: 11,
-                categoryId: "destinations",
-                category: "Pristine Islands",
-                titleEn: "Binh Ba & Binh Hung: Lobster Islands of Cam Ranh",
-                titleVi: "Đảo Bình Ba & Bình Hưng: Vương Quốc Tôm Hùm Cam Ranh",
-                leadEn: "Unspoiled turquoise coves, floating lobster farms, and quiet sandy beaches.",
-                leadVi: "Những bãi biển ngọc bích hoang sơ, bè nuôi tôm hùm và không khí biển đảo bình yên.",
-                bodyEn: "Located right inside Cam Ranh Bay, Binh Ba and Binh Hung islands are celebrated for emerald waters, pristine snorkeling reefs, and fresh lobster feasts served on wooden floating rafts.",
-                bodyVi: "Nằm trong vịnh Cam Ranh, đảo Bình Ba và Bình Hưng làm xiêu lòng du khách nhờ làn nước biển trong như pha lê, san hô tự nhiên và những bữa tiệc tôm hùm tươi ngon trên bè gỗ.",
-                img: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=800&auto=format&fit=crop",
-                location: "Cam Ranh Bay • Ba Ngoi Port",
-                url: "https://camranh.aero/en/explore/binh-ba-binh-hung"
+                categoryId: "gastronomy",
+                category: "Halal & Diversity",
+                titleEn: "Unlocking the Halal Economy: A New Era for Khanh Hoa's Tourism and Trade",
+                titleVi: "Khai Mở Nền Kinh Tế Halal: Kỷ Nguyên Mới Cho Du Lịch & Thương Mại Khánh Hòa",
+                leadEn: "Establishing certified Halal dining kitchens, prayer facilities, and direct Middle East flight links.",
+                leadVi: "Xây dựng hệ thống nhà hàng Halal chứng nhận, phòng cầu nguyện và kết nối đường bay Trung Đông.",
+                bodyEn: "<p>To welcome high-spending travelers from Southeast Asia and the Middle East, Khanh Hoa is building an inclusive Halal tourism ecosystem. Cam Ranh International Airport features dedicated quiet prayer rooms and Halal-certified dining lounges at Terminal T2.</p><p>Hotels and luxury resorts across Bai Dai and Nha Trang are actively certifying culinary teams to serve authentic Middle Eastern, Malaysian, and Indonesian Halal dishes.</p>",
+                bodyVi: "<p>Nhằm thu hút dòng khách du lịch cao cấp từ Đông Nam Á và Trung Đông, Khánh Hòa đang tích cực hoàn thiện hệ sinh thái du lịch Halal. Nhà ga T2 Sân bay Cam Ranh đã đưa vào vận hành phòng cầu nguyện riêng biệt và quầy ăn uống đạt chuẩn Halal.</p><p>Các khách sạn và resort cao cấp tại Bãi Dài và Nha Trang đồng loạt đào tạo đội ngũ đầu bếp quốc tế để phục vụ các thực đơn Halal chuẩn vị Ấn Độ, Malaysia và Trung Đông.</p>",
+                img: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?q=80&w=800&auto=format&fit=crop",
+                location: "Terminal T2 & Khanh Hoa Resorts",
+                url: "https://camranh.aero/explore/article/unlocking-halal-economy"
             },
             {
                 id: 12,
+                categoryId: "wellness",
+                category: "Green Sanctuaries",
+                titleEn: "Reset in Nature: Unveiling the Green Sanctuaries of Nha Trang - Khanh Hoa",
+                titleVi: "Chữa Lành Giữa Thiên Nhiên: Khám Phá Các Khu Bảo Tồn Xanh Khánh Hòa",
+                leadEn: "Forest bathing in Hon Ba nature reserve, waterfall trekking, and eco-wellness retreats.",
+                leadVi: "Tắm rừng tại khu bảo tồn Hòn Bà, trekking thác nước và chuỗi resort nghỉ dưỡng sinh thái.",
+                bodyEn: "<p>Beyond the coastline lies Khanh Hoa's rich mountain eco-system. Hon Ba Nature Reserve, known for its cool climate discovered by Dr. Alexandre Yersin, offers primary rainforest trekking, mountain streams, and fresh herbal mist.</p><p>Travelers seeking complete mental rejuvenation can combine mountain forest therapy with beach yoga and thermal mud baths for a holistic wellness vacation.</p>",
+                bodyVi: "<p>Ẩn sau bờ biển xanh là hệ sinh thái rừng núi bạt ngàn của Khánh Hòa. Khu bảo tồn thiên nhiên Hòn Bà, nơi bác sĩ Alexandre Yersin từng thám hiểm, mang lại không khí se lạnh mây phủ quanh năm và những cung đường trekking rừng nguyên sinh kỳ thú.</p><p>Du khách muốn phục hồi năng lượng có thể tham gia các liệu trình thiền rừng, tập yoga trước biển và ngâm bùn khoáng nóng thiên nhiên giúp giải tỏa căng thẳng toàn diện.</p>",
+                img: "https://images.unsplash.com/photo-1511497584788-876761465087?q=80&w=800&auto=format&fit=crop",
+                location: "Hon Ba Nature Reserve • Khanh Hoa",
+                url: "https://camranh.aero/explore/article/reset-in-nature-green-sanctuaries"
+            },
+            {
+                id: 13,
+                categoryId: "destinations",
+                category: "Peaceful Oases",
+                titleEn: "Discovering Lanh Ra Lake: A Peaceful Oasis Amidst Mountains and Pine Forests",
+                titleVi: "Khám Phá Hồ Láng Nhớt: Ốc Đảo Yên Bình Giữa Núi Rừng Và Rừng Thông",
+                leadEn: "A hidden gem for camping, paddleboarding, and serene outdoor photography in Cam Ranh.",
+                leadVi: "Điểm đến giấu kín lý tưởng cho cắm trại, chèo SUP và chụp ảnh dã ngoại tại Cam Ranh.",
+                bodyEn: "<p>Lanh Ra Lake is a serene freshwater reservoir located near Cam Ranh, surrounded by rolling hills and green pine trees. It is rapidly becoming a favorite getaway for eco-tourists and outdoor enthusiasts looking for peaceful kayaking and starry night camping.</p><p>Its close proximity to Cam Ranh Airport makes it a perfect short excursion for passengers with extended layovers wanting to experience authentic rural tranquil landscapes.</p>",
+                bodyVi: "<p>Hồ Láng Nhớt (Lanh Ra Lake) là hồ nước ngọt thanh bình nằm trọn giữa lòng núi đồi và những hàng thông xanh mát tại Cam Ranh. Đây là điểm dã ngoại mới nổi thu hút giới trẻ chèo thuyền SUP, cắm trại qua đêm ngắm dải ngân hà.</p><p>Nhờ vị trí thuận tiện gần Sân bay Cam Ranh, nơi đây là gợi ý tuyệt vời cho du khách muốn trải nghiệm thiên nhiên nguyên sơ trong khoảng thời gian chờ chuyến bay nối chuyến.</p>",
+                img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800&auto=format&fit=crop",
+                location: "Lanh Ra Lake • Cam Ranh Outskirts",
+                url: "https://camranh.aero/explore/article/discovering-lanh-ra-lake"
+            },
+            {
+                id: 14,
                 categoryId: "culture",
-                category: "Ocean Heritage",
-                titleEn: "National Oceanographic Museum of Vietnam",
-                titleVi: "Viện Hải Dương Học: Bảo Tàng Sinh Vật Biển Lớn Nhất",
-                leadEn: "Over 20,000 marine specimens and massive whale skeleton preserved since 1923.",
-                leadVi: "Lưu giữ hơn 20.000 mẫu vật biển cùng bộ xương cá voi khổng lồ từ năm 1923.",
-                bodyEn: "Founded in 1923 in Cau Da, this institute holds thousands of live marine species in glass aquariums, glowing coral displays, and a breathtaking 18-meter-long humpback whale skeleton.",
-                bodyVi: "Thành lập năm 1923 tại Cầu Đá, Viện Hải Dương Học lưu giữ hàng ngàn loài sinh vật biển sống trong bể kính, khu vực san hô phát sáng và bộ xương cá voi lưng gù khổng lồ dài 18m.",
+                category: "Ancient Architecture",
+                titleEn: "Ponagar Cham Towers: Sacred 8th-Century Architectural Marvel Overlooking Cai River",
+                titleVi: "Tháp Bà Ponagar: Tuyệt Tác Kiến Trúc Chăm Cổ Kính Bên Dòng Sông Cái",
+                leadEn: "Sacred temple complex honoring Goddess Yan Po Nagar with mortarless brick masonry.",
+                leadVi: "Quần thể đền tháp linh thiêng thờ Nữ thần Yan Po Nagar với kỹ thuật xây gạch không hồ độc đáo.",
+                bodyEn: "<p>Built between the 8th and 13th centuries, Ponagar Cham Towers stand majestically on Cu Lao hill in central Nha Trang. The brick towers are constructed using ancient mortarless techniques that remain a structural mystery today.</p><p>Visitors can enjoy daily traditional Cham dance performances, shadow puppet plays, and sweeping views over the Cai River fishing fleet and Nha Trang harbor.</p>",
+                bodyVi: "<p>Được xây dựng từ thế kỷ VIII đến thế kỷ XIII, Tháp Bà Ponagar tọa lạc uy nghiêm trên đỉnh đồi Cù Lao ngay trung tâm Nha Trang. Các ngôi tháp gạch nung được kết dính bằng kỹ thuật cổ truyền không dùng vữa mà vẫn vững bền qua nghìn năm.</p><p>Đến thăm di tích, du khách được thưởng thức các vũ điệu múa Chăm với tiếng trống Paranưng rộn ràng, ngắm xóm bóng và panorama toàn cảnh dòng sông Cái êm đềm.</p>",
+                img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=800&auto=format&fit=crop",
+                location: "Cu Lao Hill • Nha Trang Center",
+                url: "https://camranh.aero/explore/article/ponagar-cham-towers"
+            },
+            {
+                id: 15,
+                categoryId: "destinations",
+                category: "Marine Sanctuary",
+                titleEn: "Hon Mun Island: Marine Biodiversity Sanctuary & Scuba Diving Paradise",
+                titleVi: "Đảo Hòn Mun: Khu Bảo Tồn Biển & Thiên Đường Lặn Ngắm San Hô Số 1 Việt Nam",
+                leadEn: "Crystal-clear turquoise waters sheltering over 350 rare species of coral reefs.",
+                leadVi: "Làn nước xanh ngọc bích nuôi dưỡng hơn 350 loài san hô quý hiếm và sinh vật biển.",
+                bodyEn: "<p>Hon Mun Marine Reserve is recognized as Vietnam's top scuba diving and snorkeling destination. The island's unique ocean currents foster an extraordinarily diverse marine habitat home to tropical fish, sea turtles, and vibrant coral gardens.</p><p>Guided diving tours cater to both beginners and certified divers, offering underwater photography, glass-bottom boat excursions, and floating ocean bar experiences.</p>",
+                bodyVi: "<p>Khu bảo tồn biển Hòn Mun được chứng nhận là thiên đường lặn biển hàng đầu Việt Nam. Dòng hải lưu đặc biệt quanh đảo tạo điều kiện lý tưởng cho hơn 350 loài san hô cứng, san hô mềm cùng vô số loài cá biển rực rỡ sinh sống.</p><p>Du khách có thể lựa chọn dịch vụ lặn bình khí PADI, đi bộ dưới đáy biển (Seawalker) hoặc đi tàu đáy kính thưởng ngoạn rạn san hô mà không cần bơi lặn.</p>",
+                img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800&auto=format&fit=crop",
+                location: "Hon Mun Island • Nha Trang Bay",
+                url: "https://camranh.aero/explore/article/hon-mun-island-marine-sanctuary"
+            },
+            {
+                id: 16,
+                categoryId: "wellness",
+                category: "Thermal Spa",
+                titleEn: "Natural Thermal Mud Bathing: Rejuvenating Body and Mind in Nha Trang",
+                titleVi: "Tắm Bùn Khoáng Nóng Tự Nhiên: Liệu Pháp Chữa Lành Thân Tâm Tại Nha Trang",
+                leadEn: "Mineral-rich thermal mud springs promoting skin health and muscular relaxation.",
+                leadVi: "Suối bùn khoáng chứa hàm lượng vi chất tự nhiên giúp trẻ hóa làn da và giải độc cơ thể.",
+                bodyEn: "<p>Nha Trang's natural mineral mud is world-renowned for its therapeutic properties. High concentrations of minerals such as bromine and metasilicic acid aid in skin rejuvenation, blood circulation, and joint pain relief.</p><p>Popular spa complexes like I-Resort and Thap Ba Mud Bath combine hot mineral hydrotherapy waterfalls, herbal soak tubs, and private VIP jacuzzi bungalows set in lush tropical gardens.</p>",
+                bodyVi: "<p>Bùn khoáng nóng Nha Trang nổi tiếng thế giới nhờ đặc tính y học trị liệu vượt trội. Hàm lượng khoáng chất tự nhiên cao giúp tẩy tế bào chết, tăng cường tuần hoàn máu và hỗ trợ phục hồi sức khỏe cơ khớp.</p><p>Các khu du lịch tắm bùn hàng đầu như I-Resort hay Tắm bùn Tháp Bà cung cấp các bồn tắm bùn riêng tư, hệ thống massage ô-chút thủy lực và hồ ngâm thảo dược giữa khuôn viên xanh mát.</p>",
+                img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop",
+                location: "I-Resort & Thap Ba Mud Bath",
+                url: "https://camranh.aero/explore/article/natural-thermal-mud-bathing"
+            },
+            {
+                id: 17,
+                categoryId: "awards",
+                category: "Airport Excellence",
+                titleEn: "CXR Terminal T2 Named Top 5-Star Skytrax Regional Airport for Quality Service",
+                titleVi: "Nhà Ga T2 Sân Bay Cam Ranh Nhận Giải Thưởng Skytrax Về Chất Lượng Dịch Vụ",
+                leadEn: "International recognition for seamless digital immigration, hospitality, and architecture.",
+                leadVi: "Sự ghi nhận quốc tế về quy trình phục vụ thông minh, sự mến khách và kiến trúc độc đáo.",
+                bodyEn: "<p>Cam Ranh International Airport Terminal T2 continues to win international Skytrax accolades for high operational efficiency, rapid baggage handling, modern bird's nest architecture, and warm hospitality.</p><p>With automated self-check-in kiosks, AI assistance screens, VIP lounges, and fast-track immigration lanes, Terminal T2 ensures a stress-free passenger journey from arrival to departure.</p>",
+                bodyVi: "<p>Nhà ga Quốc tế T2 Sân bay Cam Ranh liên tục được vinh danh trong bảng xếp hạng Skytrax quốc tế nhờ hiệu quả vận hành vượt trội, thủ tục hành lý nhanh chóng và công trình kiến trúc lấy cảm hứng từ tổ yến Khánh Hòa.</p><p>Hệ thống Kiosk tự check-in thông minh, quầy hỗ trợ trợ lý ảo AI, phòng chờ CIP cao cấp và luồng ưu tiên nhập cảnh giúp mang lại sự thoải mái tối đa cho mọi hành khách.</p>",
+                img: "https://images.unsplash.com/photo-1519074069444-1ba4fff16be3?q=80&w=800&auto=format&fit=crop",
+                location: "Cam Ranh International Terminal T2",
+                url: "https://camranh.aero/explore/article/cxr-terminal-t2-skytrax-award"
+            },
+            {
+                id: 18,
+                categoryId: "destinations",
+                category: "Island Entertainment",
+                titleEn: "VinWonders Hon Tre Island: Sea-Crossing Cable Car and Tata Multimedia Show",
+                titleVi: "VinWonders Đảo Hòn Tre: Cáp Treo Vượt Biển & Tata Show Hoành Tráng",
+                leadEn: "A mega entertainment island featuring water parks, botanical domes, and roller coasters.",
+                leadVi: "Đảo giải trí kỷ lục với công viên nước, vườn thực vật 5 châu và trò chơi cảm giác mạnh.",
+                bodyEn: "<p>Located on Hon Tre Island, VinWonders is accessed via a spectacular 3.3km sea-crossing cable car offering 360-degree views over Nha Trang Bay. The park spans six thematic zones including a high-speed coaster, a world garden dome, and a massive splash waterpark.</p><p>At sunset, visitors witness the million-dollar Tata Show—a world-class multimedia performance combining 3D mapping, water fountains, real fire, and 150 international dancers.</p>",
+                bodyVi: "<p>Tọa lạc trên đảo Hòn Tre, VinWonders đón chào du khách bằng tuyến cáp treo vượt biển dài 3,3km ngắm toàn cảnh Vịnh Nha Trang từ trên cao. Công viên sở hữu 6 phân khu giải trí gồm tàu đu quay tăng tốc, đồi vạn hoa và công viên nước công nghệ cao.</p><p>Khi hoàng hôn buông xuống, du khách thưởng thức Tata Show—dạ tiệc thực cảnh đa phương tiện kết hợp chiếu 3D mapping, nhạc nước, lửa thật và 150 vũ công quốc tế trình diễn.</p>",
+                img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?q=80&w=800&auto=format&fit=crop",
+                location: "Hon Tre Island • Nha Trang Cable Car",
+                url: "https://camranh.aero/explore/article/vinwonders-hon-tre-island"
+            },
+            {
+                id: 19,
+                categoryId: "culture",
+                category: "Spiritual Culture",
+                titleEn: "Long Son Pagoda: Historic Sanctuary & Giant White Buddha Statue on Trai Thuy Hill",
+                titleVi: "Chùa Long Sơn: Di Tích Tâm Linh & Tượng Kim Thân Phật Tổ Khổng Lồ Trên Đồi Trại Thủy",
+                leadEn: "Peaceful Buddhist pagoda featuring a 24-meter white Buddha statue overlooking Nha Trang.",
+                leadVi: "Ngôi chùa Phật giáo cổ kính nổi tiếng với tượng Phật màu trắng cao 24m uy nghiêm trên đỉnh đồi.",
+                bodyEn: "<p>Established in 1886, Long Son Pagoda is the most famous Buddhist temple in Khanh Hoa province. Atop Trai Thuy Hill behind the main hall sits a monumental 24-meter-tall white Buddha statue sitting on a lotus pedestal visible throughout the city.</p><p>Visitors climbing the 193 stone steps can appreciate intricate dragon ceramic mosaics, peaceful chanting halls, and sweeping views across Nha Trang urban panorama.</p>",
+                bodyVi: "<p>Thành lập từ năm 1886, Chùa Long Sơn là trung tâm Phật giáo cổ kính và lớn nhất tỉnh Khánh Hòa. Trên đỉnh đồi Trại Thủy sau lưng chùa tọa lạc tượng Kim Thân Phật Tổ màu trắng cao 24m xô bóng xuống khoảng trời xanh ngắt.</p><p>Vượt qua 193 bậc đá, du khách được ngắm nhìn các công trình khảm sứ rồng phượng tinh xảo, lắng nghe tiếng chuông chùa thanh tĩnh và ngắm nhìn toàn cảnh thành phố Nha Trang từ trên cao.</p>",
+                img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop",
+                location: "Trai Thuy Hill • Nha Trang City",
+                url: "https://camranh.aero/explore/article/long-son-pagoda-white-buddha"
+            },
+            {
+                id: 20,
+                categoryId: "destinations",
+                category: "Pristine Islands",
+                titleEn: "Binh Ba & Binh Hung: The Unspoiled Lobster Islands inside Cam Ranh Bay",
+                titleVi: "Đảo Bình Ba & Bình Hưng: Vương Quốc Tôm Hùm Hoang Sơ Ngay Trong Vịnh Cam Ranh",
+                leadEn: "Emerald coves, floating lobster raft dining, and crystal-clear swimming beaches.",
+                leadVi: "Những bãi biển ngọc bích hoang sơ, thưởng thức tôm hùm tươi sống trên bè gỗ dập dềnh.",
+                bodyEn: "<p>Nestled inside protected Cam Ranh Bay, Binh Ba and Binh Hung islands are celebrated for their untouched turquoise waters, white sand coves, and fresh seafood aquaculture. The islands offer a peaceful glimpse into authentic Vietnamese fishing life.</p><p>Travelers can rent wooden boats to secluded snorkeling spots like Bai Sa Huynh, and enjoy freshly grilled lobsters served right on floating wooden farm rafts in the calm bay waters.</p>",
+                bodyVi: "<p>Nằm ẩn mình trong Vịnh Cam Ranh kin gió, đảo Bình Ba và Bình Hưng làm xiêu lòng du khách nhờ nước biển xanh trong thấy đáy, các bãi tắm hoang sơ và các làng chài nuôi tôm hùm truyền thống.</p><p>Du khách có thể thuê thuyền gỗ lặn ngắm san hô tại Bãi Cây Me, Bãi Sa Huỳnh và thưởng thức bữa tiệc tôm hùm nướng bơ tỏi ngay tại các nhà bè nổi dập dềnh trên biển.</p>",
+                img: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=800&auto=format&fit=crop",
+                location: "Cam Ranh Bay Islands • Ba Ngoi Port",
+                url: "https://camranh.aero/explore/article/binh-ba-binh-hung-lobster-islands"
+            },
+            {
+                id: 21,
+                categoryId: "culture",
+                category: "Ocean Museum",
+                titleEn: "National Oceanographic Museum: Preserving Vietnam's Marine Heritage Since 1923",
+                titleVi: "Viện Hải Dương Học: Nơi Lưu Giữ Di Sản Sinh Vật Biển Hàng Đầu Đông Nam Á",
+                leadEn: "Over 20,000 marine specimens and a giant 18-meter humpback whale skeleton.",
+                leadVi: "Lưu giữ hơn 20.000 mẫu vật biển và bộ xương cá voi lưng gù khổng lồ dài 18m.",
+                bodyEn: "<p>Founded in 1923 near Cau Da Port, the Institute of Oceanography is one of Vietnam's oldest scientific research centers. The museum houses thousands of living sea creatures in large glass aquariums including reef sharks, sea turtles, seahorses, and glowing anemones.</p><p>The highlight exhibit is a massive 18-meter-long humpback whale skeleton excavated from inland agricultural fields in 1994, fully preserved for public education.</p>",
+                bodyVi: "<p>Thành lập từ năm 1923 gần Cảng Cầu Đá, Viện Hải Dương Học là trung tâm nghiên cứu biển lâu đời nhất Đông Nam Á. Bảo tàng nuôi dưỡng hàng ngàn sinh vật biển sống trong hệ thống bể kính lớn như cá mập, đồi mồi, hải mã và san hô phát sáng.</p><p>Điểm nhấn thu hút du khách là bộ xương cá voi lưng gù khổng lồ dài 18m nặng 10 tấn được khai quật dưới lòng đất và phục dựng nguyên vẹn.</p>",
                 img: "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?q=80&w=800&auto=format&fit=crop",
                 location: "Cau Da Port • Nha Trang",
-                url: "https://camranh.aero/en/explore/oceanographic-museum"
+                url: "https://camranh.aero/explore/article/national-oceanographic-museum"
+            },
+            {
+                id: 22,
+                categoryId: "destinations",
+                category: "Ecotourism",
+                titleEn: "Yang Bay Waterfall Park: Forest Streams, Hot Springs & Raglai Musical Culture",
+                titleVi: "Công Viên Thác Yang Bay: Dòng Thác Rừng, Suối Khoáng & Âm Nhạc Raglai",
+                leadEn: "Trekking primary rainforest waterfalls, soaking in geothermal pools, and listening to stone chimes.",
+                leadVi: "Khám phá thác nước giữa rừng nguyên sinh, ngâm suối khoáng nóng và thưởng thức đàn đá Raglai.",
+                bodyEn: "<p>Yang Bay Eco-Park is located in a dense tropical forest valley surrounded by majestic mountains. Visitors can swim in natural rock pools under cascading waterfalls, soak in hot mineral sulfur springs, and feed lotus freshwater fish.</p><p>Cultural highlights include live ethnic Raglai musical performances using ancient stone chimes (Dan Da), bamboo flutes, and traditional storytelling under the sacred Mộc Thần tree.</p>",
+                bodyVi: "<p>Công viên Sinh thái Thác Yang Bay nằm ẩn mình trong thung lũng đại ngàn xanh mát. Du khách thỏa thích đắm mình trong làn nước mát lạnh dưới chân thác, ngâm suối khoáng nóng tự nhiên và cho cá mát mẻ ăn bình sữa.</p><p>Đặc biệt, du khách được thưởng thức chương trình biểu diễn âm nhạc dân tộc Raglai với tiếng đàn đá cổ sơ, khèn bầu và tìm hiểu văn hóa tâm linh bên cây Mộc Thần 500 năm tuổi.</p>",
+                img: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?q=80&w=800&auto=format&fit=crop",
+                location: "Yang Bay Valley • Khanh Vinh District",
+                url: "https://camranh.aero/explore/article/yang-bay-waterfall-park"
+            },
+            {
+                id: 23,
+                categoryId: "destinations",
+                category: "Coastal Escapes",
+                titleEn: "Van Phong Bay & Diep Son Island: Walking on the Submerged Sandbar in the Ocean",
+                titleVi: "Vịnh Vân Phong & Đảo Điệp Sơn: Con Đường Đi Bộ Trên Biển Độc Nhất Việt Nam",
+                leadEn: "A unique 800-meter underwater white sand pathway connecting three emerald islets.",
+                leadVi: "Con đường cát trắng uốn lượn chìm dưới làn nước biển kết nối 3 hòn đảo nhỏ.",
+                bodyEn: "<p>Located in northern Khanh Hoa, Van Phong Bay is a deep-water bay celebrated for quiet waters and pristine island archipelagos. Diep Son Island inside the bay features a famous 800-meter white sandbar submerged under knee-deep turquoise water at low tide.</p><p>Walking along this natural underwater bridge gives travelers the thrilling sensation of walking directly across the open sea surrounded by gentle waves and sea breeze.</p>",
+                bodyVi: "<p>Nằm ở phía bắc tỉnh Khánh Hòa, Vịnh Vân Phong nổi tiếng với khung cảnh thiên nhiên hùng vĩ và nước biển xanh trong veo. Đảo Điệp Sơn trong vịnh sở hữu con đường cát trắng chìm dưới biển dài 800m nối liền 3 hòn đảo nhỏ.</p><p>Khi thủy triều rút, con đường lộ ra giữa đại dương cho phép du khách thong dong đi bộ giữa lòng biển khơi, tận hưởng cảm giác kỳ thú như đang bước đi trên mặt nước.</p>",
+                img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
+                location: "Van Phong Bay • North Khanh Hoa",
+                url: "https://camranh.aero/explore/article/van-phong-bay-diep-son-pathway"
+            },
+            {
+                id: 24,
+                categoryId: "aviation",
+                category: "Aviation Expansion",
+                titleEn: "Singapore - Nha Trang Direct Flight: Strategic Boost Elevating International Tourism",
+                titleVi: "Khai Trương Đường Bay Trực Tiếp Singapore - Nha Trang: Bước Đột Phá Du Lịch Quốc Tế",
+                leadEn: "Connecting Changi International Transit Hub directly with Cam Ranh Airport 4 times weekly.",
+                leadVi: "Kết nối trung tâm quá cảnh Changi trực tiếp với Sân bay Cam Ranh 4 chuyến mỗi tuần.",
+                bodyEn: "<p>The official launch of direct flights connecting Singapore Changi Airport and Cam Ranh International Airport marks a strategic milestone for Khanh Hoa tourism. Operated with modern aircraft 4 times weekly, the route streamlines travel for global long-haul passengers.</p><p>Cam Ranh International Terminal T2 provides fast-track immigration, multi-lingual concierge kiosks, and luxury airport transfer buses to ensure a seamless arrival experience for Singaporean and international visitors.</p>",
+                bodyVi: "<p>Đường bay thẳng kết nối Sân bay Quốc tế Changi (Singapore) và Sân bay Quốc tế Cam Ranh chính thức vận hành 4 chuyến/tuần, mở ra thời kỳ bùng nổ đón dòng khách du lịch cao cấp và doanh nhân quốc tế.</p><p>Nhà ga T2 Cam Ranh đã sẵn sàng hạ tầng hiện đại, phân luồng nhập cảnh ưu tiên và các dịch vụ hỗ trợ đa ngôn ngữ giúp du khách có một khởi đầu hành trình hoàn hảo tại xứ trầm hương.</p>",
+                img: "https://images.unsplash.com/photo-1542296332-2e4473faf563?q=80&w=800&auto=format&fit=crop",
+                location: "Cam Ranh Terminal T2 & Changi Airport",
+                url: "https://camranh.aero/explore/article/singapore-nha-trang-direct-flight"
             }
         ];
 
@@ -1043,7 +1216,7 @@
 
         function selectCategory(catId) {
             selectedCategory = catId;
-            exploreCurrentPage = 0; // Reset pagination
+            exploreCurrentPage = 0; // Reset pagination on category switch
             renderCategoryBar();
             renderExploreGridPage();
         }
@@ -1159,7 +1332,7 @@
             document.getElementById('detail-location').innerText = article.location;
             document.getElementById('detail-title').innerText = currentLang === 'vi' ? article.titleVi : article.titleEn;
             document.getElementById('detail-lead').innerText = currentLang === 'vi' ? article.leadVi : article.leadEn;
-            document.getElementById('detail-body').innerHTML = `<p>${currentLang === 'vi' ? article.bodyVi : article.bodyEn}</p>`;
+            document.getElementById('detail-body').innerHTML = currentLang === 'vi' ? article.bodyVi : article.bodyEn;
             
             document.getElementById('detail-url-text').innerText = article.url;
 
