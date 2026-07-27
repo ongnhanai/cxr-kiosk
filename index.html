@@ -514,10 +514,6 @@
                 </div>
 
                 <div class="flex items-center space-x-3">
-                    <a href="https://camranh.aero/en/explore" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-teal/20 hover:bg-teal/30 text-teal border border-teal/40 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
-                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                        <span id="btn-explore-web">camranh.aero/explore</span>
-                    </a>
                     <button onclick="closeExploreModal()" class="p-3 bg-white/10 hover:bg-white/20 text-white rounded-xl transition">
                         <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
@@ -567,7 +563,7 @@
                     <div class="flex items-center justify-between pb-4 border-b border-white/15 sticky top-0 bg-slate-950/95 z-20 py-2">
                         <button onclick="backToExploreGrid()" class="px-5 py-2.5 bg-teal/20 hover:bg-teal/30 text-teal border border-teal/40 rounded-2xl text-xs font-extrabold transition flex items-center gap-2 touch-effect shadow-lg">
                             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                            <span id="btn-article-back">← Back to Articles List / Quay lại</span>
+                            <span id="btn-article-back">Quay lại danh sách</span>
                         </button>
 
                         <div class="flex items-center space-x-3">
@@ -597,9 +593,9 @@
                                     <i data-lucide="globe" class="w-4 h-4 text-teal"></i>
                                     <span>Official Source / Nguồn bài viết:</span>
                                 </div>
-                                <a id="article-detail-url" href="#" target="_blank" rel="noopener noreferrer" class="text-teal hover:underline text-xs font-mono font-bold break-all block">
+                                <span id="article-detail-url" class="text-teal text-xs font-mono font-bold break-all block select-text">
                                     camranh.aero/explore/article
-                                </a>
+                                </span>
                             </div>
                         </div>
 
@@ -619,12 +615,18 @@
                         </div>
                     </div>
 
-                    <!-- Article Footer Actions -->
+                    <!-- Article Footer Actions with Previous (<) and Next (>) Article Arrows -->
                     <div class="pt-4 border-t border-white/10 flex items-center justify-between">
-                        <button onclick="backToExploreGrid()" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl text-xs transition flex items-center gap-2">
-                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                            <span>← Return to List</span>
-                        </button>
+                        <div class="flex items-center space-x-3">
+                            <button onclick="prevArticleDetail()" class="px-4 py-2.5 bg-white/10 hover:bg-gold/30 hover:border-gold border border-white/20 text-white font-bold rounded-xl text-xs transition flex items-center gap-2 touch-effect shadow-md">
+                                <i data-lucide="chevron-left" class="w-4 h-4 text-gold"></i>
+                                <span id="btn-prev-article">Bài trước</span>
+                            </button>
+                            <button onclick="nextArticleDetail()" class="px-4 py-2.5 bg-white/10 hover:bg-gold/30 hover:border-gold border border-white/20 text-white font-bold rounded-xl text-xs transition flex items-center gap-2 touch-effect shadow-md">
+                                <span id="btn-next-article">Bài tiếp theo</span>
+                                <i data-lucide="chevron-right" class="w-4 h-4 text-gold"></i>
+                            </button>
+                        </div>
                         <span class="text-slate-400 text-xs font-mono">Cam Ranh International Terminal (CRTC) • Explore Guide</span>
                     </div>
                 </div>
@@ -1029,6 +1031,7 @@
         ];
 
         let exploreCurrentPage = 0;
+        let currentDetailIndex = -1;
         const ARTICLES_PER_PAGE = 4;
         let touchStartX = 0;
         let touchEndX = 0;
@@ -1077,7 +1080,7 @@
             container.innerHTML = pageArticles.map(article => `
                 <div class="bg-white/5 border border-white/15 rounded-2xl p-4 flex flex-col justify-between hover:bg-white/10 transition group shadow-xl relative overflow-hidden">
                     <div class="flex items-start space-x-4">
-                        <div class="relative w-36 h-28 rounded-xl overflow-hidden shrink-0 border border-white/15 shadow-md">
+                        <div onclick="viewArticleDetail('${article.id}')" class="relative w-36 h-28 rounded-xl overflow-hidden shrink-0 border border-white/15 shadow-md cursor-pointer">
                             <img src="${article.img}" alt="${article.titleEn}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                             <span class="absolute top-1.5 left-1.5 bg-teal/90 border border-white/20 backdrop-blur-md text-white text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
                                 ${article.category}
@@ -1088,7 +1091,7 @@
                                 <i data-lucide="map-pin" class="w-3 h-3"></i>
                                 <span>${article.location}</span>
                             </div>
-                            <h4 class="text-white font-bold text-sm leading-snug group-hover:text-gold transition-colors line-clamp-2">
+                            <h4 onclick="viewArticleDetail('${article.id}')" class="text-white font-bold text-sm leading-snug group-hover:text-gold transition-colors line-clamp-2 cursor-pointer">
                                 ${currentLang === 'vi' ? article.titleVi : article.titleEn}
                             </h4>
                             <p class="text-slate-300 text-xs mt-1.5 line-clamp-2 leading-relaxed">
@@ -1100,7 +1103,7 @@
                     <div class="pt-3 mt-2 border-t border-white/10 flex items-center justify-between">
                         <span class="text-[10px] text-slate-400 font-mono">${article.date}</span>
                         
-                        <!-- Open directly inside Kiosk Pop-up Reader without opening a new tab -->
+                        <!-- Open directly inside Kiosk Pop-up Reader -->
                         <button onclick="viewArticleDetail('${article.id}')" 
                                 class="px-3.5 py-1.5 bg-gradient-to-r from-teal to-teal-hover hover:brightness-110 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-1.5 touch-effect">
                             <span>${t.readMore}</span>
@@ -1119,8 +1122,10 @@
         }
 
         function viewArticleDetail(articleId) {
-            const article = exploreArticles.find(a => a.id === articleId);
-            if (!article) return;
+            const idx = exploreArticles.findIndex(a => a.id === articleId);
+            if (idx === -1) return;
+            currentDetailIndex = idx;
+            renderArticleDetail();
 
             const gridView = document.getElementById('explore-grid-view');
             const detailView = document.getElementById('explore-detail-view');
@@ -1128,26 +1133,40 @@
             if (gridView && detailView) {
                 gridView.classList.add('hidden');
                 detailView.classList.remove('hidden');
-
-                const t = i18n[currentLang] || i18n['en'];
-
-                // Populate Article Details
-                document.getElementById('article-detail-title').innerText = currentLang === 'vi' ? article.titleVi : article.titleEn;
-                document.getElementById('article-detail-lead').innerText = currentLang === 'vi' ? article.descVi : article.descEn;
-                document.getElementById('article-detail-category').innerText = article.category;
-                document.getElementById('article-detail-date').innerText = article.date;
-                document.getElementById('article-detail-location').innerText = article.location;
-                document.getElementById('article-detail-img').src = article.img;
-                document.getElementById('article-detail-url').innerText = article.url;
-                document.getElementById('article-detail-url').href = article.url;
-
-                // Format Article Content Paragraphs
-                const rawContent = currentLang === 'vi' ? article.contentVi : article.contentEn;
-                const paragraphs = rawContent.split('\n\n');
-                document.getElementById('article-detail-body').innerHTML = paragraphs.map(p => `<p class="leading-relaxed mb-3">${p}</p>`).join('');
-
-                if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
             }
+        }
+
+        function renderArticleDetail() {
+            if (currentDetailIndex < 0 || currentDetailIndex >= exploreArticles.length) return;
+            const article = exploreArticles[currentDetailIndex];
+
+            // Populate Article Details
+            document.getElementById('article-detail-title').innerText = currentLang === 'vi' ? article.titleVi : article.titleEn;
+            document.getElementById('article-detail-lead').innerText = currentLang === 'vi' ? article.descVi : article.descEn;
+            document.getElementById('article-detail-category').innerText = article.category;
+            document.getElementById('article-detail-date').innerText = article.date;
+            document.getElementById('article-detail-location').innerText = article.location;
+            document.getElementById('article-detail-img').src = article.img;
+            document.getElementById('article-detail-url').innerText = article.url;
+
+            // Format Article Content Paragraphs
+            const rawContent = currentLang === 'vi' ? article.contentVi : article.contentEn;
+            const paragraphs = rawContent.split('\n\n');
+            document.getElementById('article-detail-body').innerHTML = paragraphs.map(p => `<p class="leading-relaxed mb-3">${p}</p>`).join('');
+
+            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+        }
+
+        function prevArticleDetail() {
+            if (exploreArticles.length === 0) return;
+            currentDetailIndex = (currentDetailIndex - 1 + exploreArticles.length) % exploreArticles.length;
+            renderArticleDetail();
+        }
+
+        function nextArticleDetail() {
+            if (exploreArticles.length === 0) return;
+            currentDetailIndex = (currentDetailIndex + 1) % exploreArticles.length;
+            renderArticleDetail();
         }
 
         function backToExploreGrid() {
@@ -2014,7 +2033,9 @@
                 exploreHeaderTitle: "EXPLORE NHA TRANG - KHANH HOA",
                 exploreHeaderSub: "Pristine beaches, rich cultural heritage & coastal travel guides",
                 readMore: "Read Article",
-                backBtn: "← Back to Articles List",
+                backBtn: "Back to Articles List",
+                prevArticle: "Previous Article",
+                nextArticle: "Next Article",
                 swipeHint: "Swipe left/right or use arrow buttons"
             },
             vi: {
@@ -2068,7 +2089,9 @@
                 exploreHeaderTitle: "KHÁM PHÁ NHA TRANG - KHÁNH HÒA",
                 exploreHeaderSub: "Biển ngọc, di sản văn hóa & cẩm nang du lịch Khánh Hòa",
                 readMore: "Xem bài viết",
-                backBtn: "← Quay lại danh sách",
+                backBtn: "Quay lại danh sách",
+                prevArticle: "Bài trước",
+                nextArticle: "Bài tiếp theo",
                 swipeHint: "Vuốt trái/phải hoặc dùng nút mũi tên"
             },
             kr: {
@@ -2122,7 +2145,9 @@
                 exploreHeaderTitle: "나트랑 - 칸호아 탐험",
                 exploreHeaderSub: "아름다운 해변, 문화 유산 및 여행 가이드",
                 readMore: "기사 보기",
-                backBtn: "← 목록으로 돌아가기",
+                backBtn: "목록으로 돌아가기",
+                prevArticle: "이전 기사",
+                nextArticle: "다음 기사",
                 swipeHint: "좌우로 스와이프하거나 화살표 버튼 사용"
             },
             cn: {
@@ -2176,7 +2201,9 @@
                 exploreHeaderTitle: "芽庄 - 庆和探索",
                 exploreHeaderSub: "蔚蓝海滩、文化遗产与旅游攻略",
                 readMore: "阅读文章",
-                backBtn: "← 返回文章列表",
+                backBtn: "返回文章列表",
+                prevArticle: "上一篇",
+                nextArticle: "下一篇",
                 swipeHint: "左右滑动或使用箭头按钮"
             },
             ru: {
@@ -2230,7 +2257,9 @@
                 exploreHeaderTitle: "НЯЧАНГ - КХАНЬХОА ГИД",
                 exploreHeaderSub: "Чистейшие пляжи, культурное наследие и гид по региону",
                 readMore: "Читать",
-                backBtn: "← Назад к списку",
+                backBtn: "Назад к списку",
+                prevArticle: "Пред. статья",
+                nextArticle: "След. статья",
                 swipeHint: "Смахните влево/вправо или используйте стрелки"
             },
             jp: {
@@ -2284,7 +2313,9 @@
                 exploreHeaderTitle: "ニャチャン・カインホアガイド",
                 exploreHeaderSub: "美しいビーチ、文化遺産、観光情報",
                 readMore: "記事を読む",
-                backBtn: "← 記事一覧に戻る",
+                backBtn: "記事一覧に戻る",
+                prevArticle: "前の記事",
+                nextArticle: "次の記事",
                 swipeHint: "左右にスワイプするか矢印ボタンを使用"
             },
             fr: {
@@ -2338,7 +2369,9 @@
                 exploreHeaderTitle: "DÉCOUVRIR NHA TRANG - KHANH HOA",
                 exploreHeaderSub: "Plages magnifiques, patrimoine culturel & guides de voyage",
                 readMore: "Lire",
-                backBtn: "← Retour à la liste",
+                backBtn: "Retour à la liste",
+                prevArticle: "Article précédent",
+                nextArticle: "Article suivant",
                 swipeHint: "Balayez vers la gauche/droite ou utilisez les flèches"
             },
             de: {
@@ -2392,7 +2425,9 @@
                 exploreHeaderTitle: "NHA TRANG - KHANH HOA ENTDECKEN",
                 exploreHeaderSub: "Traumstrände, Kulturerbe & Reiseführer",
                 readMore: "Lesen",
-                backBtn: "← Zurück zur Liste",
+                backBtn: "Zurück zur Liste",
+                prevArticle: "Vorheriger Artikel",
+                nextArticle: "Nächster Artikel",
                 swipeHint: "Wischen Sie nach links/rechts oder nutzen Sie Pfeile"
             },
             th: {
@@ -2446,7 +2481,9 @@
                 exploreHeaderTitle: "สำรวจญาจาง - คั้ญฮวา",
                 exploreHeaderSub: "ชายหาดสวยงาม มรดกทางวัฒนธรรม และคู่มือการเดินทาง",
                 readMore: "อ่านบทความ",
-                backBtn: "← ย้อนกลับไปรายการบทความ",
+                backBtn: "ย้อนกลับไปรายการบทความ",
+                prevArticle: "บทความก่อนหน้า",
+                nextArticle: "บทความถัดไป",
                 swipeHint: "ปัดซ้าย/ขวา หรือใช้ปุ่มลูกศร"
             }
         };
@@ -2517,6 +2554,8 @@
             if(document.getElementById('modal-explore-close-btn')) document.getElementById('modal-explore-close-btn').innerText = t.closeBtn;
             if(document.getElementById('explore-swipe-hint')) document.getElementById('explore-swipe-hint').innerHTML = `<i data-lucide="hand" class="w-4 h-4 text-teal"></i> ${t.swipeHint}`;
             if(document.getElementById('btn-article-back')) document.getElementById('btn-article-back').innerText = t.backBtn;
+            if(document.getElementById('btn-prev-article')) document.getElementById('btn-prev-article').innerText = t.prevArticle;
+            if(document.getElementById('btn-next-article')) document.getElementById('btn-next-article').innerText = t.nextArticle;
 
             if(document.getElementById('faq-header')) document.getElementById('faq-header').innerText = t.faqHeader;
             if(document.getElementById('faq-1')) document.getElementById('faq-1').innerText = t.faq1;
@@ -2532,6 +2571,7 @@
             }
 
             renderExploreGridPage();
+            if (currentDetailIndex >= 0) renderArticleDetail();
 
             if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
             updateClock();
