@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kiosk Sân Bay Quốc Tế Cam Ranh - CXR Smart Hub</title>
+    <title>CXR AI Kiosk - CloryAI AeroHub Agent</title>
 
     <!-- Hidden Media Element for Remote WebRTC Video & Audio Stream -->
     <video id="sip-remote-video" autoplay playsinline style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></video>
@@ -334,7 +334,7 @@
 
                     <div onclick="openMapModal()" class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition cursor-pointer group">
                         <div class="w-9 h-9 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 mb-2 group-hover:scale-105 transition-transform">
-                            <i data-lucide="bath" class="w-4.5 h-4.5"></i>
+                            <i data-lucide="toilet" class="w-4.5 h-4.5"></i>
                         </div>
                         <div>
                             <div class="text-white font-bold text-[11px] leading-tight group-hover:text-cyan-300 transition-colors" id="amenity-4-title">Restrooms (WC)</div>
@@ -555,23 +555,23 @@
                                     <span id="explore-location-tag">Khanh Hoa, Vietnam</span>
                                 </div>
                                 <h4 id="explore-title" class="text-2xl xl:text-3xl font-extrabold text-white leading-tight">
-                                    Ponagar Cham Towers
-                                </h4>
-                                <p id="explore-desc" class="text-slate-300 text-sm mt-3 leading-relaxed">
-                                    Experience ancient Cham architecture dating back to the 8th century, perched on Cu Lao hill overlooking the Cai River in Nha Trang.
-                                </p>
-                            </div>
+            <!-- Modal Body: Swipe & Touch Navigation Carousel (4 Articles Grid Per Page) -->
+            <div class="flex-1 bg-gradient-to-br from-slate-950 via-navy-dark to-slate-900 p-8 flex flex-col justify-between relative overflow-hidden" id="explore-carousel-area">
+                
+                <!-- Left Nav Arrow Button -->
+                <button onclick="prevExploreSlide()" class="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-black/60 border border-white/20 hover:border-gold hover:bg-gold/20 text-white flex items-center justify-center transition shadow-2xl touch-effect">
+                    <i data-lucide="chevron-left" class="w-8 h-8"></i>
+                </button>
 
-                            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
-                                <span class="text-slate-400 text-xs flex items-center gap-1.5" id="explore-swipe-hint">
-                                    <i data-lucide="hand" class="w-4 h-4 text-teal"></i> Swipe left/right or use arrows
-                                </span>
-                                <a href="https://camranh.aero/vi/explore" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-gradient-to-r from-teal to-teal-hover hover:brightness-110 text-white text-xs font-bold rounded-xl shadow-lg transition flex items-center gap-2">
-                                    <span id="btn-read-more">Read Full Article</span>
-                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                                </a>
-                            </div>
-                        </div>
+                <!-- Right Nav Arrow Button -->
+                <button onclick="nextExploreSlide()" class="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-black/60 border border-white/20 hover:border-gold hover:bg-gold/20 text-white flex items-center justify-center transition shadow-2xl touch-effect">
+                    <i data-lucide="chevron-right" class="w-8 h-8"></i>
+                </button>
+
+                <!-- Slide Article Grid Container (4 Articles Grid) -->
+                <div class="flex-1 flex items-center justify-center px-12 relative z-10">
+                    <div id="explore-articles-grid" class="w-full max-w-6xl grid grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-300">
+                        <!-- Dynamic 4-card grid generated via JS -->
                     </div>
                 </div>
 
@@ -805,7 +805,7 @@
             targetExt: localStorage.getItem('cxr_sip_target') || '6666'
         };
 
-        // Explore Nha Trang Articles Data Array
+        // Explore Nha Trang Articles Data Array (4 items per page)
         const exploreArticles = [
             {
                 category: "Cultural Heritage",
@@ -814,47 +814,83 @@
                 descEn: "Ancient Cham Hindu architecture dating back to the 8th century, perched on Cu Lao hill overlooking the Cai River.",
                 descVi: "Quần thể kiến trúc Chăm Pa cổ kính từ thế kỷ VIII, tọa lạc trên đồi Cù Lao soi bóng bên dòng sông Cái.",
                 img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=1000&auto=format&fit=crop",
-                location: "Nha Trang City • 35km from CXR"
+                location: "Nha Trang City • 35km from CXR",
+                url: "https://camranh.aero/vi/explore"
             },
             {
                 category: "Marine Sanctuary",
                 titleEn: "Hon Mun Marine Reserve",
-                titleVi: "Khu Bảo Tồn Biển Đảo Hòn Mun",
-                descEn: "Crystal clear turquoise waters with over 350 species of rare coral reefs, a premier diving and snorkeling sanctuary.",
-                descVi: "Làn nước xanh ngọc bích cùng hơn 350 loài san hô quý hiếm, thiên đường lặn biển ngắm sinh vật biển hấp dẫn.",
+                titleVi: "Khu Bảo Tồn Biển Hòn Mun",
+                descEn: "Crystal clear turquoise waters with over 350 species of rare coral reefs, a premier snorkeling sanctuary.",
+                descVi: "Làn nước xanh ngọc bích cùng hơn 350 loài san hô quý hiếm, thiên đường lặn biển ngắm san hô hấp dẫn.",
                 img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=1000&auto=format&fit=crop",
-                location: "Nha Trang Bay • Boat Access"
+                location: "Nha Trang Bay • Boat Access",
+                url: "https://camranh.aero/vi/explore"
             },
             {
-                category: "Island Entertainment",
+                category: "Island Fun",
                 titleEn: "VinWonders Hon Tre Island",
                 titleVi: "VinWonders Đảo Hòn Tre",
-                descEn: "World-class amusement park featuring a sea-crossing cable car, waterpark, Tata Show & botanical gardens.",
-                descVi: "Tổ hợp giải trí đẳng cấp thế giới với cáp treo vượt biển, công viên nước, Tata Show đỉnh cao và đồi vạn hoa.",
+                descEn: "World-class amusement park featuring a sea-crossing cable car, waterpark & Tata Show.",
+                descVi: "Tổ hợp giải trí đẳng cấp thế giới với cáp treo vượt biển, công viên nước và Tata Show đỉnh cao.",
                 img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop",
-                location: "Hon Tre Island • Cable Car"
+                location: "Hon Tre Island • Cable Car",
+                url: "https://camranh.aero/vi/explore"
             },
             {
                 category: "Pristine Beaches",
                 titleEn: "Bai Dai Beach Cam Ranh",
                 titleVi: "Biển Bãi Dài Cam Ranh",
-                descEn: "Miles of powdery white sands and gentle crystal waters located right next to Cam Ranh International Airport.",
-                descVi: "Bãi cát trắng mịn trải dài mênh mông cùng làn nước trong xanh ngắt nằm ngay liền kề Sân bay Quốc tế Cam Ranh.",
+                descEn: "Miles of powdery white sands and gentle crystal waters located right next to Cam Ranh Airport.",
+                descVi: "Bãi cát trắng mịn trải dài mênh mông cùng làn nước trong xanh ngắt liền kề Sân bay Cam Ranh.",
                 img: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=1000&auto=format&fit=crop",
-                location: "Cam Ranh Peninsula • 5km from CXR"
+                location: "Cam Ranh Peninsula • 5km",
+                url: "https://camranh.aero/vi/explore"
             },
             {
                 category: "Local Culinary",
                 titleEn: "Nha Trang Seafood & Nem Nuong",
-                titleVi: "Ẩm Thực Nem Nướng & Hải Sản Nha Trang",
-                descEn: "Savor fresh grilled seafood, famous Ninh Hoa grilled pork rolls (Nem Nuong), and savory Banh Can pancakes.",
-                descVi: "Thưởng thức hải sản tươi sống đậm vị biển, nem nướng Ninh Hòa trứ danh và bánh căn giòn rụm thơm lừng.",
+                titleVi: "Ẩm Thực Nem Nướng & Hải Sản",
+                descEn: "Savor fresh grilled seafood, famous Ninh Hoa grilled pork rolls, and savory Banh Can pancakes.",
+                descVi: "Thưởng thức hải sản tươi sống đậm vị biển, nem nướng Ninh Hòa trứ danh và bánh căn giòn rụm.",
                 img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop",
-                location: "Khanh Hoa Gastronomy"
+                location: "Khanh Hoa Gastronomy",
+                url: "https://camranh.aero/vi/explore"
+            },
+            {
+                category: "Spiritual Landmark",
+                titleEn: "Long Son Pagoda & White Buddha",
+                titleVi: "Chùa Long Sơn & Tượng Phật Trắng",
+                descEn: "Historic Buddhist temple featuring a majestic 24-meter outdoor White Buddha statue atop Trai Thuy hill.",
+                descVi: "Ngôi chùa cổ kính trứ danh với pho tượng Kim Thân Phật Tổ cao 24m uy nghiêm trên đỉnh đồi Trại Thủy.",
+                img: "https://images.unsplash.com/photo-1563492065599-3520f775eeed?q=80&w=1000&auto=format&fit=crop",
+                location: "Nha Trang City Center",
+                url: "https://camranh.aero/vi/explore"
+            },
+            {
+                category: "Coastal Wonder",
+                titleEn: "Diep Son Island Water Path",
+                titleVi: "Con Đường Đi Bộ Giữa Biển Điệp Sơn",
+                descEn: "Unique sandbar walking trail connecting three islets amidst Van Phong Bay's emerald waters.",
+                descVi: "Con đường cát chìm dưới làn nước biển xanh ngọc nối liền 3 hòn đảo nhỏ tuyệt đẹp tại Vịnh Vân Phong.",
+                img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop",
+                location: "Van Phong Bay • Khanh Hoa",
+                url: "https://camranh.aero/vi/explore"
+            },
+            {
+                category: "Nature Haven",
+                titleEn: "Yang Bay Eco Waterfall Park",
+                titleVi: "Công Viên Sinh Thái Thác Yang Bay",
+                descEn: "Lush tropical rainforest, natural hot mineral springs, and majestic cascading waterfalls.",
+                descVi: "Rừng nguyên sinh bạt ngàn, suối khoáng nóng tự nhiên cùng dòng thác Yang Bay kỳ vĩ giữa đại ngàn.",
+                img: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?q=80&w=1000&auto=format&fit=crop",
+                location: "Khanh Vinh District • 45km",
+                url: "https://camranh.aero/vi/explore"
             }
         ];
 
-        let exploreCurrentIndex = 0;
+        let exploreCurrentPage = 0;
+        const exploreItemsPerPage = 4;
         let touchStartX = 0;
         let touchEndX = 0;
 
@@ -879,9 +915,8 @@
         });
 
         function openExploreModal() {
-            exploreCurrentIndex = 0;
+            exploreCurrentPage = 0;
             renderExploreSlide();
-            renderExploreDots();
             document.getElementById('explore-modal').classList.remove('hidden');
         }
 
@@ -890,18 +925,53 @@
         }
 
         function renderExploreSlide() {
-            const article = exploreArticles[exploreCurrentIndex];
-            const imgEl = document.getElementById('explore-img');
-            const badgeEl = document.getElementById('explore-category-badge');
-            const locEl = document.getElementById('explore-location-tag');
-            const titleEl = document.getElementById('explore-title');
-            const descEl = document.getElementById('explore-desc');
+            const gridContainer = document.getElementById('explore-articles-grid');
+            if (!gridContainer) return;
 
-            if (imgEl) imgEl.src = article.img;
-            if (badgeEl) badgeEl.innerText = article.category;
-            if (locEl) locEl.innerText = article.location;
-            if (titleEl) titleEl.innerText = currentLang === 'vi' ? article.titleVi : article.titleEn;
-            if (descEl) descEl.innerText = currentLang === 'vi' ? article.descVi : article.descEn;
+            gridContainer.innerHTML = '';
+            const startIndex = exploreCurrentPage * exploreItemsPerPage;
+            const pageArticles = exploreArticles.slice(startIndex, startIndex + exploreItemsPerPage);
+
+            pageArticles.forEach(article => {
+                const title = currentLang === 'vi' ? article.titleVi : article.titleEn;
+                const desc = currentLang === 'vi' ? article.descVi : article.descEn;
+                const readMoreText = i18n[currentLang]?.readMore || 'Read Full Article';
+
+                const cardHtml = `
+                    <div class="glass-dark border border-white/15 rounded-2xl p-4 flex flex-col justify-between hover:border-gold/50 transition-all shadow-xl group h-full">
+                        <div>
+                            <div class="relative rounded-xl overflow-hidden h-36 border border-white/10 mb-3">
+                                <img src="${article.img}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <span class="absolute top-2 left-2 bg-teal/90 border border-white/20 backdrop-blur-md text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                                    ${article.category}
+                                </span>
+                            </div>
+                            <div class="inline-flex items-center space-x-1 text-gold text-[10px] font-bold mb-1">
+                                <i data-lucide="map-pin" class="w-3 h-3"></i>
+                                <span>${article.location}</span>
+                            </div>
+                            <h4 class="text-sm font-extrabold text-white leading-snug line-clamp-2 group-hover:text-gold transition-colors">
+                                ${title}
+                            </h4>
+                            <p class="text-slate-300 text-[11px] mt-1.5 leading-relaxed line-clamp-3">
+                                ${desc}
+                            </p>
+                        </div>
+                        <div class="pt-3 mt-3 border-t border-white/10 flex items-center justify-between">
+                            <a href="${article.url}" target="_blank" rel="noopener noreferrer" 
+                               class="w-full py-1.5 px-3 bg-gradient-to-r from-teal to-teal-hover hover:brightness-110 text-white text-[11px] font-bold rounded-lg shadow-md transition flex items-center justify-center gap-1.5">
+                                <span>${readMoreText}</span>
+                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                gridContainer.insertAdjacentHTML('beforeend', cardHtml);
+            });
+
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
+            }
 
             renderExploreDots();
         }
@@ -910,18 +980,26 @@
             const container = document.getElementById('explore-dots-container');
             if (!container) return;
             container.innerHTML = '';
-            exploreArticles.forEach((_, idx) => {
+            const totalPages = Math.ceil(exploreArticles.length / exploreItemsPerPage);
+            for (let i = 0; i < totalPages; i++) {
                 const dot = document.createElement('button');
-                dot.onclick = () => { exploreCurrentIndex = idx; renderExploreSlide(); };
-                dot.className = idx === exploreCurrentIndex 
+                dot.onclick = () => { exploreCurrentPage = i; renderExploreSlide(); };
+                dot.className = i === exploreCurrentPage 
                     ? 'w-8 h-2.5 rounded-full bg-gold shadow-lg shadow-gold/50 transition-all' 
                     : 'w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all';
                 container.appendChild(dot);
-            });
+            }
         }
 
         function nextExploreSlide() {
-            exploreCurrentIndex = (exploreCurrentIndex + 1) % exploreArticles.length;
+            const totalPages = Math.ceil(exploreArticles.length / exploreItemsPerPage);
+            exploreCurrentPage = (exploreCurrentPage + 1) % totalPages;
+            renderExploreSlide();
+        }
+
+        function prevExploreSlide() {
+            const totalPages = Math.ceil(exploreArticles.length / exploreItemsPerPage);
+            exploreCurrentPage = (exploreCurrentPage - 1 + totalPages) % totalPages;
             renderExploreSlide();
         }
 
