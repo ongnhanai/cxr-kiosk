@@ -1,21 +1,230 @@
-<!-- ... existing code ... -->
+<!DOCTYPE html>
+<html lang="vi" class="h-full select-none">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Màn hình Kiosk Sân bay Cam Ranh (CXR)</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            dark: '#061528',
+                            card: '#0b2545',
+                            light: '#133a68'
+                        },
+                        teal: {
+                            DEFAULT: '#00a896',
+                            hover: '#028090',
+                            glow: '#05ceb5'
+                        },
+                        gold: {
+                            DEFAULT: '#f4a261',
+                            bright: '#ffb703',
+                            accent: '#e76f51'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 15px rgba(244, 162, 97, 0.3)' },
+                            '100%': { boxShadow: '0 0 30px rgba(244, 162, 97, 0.8)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Glassmorphism & UI Adjustments -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #061528;
+            color: #f8f9fa;
+            overflow: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(11, 37, 69, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .glass-panel-glow {
+            background: rgba(11, 37, 69, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 168, 150, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(0, 168, 150, 0.3);
+        }
+
+        .glass-gold-glow {
+            background: linear-gradient(135deg, rgba(244, 162, 97, 0.15) 0%, rgba(11, 37, 69, 0.85) 100%);
+            backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(244, 162, 97, 0.6);
+            box-shadow: 0 10px 30px -10px rgba(244, 162, 97, 0.4);
+        }
+
+        /* Custom Scrollbar for Dropdowns and Lists */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(6, 21, 40, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 168, 150, 0.5);
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 168, 150, 0.8);
+        }
+    </style>
+</head>
+
+<body class="h-full flex flex-col justify-between relative bg-gradient-to-br from-navy-dark via-[#091d36] to-navy-dark overflow-hidden text-slate-100">
+
+    <!-- TOP HEADER -->
+    <header class="relative z-30 w-full px-8 py-4 bg-navy-dark/90 border-b border-white/10 backdrop-blur-md flex items-center justify-between shadow-2xl">
+        <!-- Airport Logo & Terminal Badge -->
+        <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal to-teal-glow flex items-center justify-center shadow-lg shadow-teal/30">
+                <i data-lucide="plane-takeoff" class="w-7 h-7 text-navy-dark font-extrabold"></i>
+            </div>
+            <div>
+                <div class="flex items-center space-x-2">
+                    <h1 class="text-xl font-black tracking-wider text-white uppercase">SÂN BAY QUỐC TẾ CAM RANH</h1>
+                    <span class="bg-teal/20 text-teal border border-teal/40 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest">CXR • TERMINAL 2</span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs text-slate-400 mt-0.5" id="header-terminal-sub">
+                    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>Hệ thống Kiosk Thông tin & Hướng dẫn Hành khách 24/7</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Header Items: Weather, Clock & Multi-Language Switcher -->
+        <div class="flex items-center space-x-6">
+            <!-- Weather Widget (Real-time Open-Meteo API) -->
+            <div class="flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-2 rounded-xl backdrop-blur-sm" id="weather-widget">
+                <div class="text-teal" id="weather-icon-container">
+                    <i data-lucide="sun-cloud" class="w-6 h-6 animate-pulse"></i>
+                </div>
+                <div>
+                    <div class="text-xs text-slate-400 font-medium">Cam Ranh, VN</div>
+                    <div class="text-sm font-bold text-white flex items-center space-x-1">
+                        <span id="weather-temp">29°C</span>
+                        <span class="text-slate-400 font-normal">|</span>
+                        <span id="weather-desc" class="text-xs text-slate-300 font-normal">Nắng nhẹ</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Clock -->
+            <div class="text-right">
+                <div id="live-time" class="text-2xl font-black tracking-tight text-white font-mono leading-none">00:00:00</div>
+                <div id="live-date" class="text-xs font-semibold text-teal tracking-wide mt-1">Thứ Hai, 03/08/2026</div>
+            </div>
+
+            <!-- Multi-Language Switcher -->
+            <div class="relative inline-block text-left" id="lang-dropdown-wrapper">
+                <div class="flex items-center space-x-1 bg-white/5 border border-white/10 p-1 rounded-2xl">
+                    <!-- Direct Quick Languages -->
+                    <button onclick="changeLanguage('VIE')" id="lang-btn-VIE" class="lang-btn px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 bg-teal text-navy-dark shadow-md">VIE</button>
+                    <button onclick="changeLanguage('ENG')" id="lang-btn-ENG" class="lang-btn px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 text-slate-300 hover:text-white hover:bg-white/10">ENG</button>
+                    <button onclick="changeLanguage('KOR')" id="lang-btn-KOR" class="lang-btn px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 text-slate-300 hover:text-white hover:bg-white/10">KOR</button>
+                    <button onclick="changeLanguage('CHN')" id="lang-btn-CHN" class="lang-btn px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 text-slate-300 hover:text-white hover:bg-white/10">CHN</button>
+                    
+                    <!-- Dropdown Trigger for More Languages -->
+                    <button onclick="toggleLangDropdown()" id="lang-more-btn" class="flex items-center space-x-1 px-2.5 py-1.5 rounded-xl text-xs font-bold text-gold hover:bg-gold/10 transition-all border border-gold/30">
+                        <i data-lucide="globe" class="w-3.5 h-3.5 text-gold"></i>
+                        <span id="current-more-lang-code">+5</span>
+                        <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+
+                <!-- Expanded Dropdown Menu (On Top z-50) -->
+                <div id="lang-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 rounded-2xl glass-panel-glow bg-navy-dark/95 border border-teal/40 shadow-2xl p-2 z-[100] transition-all duration-200">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 py-1.5 border-b border-white/10" id="dropdown-header-title">Ngôn ngữ khác</div>
+                    <div class="py-1">
+                        <button onclick="changeLanguage('RUS')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:bg-teal/20 hover:text-teal transition flex items-center justify-between">
+                            <span>Русский (Nga)</span>
+                            <span class="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-slate-400">RUS</span>
+                        </button>
+                        <button onclick="changeLanguage('JPN')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:bg-teal/20 hover:text-teal transition flex items-center justify-between">
+                            <span>日本語 (Nhật)</span>
+                            <span class="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-slate-400">JPN</span>
+                        </button>
+                        <button onclick="changeLanguage('FRA')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:bg-teal/20 hover:text-teal transition flex items-center justify-between">
+                            <span>Français (Pháp)</span>
+                            <span class="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-slate-400">FRA</span>
+                        </button>
+                        <button onclick="changeLanguage('GER')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:bg-teal/20 hover:text-teal transition flex items-center justify-between">
+                            <span>Deutsch (Đức)</span>
+                            <span class="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-slate-400">GER</span>
+                        </button>
+                        <button onclick="changeLanguage('THA')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:bg-teal/20 hover:text-teal transition flex items-center justify-between">
+                            <span>ไทย (Thái)</span>
+                            <span class="text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-slate-400">THA</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN INTERACTIVE CONTENT AREA -->
+    <main class="relative z-10 flex-1 p-8 grid grid-cols-12 gap-8 items-stretch overflow-hidden">
+        
+        <!-- LEFT COLUMN: Multilingual Hero Card & Amenities Board (7 Cols) -->
+        <div class="col-span-7 flex flex-col space-y-6">
+            
+            <!-- Hero Card: Auto-rotating Multilingual Banner with Prominent Hotline -->
+            <div class="glass-panel rounded-3xl p-7 relative overflow-hidden flex-1 flex flex-col justify-between border border-white/15 bg-gradient-to-br from-navy-card/90 via-navy-card/70 to-teal/10 shadow-2xl">
+                <!-- Background Decorative Elements -->
+                <div class="absolute -right-16 -top-16 w-64 h-64 bg-teal/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+
                 <div class="relative z-10 transition-opacity duration-500" id="hero-content-container">
                     <div class="inline-flex items-center space-x-2 bg-gradient-to-r from-gold/30 to-gold/10 border border-gold/40 px-4 py-1.5 rounded-full mb-4">
                         <i data-lucide="sparkles" class="w-4 h-4 text-gold"></i>
-                        <span class="text-gold text-xs font-bold tracking-widest uppercase" id="welcome-tag">Welcome Valued Passengers</span>
+                        <span class="text-gold text-xs font-bold tracking-widest uppercase" id="welcome-tag">Chào Mừng Quý Khách</span>
                     </div>
 
                     <h2 class="text-4xl xl:text-5xl font-black text-white leading-tight tracking-tight mb-3" id="welcome-title">
-                        WELCOME TO <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold">CAM RANH INTL AIRPORT</span>
+                        CHÀO MỪNG ĐẾN VỚI <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold">SÂN BAY QUỐC TẾ CAM RANH</span>
                     </h2>
 
                     <p class="text-slate-300 text-base max-w-xl font-normal leading-relaxed mb-4" id="welcome-sub">
-                        Experience world-class aviation services and 24/7 intelligent assistance for your journey.
+                        Trải nghiệm dịch vụ hàng không đẳng cấp quốc tế cùng hệ thống hỗ trợ thông minh 24/7.
                     </p>
                 </div>
 
-                <!-- Carousel Footer: Wi-Fi Highlight, Airport Hotline & Dots -->
+                <!-- Carousel Footer: Wi-Fi Highlight, Prominent Airport Hotline & Dots -->
                 <div class="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between">
                     <div class="flex items-center space-x-5">
                         <!-- Wi-Fi Info Box -->
@@ -24,7 +233,7 @@
                                 <i data-lucide="wifi" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <div class="text-white text-xs font-bold" id="wifi-label">Free Wi-Fi Highspeed</div>
+                                <div class="text-white text-xs font-bold" id="wifi-label">Wi-Fi Tốc Độ Cao Miễn Phí</div>
                                 <div class="text-slate-400 text-[11px]">@CamRanh_Airport_Free</div>
                             </div>
                         </div>
@@ -32,9 +241,9 @@
                         <!-- Vertical Divider -->
                         <div class="h-8 w-px bg-white/20"></div>
 
-                        <!-- Prominent Airport Hotline Highlight Box (Positioned right beside Wi-Fi) -->
-                        <div class="flex items-center space-x-3 bg-gradient-to-r from-amber-500/20 via-gold/30 to-amber-500/20 border-2 border-gold/70 px-4 py-2 rounded-2xl shadow-xl shadow-gold/20 backdrop-blur-md animate-pulse-slow">
-                            <div class="w-9.5 h-9.5 rounded-xl bg-gold text-navy-dark flex items-center justify-center font-extrabold flex-shrink-0 shadow-md">
+                        <!-- PROMINENT AIRPORT HOTLINE HIGHLIGHT BOX (Positioned Right Beside Wi-Fi) -->
+                        <div class="flex items-center space-x-3 bg-gradient-to-r from-amber-500/20 via-gold/30 to-amber-500/20 border-2 border-gold/70 px-4 py-2.5 rounded-2xl shadow-xl shadow-gold/20 backdrop-blur-md animate-pulse-slow">
+                            <div class="w-10 h-10 rounded-xl bg-gold text-navy-dark flex items-center justify-center font-extrabold flex-shrink-0 shadow-md">
                                 <i data-lucide="phone-call" class="w-5 h-5 text-navy-dark animate-pulse"></i>
                             </div>
                             <div>
@@ -56,11 +265,123 @@
             </div>
 
             <!-- Terminal Amenities Board -->
-<!-- ... existing code ... -->
-    <footer class="relative z-10 w-full bg-navy-dark/95 border-t border-white/10 px-8 py-3 flex items-center justify-between">
+            <div class="grid grid-cols-4 gap-4">
+                <div onclick="openMapModal('dining')" class="glass-panel p-4 rounded-2xl border border-white/10 hover:border-teal/50 cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-95 group">
+                    <div class="w-10 h-10 rounded-xl bg-teal/20 text-teal flex items-center justify-center mb-3 group-hover:bg-teal group-hover:text-navy-dark transition-all">
+                        <i data-lucide="utensils" class="w-5 h-5"></i>
+                    </div>
+                    <div class="text-white font-bold text-sm" id="amenity-1-title">Ăn Uống & Nhà Hàng</div>
+                    <div class="text-slate-400 text-xs mt-1" id="amenity-1-sub">Tầng 1 & Tầng 2</div>
+                </div>
+
+                <div onclick="openMapModal('shopping')" class="glass-panel p-4 rounded-2xl border border-white/10 hover:border-teal/50 cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-95 group">
+                    <div class="w-10 h-10 rounded-xl bg-teal/20 text-teal flex items-center justify-center mb-3 group-hover:bg-teal group-hover:text-navy-dark transition-all">
+                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    </div>
+                    <div class="text-white font-bold text-sm" id="amenity-2-title">Mua Sắm Duty Free</div>
+                    <div class="text-slate-400 text-xs mt-1" id="amenity-2-sub">Sảnh Tầng 2</div>
+                </div>
+
+                <div onclick="openMapModal('lounge')" class="glass-panel p-4 rounded-2xl border border-white/10 hover:border-teal/50 cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-95 group">
+                    <div class="w-10 h-10 rounded-xl bg-gold/20 text-gold flex items-center justify-center mb-3 group-hover:bg-gold group-hover:text-navy-dark transition-all">
+                        <i data-lucide="armchair" class="w-5 h-5"></i>
+                    </div>
+                    <div class="text-white font-bold text-sm" id="amenity-3-title">Phòng Chờ CIP/VIP</div>
+                    <div class="text-slate-400 text-xs mt-1" id="amenity-3-sub">Tầng 2 Ga Quốc tế</div>
+                </div>
+
+                <div onclick="openMapModal('wc')" class="glass-panel p-4 rounded-2xl border border-white/10 hover:border-teal/50 cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-95 group">
+                    <div class="w-10 h-10 rounded-xl bg-teal/20 text-teal flex items-center justify-center mb-3 group-hover:bg-teal group-hover:text-navy-dark transition-all">
+                        <i data-lucide="footprints" class="w-5 h-5"></i>
+                    </div>
+                    <div class="text-white font-bold text-sm" id="amenity-4-title">Khu Vực Vệ Sinh</div>
+                    <div class="text-slate-400 text-xs mt-1" id="amenity-4-sub">Tất cả các tầng</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: 2 Giant Interactive Entry Cards (5 Cols) -->
+        <div class="col-span-5 grid grid-rows-2 gap-6">
+            
+            <!-- CARD 1: INTERACTIVE AIRPORT MAP -->
+            <div onclick="openMapModal()" class="glass-panel-glow rounded-3xl p-8 relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.01] active:scale-98 group flex flex-col justify-between border-2 border-teal/40 hover:border-teal bg-gradient-to-br from-navy-card/95 via-navy-card/80 to-teal/20 shadow-2xl">
+                <!-- Decorative Map Pulse Pin -->
+                <div class="absolute top-6 right-6 w-16 h-16 rounded-full bg-teal/10 border border-teal/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <span class="absolute w-12 h-12 rounded-full bg-teal/20 animate-ping"></span>
+                    <i data-lucide="map-pin" class="w-8 h-8 text-teal"></i>
+                </div>
+
+                <div>
+                    <div class="inline-flex items-center space-x-2 bg-teal/20 border border-teal/40 px-3.5 py-1 rounded-full mb-4">
+                        <span class="w-2 h-2 rounded-full bg-teal animate-pulse"></span>
+                        <span class="text-teal text-xs font-bold uppercase tracking-wider" id="card1-badge">Dẫn Đường 2D & 3D</span>
+                    </div>
+
+                    <h3 class="text-3xl font-black text-white leading-tight group-hover:text-teal transition-colors" id="card1-title">
+                        BẢN ĐỒ SÂN BAY <br>TƯƠNG TÁC
+                    </h3>
+
+                    <p class="text-slate-300 text-sm mt-3 max-w-xs" id="card1-desc">
+                        Tra cứu cổng ra máy bay, quầy làm thủ tục, khu miễn thuế & tiện ích nhà ga T1/T2.
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between pt-6 border-t border-white/10">
+                    <span class="text-xs font-bold text-teal flex items-center gap-1 group-hover:translate-x-1 transition-transform" id="card1-action">
+                        Mở Sơ Đồ Chi Tiết <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </span>
+                    <div class="px-4 py-2 rounded-xl bg-teal text-navy-dark font-extrabold text-xs shadow-lg group-hover:bg-teal-glow transition">
+                        XEM BẢN ĐỒ
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 2: CLORY AI ASSISTANT -->
+            <div onclick="openAiModal()" class="glass-gold-glow rounded-3xl p-8 relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.01] active:scale-98 group flex flex-col justify-between border-2 border-gold/60 hover:border-gold bg-gradient-to-br from-navy-card/95 via-navy-card/80 to-gold/20 shadow-2xl">
+                <!-- Decorative AI Orb Glow -->
+                <div class="absolute -right-8 -bottom-8 w-48 h-48 bg-gold/20 rounded-full blur-2xl group-hover:bg-gold/30 transition-all pointer-events-none"></div>
+
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="inline-flex items-center space-x-2 bg-gold/20 border border-gold/40 px-3.5 py-1 rounded-full mb-4">
+                            <i data-lucide="bot" class="w-3.5 h-3.5 text-gold"></i>
+                            <span class="text-gold text-xs font-bold uppercase tracking-wider" id="card2-badge">Trợ Lý Ảo Thông Minh</span>
+                        </div>
+
+                        <h3 class="text-3xl font-black text-white leading-tight group-hover:text-gold transition-colors" id="card2-title">
+                            TRỢ LÝ AI CLORY <br>HỎI ĐÁP GiỌNG NÓI
+                        </h3>
+
+                        <p class="text-slate-300 text-sm mt-3 max-w-xs" id="card2-desc">
+                            Hỏi đáp chuyến bay, tra cứu thông tin hành lý, xe bus, taxi & tư vấn du lịch Nha Trang.
+                        </p>
+                    </div>
+
+                    <!-- AI Avatar Icon -->
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold to-amber-600 flex items-center justify-center text-navy-dark font-black shadow-lg shadow-gold/30 animate-float">
+                        <i data-lucide="mic" class="w-8 h-8"></i>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-6 border-t border-white/10 relative z-10">
+                    <span class="text-xs font-bold text-gold flex items-center gap-1 group-hover:translate-x-1 transition-transform" id="card2-action">
+                        Chạm Để Trò Chuyện <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </span>
+                    <div class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-gold to-amber-500 text-navy-dark font-black text-xs shadow-lg group-hover:brightness-110 transition">
+                        NÓI CHUYỆN VỚI CLORY
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- BOTTOM FOOTER (Medical/SOS & Info Desk Removed) -->
+    <footer class="relative z-10 w-full bg-navy-dark/95 border-t border-white/10 px-8 py-3.5 flex items-center justify-between">
         <!-- Hotlines & Contacts -->
         <div class="flex items-center space-x-4 text-xs text-slate-300">
-            <div class="flex items-center space-x-2 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-xl">
+            <div class="flex items-center space-x-2 bg-white/5 border border-white/10 px-4 py-1.5 rounded-xl">
                 <i data-lucide="phone-call" class="w-4 h-4 text-gold animate-pulse"></i>
                 <span class="font-bold text-slate-200" id="footer-hotline-label">Airport Hotline 24/7:</span>
                 <span class="text-gold font-extrabold font-mono text-sm tracking-wide">02583 989 956 - 0981 927 018</span>
@@ -68,20 +389,674 @@
         </div>
 
         <div class="flex items-center space-x-6">
-<!-- ... existing code ... -->
-            if(document.getElementById('amenity-5-title')) document.getElementById('amenity-5-title').innerText = t.amenity5Title;
-            if(document.getElementById('amenity-5-sub')) document.getElementById('amenity-5-sub').innerText = t.amenity5Sub;
+            <div class="text-slate-400 text-xs flex items-center gap-1.5" id="touch-hint-container">
+                <i data-lucide="hand-metal" class="w-4 h-4 text-teal animate-bounce"></i>
+                <span id="touch-hint" class="font-medium">Chạm vào bất kỳ vị trí nào trên màn hình để sử dụng</span>
+            </div>
+            
+            <div class="h-4 w-px bg-white/15"></div>
+
+            <div class="text-[11px] text-slate-400">
+                © 2026 CloryAI AeroHub Agent. Powered by <a href="https://www.dntg.com.vn" target="_blank" class="text-teal hover:underline font-bold">DNTG</a>.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: INTERACTIVE AIRPORT MAP MODAL -->
+    <div id="modal-map" class="fixed inset-0 z-50 bg-navy-dark/90 backdrop-blur-xl hidden flex-col transition-opacity duration-300">
+        <!-- Modal Header -->
+        <div class="px-8 py-4 border-b border-white/10 flex items-center justify-between bg-navy-dark/95">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-teal/20 text-teal flex items-center justify-center">
+                    <i data-lucide="map" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-black text-white uppercase" id="modal-map-header-title">Sơ Đồ Nhà Ga Quốc Tế Cam Ranh (T2)</h3>
+                    <p class="text-xs text-slate-400" id="modal-map-header-sub">Chọn khu vực hoặc tầng để xem thông tin vị trí</p>
+                </div>
+            </div>
+
+            <!-- Floor Selector Switcher -->
+            <div class="flex items-center space-x-2 bg-white/5 p-1 rounded-2xl border border-white/10">
+                <button onclick="switchFloor(1)" id="floor-btn-1" class="px-4 py-2 rounded-xl text-xs font-bold bg-teal text-navy-dark transition">Tầng 1 (Sảnh Đến / Arrival)</button>
+                <button onclick="switchFloor(2)" id="floor-btn-2" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition">Tầng 2 (Sảnh Đi / Departure)</button>
+            </div>
+
+            <button onclick="closeMapModal()" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-rose-500/20 hover:text-rose-400 text-slate-300 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Modal Body (SVG Interactive Floor Plan) -->
+        <div class="flex-1 p-8 relative flex items-center justify-center overflow-hidden bg-navy-dark/50">
+            <div id="map-container" class="w-full h-full max-w-6xl max-h-[75vh] glass-panel rounded-3xl p-6 relative border border-white/15 flex items-center justify-center">
+                <!-- Interactive SVG Map Graphics -->
+                <svg id="interactive-svg-map" viewBox="0 0 1000 500" class="w-full h-full drop-shadow-2xl">
+                    <!-- Floor Outline -->
+                    <rect x="50" y="50" width="900" height="400" rx="30" fill="#0b2545" stroke="#00a896" stroke-width="3" stroke-dasharray="8 4" opacity="0.6"/>
+                    
+                    <!-- Gates Area (Top Row) -->
+                    <g id="map-layer-gates">
+                        <rect x="80" y="80" width="160" height="90" rx="16" fill="#133a68" stroke="rgba(255,255,255,0.2)" />
+                        <text x="160" y="125" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Gate 1 - 4</text>
+                        
+                        <rect x="260" y="80" width="160" height="90" rx="16" fill="#133a68" stroke="rgba(255,255,255,0.2)" />
+                        <text x="340" y="125" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Gate 5 - 8</text>
+
+                        <rect x="440" y="80" width="160" height="90" rx="16" fill="#133a68" stroke="rgba(255,255,255,0.2)" />
+                        <text x="520" y="125" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Gate 9 - 12</text>
+                    </g>
+
+                    <!-- Central Lounge & Duty Free -->
+                    <g id="map-layer-amenities">
+                        <rect id="zone-duty-free" x="620" y="80" width="300" height="150" rx="20" fill="rgba(0,168,150,0.15)" stroke="#00a896" stroke-width="2" />
+                        <text x="770" y="150" text-anchor="middle" fill="#00a896" font-size="16" font-weight="black">DUTY FREE SHOPPING</text>
+
+                        <rect id="zone-lounge" x="80" y="200" width="220" height="120" rx="20" fill="rgba(244,162,97,0.15)" stroke="#f4a261" stroke-width="2" />
+                        <text x="190" y="260" text-anchor="middle" fill="#f4a261" font-size="15" font-weight="black">CIP / VIP LOUNGE</text>
+                    </g>
+
+                    <!-- Dining Area & WC -->
+                    <g id="map-layer-services">
+                        <rect id="zone-dining" x="320" y="200" width="280" height="120" rx="20" fill="rgba(2,128,144,0.2)" stroke="#028090" stroke-width="2" />
+                        <text x="460" y="260" text-anchor="middle" fill="#38bdf8" font-size="15" font-weight="bold">KHU ẨM THỰC / DINING</text>
+
+                        <rect id="zone-wc" x="620" y="250" width="140" height="180" rx="20" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" />
+                        <text x="690" y="345" text-anchor="middle" fill="#94a3b8" font-size="14" font-weight="bold">WC / RESTROOMS</text>
+                        
+                        <!-- Info Desk -->
+                        <circle x="840" y="340" r="45" fill="rgba(244,162,97,0.3)" stroke="#f4a261" stroke-width="2" />
+                        <text x="840" y="345" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">INFO DESK</text>
+                    </g>
+
+                    <!-- Kiosk Current Location Marker -->
+                    <g id="current-kiosk-marker" transform="translate(500, 410)">
+                        <circle r="18" fill="#f4a261" class="animate-ping" opacity="0.6"/>
+                        <circle r="10" fill="#f4a261"/>
+                        <text x="0" y="30" text-anchor="middle" fill="#f4a261" font-size="12" font-weight="bold">BẠN ĐANG Ở ĐÂY (YOU ARE HERE)</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: CLORY AI VOICE ASSISTANT MODAL -->
+    <div id="modal-ai" class="fixed inset-0 z-50 bg-navy-dark/95 backdrop-blur-2xl hidden flex-col transition-opacity duration-300">
+        <!-- Modal Header -->
+        <div class="px-8 py-4 border-b border-white/10 flex items-center justify-between bg-navy-dark/90">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gold/20 text-gold flex items-center justify-center">
+                    <i data-lucide="bot" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-black text-white uppercase" id="modal-ai-header-title">Trợ Lý Ảo Sân Bay Clory AI</h3>
+                    <p class="text-xs text-slate-400" id="modal-ai-header-sub">Sẵn sàng lắng nghe và giải đáp mọi thắc mắc của bạn</p>
+                </div>
+            </div>
+
+            <button onclick="closeAiModal()" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-rose-500/20 hover:text-rose-400 text-slate-300 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Modal Body: Conversation & Voice Reactive Orb -->
+        <div class="flex-1 p-8 grid grid-cols-12 gap-8 items-center overflow-hidden">
+            <!-- Left Side: Interactive Chat Display (7 Cols) -->
+            <div class="col-span-7 h-full flex flex-col justify-between glass-panel rounded-3xl p-6 border border-white/10">
+                <div class="space-y-4 overflow-y-auto pr-2 flex-1" id="chat-messages-container">
+                    <!-- Clory Initial Greeting Message -->
+                    <div class="flex items-start space-x-3">
+                        <div class="w-9 h-9 rounded-xl bg-gold text-navy-dark flex items-center justify-center font-bold flex-shrink-0">
+                            AI
+                        </div>
+                        <div class="bg-white/10 border border-white/15 rounded-2xl rounded-tl-none p-4 text-sm text-slate-100 max-w-lg leading-relaxed" id="ai-greeting-text">
+                            Xin chào! Tôi là **Clory** - Trợ lý ảo AI của Sân bay Quốc tế Cam Ranh. Bạn cần tôi hỗ trợ tìm cổng máy bay, Wi-Fi, đổi tiền hay đón xe về Nha Trang?
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Suggested Quick FAQ Chips -->
+                <div class="pt-4 border-t border-white/10">
+                    <div class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider" id="faq-prompt-label">Gợi ý thắc mắc phổ biến:</div>
+                    <div class="flex flex-wrap gap-2" id="faq-chips-container">
+                        <button onclick="askAiFaq('wifi')" class="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-gold/50 text-xs text-slate-200 hover:text-gold transition">📡 Wi-Fi Sân bay</button>
+                        <button onclick="askAiFaq('bus')" class="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-gold/50 text-xs text-slate-200 hover:text-gold transition">🚌 Xe bus / Taxi về Nha Trang</button>
+                        <button onclick="askAiFaq('gate')" class="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-gold/50 text-xs text-slate-200 hover:text-gold transition">✈️ Cổng ra máy bay (Gates)</button>
+                        <button onclick="askAiFaq('hotline')" class="px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-gold/50 text-xs text-slate-200 hover:text-gold transition">📞 Số Hotline Sân bay</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Audio Reactive Voice Orb Visualizer (5 Cols) -->
+            <div class="col-span-5 flex flex-col items-center justify-center h-full glass-gold-glow rounded-3xl p-8 text-center relative">
+                <!-- Canvas Wave Visualizer -->
+                <div class="relative w-64 h-64 flex items-center justify-center mb-6">
+                    <canvas id="voice-orb-canvas" width="256" height="256" class="w-full h-full drop-shadow-2xl"></canvas>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-gold to-amber-400 flex items-center justify-center text-navy-dark shadow-2xl animate-pulse">
+                            <i data-lucide="mic" class="w-10 h-10"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-lg font-extrabold text-white mb-1" id="ai-listening-status">Đang Lắng Nghe Bạn...</div>
+                <div class="text-xs text-slate-300 max-w-xs" id="ai-listening-hint">Hãy nói trực tiếp vào micro kiosk hoặc chọn các gợi ý bên trái.</div>
+
+                <button onclick="toggleMicState()" id="mic-toggle-btn" class="mt-6 px-6 py-3 rounded-2xl bg-gold text-navy-dark font-extrabold text-xs tracking-wider uppercase shadow-xl hover:bg-gold-bright transition flex items-center gap-2">
+                    <i data-lucide="mic" class="w-4 h-4"></i>
+                    <span id="mic-btn-label">Tắt Micro</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Multilingual Dictionaries (9 Languages)
+        const i18n = {
+            VIE: {
+                welcomeTag: "Chào Mừng Quý Khách",
+                welcomeTitle: "CHÀO MỪNG ĐẾN VỚI <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>SÂN BAY QUỐC TẾ CAM RANH</span>",
+                welcomeSub: "Trải nghiệm dịch vụ hàng không đẳng cấp quốc tế cùng hệ thống hỗ trợ thông minh 24/7.",
+                wifiLabel: "Wi-Fi Tốc Độ Cao Miễn Phí",
+                hotlineLabel: "Airport Hotline 24/7",
+                amenity1Title: "Ăn Uống & Nhà Hàng", amenity1Sub: "Tầng 1 & Tầng 2",
+                amenity2Title: "Mua Sắm Duty Free", amenity2Sub: "Sảnh Tầng 2",
+                amenity3Title: "Phòng Chờ CIP/VIP", amenity3Sub: "Tầng 2 Ga Quốc tế",
+                amenity4Title: "Khu Vực Vệ Sinh", amenity4Sub: "Tất cả các tầng",
+                card1Badge: "Dẫn Đường 2D & 3D", card1Title: "BẢN ĐỒ SÂN BAY <br>TƯƠNG TÁC", card1Desc: "Tra cứu cổng ra máy bay, quầy làm thủ tục, khu miễn thuế & tiện ích nhà ga T1/T2.", card1Action: "Mở Sơ Đồ Chi Tiết",
+                card2Badge: "Trợ Lý Ảo Thông Minh", card2Title: "TRỢ LÝ AI CLORY <br>HỎI ĐÁP GiỌNG NÓI", card2Desc: "Hỏi đáp chuyến bay, tra cứu thông tin hành lý, xe bus, taxi & tư vấn du lịch Nha Trang.", card2Action: "Chạm Để Trò Chuyện",
+                touchHint: "Chạm vào bất kỳ vị trí nào trên màn hình để sử dụng",
+                terminalSub: "Hệ thống Kiosk Thông tin & Hướng dẫn Hành khách 24/7",
+                dropdownHeader: "Ngôn ngữ khác",
+                mapTitle: "Sơ Đồ Nhà Ga Quốc Tế Cam Ranh (T2)",
+                aiTitle: "Trợ Lý Ảo Sân Bay Clory AI"
+            },
+            ENG: {
+                welcomeTag: "Welcome Valued Passengers",
+                welcomeTitle: "WELCOME TO <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>CAM RANH INTL AIRPORT</span>",
+                welcomeSub: "Experience world-class aviation services and 24/7 intelligent passenger assistance.",
+                wifiLabel: "Free High-Speed Wi-Fi",
+                hotlineLabel: "Airport Hotline 24/7",
+                amenity1Title: "Dining & Restaurants", amenity1Sub: "Floor 1 & Floor 2",
+                amenity2Title: "Duty Free Shopping", amenity2Sub: "Floor 2 Concourse",
+                amenity3Title: "CIP / VIP Lounge", amenity3Sub: "Floor 2 Intl Terminal",
+                amenity4Title: "Restrooms / WC", amenity4Sub: "All Floors",
+                card1Badge: "2D & 3D Navigation", card1Title: "INTERACTIVE AIRPORT <br>MAP", card1Desc: "Locate boarding gates, check-in counters, duty free shops & terminal amenities.", card1Action: "Open Interactive Map",
+                card2Badge: "Smart AI Assistant", card2Title: "CLORY AI VOICE <br>ASSISTANT", card2Desc: "Ask about flight info, luggage claim, airport buses, taxis & Nha Trang travel tips.", card2Action: "Tap To Speak",
+                touchHint: "Touch anywhere on the screen to start",
+                terminalSub: "24/7 Interactive Passenger Information Kiosk System",
+                dropdownHeader: "More Languages",
+                mapTitle: "Cam Ranh International Terminal Map (T2)",
+                aiTitle: "Clory AI Airport Assistant"
+            },
+            KOR: {
+                welcomeTag: "환영합니다",
+                welcomeTitle: "깜라인 국제공항에 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>오신 것을 환영합니다</span>",
+                welcomeSub: "세계적 수준의 항공 서비스와 24시간 지능형 승객 안내 지원을 경험해보세요.",
+                wifiLabel: "무료 고속 Wi-Fi",
+                hotlineLabel: "공항 핫라인 24/7",
+                amenity1Title: "식당 및 레스토랑", amenity1Sub: "1층 & 2층",
+                amenity2Title: "면세점 쇼핑", amenity2Sub: "2층 중앙 홀",
+                amenity3Title: "VIP 라운지", amenity3Sub: "국제선 2층",
+                amenity4Title: "화장실 (WC)", amenity4Sub: "전 층",
+                card1Badge: "2D & 3D 길안내", card1Title: "대화형 공항 지도", card1Desc: "탑승구, 체크인 카운터, 면세점 및 편의시설 위치를 쉽게 찾아보세요.", card1Action: "상세 지도 열기",
+                card2Badge: "스마트 AI 비서", card2Title: "CLORY AI 음성 안내", card2Desc: "항공편, 수하물, 나트랑 시내 버스 및 택시 정보를 음성으로 질문하세요.", card2Action: "음성 대화 시작",
+                touchHint: "화면 아무 곳이나 터치하여 시작하세요",
+                terminalSub: "24시간 지능형 승객 안내 키오스크",
+                dropdownHeader: "기타 언어",
+                mapTitle: "깜라인 국제공항 터미널 맵 (T2)",
+                aiTitle: "Clory AI 공항 비서"
+            },
+            CHN: {
+                welcomeTag: "尊贵旅客 欢迎光临",
+                welcomeTitle: "欢迎光临 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>金兰国际机场</span>",
+                welcomeSub: "体验国际一流的航空服务与24小时智能旅客协助系统。",
+                wifiLabel: "免费高速 Wi-Fi",
+                hotlineLabel: "24/7 机场服务热线",
+                amenity1Title: "餐饮与餐厅", amenity1Sub: "1楼 & 2楼",
+                amenity2Title: "免税店购物", amenity2Sub: "2楼 出发大厅",
+                amenity3Title: "VIP / CIP 贵宾室", amenity3Sub: "国际航站楼 2楼",
+                amenity4Title: "洗手间", amenity4Sub: "所有楼层",
+                card1Badge: "2D & 3D 导航", card1Title: "交互式机场地图", card1Desc: "查询登机口、值机柜台、免税店及航站楼各项服务设施。", card1Action: "打开详细地图",
+                card2Badge: "智能 AI 助手", card2Title: "CLORY AI 语音助手", card2Desc: "咨询航班动态、行李提取、芽庄市巴士及出租车交通指南。", card2Action: "点击开始对话",
+                touchHint: "点击屏幕任意位置开始操作",
+                terminalSub: "24小时智能旅客信息自助服务 terminal",
+                dropdownHeader: "更多语言",
+                mapTitle: "金兰国际航站楼地图 (T2)",
+                aiTitle: "Clory AI 机场智能助手"
+            },
+            RUS: {
+                welcomeTag: "Добро пожаловать",
+                welcomeTitle: "ДОБРО ПОЖАЛОВАТЬ В <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>АЭРОПОРТ КАМРАНЬ</span>",
+                welcomeSub: "Наслаждайтесь первоклассным сервисом и круглосуточной умной помощью.",
+                wifiLabel: "Бесплатный Wi-Fi",
+                hotlineLabel: "Горячая линия 24/7",
+                amenity1Title: "Рестораны и кафе", amenity1Sub: "1 и 2 этажи",
+                amenity2Title: "Duty Free", amenity2Sub: "2 этаж",
+                amenity3Title: "VIP Зал", amenity3Sub: "2 этаж",
+                amenity4Title: "Туалеты", amenity4Sub: "Все этажи",
+                card1Badge: "Навигация 2D & 3D", card1Title: "КАРТА АЭРОПОРТА", card1Desc: "Поиск выходов на посадку, стоек регистрации и магазинов.", card1Action: "Открыть карту",
+                card2Badge: "ИИ Ассистент", card2Title: "ГОЛОСОВОЙ ИИ CLORY", card2Desc: "Информация о рейсах, багаже и трансфере в Нячанг.", card2Action: "Нажать для общения",
+                touchHint: "Коснитесь экрана для начала работы",
+                terminalSub: "Интерактивный киоск 24/7",
+                dropdownHeader: "Другие языки",
+                mapTitle: "Карта терминала Камрань (Т2)",
+                aiTitle: "ИИ Ассистент Clory"
+            },
+            JPN: {
+                welcomeTag: "ようこそ",
+                welcomeTitle: "カムラン国際空港へ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ようこそ</span>",
+                welcomeSub: "世界クラスの航空サービスと24時間スマート案内をご提供いたします。",
+                wifiLabel: "無料高速 Wi-Fi",
+                hotlineLabel: "24時間ホットライン",
+                amenity1Title: "レストラン・カフェ", amenity1Sub: "1階 & 2階",
+                amenity2Title: "免税店 (Duty Free)", amenity2Sub: "2階 出発ロビー",
+                amenity3Title: "VIPラウンジ", amenity3Sub: "国際線 2階",
+                amenity4Title: "お手洗い (WC)", amenity4Sub: "全フロア",
+                card1Badge: "2D & 3D ナビ", card1Title: "インタラクティブマップ", card1Desc: "搭乗口、チェックインカウンター、免税店の場所を案内。", card1Action: "マップを開く",
+                card2Badge: "AI アシスタント", card2Title: "CLORY AI 音声案内", card2Desc: "フライト情報、手荷物、ニャチャン市内へのアクセスをご案内。", card2Action: "タップして話す",
+                touchHint: "画面をタッチして操作を開始してください",
+                terminalSub: "24時間 旅客案内キオスクシステム",
+                dropdownHeader: "その他の言語",
+                mapTitle: "カムラン国際空港 ターミナルマップ (T2)",
+                aiTitle: "Clory AI 空港アシスタント"
+            },
+            FRA: {
+                welcomeTag: "Bienvenue",
+                welcomeTitle: "BIENVENUE À L'AÉROPORT <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>DE CAM RANH</span>",
+                welcomeSub: "Profitez de services aéronautiques d'excellence et d'une assistance 24/7.",
+                wifiLabel: "Wi-Fi Gratuit",
+                hotlineLabel: "Hotline 24/7",
+                amenity1Title: "Restauration", amenity1Sub: "Niveaux 1 et 2",
+                amenity2Title: "Boutiques Duty Free", amenity2Sub: "Niveau 2",
+                amenity3Title: "Salon VIP / CIP", amenity3Sub: "Niveau 2 Intl",
+                amenity4Title: "Toilettes", amenity4Sub: "Tous niveaux",
+                card1Badge: "Navigation 2D & 3D", card1Title: "CARTE INTERACTIVE", card1Desc: "Localisez les portes d'embarquement, comptoirs et boutiques.", card1Action: "Ouvrir la carte",
+                card2Badge: "Assistant IA", card2Title: "ASSISTANT VOCAL CLORY", card2Desc: "Posez vos questions sur les vols, bagages et transports vers Nha Trang.", card2Action: "Appuyer pour parler",
+                touchHint: "Touchez l'écran pour commencer",
+                terminalSub: "Borne d'information passagers 24/7",
+                dropdownHeader: "Autres langues",
+                mapTitle: "Plan du terminal international Cam Ranh (T2)",
+                aiTitle: "Assistant IA Clory"
+            },
+            GER: {
+                welcomeTag: "Herzlich Willkommen",
+                welcomeTitle: "WILLKOMMEN AM FLUGHAFEN <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>CAM RANH</span>",
+                welcomeSub: "Erleben Sie erstklassige Flugservices und intelligente 24/7 Assistenz.",
+                wifiLabel: "Kostenloses WLAN",
+                hotlineLabel: "24/7 Hotline",
+                amenity1Title: "Gastronomie", amenity1Sub: "Ebene 1 & 2",
+                amenity2Title: "Duty Free Shops", amenity2Sub: "Ebene 2",
+                amenity3Title: "VIP Lounge", amenity3Sub: "Ebene 2 Intl",
+                amenity4Title: "Toiletten", amenity4Sub: "Alle Ebenen",
+                card1Badge: "2D & 3D Navigation", card1Title: "INTERAKTIVE KARTE", card1Desc: "Finden Sie Gates, Check-in-Schalter und Geschäfte auf der Karte.", card1Action: "Karte öffnen",
+                card2Badge: "KI Assistent", card2Title: "CLORY SPRACHASSISTENT", card2Desc: "Fragen zu Flügen, Gepäck und Bussen nach Nha Trang.", card2Action: "Tippen zum Sprechen",
+                touchHint: "Tippen Sie auf den Bildschirm",
+                terminalSub: "24/7 Passagier-Informationskiosk",
+                dropdownHeader: "Weitere Sprachen",
+                mapTitle: "Flughafenplan Cam Ranh International (T2)",
+                aiTitle: "Clory KI Flughafen-Assistent"
+            },
+            THA: {
+                welcomeTag: "ยินดีต้อนรับ",
+                welcomeTitle: "ยินดีต้อนรับสู่ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ท่าอากาศยานนานาชาติกามซั้ญ</span>",
+                welcomeSub: "สัมผัสบริการการบินระดับโลกพร้อมระบบช่วยเหลืออัจฉริยะ 24 ชั่วโมง",
+                wifiLabel: "Wi-Fi ความเร็วสูงฟรี",
+                hotlineLabel: "สายด่วนสนามบิน 24/7",
+                amenity1Title: "ร้านอาหารและเครื่องดื่ม", amenity1Sub: "ชั้น 1 & ชั้น 2",
+                amenity2Title: "ช้อปปิ้งสินค้าปลอดภาษี", amenity2Sub: "อาคารผู้โดยสาร ชั้น 2",
+                amenity3Title: "ห้องรับรอง VIP / CIP", amenity3Sub: "ชั้น 2 อาคารระหว่างประเทศ",
+                amenity4Title: "ห้องน้ำ (WC)", amenity4Sub: "ทุกชั้น",
+                card1Badge: "ระบบนำทาง 2D & 3D", card1Title: "แผนที่สนามบินแบบโต้ตอบ", card1Desc: "ค้นหาประตูขึ้นเครื่อง เคาน์เตอร์เช็คอิน และร้านค้าปลอดภาษี", card1Action: "เปิดแผนที่รายละเอียด",
+                card2Badge: "ผู้ช่วย AI อัจฉริยะ", card2Title: "CLORY AI ผู้ช่วยเสียง", card2Desc: "สอบถามเที่ยวบิน สัมภาระ และแท็กซี่ไปเมืองญาจาง", card2Action: "แตะเพื่อพูดคุย",
+                touchHint: "แตะที่ส่วนใดก็ได้ของหน้าจอเพื่อเริ่มต้นใช้งาน",
+                terminalSub: "ระบบคีออสก์ข้อมูลผู้โดยสาร 24 ชั่วโมง",
+                dropdownHeader: "ภาษาอื่นๆ",
+                mapTitle: "แผนที่อาคารผู้โดยสารกามซั้ญ (T2)",
+                aiTitle: "ผู้ช่วยสนามบิน Clory AI"
+            }
+        };
+
+        const languages = ['VIE', 'ENG', 'KOR', 'CHN', 'RUS', 'JPN', 'FRA', 'GER', 'THA'];
+        let currentLang = 'VIE';
+        let carouselTimer = null;
+        let carouselIndex = 0;
+
+        window.onload = function() {
+            // Re-initialize Lucide Icons
+            lucide.createIcons();
+
+            // Fetch Real-time Weather
+            fetchCamRanhWeather();
+
+            // Start Clock
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            // Setup Carousel Dots
+            setupCarouselDots();
+
+            // Start Multilingual Auto-cycle Carousel
+            startCarouselTimer();
+
+            // Initialize Web Audio Visualizer Canvas
+            initOrbCanvas();
+        };
+
+        function fetchCamRanhWeather() {
+            // Cam Ranh Coordinates: 11.998, 109.219
+            const url = 'https://api.open-meteo.com/v1/forecast?latitude=11.998&longitude=109.219&current_weather=true';
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.current_weather) {
+                        const temp = Math.round(data.current_weather.temperature);
+                        document.getElementById('weather-temp').innerText = `${temp}°C`;
+                        
+                        const code = data.current_weather.weathercode;
+                        let desc = "Nắng nhẹ";
+                        if(code === 0) desc = "Nắng đẹp";
+                        else if(code > 0 && code < 4) desc = "Có mây";
+                        else if(code >= 51) desc = "Có mưa nhỏ";
+                        
+                        document.getElementById('weather-desc').innerText = desc;
+                    }
+                })
+                .catch(err => {
+                    console.log("Weather API fallback active.");
+                });
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            document.getElementById('live-time').innerText = `${hours}:${minutes}:${seconds}`;
+
+            const daysVi = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+            const dayName = daysVi[now.getDay()];
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+
+            document.getElementById('live-date').innerText = `${dayName}, ${day}/${month}/${year}`;
+        }
+
+        function toggleLangDropdown() {
+            const menu = document.getElementById('lang-dropdown-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const wrapper = document.getElementById('lang-dropdown-wrapper');
+            if(wrapper && !wrapper.contains(e.target)) {
+                document.getElementById('lang-dropdown-menu').classList.add('hidden');
+            }
+        });
+
+        function changeLanguage(langCode) {
+            currentLang = langCode;
+            carouselIndex = languages.indexOf(langCode);
+            if(carouselIndex === -1) carouselIndex = 0;
+
+            // Highlight Direct Buttons
+            ['VIE', 'ENG', 'KOR', 'CHN'].forEach(code => {
+                const btn = document.getElementById(`lang-btn-${code}`);
+                if(btn) {
+                    if(code === langCode) {
+                        btn.className = "lang-btn px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 bg-teal text-navy-dark shadow-md";
+                    } else {
+                        btn.className = "lang-btn px-3 py-1.5 rounded-xl text-xs font-bold transition-all duration-300 text-slate-300 hover:text-white hover:bg-white/10";
+                    }
+                }
+            });
+
+            const dropdownMenu = document.getElementById('lang-dropdown-menu');
+            if(dropdownMenu) dropdownMenu.classList.add('hidden');
+
+            updateLanguageUI(langCode);
+            updateCarouselDots();
+        }
+
+        function updateLanguageUI(lang) {
+            const t = i18n[lang] || i18n['VIE'];
+            
+            const container = document.getElementById('hero-content-container');
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                if(document.getElementById('welcome-tag')) document.getElementById('welcome-tag').innerText = t.welcomeTag;
+                if(document.getElementById('welcome-title')) document.getElementById('welcome-title').innerHTML = t.welcomeTitle;
+                if(document.getElementById('welcome-sub')) document.getElementById('welcome-sub').innerText = t.welcomeSub;
+                container.style.opacity = '1';
+            }, 250);
+
+            if(document.getElementById('card1-badge')) document.getElementById('card1-badge').innerText = t.card1Badge;
+            if(document.getElementById('card1-title')) document.getElementById('card1-title').innerHTML = t.card1Title;
+            if(document.getElementById('card1-desc')) document.getElementById('card1-desc').innerText = t.card1Desc;
+            if(document.getElementById('card1-action')) document.getElementById('card1-action').innerHTML = `${t.card1Action} <i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+
+            if(document.getElementById('card2-badge')) document.getElementById('card2-badge').innerText = t.card2Badge;
+            if(document.getElementById('card2-title')) document.getElementById('card2-title').innerHTML = t.card2Title;
+            if(document.getElementById('card2-desc')) document.getElementById('card2-desc').innerText = t.card2Desc;
+            if(document.getElementById('card2-action')) document.getElementById('card2-action').innerHTML = `${t.card2Action} <i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+
+            if(document.getElementById('amenity-1-title')) document.getElementById('amenity-1-title').innerText = t.amenity1Title;
+            if(document.getElementById('amenity-1-sub')) document.getElementById('amenity-1-sub').innerText = t.amenity1Sub;
+            if(document.getElementById('amenity-2-title')) document.getElementById('amenity-2-title').innerText = t.amenity2Title;
+            if(document.getElementById('amenity-2-sub')) document.getElementById('amenity-2-sub').innerText = t.amenity2Sub;
+            if(document.getElementById('amenity-3-title')) document.getElementById('amenity-3-title').innerText = t.amenity3Title;
+            if(document.getElementById('amenity-3-sub')) document.getElementById('amenity-3-sub').innerText = t.amenity3Sub;
+            if(document.getElementById('amenity-4-title')) document.getElementById('amenity-4-title').innerText = t.amenity4Title;
+            if(document.getElementById('amenity-4-sub')) document.getElementById('amenity-4-sub').innerText = t.amenity4Sub;
             
             if(document.getElementById('wifi-label')) document.getElementById('wifi-label').innerText = t.wifiLabel;
+            if(document.getElementById('hero-hotline-label')) document.getElementById('hero-hotline-label').innerText = t.hotlineLabel;
             if(document.getElementById('touch-hint')) document.getElementById('touch-hint').innerText = t.touchHint;
-            if(document.getElementById('footer-hotline-label')) document.getElementById('footer-hotline-label').innerText = t.hotlineLabel;
+            if(document.getElementById('footer-hotline-label')) document.getElementById('footer-hotline-label').innerText = t.hotlineLabel + ":";
             if(document.getElementById('header-terminal-sub')) document.getElementById('header-terminal-sub').innerText = t.terminalSub;
             if(document.getElementById('dropdown-header-title')) document.getElementById('dropdown-header-title').innerText = t.dropdownHeader;
 
             if(document.getElementById('modal-map-header-title')) document.getElementById('modal-map-header-title').innerText = t.mapTitle;
-<!-- ... existing code ... -->
-```
+            if(document.getElementById('modal-ai-header-title')) document.getElementById('modal-ai-header-title').innerText = t.aiTitle;
 
-### Tóm tắt các điều chỉnh:
-- Thông tin **Airport Hotline** mới (`02583 989 956` & `0981 927 018`) đã được hiển thị ngay bên cạnh mục Free Wi-Fi với tông màu vàng kim rực rỡ và phông chữ lớn nổi bật.
-- Cụm thông tin *Medical/SOS* và *Info Desk* đã được xóa bỏ hoàn toàn để giao diện chân trang gọn gàng hơn.
+            lucide.createIcons();
+        }
+
+        function setupCarouselDots() {
+            const dotsContainer = document.getElementById('carousel-dots');
+            if(!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            
+            languages.forEach((lang, idx) => {
+                const dot = document.createElement('button');
+                dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${idx === 0 ? 'bg-gold w-6' : 'bg-white/30 hover:bg-white/60'}`;
+                dot.onclick = () => {
+                    carouselIndex = idx;
+                    changeLanguage(languages[idx]);
+                    resetCarouselTimer();
+                };
+                dot.id = `dot-${idx}`;
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updateCarouselDots() {
+            languages.forEach((lang, idx) => {
+                const dot = document.getElementById(`dot-${idx}`);
+                if(dot) {
+                    if(idx === carouselIndex) {
+                        dot.className = "w-6 h-2 rounded-full bg-gold transition-all duration-300";
+                    } else {
+                        dot.className = "w-2 h-2 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300";
+                    }
+                }
+            });
+        }
+
+        function startCarouselTimer() {
+            carouselTimer = setInterval(() => {
+                carouselIndex = (carouselIndex + 1) % languages.length;
+                changeLanguage(languages[carouselIndex]);
+            }, 5000);
+        }
+
+        function resetCarouselTimer() {
+            clearInterval(carouselTimer);
+            startCarouselTimer();
+        }
+
+        function openMapModal(highlightZone = null) {
+            document.getElementById('modal-map').classList.remove('hidden');
+            document.getElementById('modal-map').classList.add('flex');
+
+            if(highlightZone) {
+                // Clear active highlights
+                ['zone-dining', 'zone-duty-free', 'zone-lounge', 'zone-wc'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) el.setAttribute('stroke-width', '2');
+                });
+
+                let targetId = null;
+                if(highlightZone === 'dining') targetId = 'zone-dining';
+                if(highlightZone === 'shopping') targetId = 'zone-duty-free';
+                if(highlightZone === 'lounge') targetId = 'zone-lounge';
+                if(highlightZone === 'wc') targetId = 'zone-wc';
+
+                if(targetId) {
+                    const el = document.getElementById(targetId);
+                    if(el) el.setAttribute('stroke-width', '5');
+                }
+            }
+        }
+
+        function closeMapModal() {
+            document.getElementById('modal-map').classList.add('hidden');
+            document.getElementById('modal-map').classList.remove('flex');
+        }
+
+        function switchFloor(floorNum) {
+            const btn1 = document.getElementById('floor-btn-1');
+            const btn2 = document.getElementById('floor-btn-2');
+            if(floorNum === 1) {
+                btn1.className = "px-4 py-2 rounded-xl text-xs font-bold bg-teal text-navy-dark transition";
+                btn2.className = "px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition";
+            } else {
+                btn2.className = "px-4 py-2 rounded-xl text-xs font-bold bg-teal text-navy-dark transition";
+                btn1.className = "px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white transition";
+            }
+        }
+
+        function openAiModal() {
+            document.getElementById('modal-ai').classList.remove('hidden');
+            document.getElementById('modal-ai').classList.add('flex');
+        }
+
+        function closeAiModal() {
+            document.getElementById('modal-ai').classList.add('hidden');
+            document.getElementById('modal-ai').classList.remove('flex');
+        }
+
+        function askAiFaq(topic) {
+            const chatContainer = document.getElementById('chat-messages-container');
+            let userQ = "";
+            let aiA = "";
+
+            if(topic === 'wifi') {
+                userQ = "Làm sao để kết nối Wi-Fi miễn phí tại sân bay?";
+                aiA = "Quý khách vui lòng chọn mạng Wi-Fi **@CamRanh_Airport_Free**, màn hình duyệt web sẽ tự động hiển thị để bạn bấm 'Kết nối ngay' không cần mật khẩu!";
+            } else if(topic === 'bus') {
+                userQ = "Có xe bus hay taxi nào về trung tâm Nha Trang không?";
+                aiA = "Tại sảnh đến Tầng 1, Quý khách có thể đón **Đất Mới Bus Line 18** (giá 65.000 VNĐ) hoặc các hãng taxi uy tín như Sun Taxi, Mai Linh với mức giá khoảng 300.000 - 350.000 VNĐ.";
+            } else if(topic === 'gate') {
+                userQ = "Cổng ra máy bay (Gates) nằm ở tầng mấy?";
+                aiA = "Tất cả các Cổng ra máy bay (Gate 1 đến Gate 12) đều tọa lạc tại **Tầng 2**. Quý khách sau khi hoàn tất thủ tục an ninh tại Tầng 2 hãy di chuyển theo bảng chỉ dẫn.";
+            } else if(topic === 'hotline') {
+                userQ = "Số điện thoại Hotline hỗ trợ khẩn cấp của sân bay là gì?";
+                aiA = "Tổng đài Hotline hỗ trợ 24/7 của Sân bay Cam Ranh là: **02583 989 956** và **0981 927 018**.";
+            }
+
+            // Append User Question
+            const userMsg = document.createElement('div');
+            userMsg.className = "flex items-start justify-end space-x-3";
+            userMsg.innerHTML = `<div class="bg-teal/20 border border-teal/40 rounded-2xl rounded-tr-none p-4 text-sm text-white max-w-lg leading-relaxed">${userQ}</div>`;
+            chatContainer.appendChild(userMsg);
+
+            // Append AI Answer
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = "flex items-start space-x-3";
+                aiMsg.innerHTML = `
+                    <div class="w-9 h-9 rounded-xl bg-gold text-navy-dark flex items-center justify-center font-bold flex-shrink-0">AI</div>
+                    <div class="bg-white/10 border border-white/15 rounded-2xl rounded-tl-none p-4 text-sm text-slate-100 max-w-lg leading-relaxed">${aiA}</div>
+                `;
+                chatContainer.appendChild(aiMsg);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 400);
+
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        let isMicOn = true;
+        function toggleMicState() {
+            isMicOn = !isMicOn;
+            const status = document.getElementById('ai-listening-status');
+            const label = document.getElementById('mic-btn-label');
+            
+            if(isMicOn) {
+                status.innerText = "Đang Lắng Nghe Bạn...";
+                label.innerText = "Tắt Micro";
+            } else {
+                status.innerText = "Đã Tạm Dừng Micro";
+                label.innerText = "Bật Micro";
+            }
+        }
+
+        let orbCanvas, orbCtx;
+        function initOrbCanvas() {
+            orbCanvas = document.getElementById('voice-orb-canvas');
+            if(!orbCanvas) return;
+            orbCtx = orbCanvas.getContext('2d');
+            
+            let angle = 0;
+            function animateOrb() {
+                orbCtx.clearRect(0, 0, orbCanvas.width, orbCanvas.height);
+                
+                const centerX = orbCanvas.width / 2;
+                const centerY = orbCanvas.height / 2;
+                
+                if(isMicOn) {
+                    angle += 0.05;
+                }
+
+                // Outer Glow Rings
+                for(let i = 3; i >= 1; i--) {
+                    orbCtx.beginPath();
+                    const radius = 60 + i * 18 + Math.sin(angle + i) * (isMicOn ? 8 : 2);
+                    orbCtx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                    orbCtx.fillStyle = i === 1 ? 'rgba(244, 162, 97, 0.25)' : 'rgba(0, 168, 150, 0.15)';
+                    orbCtx.fill();
+                }
+
+                // Core Pulse Sphere
+                orbCtx.beginPath();
+                const coreRadius = 45 + Math.sin(angle * 2) * (isMicOn ? 6 : 1);
+                orbCtx.arc(centerX, centerY, coreRadius, 0, Math.PI * 2);
+                const gradient = orbCtx.createRadialGradient(centerX, centerY, 5, centerX, centerY, coreRadius);
+                gradient.addColorStop(0, '#ffb703');
+                gradient.addColorStop(0.7, '#f4a261');
+                gradient.addColorStop(1, '#00a896');
+                orbCtx.fillStyle = gradient;
+                orbCtx.fill();
+
+                requestAnimationFrame(animateOrb);
+            }
+            animateOrb();
+        }
+    </script>
+</body>
+</html>
