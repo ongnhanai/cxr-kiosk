@@ -264,9 +264,26 @@
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold">CAM RANH INTL AIRPORT</span>
                     </h2>
 
-                    <p class="text-slate-300 text-base max-w-xl font-normal leading-relaxed" id="welcome-sub">
+                    <p class="text-slate-300 text-base max-w-xl font-normal leading-relaxed mb-4" id="welcome-sub">
                         Experience world-class aviation services and 24/7 intelligent assistance for your journey.
                     </p>
+
+                    <!-- Airport Hotline Highlight Badge in Hero Banner -->
+                    <div class="inline-flex items-center space-x-3 bg-navy-dark/90 border border-gold/50 px-4.5 py-2.5 rounded-2xl backdrop-blur-md shadow-xl shadow-gold/10">
+                        <div class="w-10 h-10 rounded-xl bg-gold/20 border border-gold/60 flex items-center justify-center text-gold flex-shrink-0">
+                            <i data-lucide="phone-call" class="w-5 h-5 animate-pulse"></i>
+                        </div>
+                        <div>
+                            <div class="text-gold font-extrabold text-[11px] uppercase tracking-wider flex items-center gap-1.5" id="hero-hotline-label">
+                                Airport Hotline 24/7
+                            </div>
+                            <div class="text-white font-black text-sm xl:text-base font-mono tracking-wide flex items-center gap-2 mt-0.5">
+                                <a href="tel:02583989956" class="hover:text-gold transition">02583 989 956</a>
+                                <span class="text-gold/60">•</span>
+                                <a href="tel:0981927018" class="hover:text-gold transition">0981 927 018</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Carousel Footer: Wi-Fi Highlight & Dots -->
@@ -2788,6 +2805,7 @@
                     if (document.getElementById('welcome-tag')) document.getElementById('welcome-tag').innerText = t.welcomeTag;
                     if (document.getElementById('welcome-title')) document.getElementById('welcome-title').innerHTML = t.welcomeTitle;
                     if (document.getElementById('welcome-sub')) document.getElementById('welcome-sub').innerText = t.welcomeSub;
+                    if (document.getElementById('hero-hotline-label')) document.getElementById('hero-hotline-label').innerText = t.heroHotlineLabel || "Airport Hotline 24/7";
                     container.classList.remove('opacity-0');
                 }, 300);
             }
@@ -2805,6 +2823,7 @@
                 welcomeTag: "Welcome Valued Passengers",
                 welcomeTitle: "WELCOME TO <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>CAM RANH INTL AIRPORT</span>",
                 welcomeSub: "Experience world-class aviation services and 24/7 intelligent assistance for your journey.",
+                heroHotlineLabel: "Airport Hotline 24/7",
                 status: "TERMINAL OPERATING NORMALLY",
                 mapTitle: "AIRPORT MAP & WAYFINDING",
                 mapDesc: "Locate boarding gates, dining, Duty Free shops, restrooms, ATMs & interactive terminal maps.",
@@ -2861,6 +2880,7 @@
                 welcomeTag: "Kính chào Quý khách",
                 welcomeTitle: "CHÀO MỪNG ĐẾN VỚI <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>SÂN BAY QUỐC TẾ CAM RANH</span>",
                 welcomeSub: "Trải nghiệm dịch vụ tiện ích hàng không đẳng cấp và sẵn sàng hỗ trợ thông tin 24/7 cho chuyến đi của bạn.",
+                heroHotlineLabel: "Hotline Sân bay 24/7",
                 status: "NHÀ GA HOẠT ĐỘNG BÌNH THƯỜNG",
                 mapTitle: "BẢN ĐỒ SÂN BAY TƯƠNG TÁC",
                 mapDesc: "Tìm cửa ra máy bay (Gates), nhà hàng, cửa hàng Duty Free, WC, ATM & sơ đồ nhà ga trực quan.",
@@ -2917,6 +2937,7 @@
                 welcomeTag: "환영합니다",
                 welcomeTitle: "깜라인 국제공항에 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>오신 것을 환영합니다</span>",
                 welcomeSub: "세계적 수준의 항공 서비스와 24시간 스마트 공항 안내 서비스를 경험해 보세요.",
+                heroHotlineLabel: "공항 핫라인 24/7",
                 status: "터미널 정상 운영 중",
                 mapTitle: "공항 지도 및 길안내",
                 mapDesc: "탑승구, 식당, 면세점, 화장실, ATM 및 터미널 지도를 검색하세요.",
@@ -2973,6 +2994,7 @@
                 welcomeTag: "尊贵的旅客，欢迎您",
                 welcomeTitle: "欢迎光临 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>金兰国际机场</span>",
                 welcomeSub: "体验世界级的航空服务，全天候24/7为您 provide 智能航站楼导航与 support。",
+                heroHotlineLabel: "24/7 机场热线",
                 status: "航站楼运行正常",
                 mapTitle: "机场地图与导航",
                 mapDesc: "查找登机口、餐厅、免税店、洗手间、ATM及航站楼平面图。",
@@ -3029,6 +3051,7 @@
                 welcomeTag: "Добро пожаловать",
                 welcomeTitle: "ДОБРО ПОЖАЛОВАТЬ В <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>АЭРОПОРТ КАМРАНЬ</span>",
                 welcomeSub: "Наслаждайтесь премиальным сервисом и круглосуточной умной помощью во время вашего путешествия.",
+                heroHotlineLabel: "Горячая линия 24/7",
                 status: "ТЕРМИНАЛ РАБОТАЕТ В ОБЫЧНОМ РЕЖИМЕ",
                 mapTitle: "КАРТА АЭРОПОРТА И НАВИГАЦИЯ",
                 mapDesc: "Найдите выходы на посадку, рестораны, Duty Free, туалеты и банкоматы.",
@@ -3085,6 +3108,7 @@
                 welcomeTag: "ようこそ",
                 welcomeTitle: "カムラン国際空港へ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ようこそ</span>",
                 welcomeSub: "世界クラスの航空サービスと24時間対応のスマート案内をご利用ください。",
+                heroHotlineLabel: "24/7 空港ホットライン",
                 status: "ターミナル正常運行中",
                 mapTitle: "空港マップ＆案内",
                 mapDesc: "搭乗口、レストラン、免税店、お手洗い、ATMなどを検索できます。",
@@ -3141,6 +3165,7 @@
                 welcomeTag: "Bienvenue",
                 welcomeTitle: "BIENVENUE À <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>L'AÉROPORT DE CAM RANH</span>",
                 welcomeSub: "Profitez de nos services aéroportuaires et de notre assistance intelligente 24/7.",
+                heroHotlineLabel: "Ligne directe 24/7",
                 status: "AÉROGARE EN SERVICE NORMAL",
                 mapTitle: "CARTE INTERACTIVE DE L'AÉROPORT",
                 mapDesc: "Localisez les portes d'embarquement, restaurants, magasins Duty Free et commodités.",
@@ -3197,6 +3222,7 @@
                 welcomeTag: "Herzlich Willkommen",
                 welcomeTitle: "WILLKOMMEN AM <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>FLUGHAFEN CAM RANH</span>",
                 welcomeSub: "Erleben Sie erstklassigen Service und 24/7 intelligente Flughafen-Unterstützung.",
+                heroHotlineLabel: "Flughafen-Hotline 24/7",
                 status: "TERMINAL-BETRIEB NORMAL",
                 mapTitle: "FLUGHAFENPLAN & NAVI",
                 mapDesc: "Finden Sie Gates, Restaurants, Duty Free Shops, Toiletten und Geldautomaten.",
@@ -3253,6 +3279,7 @@
                 welcomeTag: "ยินดีต้อนรับ",
                 welcomeTitle: "ยินดีต้อนรับสู่ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ท่าอากาศยานนานาชาติกามรัญ</span>",
                 welcomeSub: "สัมผัสบริการระดับโลกพร้อมระบบช่วยเหลือกิจการการบินตลอด 24 ชั่วโมง",
+                heroHotlineLabel: "สายด่วนสนามบิน 24/7",
                 status: "อาคารผู้โดยสารเปิดให้บริการปกติ",
                 mapTitle: "แผนที่สนามบิน",
                 mapDesc: "ค้นหาประตูขึ้นเครื่อง ร้านอาหาร ร้านค้าปลอดภาษี ห้องน้ำ และตู้ ATM",
