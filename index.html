@@ -134,7 +134,7 @@
                 opacity: 0;
             }
         }
-        /* Abstract Gradient Animation for Explore Nha Trang Card */
+        /* Abstract Gradient Animation for Explore Nha Trang & Hero Info Board */
         .bg-explore-gradient {
             background: linear-gradient(135deg, rgba(0,168,150,0.85) 0%, rgba(244,162,97,0.8) 50%, rgba(231,111,81,0.85) 100%);
             background-size: 200% 200%;
@@ -271,37 +271,37 @@
                     </p>
                 </div>
 
-                <!-- Carousel Footer: Wi-Fi Highlight & Dots -->
-                <div class="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between">
+                <!-- Abstract Gradient Hero Bottom Info Board (Wi-Fi + Enriched Gold Hotline) -->
+                <div class="relative z-10 p-4 rounded-2xl bg-explore-gradient border border-white/30 shadow-xl flex items-center justify-between">
                     <div class="flex items-center space-x-6">
                         <!-- Wi-Fi Info -->
                         <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-full bg-teal/20 border border-teal/40 flex items-center justify-center text-teal">
-                                <i data-lucide="wifi" class="w-5 h-5"></i>
+                            <div class="w-11 h-11 rounded-xl bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-md">
+                                <i data-lucide="wifi" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <div class="text-white text-xs font-bold" id="wifi-label">Free Wi-Fi Highspeed</div>
-                                <div class="text-slate-400 text-[11px]">@CamRanh_Airport_Free</div>
+                                <div class="text-white text-xs font-extrabold uppercase tracking-wide drop-shadow-sm" id="wifi-label">Free Wi-Fi Highspeed</div>
+                                <div class="text-white/90 text-xs font-mono font-semibold">@CamRanh_Airport_Free</div>
                             </div>
                         </div>
 
                         <!-- Divider -->
-                        <div class="h-8 w-px bg-white/15"></div>
+                        <div class="h-10 w-px bg-white/30"></div>
 
-                        <!-- Moved & Enhanced Airport Hotline Info -->
+                        <!-- Enriched Airport Hotline Info (30% Bigger Bold Gold Text) -->
                         <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-gold">
-                                <i data-lucide="phone-call" class="w-5 h-5"></i>
+                            <div class="w-11 h-11 rounded-xl bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-yellow-300 shadow-md">
+                                <i data-lucide="phone-call" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <div class="text-slate-300 text-xs font-bold" id="hero-hotline-label">Airport Hotline</div>
-                                <div class="text-gold font-extrabold font-mono text-sm tracking-wide leading-tight">02583 989 956, 0981 927 018</div>
+                                <div class="text-white/90 text-xs font-bold uppercase tracking-wider drop-shadow-sm" id="hero-hotline-label">Airport Hotline</div>
+                                <div class="text-yellow-300 font-extrabold font-mono text-base xl:text-lg tracking-wide leading-tight drop-shadow">02583 989 956, 0981 927 018</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Slide Controls Indicators (Dynamic 9 Dots) -->
-                    <div class="flex space-x-1.5" id="carousel-dots"></div>
+                    <div class="flex space-x-1.5 bg-black/30 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20" id="carousel-dots"></div>
                 </div>
             </div>
 
@@ -1852,7 +1852,7 @@
             } else {
                 btn.className = "w-full py-2 px-3 bg-white/10 border border-white/15 text-slate-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
                 lbl.innerText = "Camera: Off";
-                videoBox.classList.add('hidden');
+                videoBox.add('hidden');
                 orbBox.classList.remove('hidden');
             }
         }
