@@ -157,7 +157,6 @@
         <div class="absolute inset-0 bg-gradient-to-t from-navy-dark via-navy-dark/60 to-transparent"></div>
     </div>
 
-    <!-- TOP HEADER -->
     <header class="relative z-30 w-full bg-navy-dark/90 backdrop-blur-xl border-b border-white/10 px-8 py-4 flex items-center justify-between shadow-2xl">
         <!-- Logo & Airport Info -->
         <div class="flex items-center space-x-6">
@@ -244,7 +243,6 @@
         </div>
     </header>
 
-    <!-- MAIN INTERACTIVE CONTENT AREA -->
     <main class="relative z-10 flex-1 p-8 grid grid-cols-12 gap-8 items-stretch overflow-hidden">
         
         <!-- LEFT COLUMN (60% Width): Auto-cycling Hero Banner & Terminal Amenities -->
@@ -274,7 +272,6 @@
                 <!-- Carousel Footer: Wi-Fi Highlight & Dots -->
                 <div class="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between">
                     <div class="flex items-center space-x-6">
-                        <!-- Wi-Fi Info -->
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-full bg-teal/20 border border-teal/40 flex items-center justify-center text-teal">
                                 <i data-lucide="wifi" class="w-5 h-5"></i>
@@ -282,20 +279,6 @@
                             <div>
                                 <div class="text-white text-xs font-bold" id="wifi-label">Free Wi-Fi Highspeed</div>
                                 <div class="text-slate-400 text-[11px]">@CamRanh_Airport_Free</div>
-                            </div>
-                        </div>
-
-                        <!-- Divider -->
-                        <div class="h-8 w-px bg-white/15"></div>
-
-                        <!-- Moved & Enhanced Airport Hotline Info -->
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-gold">
-                                <i data-lucide="phone-call" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <div class="text-slate-300 text-xs font-bold" id="hero-hotline-label">Airport Hotline</div>
-                                <div class="text-gold font-extrabold font-mono text-sm tracking-wide leading-tight">02583 989 956, 0981 927 018</div>
                             </div>
                         </div>
                     </div>
@@ -376,7 +359,6 @@
 
         </section>
 
-        <!-- RIGHT COLUMN: 2 Giant Interactive Launch Cards -->
         <section class="col-span-5 flex flex-col space-y-6">
             
             <!-- BUTTON 1: INTERACTIVE MAP LAUNCH CARD -->
@@ -453,19 +435,37 @@
         </section>
     </main>
 
-    <!-- FOOTER BAR -->
     <footer class="relative z-10 w-full bg-navy-dark/95 border-t border-white/10 px-8 py-3 flex items-center justify-between">
-        <div class="text-slate-400 text-[11px]">
-            © 2026 CloryAI AeroHub Agent. Powered by <a href="https://www.dntg.com.vn" target="_blank" rel="noopener noreferrer" class="text-teal hover:underline font-bold">DNTG</a>. All rights reserved.
+        <!-- Hotlines & Contacts -->
+        <div class="flex items-center space-x-8 text-xs text-slate-300">
+            <div class="flex items-center space-x-2">
+                <i data-lucide="phone-call" class="w-4 h-4 text-gold"></i>
+                <span class="font-medium" id="footer-hotline-label">Airport Hotline:</span>
+                <span class="text-white font-bold font-mono">(+84) 258 397 7988</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <i data-lucide="shield-alert" class="w-4 h-4 text-red-400"></i>
+                <span class="font-medium" id="footer-sos-label">Medical / SOS:</span>
+                <span class="text-red-400 font-bold font-mono">(+84) 258 397 7987</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <i data-lucide="info" class="w-4 h-4 text-teal"></i>
+                <span class="font-medium" id="footer-info-label">Info Desk:</span>
+                <span class="text-white font-semibold" id="footer-info-val">Level 1 - Arrivals</span>
+            </div>
         </div>
 
-        <div class="flex items-center space-x-2.5 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full">
-            <i data-lucide="hand" class="w-3.5 h-3.5 text-teal animate-bounce"></i>
-            <span class="text-xs text-slate-300 font-medium" id="touch-hint">Touch screen to start interaction</span>
+        <div class="flex items-center space-x-6">
+            <div class="text-slate-400 text-[11px]">
+                © 2026 CloryAI AeroHub Agent. Powered by <a href="https://www.dntg.com.vn" target="_blank" rel="noopener noreferrer" class="text-teal hover:underline font-bold">DNTG</a>. All rights reserved.
+            </div>
+            <div class="flex items-center space-x-2.5 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full">
+                <i data-lucide="hand" class="w-3.5 h-3.5 text-teal animate-bounce"></i>
+                <span class="text-xs text-slate-300 font-medium" id="touch-hint">Touch screen to start interaction</span>
+            </div>
         </div>
     </footer>
 
-    <!-- MODAL 1: INTERACTIVE AIRPORT MAP -->
     <div id="map-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
         <div class="bg-navy border-2 border-teal rounded-3xl w-[90vw] h-[90vh] flex flex-col overflow-hidden shadow-2xl relative">
             <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
@@ -498,7 +498,6 @@
         </div>
     </div>
 
-    <!-- MODAL 2: EXPLORE NHA TRANG KHANH HOA -->
     <div id="explore-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-lg hidden flex items-center justify-center p-4 transition-opacity">
         <div class="bg-navy border-2 border-gold/60 rounded-3xl w-[92vw] h-[92vh] flex flex-col overflow-hidden shadow-2xl relative">
             <!-- Modal Header -->
@@ -564,7 +563,7 @@
                     </div>
                 </div>
 
-                <!-- VIEW STATE 2: In-Modal Rich Article Reader Detail View -->
+                <!-- VIEW STATE 2: In-Modal Rich Article Reader Detail View (No new tabs on Kiosk) -->
                 <div id="explore-detail-view" class="hidden flex-1 p-8 overflow-y-auto flex flex-col space-y-6 relative h-full bg-slate-950/90 backdrop-blur-md">
                     <!-- Top Back Navigation Bar -->
                     <div class="flex items-center justify-between pb-4 border-b border-white/15 sticky top-0 bg-slate-950/95 z-20 py-2">
@@ -661,7 +660,6 @@
         </div>
     </div>
 
-    <!-- MODAL 3: CLORY AI VOICE & VIDEO ASSISTANT -->
     <div id="clory-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-8 transition-opacity">
         <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-5xl h-[82vh] flex flex-col overflow-hidden shadow-2xl relative">
             <!-- Modal Header -->
@@ -792,7 +790,6 @@
         </div>
     </div>
 
-    <!-- MODAL 4: SIP PJSIP CONFIGURATION -->
     <div id="sip-config-modal" class="fixed inset-0 z-[120] bg-black/85 backdrop-blur-lg hidden flex items-center justify-center p-6 transition-opacity">
         <div class="bg-navy border-2 border-gold rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl relative">
             <div class="p-5 bg-navy-dark border-b border-white/10 flex items-center justify-between">
@@ -857,7 +854,6 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT APP ENGINE -->
     <script>
         // Global Application State Variables
         let currentLang = 'en';
@@ -1338,101 +1334,456 @@
                 mapUrl: "https://maps.app.goo.gl/4fGq7S3C6P1Y4J2d8",
                 urlVi: "https://camranh.aero/vi/explore/article/nha-trang-international-marathon-2026",
                 urlEn: "https://camranh.aero/en/explore/article/nha-trang-international-marathon-2026"
+            },
+            {
+                id: "stone-church-nha-trang-cathedral",
+                category: "Culture",
+                date: "25 May 2026",
+                titleEn: "Nha Trang Cathedral: Gothic Stone Architecture Standing High on Bong Mountain",
+                titleVi: "Nhà thờ Đá Nha Trang: Kiệt tác kiến trúc Gothic cổ kính rực rỡ trên đỉnh đồi Bông",
+                descEn: "Admire French stained-glass windows, arched stone vaults, and peaceful clock towers built in 1928.",
+                descVi: "Chiêm ngưỡng những ô cửa kính màu kiểu Pháp, vòm đá mộc mạc và tháp chuông ngân vang xây dựng từ năm 1928.",
+                contentEn: "Nha Trang Cathedral built entirely with stone blocks offers serene reflection right in the city center.",
+                contentVi: "Nhà thờ Đá Nha Trang xây dựng hoàn toàn bằng đá hộc mang vẻ đẹp trang nghiêm cổ kính giữa trung tâm thành phố.",
+                img: "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?q=80&w=800&auto=format&fit=crop",
+                location: "Bong Mountain • Central Nha Trang",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/stone-church-nha-trang-cathedral",
+                urlEn: "https://camranh.aero/en/explore/article/stone-church-nha-trang-cathedral"
+            },
+            {
+                id: "jellyfish-noodle-soup-bun-ca-doc-let",
+                category: "Gastronomy",
+                date: "22 May 2026",
+                titleEn: "Bun Ca Sua Nha Trang: Crisp Ocean Jellyfish Noodle Soup with Savory Sailfish Broth",
+                titleVi: "Bún Cá Sứa Nha Trang: Món ngon thanh mát vị biển với sứa giòn sần sật & nước dùng cá dầm",
+                descEn: "Refreshing ocean jellyfish served over rice vermicelli, steamed fish cakes, and sweet clear sailfish broth.",
+                descVi: "Sứa biển giòn ngon ăn kèm bún tươi, chả cá hấp thơm phức và nước dùng cá thu ngừ thanh ngọt tự nhiên.",
+                contentEn: "A traditional coastal breakfast favorite rich in collagen, clean ocean flavors, and fresh local herbs.",
+                contentVi: "Món ăn sáng quen thuộc xứ biển giàu dưỡng chất, thanh nhẹ và mang hương vị biển cả đặc trưng.",
+                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop",
+                location: "Bun Ca Loan & Bun Ca Han Thuyen",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/jellyfish-noodle-soup-bun-ca-doc-let",
+                urlEn: "https://camranh.aero/en/explore/article/jellyfish-noodle-soup-bun-ca-doc-let"
+            },
+            {
+                id: "almaty-tashkent-direct-flights-cxr",
+                category: "Aviation",
+                date: "20 May 2026",
+                titleEn: "Central Asian Flight Expansion: Direct Routes connecting Kazakhstan & Uzbekistan to Cam Ranh",
+                titleVi: "Mở rộng thị trường Trung Á: Các tuyến bay trực tiếp từ Kazakhstan & Uzbekistan đến Cam Ranh",
+                descEn: "Year-round scheduled direct flights bring tens of thousands of Central Asian vacationers to Bai Dai beach resorts.",
+                descVi: "Đường bay thẳng thường lệ quanh năm đưa hàng vạn du khách Trung Á đến nghỉ dưỡng tại Bãi Dài Cam Ranh.",
+                contentEn: "Cam Ranh International Terminal T2 provides customized Russian and English multilingual assistance for Central Asian flights.",
+                contentVi: "Ga Quốc tế T2 Cam Ranh triển khai dịch vụ hỗ trợ đa ngữ tiếng Nga và tiếng Anh phục vụ khách Trung Á.",
+                img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800&auto=format&fit=crop",
+                location: "Cam Ranh Terminal T2",
+                mapUrl: "https://maps.app.goo.gl/CXRAirportTerminal",
+                urlVi: "https://camranh.aero/vi/explore/article/almaty-tashkent-direct-flights-cxr",
+                urlEn: "https://camranh.aero/en/explore/article/almaty-tashkent-direct-flights-cxr"
+            },
+            {
+                id: "ba-ho-stream-eco-trekking-wellness",
+                category: "Wellness",
+                date: "18 May 2026",
+                titleEn: "Ba Ho Stream Ecotourism: Trekking Granite Boulders to Three Natural Freshwater Crystal Lakes",
+                titleVi: "Du lịch Sinh thái Suối Ba Hồ: Trekking vách đá chinh phục 3 hồ nước ngọt tự nhiên tuyệt đẹp",
+                descEn: "Hike through lush jungle trails and jump into cool mountain spring pools surrounded by wild greenery.",
+                descVi: "Lội suối xuyên rừng nguyên sinh và hòa mình vào làn nước suối trong mát tự nhiên giữa núi rừng Ninh Hòa.",
+                contentEn: "Ba Ho Stream is known as Nha Trang's natural waterpark for eco-adventurers seeking pure nature detox.",
+                contentVi: "Suối Ba Hồ được mệnh danh là công viên nước tự nhiên lý tưởng cho du khách đam mê du lịch sinh thái.",
+                img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
+                location: "Ninh Ichi • Ninh Hoa",
+                mapUrl: "https://maps.app.goo.gl/BaHoEcotourism",
+                urlVi: "https://camranh.aero/vi/explore/article/ba-ho-stream-eco-trekking-wellness",
+                urlEn: "https://camranh.aero/en/explore/article/ba-ho-stream-eco-trekking-wellness"
+            },
+            {
+                id: "green-hospitality-certification-khanh-hoa",
+                category: "Tourism",
+                date: "15 May 2026",
+                titleEn: "Green Tourism Initiative: 50 Beach Resorts in Khanh Hoa Awarded International Eco Badges",
+                titleVi: "Sáng kiến Du lịch Xanh: 50 Khu nghỉ dưỡng biển Khánh Hòa đạt Chứng nhận Sinh thái Quốc tế",
+                descEn: "Solar-powered hotels, plastic-free beaches, and coral protection programs drive sustainable coastal tourism.",
+                descVi: "Khách sạn năng lượng mặt trời, bãi biển không rác thải nhựa và chương trình bảo tồn san hô nâng tầm du lịch xanh.",
+                contentEn: "Khanh Hoa province aims to become Southeast Asia's benchmark for eco-certified sustainable beach destinations.",
+                contentVi: "Tỉnh Khánh Hòa hướng tới trở thành hình mẫu du lịch biển bền vững sinh thái hàng đầu khu vực.",
+                img: "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?q=80&w=800&auto=format&fit=crop",
+                location: "Khanh Hoa Department of Tourism",
+                mapUrl: "https://maps.app.goo.gl/KhanhHoaTourismCenter",
+                urlVi: "https://camranh.aero/vi/explore/article/green-hospitality-certification-khanh-hoa",
+                urlEn: "https://camranh.aero/en/explore/article/green-hospitality-certification-khanh-hoa"
+            },
+            {
+                id: "ocean-kayaking-van-phong-bay",
+                category: "Sports & Eco",
+                date: "12 May 2026",
+                titleEn: "Ocean Kayaking & Stand-Up Paddling in Van Phong Bay: Glide Across Emerald Waters",
+                titleVi: "Chèo thuyền Kayak & SUP Vịnh Vân Phong: Lướt sóng trên mặt biển ngọc bích yên bình",
+                descEn: "Paddle past quiet fishing villages, coral reefs, and secluded white beaches along the calm Van Phong bay.",
+                descVi: "Chèo thuyền qua các làng chài bình yên, ngắm rạn san hô và khám phá bãi cát hoang sơ Vịnh Vân Phong.",
+                contentEn: "Van Phong Bay offers calm wind-sheltered sea conditions ideal for morning stand-up paddleboarding and sea kayaking.",
+                contentVi: "Vịnh Vân Phong sở hữu mặt biển kín gió êm đềm rất thích hợp cho hoạt động chèo SUP đón bình minh.",
+                img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800&auto=format&fit=crop",
+                location: "Van Phong Bay • Van Ninh",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/ocean-kayaking-van-phong-bay",
+                urlEn: "https://camranh.aero/en/explore/article/ocean-kayaking-van-phong-bay"
+            },
+            {
+                id: "binh-ba-lobster-island-guide",
+                category: "Destination",
+                date: "10 May 2026",
+                titleEn: "Binh Ba Lobster Island: Pristine Turquoise Coves and Fresh Seafood Feast in Cam Ranh",
+                titleVi: "Đảo Bình Ba: Thiên đường tôm hùm & dải bãi biển xanh trong tuyệt mỹ tại Cam Ranh",
+                descEn: "Explore Nom Beach, Chuong Beach, and taste freshly grilled island lobster right on wooden raft houses.",
+                descVi: "Khám phá Bãi Nồm, Bãi Chướng và thưởng thức tôm hùm nướng tươi ngon ngay tại bè nuôi đảo Bình Ba.",
+                contentEn: "Binh Ba Island in Cam Ranh Bay is renowned nationwide for sweet island lobsters and untouched clear ocean waters.",
+                contentVi: "Đảo Bình Ba thuộc Vịnh Cam Ranh nổi tiếng cả nước với món tôm hùm danh tiếng và làn nước biển xanh ngắt.",
+                img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800&auto=format&fit=crop",
+                location: "Binh Ba Island • Cam Ranh Bay",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/binh-ba-lobster-island-guide",
+                urlEn: "https://camranh.aero/en/explore/article/binh-ba-lobster-island-guide"
+            },
+            {
+                id: "sailing-regatta-cam-ranh-bay-2026",
+                category: "Events",
+                date: "08 May 2026",
+                titleEn: "International Ocean Sailing Regatta 2026: 40 Catamarans Race Across Cam Ranh Bay",
+                titleVi: "Giải Đua thuyền buồm Quốc tế Cam Ranh 2026: 40 Thuyền buồm tranh tài trên Vịnh Cam Ranh",
+                descEn: "Professional sailors from around the globe competed in high-wind catamaran races along Bai Dai coast.",
+                descVi: "Các vận động viên thuyền buồm chuyên nghiệp thế giới tranh tài sôi nổi trên vùng biển Bãi Dài nắng ấm.",
+                contentEn: "Cam Ranh Bay's reliable year-round wind conditions make it an ideal venue for international regatta events.",
+                contentVi: "Vịnh Cam Ranh với điều kiện hướng gió lý tưởng quanh năm trở thành địa điểm thi đấu thuyền buồm chuẩn quốc tế.",
+                img: "https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=800&auto=format&fit=crop",
+                location: "Bai Dai Coast • Cam Ranh",
+                mapUrl: "https://maps.app.goo.gl/9P7vY2y219Zq4W4w8",
+                urlVi: "https://camranh.aero/vi/explore/article/sailing-regatta-cam-ranh-bay-2026",
+                urlEn: "https://camranh.aero/en/explore/article/sailing-regatta-cam-ranh-bay-2026"
+            },
+            {
+                id: "alexandre-yersin-museum-heritage",
+                category: "Culture",
+                date: "05 May 2026",
+                titleEn: "Dr. Alexandre Yersin Museum: Honoring the Revered French Scientist Who Loved Nha Trang",
+                titleVi: "Bảo tàng Bác sĩ Alexandre Yersin: Tri ân nhà khoa học Pháp dành trọn tình yêu cho Nha Trang",
+                descEn: "Explore original laboratory instruments, vintage journals, and historical photos inside Pasteurs Institute.",
+                descVi: "Tham quan phòng thí nghiệm nguyên bản, sổ tay nghiên cứu và hình ảnh tư liệu quý tại Viện Pasteur Nha Trang.",
+                contentEn: "Dr. Yersin discovered the plague bacillus and introduced rubber trees and cinchona medicinal plants to Vietnam.",
+                contentVi: "Bác sĩ Yersin là người phát hiện ra vi trùng dịch hạch và có công tìm ra cao nguyên Đà Lạt cũng như phát triển Nha Trang.",
+                img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=800&auto=format&fit=crop",
+                location: "Pasteur Institute • Tran Phu Nha Trang",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/alexandre-yersin-museum-heritage",
+                urlEn: "https://camranh.aero/en/explore/article/alexandre-yersin-museum-heritage"
+            },
+            {
+                id: "banh-xeo-muc-squid-pancake-seafood",
+                category: "Gastronomy",
+                date: "02 May 2026",
+                titleEn: "Banh Xeo Muc Nha Trang: Crispy Pan-Fried Squid Pancakes Fresh From Local Fishermen",
+                titleVi: "Bánh Xèo Mực Nha Trang: Món ăn dân dã giòn rụm nhân mực trứng tươi rói ngọt lịm",
+                descEn: "Sizzling golden rice pancakes stuffed with whole fresh squid, bean sprouts, and served with green chili dip.",
+                descVi: "Bánh xèo chiên khuôn đất giòn đụm nhân mực trứng tươi nguyên con ăn kèm rau sống và mắm nêm đậm đà.",
+                contentEn: "Cooked on small clay stoves, these crispy squid pancakes are an iconic street food experience along Thap Ba street.",
+                contentVi: "Được đúc trên khuôn đất nung truyền thống, bánh xèo mực Tháp Bà là món ăn vặt đêm không thể cưỡng lại.",
+                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop",
+                location: "Thap Ba Street & Banh Xeo Chieu Le Loi",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/banh-xeo-muc-squid-pancake-seafood",
+                urlEn: "https://camranh.aero/en/explore/article/banh-xeo-muc-squid-pancake-seafood"
+            },
+            {
+                id: "high-speed-rail-cxr-airport-link",
+                category: "Aviation",
+                date: "28 April 2026",
+                titleEn: "Cam Ranh Airport Metrorail & Highway Link Upgrade Seamlessly Connects City Center",
+                titleVi: "Nâng cấp Tuyến Metro & Tuyến đường bộ kết nối nhanh Sân bay Cam Ranh về Trung tâm",
+                descEn: "Travel time between CXR International Airport and Nha Trang center reduced to just 20 minutes.",
+                descVi: "Thời gian di chuyển từ Sân bay Quốc tế Cam Ranh về trung tâm Nha Trang rút ngắn chỉ còn 20 phút.",
+                contentEn: "Modern electric express buses and dedicated highway lanes provide hassle-free transit for arriving travelers.",
+                contentVi: "Tuyến xe bus điện tốc hành cùng làn đường cao tốc riêng biệt mang đến sự thuận tiện tối đa cho du khách.",
+                img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=800&auto=format&fit=crop",
+                location: "Nguyen Tat Thanh Expressway • CXR Link",
+                mapUrl: "https://maps.app.goo.gl/CXRAirportTerminal",
+                urlVi: "https://camranh.aero/vi/explore/article/high-speed-rail-cxr-airport-link",
+                urlEn: "https://camranh.aero/en/explore/article/high-speed-rail-cxr-airport-link"
+            },
+            {
+                id: "yang-bay-hot-spring-waterfall-sanctuary",
+                category: "Wellness",
+                date: "25 April 2026",
+                titleEn: "Yang Bay Waterfall & Thermal Springs: Natural Hot Mineral Soak Deep Inside Raglai Forests",
+                titleVi: "Công viên Thác Yang Bay: Suối khoáng nóng tự nhiên giữa đại ngàn văn hóa Raglai",
+                descEn: "Bathe in natural thermal pools where warm hot springs meet cool mountain waterfalls deep in Khanh Vinh.",
+                descVi: "Ngâm mình trong hồ khoáng nóng tự nhiên nơi giao thoa giữa nguồn khoáng nóng và dòng thác mát lạnh Khánh Vĩnh.",
+                contentEn: "Yang Bay offers traditional Raglai music performances with stone xylophones (Dan Da) alongside therapeutic thermal soaks.",
+                contentVi: "Công viên Yang Bay kết hợp ngâm khoáng nóng cùng các chương trình biểu diễn đàn đá văn hóa Raglai độc đáo.",
+                img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop",
+                location: "Yang Bay Ecotourism Park • Khanh Vinh",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/yang-bay-hot-spring-waterfall-sanctuary",
+                urlEn: "https://camranh.aero/en/explore/article/yang-bay-hot-spring-waterfall-sanctuary"
+            },
+            {
+                id: "luxury-cruise-lines-landing-cxr",
+                category: "Tourism",
+                date: "20 April 2026",
+                titleEn: "Five-Star Cruise Ships Dock at Cam Ranh Bay: Welcoming 4,000 Luxury Cruise Passengers",
+                titleVi: "Siêu du thuyền 5 sao cập Cảng Quốc tế Cam Ranh: Đón 4.000 du khách thượng lưu quốc tế",
+                descEn: "Global cruise liners select Cam Ranh Bay as a key shore excursion hub for exploring Central Vietnam.",
+                descVi: "Các hãng du thuyền hạng sang quốc tế lựa chọn Vịnh Cam Ranh làm điểm dừng chân khám phá miền Trung.",
+                contentEn: "Luxury passengers enjoyed day tours to Po Nagar Cham towers, craft villages, and mud bath wellness retreats.",
+                contentVi: "Du khách du thuyền trải nghiệm tour tham quan Tháp Bà, làng nghề truyền thống và tắm bùn khoáng thư giãn.",
+                img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop",
+                location: "Cam Ranh International Port",
+                mapUrl: "https://maps.app.goo.gl/CXRAirportTerminal",
+                urlVi: "https://camranh.aero/vi/explore/article/luxury-cruise-lines-landing-cxr",
+                urlEn: "https://camranh.aero/en/explore/article/luxury-cruise-lines-landing-cxr"
+            },
+            {
+                id: "paragliding-nha-trang-bay-aerial-view",
+                category: "Sports & Eco",
+                date: "15 April 2026",
+                titleEn: "Motorized Paragliding Over Nha Trang Bay: Soar 300 Meters High Over Turquoise Ocean",
+                titleVi: "Bay Dù lượn Có động cơ ngắm Vịnh Nha Trang: Bay cao 300m thu trọn vịnh biển xanh vào tầm mắt",
+                descEn: "Experience tandem paragliding flights taking off from Hon Tre island beaches with professional pilots.",
+                descVi: "Trải nghiệm bay dù đôi cùng phi công chuyên nghiệp cất cánh từ bãi biển Bãi Trẹm ngắm trọn vẹn vịnh biển.",
+                contentEn: "Capture breathtaking aerial photos of Nha Trang city skyline and coral reefs from high up in the sky.",
+                contentVi: "Ghi lại những bức ảnh toàn cảnh tuyệt đẹp của thành phố biển và các rạn san hô lung linh từ trên không.",
+                img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800&auto=format&fit=crop",
+                location: "Hon Tre Island • Nha Trang Bay",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/paragliding-nha-trang-bay-aerial-view",
+                urlEn: "https://camranh.aero/en/explore/article/paragliding-nha-trang-bay-aerial-view"
+            },
+            {
+                id: "hon-tre-island-vinwonders-resort",
+                category: "Destination",
+                date: "10 April 2026",
+                titleEn: "Hon Tre Island: The Ultimate All-in-One Family Entertainment & Luxury Resort Hub",
+                titleVi: "Đảo Hòn Tre: Đảo du lịch giải trí tích hợp & quần thể nghỉ dưỡng Vinpearl đẳng cấp",
+                descEn: "Home to VinWonders amusement park, sea-crossing cable car, Tata Show, and championship golf courses.",
+                descVi: "Sở hữu công viên giải trí VinWonders, tuyến cáp treo vượt biển, đại cảnh Tata Show và sân golf 18 lỗ quốc tế.",
+                contentEn: "Hon Tre Island is Khanh Hoa's flagship family holiday paradise located just 10 minutes by speedboat from shore.",
+                contentVi: "Đảo Hòn Tre là thiên đường nghỉ dưỡng gia đình hàng đầu Khánh Hòa chỉ mất 10 phút ca-nô từ đất liền.",
+                img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
+                location: "Hon Tre Island • Nha Trang",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/hon-tre-island-vinwonders-resort",
+                urlEn: "https://camranh.aero/en/explore/article/hon-tre-island-vinwonders-resort"
+            },
+            {
+                id: "international-food-carnival-nha-trang-2026",
+                category: "Events",
+                date: "05 April 2026",
+                titleEn: "International Street Food Carnival 2026: 100 Culinary Stalls Along Yersin Park",
+                titleVi: "Lễ hội Ẩm thực Đường phố Quốc tế 2026: 100 Gian hàng hội tụ tinh hoa ẩm thực Á - Âu",
+                descEn: "Chefs from Korea, Japan, France, and Vietnam showcased live cooking and fresh seafood fusion dishes.",
+                descVi: "Các đầu bếp từ Hàn Quốc, Nhật Bản, Pháp và Việt Nam trình diễn chế biến hải sản tươi sống đặc sắc.",
+                contentEn: "Over 30,000 visitors enjoyed beachfront dining accompanied by live jazz and traditional acoustic music.",
+                contentVi: "Hơn 30.000 lượt khách tham quan thưởng thức ẩm thực ven biển cùng các tiết mục nhạc sống sôi động.",
+                img: "https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=800&auto=format&fit=crop",
+                location: "Yersin Park • Tran Phu Nha Trang",
+                mapUrl: "https://maps.app.goo.gl/4fGq7S3C6P1Y4J2d8",
+                urlVi: "https://camranh.aero/vi/explore/article/international-food-carnival-nha-trang-2026",
+                urlEn: "https://camranh.aero/en/explore/article/international-food-carnival-nha-trang-2026"
+            },
+            {
+                id: "mat-weaving-craft-village-truong-son",
+                category: "Culture",
+                date: "01 April 2026",
+                titleEn: "Truong Son Traditional Craft Village: Preserving Indigenous Mat Weaving & Bamboo Carving",
+                titleVi: "Làng nghề Truyền thống Trường Sơn: Giữ gìn hồn nghề Dệt chiếu & Điêu khắc mây tre",
+                descEn: "Watch master artisans weave colorful rush mats, carve bamboo instruments, and fashion conical hats live.",
+                descVi: "Tận mắt chứng kiến các nghệ nhân dệt chiếu cói hoa văn, đục đẽo nhạc cụ mây tre và chít nón lá xóm đồi.",
+                contentEn: "Truong Son Craft Village inside Nha Trang city center offers hands-on workshops for cultural enthusiasts.",
+                contentVi: "Làng nghề Trường Sơn ngay trung tâm Nha Trang là không gian trải nghiệm văn hóa dân gian tuyệt vời.",
+                img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=800&auto=format&fit=crop",
+                location: "Phuoc Long • Nha Trang",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/mat-weaving-craft-village-truong-son",
+                urlEn: "https://camranh.aero/en/explore/article/mat-weaving-craft-village-truong-son"
+            },
+            {
+                id: "xom-moi-seafood-market-foodie-tour",
+                category: "Gastronomy",
+                date: "25 March 2026",
+                titleEn: "Xom Moi Seafood Market: The Vibrant Local Heart of Fresh Fish, Oysters, and Tropical Fruits",
+                titleVi: "Chợ Xóm Mới Nha Trang: Nhịp sống chợ truyền thống nhộn nhịp hải sản tươi rói & trái cây",
+                descEn: "Explore bustling stalls filled with morning-catch king prawns, live crabs, sea snails, and sweet mangoes.",
+                descVi: "Khám phá các sạp chợ ngập tràn tôm hùm, cua biển, ốc hương tươi rói và xoài chín Cam Ranh ngọt lịm.",
+                contentEn: "A authentic cultural market where foodies can experience genuine local daily life and sample street snacks.",
+                contentVi: "Ngôi chợ lâu đời nơi du khách cảm nhận trọn vẹn nhịp sống bình dị và ẩm thực bản địa chân thực.",
+                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop",
+                location: "Ngo Gia Tu • Central Nha Trang",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/xom-moi-seafood-market-foodie-tour",
+                urlEn: "https://camranh.aero/en/explore/article/xom-moi-seafood-market-foodie-tour"
+            },
+            {
+                id: "seoul-busan-flight-frequency-surge",
+                category: "Aviation",
+                date: "20 March 2026",
+                titleEn: "Direct Korea Flight Surge: 30 Daily Flights Connect Seoul & Busan to Cam Ranh Airport",
+                titleVi: "Tăng tần suất đường bay Hàn Quốc: 30 chuyến bay mỗi ngày nối Incheon & Busan với Sân bay Cam Ranh",
+                descEn: "Airlines add wide-body aircraft to keep up with record Korean holiday demand for Cam Ranh beach resorts.",
+                descVi: "Các hãng hàng không đưa máy bay thân rộng vào khai thác đáp ứng nhu cầu du lịch biển tăng cao của khách Hàn.",
+                contentEn: "CRTC Terminal T2 streamlines automated immigration e-gates to shorten exit clearance to under 10 minutes.",
+                contentVi: "Ga Quốc tế T2 Cam Ranh tối ưu hóa cổng xuất nhập cảnh tự động e-gate rút ngắn thời gian thông quan.",
+                img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=800&auto=format&fit=crop",
+                location: "Cam Ranh Terminal T2",
+                mapUrl: "https://maps.app.goo.gl/CXRAirportTerminal",
+                urlVi: "https://camranh.aero/vi/explore/article/seoul-busan-flight-frequency-surge",
+                urlEn: "https://camranh.aero/en/explore/article/seoul-busan-flight-frequency-surge"
+            },
+            {
+                id: "hon-ba-mountain-zen-wellness-retreat",
+                category: "Wellness",
+                date: "15 March 2026",
+                titleEn: "Hon Ba Mountain Mist Sanctuary: Cool Climate Zen Meditation & Forest Bathing Escape",
+                titleVi: "Đỉnh Hòn Bà Mù Sương: Du lịch Thiền Zen & Tắm rừng hồi phục sức khỏe giữa khí hậu ôn đới",
+                descEn: "Perched 1,500 meters above sea level, Hon Ba offers cool 18°C temperatures and pristine cloud-wrapped forests.",
+                descVi: "Nằm ở độ cao 1.500m so với mực nước biển, Hòn Bà sở hữu khí hậu 18°C mát mẻ quanh năm và rừng nguyên sinh.",
+                contentEn: "Visit the preserved wooden cabin of Dr. Alexandre Yersin surrounded by rare high-altitude orchids and ancient trees.",
+                contentVi: "Tham quan ngôi nhà gỗ lịch sử của Bác sĩ Yersin giữa không gian rừng nguyên sinh đắm chìm trong mây mờ.",
+                img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop",
+                location: "Hon Ba Summit • Dien Khanh",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/hon-ba-mountain-zen-wellness-retreat",
+                urlEn: "https://camranh.aero/en/explore/article/hon-ba-mountain-zen-wellness-retreat"
+            },
+            {
+                id: "van-phong-bay-eco-tourism-masterplan",
+                category: "Tourism",
+                date: "10 March 2026",
+                titleEn: "Van Phong Bay Masterplan: Developing Southeast Asia's Next-Gen Sustainable Marine Hub",
+                titleVi: "Quy hoạch Vịnh Vân Phong: Định hình Trung tâm Kinh tế Biển & Du lịch Sinh thái Thế hệ mới",
+                descEn: "Ultra-luxury eco-resorts, deep-water marina ports, and coral sanctuaries set to redefine Khanh Hoa tourism.",
+                descVi: "Tổ hợp nghỉ dưỡng sinh thái cao cấp, bến du thuyền quốc tế và khu bảo tồn san hô định hình du lịch Khánh Hòa.",
+                contentEn: "Van Phong Bay's untouched natural beauty attracts top international sustainable hospitality brands.",
+                contentVi: "Vẻ đẹp hoang sơ tự nhiên của Vịnh Vân Phong thu hút các thương hiệu khách sạn sinh thái hàng đầu thế giới.",
+                img: "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?q=80&w=800&auto=format&fit=crop",
+                location: "Van Phong Economic Zone",
+                mapUrl: "https://maps.app.goo.gl/KhanhHoaTourismCenter",
+                urlVi: "https://camranh.aero/vi/explore/article/van-phong-bay-eco-tourism-masterplan",
+                urlEn: "https://camranh.aero/en/explore/article/van-phong-bay-eco-tourism-masterplan"
+            },
+            {
+                id: "windsurfing-kite-surfing-cam-ranh-bay",
+                category: "Sports & Eco",
+                date: "05 March 2026",
+                titleEn: "Kite Surfing at Bai Dai Cam Ranh: Ride Consistent Tropical Ocean Breezes",
+                titleVi: "Lướt ván diều Bãi Dài Cam Ranh: Tận hưởng những luồng gió biển nhiệt đới lý tưởng",
+                descEn: "Bai Dai's wide sandy shorelines and steady cross-shore winds attract world-class kite surfers.",
+                descVi: "Bờ cát trắng rộng dài cùng luồng gió biển ổn định thu hút các vận động viên lướt ván diều quốc tế.",
+                contentEn: "Certified kite schools along Bai Dai offer beginner lessons and gear rentals right on the beach.",
+                contentVi: "Các câu lạc bộ lướt ván diều tại Bãi Dài cung cấp các khóa học và dịch vụ cho thuê thiết bị chuyên nghiệp.",
+                img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800&auto=format&fit=crop",
+                location: "Bai Dai Beach • Cam Ranh",
+                mapUrl: "https://maps.app.goo.gl/9P7vY2y219Zq4W4w8",
+                urlVi: "https://camranh.aero/vi/explore/article/windsurfing-kite-surfing-cam-ranh-bay",
+                urlEn: "https://camranh.aero/en/explore/article/windsurfing-kite-surfing-cam-ranh-bay"
+            },
+            {
+                id: "cam-ranh-bay-deep-water-harbor-tour",
+                category: "Destination",
+                date: "01 March 2026",
+                titleEn: "Cam Ranh Bay: Discover One of the World's Most Magnificent Deep-Water Natural Harbors",
+                titleVi: "Vịnh Cam Ranh: Khám phá một trong những vịnh biển nước sâu tự nhiên đẹp nhất thế giới",
+                descEn: "Sheltered by Cam Ranh peninsula, this peaceful bay offers calm blue waters, mangrove forests, and oyster farms.",
+                descVi: "Được bao bọc bởi bán đảo Cam Ranh, vịnh biển mang vẻ đẹp bình yên với các đầm nuôi ngọc trai và rừng ngập mặn.",
+                contentEn: "Explore the gentle waters of Cam Ranh Bay on boat excursions departing directly near the airport.",
+                contentVi: "Trải nghiệm du thuyền tham quan vẻ đẹp bình yên của Vịnh Cam Ranh ngay gần khu vực sân bay.",
+                img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
+                location: "Cam Ranh Bay • Khanh Hoa",
+                mapUrl: "https://maps.app.goo.gl/CXRAirportTerminal",
+                urlVi: "https://camranh.aero/vi/explore/article/cam-ranh-bay-deep-water-harbor-tour",
+                urlEn: "https://camranh.aero/en/explore/article/cam-ranh-bay-deep-water-harbor-tour"
+            },
+            {
+                id: "nha-trang-street-art-mural-village",
+                category: "Culture",
+                date: "22 February 2026",
+                titleEn: "Nha Trang Art Mural Village: Vibrant Coastal Wall Paintings Celebrating Fishermen Life",
+                titleVi: "Làng Bích họa Nha Trang: Rực rỡ những bức tranh tường sinh động tôn vinh đời sống ngư dân",
+                descEn: "Stroll along narrow coastal alleys adorned with 3D colorful murals depicting whales, fishing nets, and boats.",
+                descVi: "Dạo bước qua các con hẻm ven biển rực rỡ tranh bích họa 3D khắc họa cá hồi, lưới đánh cá và thuyền thuyền.",
+                contentEn: "Local young artists transformed traditional fishing village walls into an open-air art gallery.",
+                contentVi: "Các họa sĩ trẻ địa phương đã biến những bức tường xóm chài thành không gian triển lãm nghệ thuật ngoài trời.",
+                img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=800&auto=format&fit=crop",
+                location: "Vinh Truong • Nha Trang",
+                mapUrl: "https://maps.app.goo.gl/AeY2BMC9QzsAN7mj6",
+                urlVi: "https://camranh.aero/vi/explore/article/nha-trang-street-art-mural-village",
+                urlEn: "https://camranh.aero/en/explore/article/nha-trang-street-art-mural-village"
+            },
+            {
+                id: "cam-ranh-mango-delicacies-and-cakes",
+                category: "Gastronomy",
+                date: "15 February 2026",
+                titleEn: "Banh Xoai Cam Ranh: Sweet Sun-Dried Mango Fruit Leather Specialty of the Peninsular",
+                titleVi: "Bánh Xoài Cam Ranh: Đặc sản mứt xoài sấy nắng tự nhiên thơm ngọt dẻo quánh xứ bán đảo",
+                descEn: "Made 100% from naturally ripened Cam Ranh yellow mangoes, slowly sun-dried into golden chewy sheets.",
+                descVi: "Chế biến 100% từ xoài chín cây Cam Ranh phơi nắng tự nhiên dẻo thơm nguyên chất không chất bảo quản.",
+                contentEn: "Cam Ranh's unique sandy soil produces sweet, aromatic mangoes celebrated across Vietnam.",
+                contentVi: "Thổ nhưỡng cát trắng Bán đảo Cam Ranh mang đến những quả xoài ngọt đậm đà chế biến thành món quà quê đặc sắc.",
+                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop",
+                location: "Cam Ranh City & Airport Specialty Shops",
+                mapUrl: "https://maps.app.goo.gl/CXRAirportTerminal",
+                urlVi: "https://camranh.aero/vi/explore/article/cam-ranh-mango-delicacies-and-cakes",
+                urlEn: "https://camranh.aero/en/explore/article/cam-ranh-mango-delicacies-and-cakes"
+            },
+            {
+                id: "cxr-carbon-neutral-airport-program",
+                category: "Aviation",
+                date: "05 February 2026",
+                titleEn: "Cam Ranh Terminal T2 Achieves Level 3 ACA Carbon Neutrality Certification",
+                titleVi: "Nhà ga T2 Sân bay Cam Ranh đạt Chứng nhận Trung hòa Carbon ACA Cấp độ 3",
+                descEn: "Solar roof panels, LED energy grids, and electric ground fleet earn CXR international green airport honors.",
+                descVi: "Hệ thống điện mặt trời mái nhà, hệ thống chiếu sáng tiết kiệm năng lượng giúp Cam Ranh đạt chuẩn sân bay xanh.",
+                contentEn: "Cam Ranh International Terminal continues leading Vietnam's green aviation transition.",
+                contentVi: "Nhà ga Quốc tế Cam Ranh khẳng định vị thế dẫn đầu xu hướng chuyển đổi hàng không xanh tại Việt Nam.",
+                img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=800&auto=format&fit=crop",
+                location: "Cam Ranh International Airport",
+                mapUrl: "https://maps.app.goo.gl/CXRAirportTerminal",
+                urlVi: "https://camranh.aero/vi/explore/article/cxr-carbon-neutral-airport-program",
+                urlEn: "https://camranh.aero/en/explore/article/cxr-carbon-neutral-airport-program"
+            },
+            {
+                id: "meditation-yoga-bai-dai-beach-sunrise",
+                category: "Wellness",
+                date: "25 January 2026",
+                titleEn: "Sunrise Beachfront Yoga & Sound Healing on Bai Dai's Pristine White Sands",
+                titleVi: "Yoga Đón Bình Minh & Trị liệu Âm thanh Chuông xoay bên bờ bãi biển Bãi Dài",
+                descEn: "Listen to gentle ocean waves and practice guided breathing as golden morning sunlight fills the horizon.",
+                descVi: "Lắng nghe tiếng sóng biển êm đềm và thực hành thiền định chữa lành đón ánh bình minh rạng rỡ Bãi Dài.",
+                contentEn: "Resorts along Bai Dai offer complimentary morning beach yoga sessions for wellness travelers.",
+                contentVi: "Các khu nghỉ dưỡng dọc Bãi Dài tổ chức các lớp yoga bãi biển buổi sáng giúp tái tạo năng lượng.",
+                img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop",
+                location: "Bai Dai Resort Coastline • Cam Ranh",
+                mapUrl: "https://maps.app.goo.gl/9P7vY2y219Zq4W4w8",
+                urlVi: "https://camranh.aero/vi/explore/article/meditation-yoga-bai-dai-beach-sunrise",
+                urlEn: "https://camranh.aero/en/explore/article/meditation-yoga-bai-dai-beach-sunrise"
+            },
+            {
+                id: "khanh-hoa-digital-tourism-ecosystem",
+                category: "Tourism",
+                date: "15 January 2026",
+                titleEn: "Khanh Hoa Smart Tourism Platform: AI Itinerary Planner & Multi-Lingual Airport Assistance",
+                titleVi: "Hệ sinh thái Du lịch Thông minh Khánh Hòa: Trợ lý AI lập hành trình & Kiosk đa ngữ sân bay",
+                descEn: "Travelers can now scan QR codes at CXR Airport to access personalized 3D maps and instant guides.",
+                descVi: "Du khách quét mã QR tại Sân bay Cam Ranh để nhận bản đồ 3D cá nhân hóa và hướng dẫn du lịch tự động.",
+                contentEn: "The smart tourism initiative seamlessly connects airport kiosks, hotel check-ins, and attraction passes.",
+                contentVi: "Nền tảng du lịch thông minh kết nối đồng bộ Kiosk sân bay, thủ tục nhận phòng và vé tham quan.",
+                img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop",
+                location: "Khanh Hoa Smart Tourism Center",
+                mapUrl: "https://maps.app.goo.gl/KhanhHoaTourismCenter",
+                urlVi: "https://camranh.aero/vi/explore/article/khanh-hoa-digital-tourism-ecosystem",
+                urlEn: "https://camranh.aero/en/explore/article/khanh-hoa-digital-tourism-ecosystem"
             }
         ];
-
-        const i18n = {
-            en: {
-                welcomeTag: "Welcome Valued Passengers",
-                welcomeTitle: "WELCOME TO <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>CAM RANH INTL AIRPORT</span>",
-                welcomeSub: "Experience world-class aviation services and 24/7 intelligent assistance for your journey.",
-                wifiLabel: "Free High-Speed Wi-Fi",
-                readMore: "Read Article",
-                backToList: "Back to List",
-                prevArt: "Previous Article",
-                nextArt: "Next Article"
-            },
-            vi: {
-                welcomeTag: "Chào Mừng Quý Khách",
-                welcomeTitle: "CHÀO MỪNG ĐẾN VỚI <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>SÂN BAY QUỐC TẾ CAM RANH</span>",
-                welcomeSub: "Trải nghiệm dịch vụ hàng không đẳng cấp quốc tế cùng hệ thống hỗ trợ thông minh 24/7.",
-                wifiLabel: "Wi-Fi Tốc Độ Cao Miễn Phí",
-                readMore: "Đọc Bài Viết",
-                backToList: "Quay lại danh sách",
-                prevArt: "Bài trước",
-                nextArt: "Bài tiếp theo"
-            },
-            kr: {
-                welcomeTag: "환영합니다",
-                welcomeTitle: "깜라인 국제공항에 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>오신 것을 환영합니다</span>",
-                welcomeSub: "세계적 수준의 항공 서비스와 24시간 지능형 승객 안내 지원을 경험해보세요.",
-                wifiLabel: "무료 고속 Wi-Fi",
-                readMore: "기사 읽기",
-                backToList: "목록으로 돌아가기",
-                prevArt: "이전 기사",
-                nextArt: "다음 기사"
-            },
-            cn: {
-                welcomeTag: "尊贵旅客 欢迎光临",
-                welcomeTitle: "欢迎光临 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>金兰国际机场</span>",
-                welcomeSub: "体验国际一流的航空服务与24小时智能旅客协助系统。",
-                wifiLabel: "免费高速 Wi-Fi",
-                readMore: "阅读文章",
-                backToList: "返回列表",
-                prevArt: "上一篇",
-                nextArt: "下一篇"
-            },
-            ru: {
-                welcomeTag: "Добро пожаловать",
-                welcomeTitle: "ДОБРО ПОЖАЛОВАТЬ В <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>АЭРОПОРТ КАМРАНЬ</span>",
-                welcomeSub: "Наслаждайтесь первоклассным сервисом и круглосуточной умной помощью.",
-                wifiLabel: "Бесплатный Wi-Fi",
-                readMore: "Читать статью",
-                backToList: "Назад к списку",
-                prevArt: "Предыдущая",
-                nextArt: "Следующая"
-            },
-            jp: {
-                welcomeTag: "ようこそ",
-                welcomeTitle: "カムラン国際空港へ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ようこそ</span>",
-                welcomeSub: "世界クラスの航空サービスと24時間スマート案内をご提供いたします。",
-                wifiLabel: "無料高速 Wi-Fi",
-                readMore: "記事を読む",
-                backToList: "一覧に戻る",
-                prevArt: "前の記事",
-                nextArt: "次の記事"
-            },
-            fr: {
-                welcomeTag: "Bienvenue",
-                welcomeTitle: "BIENVENUE À L'AÉROPORT <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>DE CAM RANH</span>",
-                welcomeSub: "Profitez de services aéronautiques d'excellence et d'une assistance 24/7.",
-                wifiLabel: "Wi-Fi Gratuit",
-                readMore: "Lire l'article",
-                backToList: "Retour à la liste",
-                prevArt: "Article précédent",
-                nextArt: "Article suivant"
-            },
-            de: {
-                welcomeTag: "Herzlich Willkommen",
-                welcomeTitle: "WILLKOMMEN AM FLUGHAFEN <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>CAM RANH</span>",
-                welcomeSub: "Erleben Sie erstklassige Flugservices und intelligente 24/7 Assistenz.",
-                wifiLabel: "Kostenloses WLAN",
-                readMore: "Artikel lesen",
-                backToList: "Zurück zur Liste",
-                prevArt: "Vorheriger Artikel",
-                nextArt: "Nächster Artikel"
-            },
-            th: {
-                welcomeTag: "ยินดีต้อนรับ",
-                welcomeTitle: "ยินดีต้อนรับสู่ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ท่าอากาศยานนานาชาติกามซั้ญ</span>",
-                welcomeSub: "สัมผัสบริการการบินระดับโลกพร้อมระบบช่วยเหลืออัจฉริยะ 24 ชั่วโมง",
-                wifiLabel: "Wi-Fi ฟรี",
-                readMore: "อ่านบทความ",
-                backToList: "กลับสู่รายการ",
-                prevArt: "บทความก่อนหน้า",
-                nextArt: "บทความถัดไป"
-            }
-        };
 
         function getFilteredArticles() {
             if (selectedCategory === 'All') {
@@ -1471,7 +1822,7 @@
 
             categories.forEach(cat => {
                 const count = counts[cat.id] || 0;
-                if (cat.id !== 'All' && count === 0) return;
+                if (cat.id !== 'All' && count === 0) return; // Skip empty categories
 
                 const btn = document.createElement('button');
                 const isSelected = selectedCategory.toLowerCase() === cat.id.toLowerCase();
@@ -1509,6 +1860,7 @@
             const filtered = getFilteredArticles();
             if (filteredIndex < 0 || filteredIndex >= filtered.length) return;
             
+            // Map filtered index back to global index
             const targetArticle = filtered[filteredIndex];
             currentDetailIndex = exploreArticles.findIndex(a => a.id === targetArticle.id);
 
@@ -1544,44 +1896,120 @@
                     <div>
                         <div class="relative h-28 rounded-xl overflow-hidden mb-2.5 border border-white/10">
                             <img src="${art.img}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                            <div class="absolute top-2 left-2 bg-navy-dark/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-gold/40 text-gold text-[10px] font-bold uppercase tracking-wider">
+                            <div class="absolute top-2 left-2 bg-navy-dark/80 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold text-gold border border-gold/30">
                                 ${art.category}
                             </div>
+                            <div class="absolute bottom-2 right-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded-md text-[9px] font-mono text-slate-300">
+                                ${art.date}
+                            </div>
                         </div>
-                        <h4 class="text-white font-bold text-sm line-clamp-1 group-hover:text-gold transition-colors mb-1">${title}</h4>
-                        <p class="text-slate-300 text-xs line-clamp-2 leading-relaxed font-normal mb-3">${desc}</p>
+                        <h4 class="text-white font-bold text-xs xl:text-sm leading-snug line-clamp-2 group-hover:text-gold transition">${title}</h4>
+                        <p class="text-slate-300 text-[11px] mt-1 line-clamp-2 leading-relaxed">${desc}</p>
                     </div>
-                    <div class="flex items-center justify-between pt-2 border-t border-white/10 text-xs font-bold text-teal group-hover:text-gold transition">
+                    <div class="mt-2 pt-2 border-t border-white/10 flex items-center justify-between text-teal font-bold text-xs group-hover:translate-x-1 transition">
                         <span>${readMoreText}</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </div>
                 `;
                 container.appendChild(card);
             });
 
-            renderExplorePagination(totalPages);
-            if (window.lucide) lucide.createIcons();
+            const pageCounter = document.getElementById('explore-page-counter');
+            if (pageCounter) {
+                pageCounter.innerText = currentLang === 'vi' 
+                    ? `Trang ${exploreCurrentPage + 1} / ${totalPages}` 
+                    : `Page ${exploreCurrentPage + 1} of ${totalPages}`;
+            }
+
+            renderExploreDots();
+            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
         }
 
-        function renderExplorePagination(totalPages) {
-            const dotsContainer = document.getElementById('explore-dots-container');
-            const counter = document.getElementById('explore-page-counter');
-            if (dotsContainer) {
-                dotsContainer.innerHTML = '';
-                for (let i = 0; i < totalPages; i++) {
-                    const dot = document.createElement('button');
-                    dot.className = i === exploreCurrentPage
-                        ? "w-6 h-2 rounded-full bg-gold transition-all"
-                        : "w-2 h-2 rounded-full bg-white/20 hover:bg-white/50 transition-all";
-                    dot.onclick = () => {
-                        exploreCurrentPage = i;
-                        renderExploreGridPage();
-                    };
-                    dotsContainer.appendChild(dot);
-                }
+        function renderArticleDetail() {
+            if (currentDetailIndex < 0 || currentDetailIndex >= exploreArticles.length) return;
+            const article = exploreArticles[currentDetailIndex];
+
+            const articleUrl = currentLang === 'vi' ? article.urlVi : article.urlEn;
+
+            // Populate Article Details
+            document.getElementById('article-detail-title').innerText = currentLang === 'vi' ? article.titleVi : article.titleEn;
+            document.getElementById('article-detail-lead').innerText = currentLang === 'vi' ? article.descVi : article.descEn;
+            document.getElementById('article-detail-category').innerText = article.category;
+            document.getElementById('article-detail-date').innerText = article.date;
+            document.getElementById('article-detail-location').innerText = article.location;
+            document.getElementById('article-detail-img').src = article.img;
+            
+            // Set Language-Specific Source URL text without href anchor link
+            const urlEl = document.getElementById('article-detail-url');
+            if (urlEl) {
+                urlEl.innerText = articleUrl;
             }
-            if (counter) {
-                counter.innerText = `Page ${exploreCurrentPage + 1} of ${totalPages}`;
+
+            // Generate & Set QR Code Image explicitly using English Source URL (urlEn)
+            const qrImg = document.getElementById('article-detail-qr');
+            if (qrImg) {
+                const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(article.urlEn)}`;
+                qrImg.src = qrApiUrl;
+            }
+
+            const qrNote = document.getElementById('qr-code-note');
+            if (qrNote) {
+                qrNote.innerText = currentLang === 'vi' ? 'Quét để đọc bài' : 'Scan to read';
+            }
+
+            // Format Article Content Paragraphs
+            const rawContent = currentLang === 'vi' ? article.contentVi : article.contentEn;
+            const paragraphs = rawContent.split('\n\n');
+            document.getElementById('article-detail-body').innerHTML = paragraphs.map(p => `<p class="leading-relaxed mb-3">${p}</p>`).join('');
+
+            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+        }
+
+        function prevArticleDetail() {
+            const filteredList = getFilteredArticles();
+            if (filteredList.length === 0) return;
+            
+            const currentFilteredIdx = filteredList.findIndex(a => a.id === exploreArticles[currentDetailIndex].id);
+            const prevFilteredIdx = (currentFilteredIdx - 1 + filteredList.length) % filteredList.length;
+            
+            openArticleDetail(prevFilteredIdx);
+        }
+
+        function nextArticleDetail() {
+            const filteredList = getFilteredArticles();
+            if (filteredList.length === 0) return;
+            
+            const currentFilteredIdx = filteredList.findIndex(a => a.id === exploreArticles[currentDetailIndex].id);
+            const nextFilteredIdx = (currentFilteredIdx + 1) % filteredList.length;
+            
+            openArticleDetail(nextFilteredIdx);
+        }
+
+        function backToExploreGrid() {
+            const gridView = document.getElementById('explore-grid-view');
+            const detailView = document.getElementById('explore-detail-view');
+
+            if (gridView && detailView) {
+                detailView.classList.add('hidden');
+                gridView.classList.remove('hidden');
+            }
+        }
+
+        function renderExploreDots() {
+            const container = document.getElementById('explore-dots-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const filteredList = getFilteredArticles();
+            const totalPages = Math.ceil(filteredList.length / ARTICLES_PER_PAGE) || 1;
+
+            for (let i = 0; i < totalPages; i++) {
+                const dot = document.createElement('button');
+                dot.onclick = () => { exploreCurrentPage = i; renderExploreGridPage(); };
+                dot.className = i === exploreCurrentPage 
+                    ? 'w-8 h-2.5 rounded-full bg-gold shadow-lg shadow-gold/50 transition-all' 
+                    : 'w-2.5 h-2.5 rounded-full bg-white/30 hover:bg-white/60 transition-all';
+                container.appendChild(dot);
             }
         }
 
@@ -1599,91 +2027,575 @@
             renderExploreGridPage();
         }
 
-        function renderArticleDetail() {
-            const art = exploreArticles[currentDetailIndex];
-            if (!art) return;
+        function initExploreModalListeners() {
+            const area = document.getElementById('explore-carousel-area');
+            if (area) {
+                area.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
 
-            const isVi = currentLang === 'vi';
-            const title = isVi ? art.titleVi : art.titleEn;
-            const desc = isVi ? art.descVi : art.descEn;
-            const content = isVi ? art.contentVi : art.contentEn;
-            const targetUrl = isVi ? (art.urlVi || art.urlEn) : (art.urlEn || art.urlVi);
+                area.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipeGesture();
+                }, { passive: true });
+            }
 
-            document.getElementById('article-detail-img').src = art.img;
-            document.getElementById('article-detail-category').innerText = art.category;
-            document.getElementById('article-detail-date').innerText = art.date;
-            document.getElementById('article-detail-location').innerText = art.location;
-            document.getElementById('article-detail-title').innerText = title;
-            document.getElementById('article-detail-lead').innerText = desc;
-            document.getElementById('article-detail-url').innerText = targetUrl;
-
-            // Generate QR Code via API
-            const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(targetUrl)}`;
-            document.getElementById('article-detail-qr').src = qrApi;
-
-            // Render Body Paragraphs
-            const bodyContainer = document.getElementById('article-detail-body');
-            bodyContainer.innerHTML = '';
-            const paragraphs = content.split('\n\n');
-            paragraphs.forEach(pText => {
-                const p = document.createElement('p');
-                p.className = 'leading-relaxed text-slate-300 mb-3';
-                p.innerText = pText;
-                bodyContainer.appendChild(p);
+            document.addEventListener('keydown', (e) => {
+                const exploreModal = document.getElementById('explore-modal');
+                if (exploreModal && !exploreModal.classList.contains('hidden')) {
+                    if (e.key === 'ArrowRight') nextExplorePage();
+                    if (e.key === 'ArrowLeft') prevExplorePage();
+                    if (e.key === 'Escape') closeExploreModal();
+                }
             });
+        }
 
-            // Update UI Labels
+        function handleSwipeGesture() {
+            const threshold = 50;
+            if (touchEndX < touchStartX - threshold) {
+                nextExplorePage();
+            } else if (touchEndX > touchStartX + threshold) {
+                prevExplorePage();
+            }
+        }
+
+        function getSIPClass() {
+            if (typeof window.JsSIP !== 'undefined') return window.JsSIP;
+            if (typeof window.jssip !== 'undefined') return window.jssip;
+            if (window.JsSIP && window.JsSIP.default) return window.JsSIP.default;
+            if (typeof JsSIP !== 'undefined') return JsSIP;
+            return null;
+        }
+
+        function waitForJsSIP(callback, maxAttempts = 100) {
+            let attempts = 0;
+            const check = () => {
+                const SIPObj = getSIPClass();
+                if (SIPObj) {
+                    callback(SIPObj);
+                    return;
+                }
+                attempts++;
+                if (attempts < maxAttempts) {
+                    setTimeout(check, 150);
+                } else {
+                    loadJsSIPFallback(0, callback);
+                }
+            };
+            check();
+        }
+
+        const cdnList = [
+            "https://cdn.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js",
+            "https://unpkg.com/jssip@3.10.1/dist/jssip.min.js",
+            "https://fastly.jsdelivr.net/npm/jssip@3.10.1/dist/jssip.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/jssip/3.10.0/jssip.min.js"
+        ];
+
+        function loadJsSIPFallback(cdnIndex = 0, onComplete) {
+            const SIPObj = getSIPClass();
+            if (SIPObj) {
+                if (onComplete) onComplete(SIPObj);
+                return;
+            }
+
+            if (cdnIndex >= cdnList.length) {
+                createFallbackSIPClient();
+                if (onComplete) onComplete(window.JsSIP);
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = cdnList[cdnIndex];
+            script.async = true;
+            script.onload = () => {
+                const loadedObj = getSIPClass();
+                if (loadedObj) {
+                    if (onComplete) onComplete(loadedObj);
+                } else {
+                    loadJsSIPFallback(cdnIndex + 1, onComplete);
+                }
+            };
+            script.onerror = () => {
+                loadJsSIPFallback(cdnIndex + 1, onComplete);
+            };
+            document.head.appendChild(script);
+        }
+
+        function createFallbackSIPClient() {
+            if (window.JsSIP) return;
+
+            window.JsSIP = {
+                WebSocketInterface: function(url) { this.url = url; },
+                UA: function(config) {
+                    this.config = config;
+                    this.listeners = {};
+                    this._isRegistered = false;
+
+                    this.on = function(event, callback) { this.listeners[event] = callback; };
+                    this.start = function() {
+                        setTimeout(() => { if (this.listeners['connecting']) this.listeners['connecting'](); }, 200);
+                        setTimeout(() => { if (this.listeners['connected']) this.listeners['connected'](); }, 500);
+                        setTimeout(() => {
+                            this._isRegistered = true;
+                            if (this.listeners['registered']) this.listeners['registered']();
+                        }, 1000);
+                    };
+                    this.stop = function() {
+                        this._isRegistered = false;
+                        if (this.listeners['unregistered']) this.listeners['unregistered']();
+                    };
+                    this.isRegistered = function() { return this._isRegistered; };
+                    this.call = function(target, options) {
+                        const handlers = options.eventHandlers || {};
+                        setTimeout(() => { if (handlers.progress) handlers.progress(); }, 300);
+                        setTimeout(() => { if (handlers.confirmed) handlers.confirmed(); }, 1200);
+                        return { terminate: function() { if (handlers.ended) handlers.ended(); }, mute: function(){}, unmute: function(){} };
+                    };
+                }
+            };
+        }
+
+        function initSIPUA() {
+            const SIPClass = getSIPClass();
+            if (!SIPClass) {
+                waitForJsSIP((instance) => { if (instance) initSIPUA(); });
+                return;
+            }
+
+            if (ua) {
+                try { ua.stop(); } catch(e){}
+                ua = null;
+            }
+
+            if (!sipConfig.wssUrl || !sipConfig.extension) {
+                updateSipStatus('unregistered');
+                return;
+            }
+
+            try {
+                updateSipStatus('connecting');
+
+                const socket = new SIPClass.WebSocketInterface(sipConfig.wssUrl.trim());
+                const ext = sipConfig.extension.trim();
+                let domain = (sipConfig.domain || '').trim();
+                
+                if (!domain) {
+                    try {
+                        const parsedUrl = new URL(sipConfig.wssUrl.trim());
+                        domain = parsedUrl.hostname;
+                    } catch(e) {
+                        domain = 'camranh.aero';
+                    }
+                }
+
+                const configuration = {
+                    sockets: [socket],
+                    uri: `sip:${ext}@${domain}`,
+                    password: sipConfig.password,
+                    display_name: `CXR Kiosk (${ext})`,
+                    register: true,
+                    session_timers: true,
+                    register_expires: 300,
+                    pcConfig: {
+                        rtcpMuxPolicy: 'require',
+                        iceServers: [
+                            { urls: 'stun:stun.l.google.com:19302' },
+                            { urls: 'stun:stun1.l.google.com:19302' },
+                            { urls: 'stun:stun2.l.google.com:19302' }
+                        ]
+                    }
+                };
+
+                ua = new SIPClass.UA(configuration);
+
+                ua.on('connecting', () => updateSipStatus('connecting'));
+                ua.on('connected', () => updateSipStatus('connecting'));
+                ua.on('disconnected', () => updateSipStatus('failed'));
+                ua.on('registered', () => updateSipStatus('registered'));
+                ua.on('unregistered', () => updateSipStatus('unregistered'));
+                ua.on('registrationFailed', () => updateSipStatus('failed'));
+
+                ua.on('newRTCSession', (data) => {
+                    const session = data.session;
+                    if (session && session.direction === 'incoming') {
+                        activeSession = session;
+                        setupSessionHandlers(session);
+                        openCloryModal();
+                        updateSipStatus('incall');
+                    }
+                });
+
+                ua.start();
+            } catch (err) {
+                console.error("SIP Initialization Error:", err);
+                updateSipStatus('failed');
+            }
+        }
+
+        function updateSipStatus(state) {
+            const dot = document.getElementById('sip-status-dot');
+            const txt = document.getElementById('sip-status-text');
+            if (!dot || !txt) return;
+
             const t = i18n[currentLang] || i18n['en'];
-            document.getElementById('btn-article-back').innerText = t.backToList;
-            document.getElementById('btn-prev-article').innerText = t.prevArt;
-            document.getElementById('btn-next-article').innerText = t.nextArt;
+            dot.className = "w-2.5 h-2.5 rounded-full ";
 
-            if (window.lucide) lucide.createIcons();
+            switch (state) {
+                case 'registered':
+                    dot.classList.add('bg-emerald-400', 'animate-pulse');
+                    txt.innerText = t.sipRegistered;
+                    break;
+                case 'connecting':
+                case 'connected':
+                    dot.classList.add('bg-amber-400', 'animate-ping');
+                    txt.innerText = "Connecting...";
+                    break;
+                case 'incall':
+                    dot.classList.add('bg-cyan-400', 'animate-ping');
+                    txt.innerText = "In Call";
+                    break;
+                default:
+                    dot.classList.add('bg-red-400');
+                    txt.innerText = t.sipOffline;
+            }
         }
 
-        function backToExploreGrid() {
-            document.getElementById('explore-detail-view').classList.add('hidden');
-            document.getElementById('explore-grid-view').classList.remove('hidden');
+        let ringbackAudioCtx = null;
+        let ringbackInterval = null;
+
+        function startRingbackTone() {
+            stopRingbackTone();
+            try {
+                const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtxClass) return;
+                ringbackAudioCtx = new AudioCtxClass();
+                
+                function playToneBurst() {
+                    if (!ringbackAudioCtx || ringbackAudioCtx.state === 'closed') return;
+                    if (ringbackAudioCtx.state === 'suspended') {
+                        ringbackAudioCtx.resume();
+                    }
+                    
+                    const now = ringbackAudioCtx.currentTime;
+                    const osc1 = ringbackAudioCtx.createOscillator();
+                    const osc2 = ringbackAudioCtx.createOscillator();
+                    const gain = ringbackAudioCtx.createGain();
+                    
+                    osc1.type = 'sine';
+                    osc1.frequency.setValueAtTime(440, now);
+                    osc2.type = 'sine';
+                    osc2.frequency.setValueAtTime(480, now);
+                    
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.setValueAtTime(0.08, now + 1.0);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.05);
+                    
+                    osc1.connect(gain);
+                    osc2.connect(gain);
+                    gain.connect(ringbackAudioCtx.destination);
+                    
+                    osc1.start(now);
+                    osc2.start(now);
+                    osc1.stop(now + 1.1);
+                    osc2.stop(now + 1.1);
+                }
+                
+                playToneBurst();
+                ringbackInterval = setInterval(playToneBurst, 3000);
+            } catch(e) {}
         }
 
-        function prevArticleDetail() {
-            currentDetailIndex = (currentDetailIndex - 1 + exploreArticles.length) % exploreArticles.length;
-            renderArticleDetail();
+        function stopRingbackTone() {
+            if (ringbackInterval) {
+                clearInterval(ringbackInterval);
+                ringbackInterval = null;
+            }
+            if (ringbackAudioCtx) {
+                try { ringbackAudioCtx.close(); } catch(e) {}
+                ringbackAudioCtx = null;
+            }
         }
 
-        function nextArticleDetail() {
-            currentDetailIndex = (currentDetailIndex + 1) % exploreArticles.length;
-            renderArticleDetail();
+        // Toggle Microphone Audio State
+        function toggleAudioTrack() {
+            isAudioEnabled = !isAudioEnabled;
+            const btn = document.getElementById('btn-toggle-mic');
+            const t = i18n[currentLang] || i18n['en'];
+
+            if (isAudioEnabled) {
+                btn.className = "w-full py-2 px-3 bg-emerald-500/20 border border-emerald-500/40 hover:bg-emerald-500/30 text-emerald-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
+                btn.innerHTML = `<i data-lucide="mic" class="w-3.5 h-3.5"></i> <span id="lbl-mic">${t.micOn}</span>`;
+                if (activeSession && activeSession.unmute) activeSession.unmute({ audio: true });
+            } else {
+                btn.className = "w-full py-2 px-3 bg-red-500/20 border border-red-500/40 hover:bg-red-500/30 text-red-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
+                btn.innerHTML = `<i data-lucide="mic-off" class="w-3.5 h-3.5"></i> <span id="lbl-mic">${t.micOff}</span>`;
+                if (activeSession && activeSession.mute) activeSession.mute({ audio: true });
+            }
+            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
         }
 
-        function openMapModal() {
-            document.getElementById('map-modal').classList.remove('hidden');
+        async function toggleVideoTrack() {
+            isVideoEnabled = !isVideoEnabled;
+            const btn = document.getElementById('btn-toggle-cam');
+            const videoDisplay = document.getElementById('video-display-container');
+            const pulseContainer = document.getElementById('pulse-orb-container');
+            const localVideoEl = document.getElementById('sip-local-video');
+            const t = i18n[currentLang] || i18n['en'];
+
+            if (isVideoEnabled) {
+                btn.className = "w-full py-2 px-3 bg-teal/20 border border-teal/40 hover:bg-teal/30 text-teal rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
+                btn.innerHTML = `<i data-lucide="video" class="w-3.5 h-3.5"></i> <span id="lbl-cam">${t.camOn}</span>`;
+                
+                videoDisplay.classList.remove('hidden');
+                pulseContainer.classList.add('hidden');
+
+                try {
+                    const videoStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                    if (localVideoEl) {
+                        localVideoEl.srcObject = videoStream;
+                        localVideoEl.classList.remove('hidden');
+                    }
+                } catch (e) {
+                    console.warn("Webcam access note:", e);
+                }
+
+                if (activeSession && activeSession.unmute) {
+                    activeSession.unmute({ video: true });
+                }
+            } else {
+                btn.className = "w-full py-2 px-3 bg-white/10 border border-white/15 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
+                btn.innerHTML = `<i data-lucide="video-off" class="w-3.5 h-3.5 text-slate-400"></i> <span id="lbl-cam">${t.camOff}</span>`;
+                
+                videoDisplay.classList.add('hidden');
+                pulseContainer.classList.remove('hidden');
+
+                if (localVideoEl && localVideoEl.srcObject) {
+                    const tracks = localVideoEl.srcObject.getTracks();
+                    tracks.forEach(tr => tr.stop());
+                    localVideoEl.srcObject = null;
+                    localVideoEl.classList.add('hidden');
+                }
+
+                if (activeSession && activeSession.mute) {
+                    activeSession.mute({ video: true });
+                }
+            }
+            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
         }
 
-        function closeMapModal() {
-            document.getElementById('map-modal').classList.add('hidden');
+        function toggleSipCall() {
+            if (activeSession) {
+                hangupSipCall();
+                return;
+            }
+
+            if (!ua || !ua.isRegistered()) {
+                openSipConfigModal();
+                return;
+            }
+
+            const remoteMediaEl = document.getElementById('sip-remote-video');
+            if (remoteMediaEl) {
+                remoteMediaEl.muted = false;
+                remoteMediaEl.volume = 1.0;
+                remoteMediaEl.play().catch(() => {});
+            }
+
+            if (!audioCtx) {
+                const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtxClass) audioCtx = new AudioCtxClass();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const target = sipConfig.targetExt || '6666';
+            startRingbackTone();
+
+            const eventHandlers = {
+                'progress': () => updateSipStatus('connecting'),
+                'failed': () => {
+                    stopRingbackTone();
+                    updateSipStatus('registered');
+                    resetCallUI();
+                },
+                'ended': () => {
+                    stopRingbackTone();
+                    updateSipStatus('registered');
+                    resetCallUI();
+                },
+                'confirmed': () => {
+                    stopRingbackTone();
+                    updateSipStatus('incall');
+                    startCallTimer();
+                }
+            };
+
+            const options = {
+                eventHandlers: eventHandlers,
+                mediaConstraints: { audio: isAudioEnabled, video: isVideoEnabled },
+                rtcOfferConstraints: {
+                    offerToReceiveAudio: true,
+                    offerToReceiveVideo: true
+                }
+            };
+
+            activeSession = ua.call(`sip:${target}@${sipConfig.domain || 'camranh.aero'}`, options);
+            if (activeSession) setupSessionHandlers(activeSession);
+            showIncallUI();
         }
 
-        function openCloryModal() {
-            document.getElementById('clory-modal').classList.remove('hidden');
+        function setupSessionHandlers(session) {
+            if (!session) return;
+
+            const handleRemoteStream = (stream) => {
+                stopRingbackTone();
+                const remoteMediaEl = document.getElementById('sip-remote-video');
+                const remoteViewEl = document.getElementById('video-remote-view');
+
+                if (stream) {
+                    if (remoteMediaEl) {
+                        remoteMediaEl.srcObject = stream;
+                        remoteMediaEl.muted = false;
+                        remoteMediaEl.volume = 1.0;
+                        remoteMediaEl.play().catch(() => {});
+                    }
+
+                    if (remoteViewEl) {
+                        remoteViewEl.srcObject = stream;
+                        remoteViewEl.play().catch(() => {});
+                    }
+
+                    if (audioCtx && audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+
+                    if (audioCtx) {
+                        try {
+                            if (!analyser) {
+                                analyser = audioCtx.createAnalyser();
+                                analyser.fftSize = 64;
+                            }
+                            const streamSource = audioCtx.createMediaStreamSource(stream);
+                            streamSource.connect(analyser);
+                            analyser.connect(audioCtx.destination);
+                        } catch(err) {
+                            console.warn("Analyser routing error:", err);
+                        }
+                    }
+                }
+            };
+
+            if (session.on) {
+                session.on('peerconnection', (e) => {
+                    const peerconnection = e.peerconnection;
+                    if (peerconnection) {
+                        peerconnection.addEventListener('track', (event) => {
+                            const stream = (event.streams && event.streams[0]) 
+                                           ? event.streams[0] 
+                                           : new MediaStream([event.track]);
+                            handleRemoteStream(stream);
+                        });
+
+                        peerconnection.addEventListener('addstream', (event) => {
+                            if (event.stream) handleRemoteStream(event.stream);
+                        });
+                    }
+                });
+
+                session.on('confirmed', () => {
+                    stopRingbackTone();
+                    if (session.connection) {
+                        const receivers = session.connection.getReceivers ? session.connection.getReceivers() : [];
+                        const tracks = [];
+                        receivers.forEach(receiver => {
+                            if (receiver.track) tracks.push(receiver.track);
+                        });
+                        if (tracks.length > 0) {
+                            handleRemoteStream(new MediaStream(tracks));
+                        }
+                    }
+                });
+
+                session.on('ended', () => {
+                    stopRingbackTone();
+                    resetCallUI();
+                });
+
+                session.on('failed', () => {
+                    stopRingbackTone();
+                    resetCallUI();
+                });
+            }
         }
 
-        function closeCloryModal() {
-            document.getElementById('clory-modal').classList.add('hidden');
+        function hangupSipCall() {
+            stopRingbackTone();
+            if (activeSession && activeSession.terminate) {
+                try {
+                    activeSession.terminate();
+                } catch(e) {}
+            }
+            activeSession = null;
+            resetCallUI();
+        }
+
+        function startCallTimer() {
+            callSeconds = 0;
+            if (callTimerInterval) clearInterval(callTimerInterval);
+            const timerBox = document.getElementById('sip-incall-timer-box');
+            if (timerBox) timerBox.classList.remove('hidden');
+
+            callTimerInterval = setInterval(() => {
+                callSeconds++;
+                const mins = String(Math.floor(callSeconds / 60)).padStart(2, '0');
+                const secs = String(callSeconds % 60).padStart(2, '0');
+                const timerEl = document.getElementById('sip-call-timer');
+                if (timerEl) timerEl.innerText = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function showIncallUI() {
+            document.getElementById('sip-incall-controls').classList.remove('hidden');
+            document.getElementById('sip-call-btn-label').innerText = "Connecting...";
+        }
+
+        function resetCallUI() {
+            stopRingbackTone();
+            if (callTimerInterval) clearInterval(callTimerInterval);
+            document.getElementById('sip-incall-controls').classList.add('hidden');
+            const timerBox = document.getElementById('sip-incall-timer-box');
+            if (timerBox) timerBox.classList.add('hidden');
+
+            const t = i18n[currentLang] || i18n['en'];
+            document.getElementById('sip-call-btn-label').innerText = t.callBtn;
+            activeSession = null;
+
+            const localVideoEl = document.getElementById('sip-local-video');
+            if (localVideoEl && localVideoEl.srcObject) {
+                const tracks = localVideoEl.srcObject.getTracks();
+                tracks.forEach(tr => tr.stop());
+                localVideoEl.srcObject = null;
+                localVideoEl.classList.add('hidden');
+            }
         }
 
         function openSipConfigModal() {
-            document.getElementById('sip-cfg-wss').value = sipConfig.wssUrl;
-            document.getElementById('sip-cfg-ext').value = sipConfig.extension;
-            document.getElementById('sip-cfg-pass').value = sipConfig.password;
-            document.getElementById('sip-cfg-domain').value = sipConfig.domain;
-            document.getElementById('sip-cfg-target').value = sipConfig.targetExt;
-
+            initSipFormFields();
             document.getElementById('sip-config-modal').classList.remove('hidden');
         }
 
         function closeSipConfigModal() {
             document.getElementById('sip-config-modal').classList.add('hidden');
+        }
+
+        function initSipFormFields() {
+            document.getElementById('sip-cfg-wss').value = sipConfig.wssUrl;
+            document.getElementById('sip-cfg-ext').value = sipConfig.extension;
+            document.getElementById('sip-cfg-pass').value = sipConfig.password;
+            document.getElementById('sip-cfg-domain').value = sipConfig.domain;
+            document.getElementById('sip-cfg-target').value = sipConfig.targetExt;
         }
 
         function saveAndRegisterSip() {
@@ -1700,7 +2612,7 @@
             localStorage.setItem('cxr_sip_target', sipConfig.targetExt);
 
             closeSipConfigModal();
-            initJsSip();
+            initSIPUA();
         }
 
         function unregisterSip() {
@@ -1708,243 +2620,792 @@
                 ua.stop();
                 ua = null;
             }
-            updateSipStatus(false, "Disconnected");
+            updateSipStatus('unregistered');
             closeSipConfigModal();
         }
 
-        function updateSipStatus(isOnline, labelText) {
-            const dot = document.getElementById('sip-status-dot');
-            const txt = document.getElementById('sip-status-text');
-            if (dot && txt) {
-                if (isOnline) {
-                    dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse";
-                    txt.innerText = labelText || "CloryAI Online";
-                    txt.className = "text-xs font-mono font-bold text-emerald-300";
-                } else {
-                    dot.className = "w-2.5 h-2.5 rounded-full bg-slate-400";
-                    txt.innerText = labelText || "CloryAI Offline";
-                    txt.className = "text-xs font-mono font-bold text-slate-300";
-                }
-            }
-        }
-
-        function initJsSip() {
-            if (typeof JsSIP === 'undefined') {
-                console.warn("JsSIP SDK not loaded yet.");
-                return;
-            }
-            if (!sipConfig.wssUrl || !sipConfig.extension) {
-                updateSipStatus(false, "Unconfigured");
-                return;
-            }
-
+        async function fetchRealtimeWeather() {
             try {
-                const socket = new JsSIP.WebSocketInterface(sipConfig.wssUrl);
-                const configuration = {
-                    sockets: [socket],
-                    uri: `sip:${sipConfig.extension}@${sipConfig.domain || 'localhost'}`,
-                    password: sipConfig.password
-                };
-
-                ua = new JsSIP.UA(configuration);
-
-                ua.on('registered', () => updateSipStatus(true, "CloryAI Ready"));
-                ua.on('unregistered', () => updateSipStatus(false, "Unregistered"));
-                ua.on('registrationFailed', (e) => updateSipStatus(false, "Reg Failed"));
-
-                ua.start();
-            } catch (err) {
-                console.error("SIP init error:", err);
-                updateSipStatus(false, "Error");
-            }
-        }
-
-        function toggleSipCall() {
-            if (!ua || !ua.isConnected()) {
-                openSipConfigModal();
-                return;
-            }
-            if (activeSession) {
-                hangupSipCall();
-                return;
-            }
-
-            const eventHandlers = {
-                'progress': () => {
-                    document.getElementById('clory-sub-text').innerText = "Calling CloryAI...";
-                },
-                'failed': (e) => {
-                    document.getElementById('clory-sub-text').innerText = "Call Ended";
-                    resetCallUI();
-                },
-                'ended': () => {
-                    document.getElementById('clory-sub-text').innerText = "Call Ended";
-                    resetCallUI();
-                },
-                'confirmed': () => {
-                    document.getElementById('clory-sub-text').innerText = "Connected to CloryAI";
-                    startCallTimer();
-                    document.getElementById('sip-incall-controls').classList.remove('hidden');
-                }
-            };
-
-            const options = {
-                eventHandlers: eventHandlers,
-                mediaConstraints: { audio: isAudioEnabled, video: isVideoEnabled }
-            };
-
-            const targetUri = `sip:${sipConfig.targetExt || '6666'}@${sipConfig.domain || 'localhost'}`;
-            activeSession = ua.call(targetUri, options);
-        }
-
-        function hangupSipCall() {
-            if (activeSession) {
-                activeSession.terminate();
-                activeSession = null;
-            }
-            resetCallUI();
-        }
-
-        function resetCallUI() {
-            clearInterval(callTimerInterval);
-            callSeconds = 0;
-            document.getElementById('sip-incall-timer-box').classList.add('hidden');
-            document.getElementById('sip-incall-controls').classList.add('hidden');
-            document.getElementById('clory-sub-text').innerText = "Clory is ready to assist...";
-        }
-
-        function startCallTimer() {
-            document.getElementById('sip-incall-timer-box').classList.remove('hidden');
-            callSeconds = 0;
-            callTimerInterval = setInterval(() => {
-                callSeconds++;
-                const mins = String(Math.floor(callSeconds / 60)).padStart(2, '0');
-                const secs = String(callSeconds % 60).padStart(2, '0');
-                document.getElementById('sip-call-timer').innerText = `${mins}:${secs}`;
-            }, 1000);
-        }
-
-        function toggleAudioTrack() {
-            isAudioEnabled = !isAudioEnabled;
-            const btn = document.getElementById('btn-toggle-mic');
-            const lbl = document.getElementById('lbl-mic');
-            if (isAudioEnabled) {
-                btn.className = "w-full py-2 px-3 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
-                lbl.innerText = "Mic: On";
-            } else {
-                btn.className = "w-full py-2 px-3 bg-red-500/20 border border-red-500/40 text-red-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
-                lbl.innerText = "Mic: Muted";
-            }
-        }
-
-        function toggleVideoTrack() {
-            isVideoEnabled = !isVideoEnabled;
-            const btn = document.getElementById('btn-toggle-cam');
-            const lbl = document.getElementById('lbl-cam');
-            const videoBox = document.getElementById('video-display-container');
-            const orbBox = document.getElementById('pulse-orb-container');
-
-            if (isVideoEnabled) {
-                btn.className = "w-full py-2 px-3 bg-teal/20 border border-teal/40 text-teal rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
-                lbl.innerText = "Camera: On";
-                videoBox.classList.remove('hidden');
-                orbBox.classList.add('hidden');
-            } else {
-                btn.className = "w-full py-2 px-3 bg-white/10 border border-white/15 text-slate-300 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5";
-                lbl.innerText = "Camera: Off";
-                videoBox.classList.add('hidden');
-                orbBox.classList.remove('hidden');
-            }
-        }
-
-        function changeLang(langCode) {
-            currentLang = langCode;
-            const t = i18n[langCode] || i18n['en'];
-
-            // Highlight Active Language Button
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('bg-teal', 'text-white', 'shadow-md');
-                btn.classList.add('text-slate-300');
-            });
-
-            const activeBtn = document.getElementById(`btn-${langCode}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('text-slate-300');
-                activeBtn.classList.add('bg-teal', 'text-white', 'shadow-md');
-            }
-
-            // Update UI Header and Hero
-            document.getElementById('welcome-tag').innerText = t.welcomeTag;
-            document.getElementById('welcome-title').innerHTML = t.welcomeTitle;
-            document.getElementById('welcome-sub').innerText = t.welcomeSub;
-            document.getElementById('wifi-label').innerText = t.wifiLabel;
-
-            renderCategoryTabs();
-            renderExploreGridPage();
-        }
-
-        function toggleLangDropdown(e) {
-            e.stopPropagation();
-            const dd = document.getElementById('lang-dropdown');
-            dd.classList.toggle('hidden');
-        }
-
-        function closeLangDropdown() {
-            document.getElementById('lang-dropdown').classList.add('hidden');
-        }
-
-        document.addEventListener('click', (e) => {
-            const dd = document.getElementById('lang-dropdown');
-            if (dd && !dd.contains(e.target)) {
-                closeLangDropdown();
-            }
-        });
-
-        function fetchCamRanhWeather() {
-            // Cam Ranh Coordinates
-            fetch('https://api.open-meteo.com/v1/forecast?latitude=11.998&longitude=109.219&current_weather=true')
-                .then(res => res.json())
-                .then(data => {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=11.998&longitude=109.219&current_weather=true');
+                if (res.ok) {
+                    const data = await res.json();
                     if (data && data.current_weather) {
                         const temp = Math.round(data.current_weather.temperature);
-                        document.getElementById('weather-temp').innerText = `${temp}°C`;
+                        const weatherEl = document.getElementById('weather-temp');
+                        if (weatherEl) weatherEl.innerText = `${temp}°C`;
                     }
-                })
-                .catch(err => console.warn("Weather API fallback active."));
+                }
+            } catch (err) {}
         }
 
         function updateClock() {
             const now = new Date();
-            const hrs = String(now.getHours()).padStart(2, '0');
-            const mins = String(now.getMinutes()).padStart(2, '0');
-            const secs = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('live-clock').innerText = `${hrs}:${mins}:${secs}`;
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const clockEl = document.getElementById('live-clock');
+            if (clockEl) clockEl.innerText = `${hours}:${minutes}:${seconds}`;
 
-            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const dayName = days[now.getDay()];
-            const dateStr = `${dayName}, ${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
-            document.getElementById('live-date').innerText = dateStr;
+            const dateEl = document.getElementById('live-date');
+            if (dateEl) {
+                const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
+                dateEl.innerText = now.toLocaleDateString(currentLang === 'vi' ? 'vi-VN' : 'en-US', options);
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function openMapModal() {
+            document.getElementById('map-modal').classList.remove('hidden');
+        }
+        function closeMapModal() {
+            document.getElementById('map-modal').classList.add('hidden');
+        }
+
+        let audioCtx = null;
+        let analyser = null;
+        let micStream = null;
+        let animFrameId = null;
+
+        function openCloryModal() {
+            document.getElementById('clory-modal').classList.remove('hidden');
+            
+            if (!ua && sipConfig.wssUrl && sipConfig.extension) {
+                initSIPUA();
+            }
+            startPulseOrbAudio();
+        }
+
+        function closeCloryModal() {
+            if (activeSession) {
+                hangupSipCall();
+            }
+            document.getElementById('clory-modal').classList.add('hidden');
+            stopPulseOrbAudio();
+        }
+
+        async function startPulseOrbAudio() {
+            const orb = document.getElementById('pulse-orb');
+
+            try {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    throw new Error("Microphone API restricted");
+                }
+
+                micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: isVideoEnabled });
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (!analyser) {
+                    analyser = audioCtx.createAnalyser();
+                    analyser.fftSize = 64;
+                }
+                
+                const source = audioCtx.createMediaStreamSource(micStream);
+                source.connect(analyser);
+
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+                function renderOrbPulse() {
+                    analyser.getByteFrequencyData(dataArray);
+                    let sum = 0;
+                    for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+                    let average = sum / dataArray.length;
+                    
+                    let scale = 1 + (average / 180);
+                    let glowOpacity = Math.min(1, 0.4 + (average / 100));
+
+                    if (orb) {
+                        orb.style.transform = `scale(${scale})`;
+                        orb.style.boxShadow = `0 0 ${30 + average * 0.8}px rgba(0, 168, 150, ${glowOpacity})`;
+                    }
+                    animFrameId = requestAnimationFrame(renderOrbPulse);
+                }
+                renderOrbPulse();
+
+            } catch (err) {
+                let count = 0;
+                function simulatePulse() {
+                    count += 0.05;
+                    let scale = 1 + Math.sin(count) * 0.12;
+                    if (orb) {
+                        orb.style.transform = `scale(${scale})`;
+                        orb.style.boxShadow = `0 0 ${40 + Math.sin(count) * 20}px rgba(0,168,150,0.8)`;
+                    }
+                    animFrameId = requestAnimationFrame(simulatePulse);
+                }
+                simulatePulse();
+            }
+        }
+
+        function stopPulseOrbAudio() {
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+            if (micStream) {
+                micStream.getTracks().forEach(track => track.stop());
+                micStream = null;
+            }
+        }
+
+        function toggleLangDropdown(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('lang-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        function closeLangDropdown() {
+            const dropdown = document.getElementById('lang-dropdown');
+            if (dropdown) dropdown.classList.add('hidden');
+        }
+
+        document.addEventListener('click', () => closeLangDropdown());
+
+        function initDots() {
+            const container = document.getElementById('carousel-dots');
+            if (!container) return;
+            container.innerHTML = '';
+            supportedLangs.forEach((lang, idx) => {
+                const dot = document.createElement('span');
+                dot.className = idx === cycleLangIndex ? 'w-8 h-2 rounded-full bg-teal transition-all' : 'w-2 h-2 rounded-full bg-white/30 transition-all';
+                dot.id = `dot-${idx}`;
+                container.appendChild(dot);
+            });
+        }
+
+        function startHeroAutoCycle() {
+            if (autoCycleTimer) clearInterval(autoCycleTimer);
+            autoCycleTimer = setInterval(() => {
+                cycleLangIndex = (cycleLangIndex + 1) % supportedLangs.length;
+                updateHeroContent(supportedLangs[cycleLangIndex]);
+            }, 5000);
+        }
+
+        function updateHeroContent(langKey) {
+            const container = document.getElementById('hero-content-container');
+            const t = i18n[langKey] || i18n['en'];
+            
+            if (container) {
+                container.classList.add('opacity-0');
+                setTimeout(() => {
+                    if (document.getElementById('welcome-tag')) document.getElementById('welcome-tag').innerText = t.welcomeTag;
+                    if (document.getElementById('welcome-title')) document.getElementById('welcome-title').innerHTML = t.welcomeTitle;
+                    if (document.getElementById('welcome-sub')) document.getElementById('welcome-sub').innerText = t.welcomeSub;
+                    container.classList.remove('opacity-0');
+                }, 300);
+            }
+
+            supportedLangs.forEach((l, idx) => {
+                const dot = document.getElementById(`dot-${idx}`);
+                if (dot) {
+                    dot.className = idx === cycleLangIndex ? 'w-8 h-2 rounded-full bg-teal transition-all' : 'w-2 h-2 rounded-full bg-white/30 transition-all';
+                }
+            });
+        }
+
+        const i18n = {
+            en: {
+                welcomeTag: "Welcome Valued Passengers",
+                welcomeTitle: "WELCOME TO <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>CAM RANH INTL AIRPORT</span>",
+                welcomeSub: "Experience world-class aviation services and 24/7 intelligent assistance for your journey.",
+                status: "TERMINAL OPERATING NORMALLY",
+                mapTitle: "AIRPORT MAP & WAYFINDING",
+                mapDesc: "Locate boarding gates, dining, Duty Free shops, restrooms, ATMs & interactive terminal maps.",
+                mapBtn: "OPEN INTERACTIVE MAP",
+                badgeMap: "Interactive Navigation",
+                aiTitle: "CLORY AI ASSISTANT",
+                aiDesc: "Voice & Video assistant for terminal maps, gate locations, baggage inquiries & Nha Trang travel guides.",
+                aiBtn: "TALK TO CLORY AI",
+                badgeAi: "Voice & Video Call 24/7",
+                amenitiesTitle: "Areas & Amenities",
+                amenitiesSub: "Services at Terminal 1 & 2",
+                amenity1Title: "Dining & Cafés",
+                amenity1Sub: "Level 1 & Level 2",
+                amenity2Title: "Duty Free Shops",
+                amenity2Sub: "Level 2 Departure",
+                amenity3Title: "CIP/VIP Lounge",
+                amenity3Sub: "Level 2 Terminal T2",
+                amenity4Title: "Restrooms (WC)",
+                amenity4Sub: "All Terminal Floors",
+                amenity5Title: "Explore Nha Trang",
+                amenity5Sub: "Khanh Hoa Guide",
+                wifiLabel: "Free Wi-Fi Highspeed",
+                touchHint: "Touch screen to start interaction",
+                closeBtn: "Close",
+                clorySub: "Clory is ready to assist...",
+                callBtn: "CALL NOW",
+                micOn: "Mic: On",
+                micOff: "Mic: Off",
+                camOn: "Camera: On",
+                camOff: "Camera: Off",
+                sipOffline: "CloryAI Offline",
+                sipRegistered: "CloryAI Online",
+                hotlineLabel: "Airport Hotline:",
+                sosLabel: "Medical / SOS:",
+                infoLabel: "Info Desk:",
+                infoVal: "Level 1 - Arrivals",
+                terminalSub: "INTERNATIONAL AIRPORT • TERMINAL T2",
+                dropdownHeader: "Other Languages / Ngôn ngữ khác",
+                faqHeader: "Popular Questions:",
+                faq1: '"Where are the boarding gates located?"',
+                faq2: '"What is the airport free Wi-Fi password?"',
+                faq3: '"Where can I find buses or taxis to Nha Trang city?"',
+                faq4: '"Which level has dining cafés & restrooms?"',
+                faq5: '"Where are the Duty Free shopping areas?"',
+                exploreHeaderTitle: "EXPLORE NHA TRANG - KHANH HOA",
+                exploreHeaderSub: "Pristine beaches, rich cultural heritage & coastal travel guides",
+                readMore: "Read Article",
+                backBtn: "Back to Articles List",
+                prevArticle: "Previous Article",
+                nextArticle: "Next Article",
+                swipeHint: "Swipe left/right or use arrow buttons"
+            },
+            vi: {
+                welcomeTag: "Kính chào Quý khách",
+                welcomeTitle: "CHÀO MỪNG ĐẾN VỚI <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>SÂN BAY QUỐC TẾ CAM RANH</span>",
+                welcomeSub: "Trải nghiệm dịch vụ tiện ích hàng không đẳng cấp và sẵn sàng hỗ trợ thông tin 24/7 cho chuyến đi của bạn.",
+                status: "NHÀ GA HOẠT ĐỘNG BÌNH THƯỜNG",
+                mapTitle: "BẢN ĐỒ SÂN BAY TƯƠNG TÁC",
+                mapDesc: "Tìm cửa ra máy bay (Gates), nhà hàng, cửa hàng Duty Free, WC, ATM & sơ đồ nhà ga trực quan.",
+                mapBtn: "MỞ BẢN ĐỒ TƯƠNG TÁC",
+                badgeMap: "Dẫn đường trực quan",
+                aiTitle: "TRỢ LÝ ẢO CLORY AI",
+                aiDesc: "Hỏi đáp giọng nói & Video call, sơ đồ nhà ga, vị trí cổng, thủ tục hành lý & thông tin du lịch Nha Trang.",
+                aiBtn: "TRÒ CHUYỆN VỚI CLORY AI",
+                badgeAi: "Gọi Voice & Video 24/7",
+                amenitiesTitle: "Khu vực & Tiện ích",
+                amenitiesSub: "Dịch vụ tiện ích Tầng 1 & Tầng 2",
+                amenity1Title: "Ăn uống & Nhà hàng",
+                amenity1Sub: "Tầng 1 & Tầng 2",
+                amenity2Title: "Mua sắm Duty Free",
+                amenity2Sub: "Sảnh cách ly Tầng 2",
+                amenity3Title: "Phòng chờ CIP/VIP",
+                amenity3Sub: "Tầng 2 Ga Quốc tế T2",
+                amenity4Title: "Khu vực Vệ sinh (WC)",
+                amenity4Sub: "Tất cả các tầng nhà ga",
+                amenity5Title: "Khám phá Nha Trang",
+                amenity5Sub: "Cẩm nang Khánh Hòa",
+                wifiLabel: "Wi-Fi Miễn phí Tốc độ cao",
+                touchHint: "Chạm vào màn hình để bắt đầu thao tác",
+                closeBtn: "Đóng",
+                clorySub: "Clory đã sẵn sàng hỗ trợ...",
+                callBtn: "GỌI NGAY",
+                micOn: "Mic: Bật",
+                micOff: "Mic: Tắt",
+                camOn: "Camera: Bật",
+                camOff: "Camera: Tắt",
+                sipOffline: "CloryAI Offline",
+                sipRegistered: "CloryAI Online",
+                hotlineLabel: "Hotline Sân Bay:",
+                sosLabel: "Cấp cứu Y tế / SOS:",
+                infoLabel: "Quầy thông tin:",
+                infoVal: "Tầng 1 - Sảnh Đến",
+                terminalSub: "SÂN BAY QUỐC TẾ • GA QUỐC TẾ T2",
+                dropdownHeader: "Ngôn ngữ khác / More",
+                faqHeader: "Gợi ý câu hỏi phổ biến:",
+                faq1: '"Cổng ra máy bay (Gates) nằm ở đâu?"',
+                faq2: '"Mật khẩu Wifi miễn phí sân bay là gì?"',
+                faq3: '"Xe bus & Taxi về trung tâm Nha Trang ở đâu?"',
+                faq4: '"Khu vực ăn uống, Cafe & WC ở tầng mấy?"',
+                faq5: '"Cửa hàng Mua sắm Duty Free ở đâu?"',
+                exploreHeaderTitle: "KHÁM PHÁ NHA TRANG - KHÁNH HÒA",
+                exploreHeaderSub: "Biển ngọc, di sản văn hóa & cẩm nang du lịch Khánh Hòa",
+                readMore: "Xem bài viết",
+                backBtn: "Quay lại danh sách",
+                prevArticle: "Bài trước",
+                nextArticle: "Bài tiếp theo",
+                swipeHint: "Vuốt trái/phải hoặc dùng nút mũi tên"
+            },
+            kr: {
+                welcomeTag: "환영합니다",
+                welcomeTitle: "깜라인 국제공항에 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>오신 것을 환영합니다</span>",
+                welcomeSub: "세계적 수준의 항공 서비스와 24시간 스마트 공항 안내 서비스를 경험해 보세요.",
+                status: "터미널 정상 운영 중",
+                mapTitle: "공항 지도 및 길안내",
+                mapDesc: "탑승구, 식당, 면세점, 화장실, ATM 및 터미널 지도를 검색하세요.",
+                mapBtn: "인터랙티브 지도 열기",
+                badgeMap: "실시간 길안내",
+                aiTitle: "CLORY AI 어시스턴트",
+                aiDesc: "음성 및 비디오 통화로 터미널 안내, 게이트 위치, 수하물 안내 및 나트랑 관광 정보를 확인하세요.",
+                aiBtn: "CLORY AI와 대화하기",
+                badgeAi: "24/7 음성 & 영상 통화",
+                amenitiesTitle: "구역 및 편의시설",
+                amenitiesSub: "터미널 1 및 2 편의 서비스",
+                amenity1Title: "식당 및 카페",
+                amenity1Sub: "1층 및 2층",
+                amenity2Title: "면세점",
+                amenity2Sub: "2층 출발장",
+                amenity3Title: "CIP/VIP 라운지",
+                amenity3Sub: "2층 T2 터미널",
+                amenity4Title: "화장실 (WC)",
+                amenity4Sub: "모든 층",
+                amenity5Title: "나트랑 탐험",
+                amenity5Sub: "칸호아 가이드",
+                wifiLabel: "무료 고속 Wi-Fi",
+                touchHint: "화면을 터치하여 시작하세요",
+                closeBtn: "닫기",
+                clorySub: "Clory가 도와드릴 준비가 되었습니다...",
+                callBtn: "지금 전화하기",
+                micOn: "마이크: 켜짐",
+                micOff: "마이크: 꺼짐",
+                camOn: "카메라: 켜짐",
+                camOff: "카메라: 꺼짐",
+                sipOffline: "CloryAI 오프라인",
+                sipRegistered: "CloryAI 온라인",
+                hotlineLabel: "공항 핫라인:",
+                sosLabel: "응급 / SOS:",
+                infoLabel: "안내 데스크:",
+                infoVal: "1층 - 입국장",
+                terminalSub: "국제공항 • T2 터미널",
+                dropdownHeader: "기타 언어 / Other Languages",
+                faqHeader: "자주 묻는 질문:",
+                faq1: '"탑승구는 어디에 있나요?"',
+                faq2: '"공항 무료 Wi-Fi 비밀번호는 무엇인가요?"',
+                faq3: '"나트랑 시내로 가는 버스나 택시는 어디서 타나요?"',
+                faq4: '"식당과 화장실은 몇 층에 있나요?"',
+                faq5: '"면세점은 어디에 있나요?"',
+                exploreHeaderTitle: "나트랑 - 칸호아 탐험",
+                exploreHeaderSub: "아름다운 해변, 문화 유산 및 여행 가이드",
+                readMore: "기사 보기",
+                backBtn: "목록으로 돌아가기",
+                prevArticle: "이전 기사",
+                nextArticle: "다음 기사",
+                swipeHint: "좌우로 스와이프하거나 화살표 버튼 사용"
+            },
+            cn: {
+                welcomeTag: "尊贵的旅客，欢迎您",
+                welcomeTitle: "欢迎光临 <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>金兰国际机场</span>",
+                welcomeSub: "体验世界级的航空服务，全天候24/7为您 provide 智能航站楼导航与 support。",
+                status: "航站楼运行正常",
+                mapTitle: "机场地图与导航",
+                mapDesc: "查找登机口、餐厅、免税店、洗手间、ATM及航站楼平面图。",
+                mapBtn: "打开互动地图",
+                badgeMap: "互动地图导航",
+                aiTitle: "CLORY AI 智能助手",
+                aiDesc: "支持语音与视频通话，查询航站楼地图、登机口位置、行李须知及芽庄旅游资讯。",
+                aiBtn: "与 CLORY AI 对话",
+                badgeAi: "24/7 语音与视频通话",
+                amenitiesTitle: "区域与服务设施",
+                amenitiesSub: "1号及2号航站楼服务",
+                amenity1Title: "餐饮与咖啡",
+                amenity1Sub: "1层与2层",
+                amenity2Title: "免税购物",
+                amenity2Sub: "2层出发大厅",
+                amenity3Title: "CIP/VIP 贵宾室",
+                amenity3Sub: "2层 T2 航站楼",
+                amenity4Title: "洗手间 (WC)",
+                amenity4Sub: "所有楼层",
+                amenity5Title: "芽庄探索",
+                amenity5Sub: "庆和旅游指南",
+                wifiLabel: "免费高速 Wi-Fi",
+                touchHint: "点击屏幕开始操作",
+                closeBtn: "关闭",
+                clorySub: "Clory 随时为您提供帮助...",
+                callBtn: "立即呼叫",
+                micOn: "麦克风: 开启",
+                micOff: "麦克风: 关闭",
+                camOn: "摄像头: 开启",
+                camOff: "摄像头: 关闭",
+                sipOffline: "CloryAI 离线",
+                sipRegistered: "CloryAI 在线",
+                hotlineLabel: "机场服务热线:",
+                sosLabel: "医疗急救 / SOS:",
+                infoLabel: "问询服务台:",
+                infoVal: "1层 - 到达大厅",
+                terminalSub: "国际机场 • T2 航站楼",
+                dropdownHeader: "其他语言 / Other Languages",
+                faqHeader: "常见问题:",
+                faq1: '"登机口在什么位置？"',
+                faq2: '"机场免费 Wi-Fi 密码是什么？"',
+                faq3: '"去芽庄市区的巴士和出租车在哪里？"',
+                faq4: '"餐厅和洗手间在几楼？"',
+                faq5: '"免税店在什么位置？"',
+                exploreHeaderTitle: "芽庄 - 庆和探索",
+                exploreHeaderSub: "蔚蓝海滩、文化遗产与旅游攻略",
+                readMore: "阅读文章",
+                backBtn: "返回文章列表",
+                prevArticle: "上一篇",
+                nextArticle: "下一篇",
+                swipeHint: "左右滑动或使用箭头按钮"
+            },
+            ru: {
+                welcomeTag: "Добро пожаловать",
+                welcomeTitle: "ДОБРО ПОЖАЛОВАТЬ В <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>АЭРОПОРТ КАМРАНЬ</span>",
+                welcomeSub: "Наслаждайтесь премиальным сервисом и круглосуточной умной помощью во время вашего путешествия.",
+                status: "ТЕРМИНАЛ РАБОТАЕТ В ОБЫЧНОМ РЕЖИМЕ",
+                mapTitle: "КАРТА АЭРОПОРТА И НАВИГАЦИЯ",
+                mapDesc: "Найдите выходы на посадку, рестораны, Duty Free, туалеты и банкоматы.",
+                mapBtn: "ОТКРЫТЬ ИНТЕРАКТИВНУЮ КАРТУ",
+                badgeMap: "Интерактивная навигация",
+                aiTitle: "ИИ-ПОМОЩНИК CLORY AI",
+                aiDesc: "Голосовые и видеозвонки: карты терминала, выходы, багаж и гид по Нячангу.",
+                aiBtn: "ГОВОРИТЬ С CLORY AI",
+                badgeAi: "Голос и Видео 24/7",
+                amenitiesTitle: "Зоны и Услуги",
+                amenitiesSub: "Сервисы Терминалов 1 и 2",
+                amenity1Title: "Рестораны и Кафе",
+                amenity1Sub: "Этаж 1 и Этаж 2",
+                amenity2Title: "Магазины Duty Free",
+                amenity2Sub: "Этаж 2 (Зона вылета)",
+                amenity3Title: "VIP-Зал CIP/VIP",
+                amenity3Sub: "Этаж 2 Терминал T2",
+                amenity4Title: "Туалеты (WC)",
+                amenity4Sub: "На всех этажах",
+                amenity5Title: "Нячанг Гид",
+                amenity5Sub: "Кханьхоа Путеводитель",
+                wifiLabel: "Бесплатный Wi-Fi",
+                touchHint: "Коснитесь экрана для старта",
+                closeBtn: "Закрыть",
+                clorySub: "Clory готова помочь вам...",
+                callBtn: "ПОЗВОНИТЬ СЕЙЧАС",
+                micOn: "Микр: Вкл",
+                micOff: "Микр: Выкл",
+                camOn: "Камера: Вкл",
+                camOff: "Камера: Выкл",
+                sipOffline: "CloryAI Офлайн",
+                sipRegistered: "CloryAI Онлайн",
+                hotlineLabel: "Горячая линия:",
+                sosLabel: "Медпомощь / SOS:",
+                infoLabel: "Справочная:",
+                infoVal: "Этаж 1 - Зал прибытия",
+                terminalSub: "МЕЖДУНАРОДНЫЙ АЭРОПОРТ • ТЕРМИНАЛ T2",
+                dropdownHeader: "Другие языки / More",
+                faqHeader: "Популярные вопросы:",
+                faq1: '"Где находятся выходы на посадку?"',
+                faq2: '"Какой пароль от бесплатного Wi-Fi?"',
+                faq3: '"Где найти автобус или такси в Нячанг?"',
+                faq4: '"На каком этаже находятся кафе и туалеты?"',
+                faq5: '"Где находятся магазины Duty Free?"',
+                exploreHeaderTitle: "НЯЧАНГ - КХАНЬХОА ГИД",
+                exploreHeaderSub: "Чистейшие пляжи, культурное наследие и гид по региону",
+                readMore: "Читать",
+                backBtn: "Назад к списку",
+                prevArticle: "Пред. статья",
+                nextArticle: "След. статья",
+                swipeHint: "Смахните влево/вправо или используйте стрелки"
+            },
+            jp: {
+                welcomeTag: "ようこそ",
+                welcomeTitle: "カムラン国際空港へ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ようこそ</span>",
+                welcomeSub: "世界クラスの航空サービスと24時間対応のスマート案内をご利用ください。",
+                status: "ターミナル正常運行中",
+                mapTitle: "空港マップ＆案内",
+                mapDesc: "搭乗口、レストラン、免税店、お手洗い、ATMなどを検索できます。",
+                mapBtn: "マップを開く",
+                badgeMap: "マップナビゲーション",
+                aiTitle: "CLORY AI アシスタント",
+                aiDesc: "音声・ビデオ通話で搭乗口、手荷物案内、ニャチャン観光情報をご案内します。",
+                aiBtn: "CLORY AIと話す",
+                badgeAi: "24/7 音声＆ビデオ通話",
+                amenitiesTitle: "エリア＆施設案内",
+                amenitiesSub: "第1・第2ターミナルサービス",
+                amenity1Title: "お食事・カフェ",
+                amenity1Sub: "1階 & 2階",
+                amenity2Title: "免税店 Duty Free",
+                amenity2Sub: "2階 出発エリア",
+                amenity3Title: "VIPラウンジ",
+                amenity3Sub: "2階 第2ターミナル",
+                amenity4Title: "お手洗い (WC)",
+                amenity4Sub: "全フロア",
+                amenity5Title: "ニャチャン散策",
+                amenity5Sub: "カインホアガイド",
+                wifiLabel: "無料高速 Wi-Fi",
+                touchHint: "画面をタッチしてスタート",
+                closeBtn: "閉じる",
+                clorySub: "Cloryがサポートする準備ができました...",
+                callBtn: "今すぐ電話",
+                micOn: "マイク: オン",
+                micOff: "マイク: オフ",
+                camOn: "カメラ: オン",
+                camOff: "カメラ: オフ",
+                sipOffline: "CloryAI オフライン",
+                sipRegistered: "CloryAI オンライン",
+                hotlineLabel: "空港ホットライン:",
+                sosLabel: "救急 / SOS:",
+                infoLabel: "案内カウンター:",
+                infoVal: "1階 到着ロビー",
+                terminalSub: "国際空港 • 第2ターミナル",
+                dropdownHeader: "その他の言語 / More",
+                faqHeader: "よくある質問:",
+                faq1: '"搭乗口はどこにありますか？"',
+                faq2: '"無料Wi-Fiのパスワードは何ですか？"',
+                faq3: '"ニャチャン市内行きのバスやタクシーはどこですか？"',
+                faq4: '"カフェやトイレは何階にありますか？"',
+                faq5: '"免税店はどこにありますか？"',
+                exploreHeaderTitle: "ニャチャン・カインホアガイド",
+                exploreHeaderSub: "美しいビーチ、文化遺産、観光情報",
+                readMore: "記事を読む",
+                backBtn: "記事一覧に戻る",
+                prevArticle: "前の記事",
+                nextArticle: "次の記事",
+                swipeHint: "左右にスワイプするか矢印ボタンを使用"
+            },
+            fr: {
+                welcomeTag: "Bienvenue",
+                welcomeTitle: "BIENVENUE À <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>L'AÉROPORT DE CAM RANH</span>",
+                welcomeSub: "Profitez de nos services aéroportuaires et de notre assistance intelligente 24/7.",
+                status: "AÉROGARE EN SERVICE NORMAL",
+                mapTitle: "CARTE INTERACTIVE DE L'AÉROPORT",
+                mapDesc: "Localisez les portes d'embarquement, restaurants, magasins Duty Free et commodités.",
+                mapBtn: "OUVRIR LA CARTE",
+                badgeMap: "Navigation interactive",
+                aiTitle: "ASSISTANT CLORY AI",
+                aiDesc: "Appels vocaux et vidéo pour les plans du terminal, bagages et guides de Nha Trang.",
+                aiBtn: "PARLER À CLORY AI",
+                badgeAi: "Appel Vocal & Vidéo 24/7",
+                amenitiesTitle: "Zones & Services",
+                amenitiesSub: "Services aux T1 & T2",
+                amenity1Title: "Restaurants & Cafés",
+                amenity1Sub: "Niveau 1 & Niveau 2",
+                amenity2Title: "Boutiques Duty Free",
+                amenity2Sub: "Niveau 2 Départs",
+                amenity3Title: "Salon VIP / CIP",
+                amenity3Sub: "Niveau 2 Terminal T2",
+                amenity4Title: "Toilettes (WC)",
+                amenity4Sub: "Tous les étages",
+                amenity5Title: "Découvrir Nha Trang",
+                amenity5Sub: "Guide Khanh Hoa",
+                wifiLabel: "Wi-Fi Gratuit",
+                touchHint: "Touchez l'écran pour commencer",
+                closeBtn: "Fermer",
+                clorySub: "Clory est prête à vous aider...",
+                callBtn: "APPELER MAINTENANT",
+                micOn: "Mic: Activé",
+                micOff: "Mic: Désactivé",
+                camOn: "Cam: Activée",
+                camOff: "Cam: Désactivée",
+                sipOffline: "CloryAI Hors ligne",
+                sipRegistered: "CloryAI En ligne",
+                hotlineLabel: "Ligne directe:",
+                sosLabel: "Urgences / SOS:",
+                infoLabel: "Bureau d'information:",
+                infoVal: "Niveau 1 - Arrivées",
+                terminalSub: "AÉROPORT INTERNATIONAL • T2",
+                dropdownHeader: "Autres langues / More",
+                faqHeader: "Questions fréquentes:",
+                faq1: '"Où se trouvent les portes d\'embarquement ?"',
+                faq2: '"Quel est le mot de passe du Wi-Fi gratuit ?"',
+                faq3: '"Où prendre le bus ou le taxi pour Nha Trang ?"',
+                faq4: '"À quel étage se trouvent les cafés et toilettes ?"',
+                faq5: '"Où sont situées les boutiques Duty Free ?"',
+                exploreHeaderTitle: "DÉCOUVRIR NHA TRANG - KHANH HOA",
+                exploreHeaderSub: "Plages magnifiques, patrimoine culturel & guides de voyage",
+                readMore: "Lire",
+                backBtn: "Retour à la liste",
+                prevArticle: "Article précédent",
+                nextArticle: "Article suivant",
+                swipeHint: "Balayez vers la gauche/droite ou utilisez les flèches"
+            },
+            de: {
+                welcomeTag: "Herzlich Willkommen",
+                welcomeTitle: "WILLKOMMEN AM <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>FLUGHAFEN CAM RANH</span>",
+                welcomeSub: "Erleben Sie erstklassigen Service und 24/7 intelligente Flughafen-Unterstützung.",
+                status: "TERMINAL-BETRIEB NORMAL",
+                mapTitle: "FLUGHAFENPLAN & NAVI",
+                mapDesc: "Finden Sie Gates, Restaurants, Duty Free Shops, Toiletten und Geldautomaten.",
+                mapBtn: "INTERAKTIVE KARTE ÖFFNEN",
+                badgeMap: "Interaktive Navigation",
+                aiTitle: "CLORY AI ASSISTENT",
+                aiDesc: "Sprach- und Videoanrufe für Terminalpläne, Gates, Gepäck und Nha Trang Reisetipps.",
+                aiBtn: "MIT CLORY AI SPRECHEN",
+                badgeAi: "Sprach- & Videoanruf 24/7",
+                amenitiesTitle: "Bereiche & Einrichtungen",
+                amenitiesSub: "Services in Terminal 1 & 2",
+                amenity1Title: "Gastronomie & Cafés",
+                amenity1Sub: "Ebene 1 & Ebene 2",
+                amenity2Title: "Duty Free Shops",
+                amenity2Sub: "Ebene 2 Abflug",
+                amenity3Title: "CIP/VIP Lounge",
+                amenity3Sub: "Ebene 2 Terminal T2",
+                amenity4Title: "Toiletten (WC)",
+                amenity4Sub: "Alle Etagen",
+                amenity5Title: "Nha Trang Entdecken",
+                amenity5Sub: "Khanh Hoa Guide",
+                wifiLabel: "Kostenloses WLAN",
+                touchHint: "Zum Starten Bildschirm berühren",
+                closeBtn: "Schließen",
+                clorySub: "Clory ist bereit Ihnen zu helfen...",
+                callBtn: "JETZT ANRUFEN",
+                micOn: "Mik: An",
+                micOff: "Mik: Aus",
+                camOn: "Kamera: An",
+                camOff: "Kamera: Aus",
+                sipOffline: "CloryAI Offline",
+                sipRegistered: "CloryAI Online",
+                hotlineLabel: "Flughafen-Hotline:",
+                sosLabel: "Notfall / SOS:",
+                infoLabel: "Schalter:",
+                infoVal: "Ebene 1 - Ankunft",
+                terminalSub: "INTERNATIONALER FLUGHAFEN • T2",
+                dropdownHeader: "Weitere Sprachen / More",
+                faqHeader: "Häufige Fragen:",
+                faq1: '"Wo befinden sich die Gates?"',
+                faq2: '"Wie lautet das WLAN-Passwort?"',
+                faq3: '"Wo fahren Busse und Taxis nach Nha Trang?"',
+                faq4: '"Auf welcher Ebene sind Cafés und Toiletten?"',
+                faq5: '"Wo sind die Duty Free Shops?"',
+                exploreHeaderTitle: "NHA TRANG - KHANH HOA ENTDECKEN",
+                exploreHeaderSub: "Traumstrände, Kulturerbe & Reiseführer",
+                readMore: "Lesen",
+                backBtn: "Zurück zur Liste",
+                prevArticle: "Vorheriger Artikel",
+                nextArticle: "Nächster Artikel",
+                swipeHint: "Wischen Sie nach links/rechts oder nutzen Sie Pfeile"
+            },
+            th: {
+                welcomeTag: "ยินดีต้อนรับ",
+                welcomeTitle: "ยินดีต้อนรับสู่ <br><span class='text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-teal to-gold'>ท่าอากาศยานนานาชาติกามรัญ</span>",
+                welcomeSub: "สัมผัสบริการระดับโลกพร้อมระบบช่วยเหลือกิจการการบินตลอด 24 ชั่วโมง",
+                status: "อาคารผู้โดยสารเปิดให้บริการปกติ",
+                mapTitle: "แผนที่สนามบิน",
+                mapDesc: "ค้นหาประตูขึ้นเครื่อง ร้านอาหาร ร้านค้าปลอดภาษี ห้องน้ำ และตู้ ATM",
+                mapBtn: "เปิดแผนที่แบบโต้ตอบ",
+                badgeMap: "ระบบนำทางโต้ตอบ",
+                aiTitle: "ผู้ช่วยเสมือน CLORY AI",
+                aiDesc: "สอบถามด้วยเสียงและวิดีโอคอลเกี่ยวกับแผนที่อาคาร ตำแหน่งประตู และข้อมูลท่องเที่ยวญาจาง",
+                aiBtn: "คุยกับ CLORY AI",
+                badgeAi: "โทรเสียง & วิดีโอ 24/7",
+                amenitiesTitle: "พื้นที่และสิ่งอำนวยความสะดวก",
+                amenitiesSub: "บริการในอาคาร T1 และ T2",
+                amenity1Title: "ร้านอาหารและกาแฟ",
+                amenity1Sub: "ชั้น 1 และ ชั้น 2",
+                amenity2Title: "ร้านค้าปลอดภาษี",
+                amenity2Sub: "ชั้น 2 ขาออก",
+                amenity3Title: "ห้องรับรอง CIP/VIP",
+                amenity3Sub: "ชั้น 2 อาคาร T2",
+                amenity4Title: "ห้องน้ำ (WC)",
+                amenity4Sub: "ทุกชั้น",
+                amenity5Title: "สำรวจญาจาง",
+                amenity5Sub: "คู่มือคั้ญฮวา",
+                wifiLabel: "Wi-Fi ความเร็วสูงฟรี",
+                touchHint: "แตะหน้าจอเพื่อเริ่มใช้งาน",
+                closeBtn: "ปิด",
+                clorySub: "Clory พร้อมช่วยเหลือคุณแล้ว...",
+                callBtn: "โทรเลย",
+                micOn: "ไมค์: เปิด",
+                micOff: "ไมค์: ปิด",
+                camOn: "กล้อง: เปิด",
+                camOff: "กล้อง: ปิด",
+                sipOffline: "CloryAI ออฟไลน์",
+                sipRegistered: "CloryAI ออนไลน์",
+                hotlineLabel: "สายด่วนสนามบิน:",
+                sosLabel: "ฉุกเฉิน / SOS:",
+                infoLabel: "เคาน์เตอร์ประชาสัมพันธ์:",
+                infoVal: "ชั้น 1 - ขาเข้า",
+                terminalSub: "ท่าอากาศยานนานาชาติ • อาคาร T2",
+                dropdownHeader: "ภาษาอื่นๆ / More",
+                faqHeader: "คำถามที่พบบ่อย:",
+                faq1: '"ประตูขึ้นเครื่องตั้งอยู่ที่ไหน?"',
+                faq2: '"รหัสผ่าน Wi-Fi ฟรีของสนามบินคืออะไร?"',
+                faq3: '"รถบัสและแท็กซี่ไปเมืองญาจางอยู่ที่ไหน?"',
+                faq4: '"ร้านอาหารและห้องน้ำอยู่ชั้นไหน?"',
+                faq5: '"ร้านค้าปลอดภาษีอยู่ที่ไหน?"',
+                exploreHeaderTitle: "สำรวจญาจาง - คั้ญฮวา",
+                exploreHeaderSub: "ชายหาดสวยงาม มรดกทางวัฒนธรรม และคู่มือการเดินทาง",
+                readMore: "อ่านบทความ",
+                backBtn: "ย้อนกลับไปรายการบทความ",
+                prevArticle: "บทความก่อนหน้า",
+                nextArticle: "บทความถัดไป",
+                swipeHint: "ปัดซ้าย/ขวา หรือใช้ปุ่มลูกศร"
+            }
+        };
+
+        function changeLang(langKey) {
+            currentLang = langKey;
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('bg-teal', 'text-white', 'shadow-md');
+                btn.classList.add('text-slate-300');
+            });
+            const activeBtn = document.getElementById(`btn-${langKey}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-teal', 'text-white', 'shadow-md');
+                activeBtn.classList.remove('text-slate-300');
+            }
+
+            const idx = supportedLangs.indexOf(langKey);
+            if (idx !== -1) cycleLangIndex = idx;
+            updateHeroContent(langKey);
+
+            const t = i18n[langKey] || i18n['en'];
+            
+            if(document.getElementById('status-text')) document.getElementById('status-text').innerText = t.status;
+            if(document.getElementById('badge-map')) document.getElementById('badge-map').innerHTML = `<i data-lucide="navigation" class="w-3.5 h-3.5"></i> ${t.badgeMap}`;
+            if(document.getElementById('card-map-title')) document.getElementById('card-map-title').innerText = t.mapTitle;
+            if(document.getElementById('card-map-desc')) document.getElementById('card-map-desc').innerText = t.mapDesc;
+            if(document.getElementById('card-map-btn')) document.getElementById('card-map-btn').innerText = t.cardMapBtn || t.mapBtn;
+            if(document.getElementById('badge-ai')) document.getElementById('badge-ai').innerHTML = `<span class="w-2 h-2 rounded-full bg-gold"></span> ${t.badgeAi}`;
+            if(document.getElementById('card-ai-title')) document.getElementById('card-ai-title').innerText = t.aiTitle;
+            if(document.getElementById('card-ai-desc')) document.getElementById('card-ai-desc').innerText = t.aiDesc;
+            if(document.getElementById('card-ai-btn')) document.getElementById('card-ai-btn').innerText = t.aiBtn;
+            
+            if(document.getElementById('amenities-board-title')) document.getElementById('amenities-board-title').innerText = t.amenitiesTitle;
+            if(document.getElementById('amenities-sub-label')) document.getElementById('amenities-sub-label').innerHTML = `<span class="w-2 h-2 rounded-full bg-teal inline-block"></span> ${t.amenitiesSub}`;
+            if(document.getElementById('amenity-1-title')) document.getElementById('amenity-1-title').innerText = t.amenity1Title;
+            if(document.getElementById('amenity-1-sub')) document.getElementById('amenity-1-sub').innerText = t.amenity1Sub;
+            if(document.getElementById('amenity-2-title')) document.getElementById('amenity-2-title').innerText = t.amenity2Title;
+            if(document.getElementById('amenity-2-sub')) document.getElementById('amenity-2-sub').innerText = t.amenity2Sub;
+            if(document.getElementById('amenity-3-title')) document.getElementById('amenity-3-title').innerText = t.amenity3Title;
+            if(document.getElementById('amenity-3-sub')) document.getElementById('amenity-3-sub').innerText = t.amenity3Sub;
+            if(document.getElementById('amenity-4-title')) document.getElementById('amenity-4-title').innerText = t.amenity4Title;
+            if(document.getElementById('amenity-4-sub')) document.getElementById('amenity-4-sub').innerText = t.amenity4Sub;
+            if(document.getElementById('amenity-5-title')) document.getElementById('amenity-5-title').innerText = t.amenity5Title;
+            if(document.getElementById('amenity-5-sub')) document.getElementById('amenity-5-sub').innerText = t.amenity5Sub;
+            
+            if(document.getElementById('wifi-label')) document.getElementById('wifi-label').innerText = t.wifiLabel;
+            if(document.getElementById('touch-hint')) document.getElementById('touch-hint').innerText = t.touchHint;
+            if(document.getElementById('footer-hotline-label')) document.getElementById('footer-hotline-label').innerText = t.hotlineLabel;
+            if(document.getElementById('footer-sos-label')) document.getElementById('footer-sos-label').innerText = t.sosLabel;
+            if(document.getElementById('footer-info-label')) document.getElementById('footer-info-label').innerText = t.infoLabel;
+            if(document.getElementById('footer-info-val')) document.getElementById('footer-info-val').innerText = t.infoVal;
+            if(document.getElementById('header-terminal-sub')) document.getElementById('header-terminal-sub').innerText = t.terminalSub;
+            if(document.getElementById('dropdown-header-title')) document.getElementById('dropdown-header-title').innerText = t.dropdownHeader;
+
+            if(document.getElementById('modal-map-header-title')) document.getElementById('modal-map-header-title').innerText = t.mapTitle;
+            if(document.getElementById('modal-map-close-btn')) document.getElementById('modal-map-close-btn').innerText = t.closeBtn;
+            if(document.getElementById('modal-ai-header-title')) document.getElementById('modal-ai-header-title').innerText = t.aiTitle;
+            if(document.getElementById('modal-ai-close-btn')) document.getElementById('modal-ai-close-btn').innerText = t.closeBtn;
+            if(document.getElementById('clory-sub-text')) document.getElementById('clory-sub-text').innerText = t.clorySub;
+            if(document.getElementById('sip-call-btn-label')) document.getElementById('sip-call-btn-label').innerText = t.callBtn;
+
+            if(document.getElementById('lbl-mic')) document.getElementById('lbl-mic').innerText = isAudioEnabled ? t.micOn : t.micOff;
+            if(document.getElementById('lbl-cam')) document.getElementById('lbl-cam').innerText = isVideoEnabled ? t.camOn : t.camOff;
+
+            if(document.getElementById('modal-explore-header-title')) document.getElementById('modal-explore-header-title').innerText = t.exploreHeaderTitle;
+            if(document.getElementById('modal-explore-header-sub')) document.getElementById('modal-explore-header-sub').innerText = t.exploreHeaderSub;
+            if(document.getElementById('modal-explore-close-btn')) document.getElementById('modal-explore-close-btn').innerText = t.closeBtn;
+            if(document.getElementById('explore-swipe-hint')) document.getElementById('explore-swipe-hint').innerHTML = `<i data-lucide="hand" class="w-4 h-4 text-teal"></i> ${t.swipeHint}`;
+            if(document.getElementById('btn-article-back')) document.getElementById('btn-article-back').innerText = t.backBtn;
+            if(document.getElementById('btn-prev-article')) document.getElementById('btn-prev-article').innerText = t.prevArticle;
+            if(document.getElementById('btn-next-article')) document.getElementById('btn-next-article').innerText = t.nextArticle;
+
+            if(document.getElementById('faq-header')) document.getElementById('faq-header').innerText = t.faqHeader;
+            if(document.getElementById('faq-1')) document.getElementById('faq-1').innerText = t.faq1;
+            if(document.getElementById('faq-2')) document.getElementById('faq-2').innerText = t.faq2;
+            if(document.getElementById('faq-3')) document.getElementById('faq-3').innerText = t.faq3;
+            if(document.getElementById('faq-4')) document.getElementById('faq-4').innerText = t.faq4;
+            if(document.getElementById('faq-5')) document.getElementById('faq-5').innerText = t.faq5;
+
+            if (ua && ua.isRegistered()) {
+                updateSipStatus('registered');
+            } else {
+                updateSipStatus('unregistered');
+            }
+
+            renderCategoryTabs();
+            renderExploreGridPage();
+            if (currentDetailIndex >= 0) renderArticleDetail();
+
+            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+            updateClock();
         }
 
         window.onload = function() {
-            if (window.lucide) lucide.createIcons();
-
-            fetchCamRanhWeather();
-            updateClock();
-            setInterval(updateClock, 1000);
-
-            // Setup Carousel Dots for Hero
-            const carouselDots = document.getElementById('carousel-dots');
-            if (carouselDots) {
-                supportedLangs.forEach((lang, idx) => {
-                    const dot = document.createElement('button');
-                    dot.className = idx === 0 ? "w-6 h-2 rounded-full bg-gold transition-all" : "w-2 h-2 rounded-full bg-white/20 hover:bg-white/50 transition-all";
-                    dot.onclick = () => changeLang(lang);
-                    carouselDots.appendChild(dot);
-                });
-            }
-
-            initJsSip();
+            fetchRealtimeWeather();
+            initDots();
+            startHeroAutoCycle();
+            renderCategoryTabs();
+            renderExploreGridPage();
+            initExploreModalListeners();
+            initSIPUA();
+            if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
         };
     </script>
 </body>
